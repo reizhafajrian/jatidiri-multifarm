@@ -1,5 +1,6 @@
 import { Poppins } from '@next/font/google'
 import Head from 'next/head'
+import Header from './Header'
 import Sidebar from './Sidebar'
 
 const poppins = Poppins({
@@ -20,7 +21,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       <div className="text-sm">
         <Sidebar />
-        <main className="ml-64 p-6">{children}</main>
+        <div className="ml-64 min-h-screen bg-neutral-1 p-6">
+          <Header />
+          {children}
+        </div>
       </div>
     </div>
   )

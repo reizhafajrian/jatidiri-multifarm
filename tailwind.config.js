@@ -19,6 +19,12 @@ module.exports = {
           6: '#214A37',
           7: '#081C15',
         },
+        neutral: {
+          1: '#F6F6F6',
+        },
+      },
+      boxShadow: {
+        header: '0px 0px 5px rgba(0, 0, 0, 0.06)',
       },
     },
   },
