@@ -1,6 +1,8 @@
 import DownloadIcon from '@/assets/icons/download.svg'
-import Card from '@/components/Card'
-import FilterReport from '@/components/FilterReport'
+import CardDiagram from '@/components/Dashboard/CardDiagram'
+import FilterReport from '@/components/Dashboard/FilterReport'
+import SectionOne from '@/components/Dashboard/SectionOne'
+import SectionTwo from '@/components/Dashboard/SectionTwo'
 
 export default function Home() {
   return (
@@ -13,24 +15,29 @@ export default function Home() {
         </button>
       </div>
       <div className="space-y-6">
-        <div className="grid grid-cols-2 gap-7">
-          <Card>total pendapatan</Card>
-          <Card>total pembelian</Card>
-        </div>
-        <div className="grid grid-cols-3 gap-7">
-          <Card>sapi</Card>
-          <Card>domba</Card>
-          <Card>kambing</Card>
+        <SectionOne />
+        <SectionTwo />
+        <div className="grid grid-cols-12 gap-6">
+          <CardDiagram col="5" title="ternak terjual">
+            diagram
+          </CardDiagram>
+          <CardDiagram col="4" title="pendapatan event">
+            diagram
+          </CardDiagram>
+          <CardDiagram col="3" title="penjualan susu">
+            diagram
+          </CardDiagram>
         </div>
         <div className="grid grid-cols-12 gap-6">
-          <Card className="col-span-5">Ternak Terjual</Card>
-          <Card className="col-span-4">Pendapatan Event</Card>
-          <Card className="col-span-3">Penjualan Susu</Card>
-        </div>
-        <div className="grid grid-cols-12 gap-6">
-          <Card className="col-span-5">Data Analytics</Card>
-          <Card className="col-span-4">Hewan Mati</Card>
-          <Card className="col-span-3">Total kambing Menyusui</Card>
+          <CardDiagram col="5" title="data analytics">
+            diagram
+          </CardDiagram>
+          <CardDiagram col="4" title="hewan mati">
+            diagram
+          </CardDiagram>
+          <CardDiagram col="3" title="total kambing menyusui">
+            diagram
+          </CardDiagram>
         </div>
       </div>
     </main>

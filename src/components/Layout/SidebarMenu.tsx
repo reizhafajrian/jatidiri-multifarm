@@ -27,8 +27,8 @@ const cluster = {
   icon: <ClusterIcon />,
   caretIcon: <CaretIcon />,
   submenu: [
-    { name: 'Cluster 1', link: '/cluster-1', icon: <ClusterIcon /> },
-    { name: 'Cluster 2', link: '/cluster-2', icon: <ClusterIcon /> },
+    { name: 'Cluster 1', link: '/cluster/1', icon: <ClusterIcon /> },
+    { name: 'Cluster 2', link: '/cluster/2', icon: <ClusterIcon /> },
   ],
 }
 
