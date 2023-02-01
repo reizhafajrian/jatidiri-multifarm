@@ -13,7 +13,7 @@ import SheepIcon from '@/assets/icons/sheep.svg'
 import { Disclosure } from '@headlessui/react'
 
 const menu = [
-  { name: 'Dashboard', link: '/', icon: <DashboardIcon /> },
+  { name: 'Dashboard', link: '/home', icon: <DashboardIcon /> },
   { name: 'Domba', link: '/domba', icon: <SheepIcon /> },
   { name: 'Kambing', link: '/kambing', icon: <GoatIcon /> },
   { name: 'Sapi', link: '/sapi', icon: <CowIcon /> },

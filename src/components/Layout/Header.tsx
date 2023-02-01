@@ -9,10 +9,10 @@ import Search from './Search'
 
 export default function Header() {
   const pathname = usePathname()
-  const isDashboard = pathname === '/'
+  const isDashboard = pathname === '/home'
 
   return (
-    <div className="flex items-center justify-between py-6">
+    <header className="flex items-center justify-between py-6">
       {isDashboard && (
         <div>
           <h1 className="mb-2 text-2xl font-semibold">Hello John,</h1>
@@ -27,13 +27,13 @@ export default function Header() {
       >
         {!isDashboard && <Search />}
         <div className="flex items-center gap-4">
-          <NotifIcon />
-          <InfoIcon />
+          <NotifIcon className="h-6 w-6 stroke-primary-6" />
+          <InfoIcon className="h-6 w-6 stroke-primary-6" />
           <div className="flex items-center gap-3">
             <div className="h-8 w-8 rounded-full bg-gray-200" />
             <div>
               <p className="text-sm">John Doe</p>
-              <p className="rounded-md bg-[#E5F6EA] p-1 text-[10px] font-light">
+              <p className="rounded-md bg-[#E5F6EA] px-1 py-[2px] text-[10px] font-light">
                 Super Admin
               </p>
             </div>
@@ -44,6 +44,6 @@ export default function Header() {
           </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }
