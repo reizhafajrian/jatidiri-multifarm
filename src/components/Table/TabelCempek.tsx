@@ -1,3 +1,5 @@
+import DeleteIcon from '@/assets/icons/delete.svg'
+import EditIcon from '@/assets/icons/edit.svg'
 import { longDateFormatter } from '@/utils/formatDate'
 import Table from './Table'
 
@@ -47,6 +49,20 @@ export default function TabelCempek({ data }: any) {
       header: 'Harga Beli',
       accessorKey: 'harga_beli',
     },
+    {
+      header: 'Aksi',
+      cell: () => (
+        <div className="flex gap-2">
+          <button className="grid h-6 w-6 place-items-center rounded-lg bg-[#40916C]">
+            <EditIcon />
+          </button>
+          <button className="grid h-6 w-6 place-items-center rounded-lg bg-[#E15E52]">
+            <DeleteIcon />
+          </button>
+        </div>
+      ),
+    },
+
     {
       header: 'Keterangan',
       accessorKey: 'keterangan',
