@@ -1,6 +1,6 @@
 import DownloadIcon from '@/assets/icons/download-outline.svg'
 import { Tab } from '@headlessui/react'
-import clsx from 'clsx'
+import NoSSR from './NoSSR'
 
 interface IProps {
   categories: any
@@ -15,7 +15,7 @@ export default function PageTabs(props: IProps) {
   const { categories, addButton, downloadOnClick } = props
 
   return (
-    <div>
+    <NoSSR>
       <Tab.Group>
         <Tab.List className="flex flex-col items-center justify-between gap-3 md:flex-row">
           <div>
@@ -23,12 +23,11 @@ export default function PageTabs(props: IProps) {
               <Tab
                 key={category}
                 className={({ selected }) =>
-                  clsx(
-                    'border-b py-3 px-4 font-light focus:outline-none',
+                  `border-b py-3 px-4 focus:outline-none ${
                     selected
                       ? 'border-primary-3 font-medium'
-                      : 'border-transparent hover:border-primary-3'
-                  )
+                      : 'font-light hover:border-primary-3'
+                  }`
                 }
               >
                 {category}
@@ -47,14 +46,14 @@ export default function PageTabs(props: IProps) {
           </div>
         </Tab.List>
 
-        <Tab.Panels className="mt-5">
+        <Tab.Panels>
           {Object.values(categories).map((content: any, idx) => (
-            <Tab.Panel key={idx} className="focus:outline-none">
+            <Tab.Panel as="div" key={idx} className="mt-5 focus:outline-none">
               {content}
             </Tab.Panel>
           ))}
         </Tab.Panels>
       </Tab.Group>
-    </div>
+    </NoSSR>
   )
 }
