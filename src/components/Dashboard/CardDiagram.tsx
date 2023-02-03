@@ -2,17 +2,17 @@ import DashboardInfo from '@/assets/icons/dashboard-info.svg'
 import Card from '../Card'
 
 interface IProps {
-  col: string
+  className: string
   title: string
   description?: string
   children: React.ReactNode
 }
 
 export default function CardDiagram(props: IProps) {
-  const { col, children, title, description } = props
+  const { className, children, title, description } = props
 
   return (
-    <Card className={`col-span-${col}`}>
+    <Card className={className}>
       <div className="flex items-center justify-between">
         <h3 className="mb-2 capitalize">{title}</h3>
         <DashboardInfo />

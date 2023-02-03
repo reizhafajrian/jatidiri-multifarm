@@ -18,24 +18,24 @@ export default function Home() {
         <SectionOne />
         <SectionTwo />
         <div className="grid grid-cols-12 gap-6">
-          <CardDiagram col="5" title="ternak terjual">
+          <CardDiagram className="col-span-5" title="ternak terjual">
             diagram
           </CardDiagram>
-          <CardDiagram col="4" title="pendapatan event">
+          <CardDiagram className="col-span-4" title="pendapatan event">
             diagram
           </CardDiagram>
-          <CardDiagram col="3" title="penjualan susu">
+          <CardDiagram className="col-span-3" title="penjualan susu">
             diagram
           </CardDiagram>
         </div>
         <div className="grid grid-cols-12 gap-6">
-          <CardDiagram col="5" title="data analytics">
+          <CardDiagram className="col-span-5" title="data analytics">
             diagram
           </CardDiagram>
-          <CardDiagram col="4" title="hewan mati">
+          <CardDiagram className="col-span-4" title="hewan mati">
             diagram
           </CardDiagram>
-          <CardDiagram col="3" title="total kambing menyusui">
+          <CardDiagram className="col-span-3" title="total kambing menyusui">
             diagram
           </CardDiagram>
         </div>
