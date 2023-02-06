@@ -1,3 +1,4 @@
+'use client'
 import CaretIcon from '@/assets/icons/caret.svg'
 import { dateOptions, indukOptions, pejantanOptions } from '@/data/data'
 import { shortDateFormatter } from '@/utils/formatDate'

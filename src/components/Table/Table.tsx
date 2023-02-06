@@ -1,3 +1,4 @@
+'use client'
 import SortIcon from '@/assets/icons/sort.svg'
 import {
   ColumnDef,

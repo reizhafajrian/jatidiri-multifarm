@@ -21,6 +21,8 @@ module.exports = {
         },
         neutral: {
           1: '#F6F6F6',
+          2: '#E3E8EF',
+          3: '#C4C4C4',
         },
       },
       boxShadow: {

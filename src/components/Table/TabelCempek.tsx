@@ -1,3 +1,4 @@
+'use client'
 import { columns } from '@/data/data'
 import FilterTable from './FilterTable'
 import Table from './Table'

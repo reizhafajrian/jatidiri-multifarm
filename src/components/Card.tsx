@@ -1,20 +1,19 @@
 import clsx from 'clsx'
 
-export default function Card({
-  children,
-  className,
-}: {
+interface IProps {
   children: React.ReactNode
   className?: string
-}) {
+}
+
+export default function Card(props: IProps) {
   return (
     <div
       className={clsx(
-        'rounded-xl border border-[#E3E8EF] bg-white p-6',
-        className
+        'rounded-xl border border-neutral-2 bg-white p-6',
+        props.className
       )}
     >
-      {children}
+      {props.children}
     </div>
   )
 }

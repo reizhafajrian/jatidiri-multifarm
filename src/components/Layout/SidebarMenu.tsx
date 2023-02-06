@@ -1,6 +1,4 @@
-import clsx from 'clsx'
-import SidebarLink from './SidebarLink'
-
+'use client'
 import CaretIcon from '@/assets/icons/caret.svg'
 import CategoryIcon from '@/assets/icons/category.svg'
 import ClusterIcon from '@/assets/icons/cluster.svg'
@@ -11,26 +9,8 @@ import HppIcon from '@/assets/icons/hpp.svg'
 import MilkIcon from '@/assets/icons/milk.svg'
 import SheepIcon from '@/assets/icons/sheep.svg'
 import { Disclosure } from '@headlessui/react'
-
-const menu = [
-  { name: 'Dashboard', link: '/home', icon: <DashboardIcon /> },
-  { name: 'Domba', link: '/domba', icon: <SheepIcon /> },
-  { name: 'Kambing', link: '/kambing', icon: <GoatIcon /> },
-  { name: 'Sapi', link: '/sapi', icon: <CowIcon /> },
-  { name: 'Kategori', link: '/kategori', icon: <CategoryIcon /> },
-  { name: 'Susu', link: '/susu', icon: <MilkIcon /> },
-  { name: 'HPP', link: '/hpp', icon: <HppIcon /> },
-]
-
-const cluster = {
-  name: 'Cluster',
-  icon: <ClusterIcon />,
-  caretIcon: <CaretIcon />,
-  submenu: [
-    { name: 'Cluster 1', link: '/cluster/1', icon: <ClusterIcon /> },
-    { name: 'Cluster 2', link: '/cluster/2', icon: <ClusterIcon /> },
-  ],
-}
+import clsx from 'clsx'
+import SidebarLink from './SidebarLink'
 
 export default function SidebarMenu() {
   return (
@@ -58,4 +38,24 @@ export default function SidebarMenu() {
       </Disclosure>
     </div>
   )
+}
+
+const menu = [
+  { name: 'Dashboard', link: '/home', icon: <DashboardIcon /> },
+  { name: 'Domba', link: '/domba', icon: <SheepIcon /> },
+  { name: 'Kambing', link: '/kambing', icon: <GoatIcon /> },
+  { name: 'Sapi', link: '/sapi', icon: <CowIcon /> },
+  { name: 'Kategori', link: '/category', icon: <CategoryIcon /> },
+  { name: 'Susu', link: '/susu', icon: <MilkIcon /> },
+  { name: 'HPP', link: '/hpp', icon: <HppIcon /> },
+]
+
+const cluster = {
+  name: 'Cluster',
+  icon: <ClusterIcon />,
+  caretIcon: <CaretIcon />,
+  submenu: [
+    { name: 'Cluster 1', link: '/cluster/1', icon: <ClusterIcon /> },
+    { name: 'Cluster 2', link: '/cluster/2', icon: <ClusterIcon /> },
+  ],
 }

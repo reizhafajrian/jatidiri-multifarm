@@ -4,12 +4,12 @@ import FilterReport from '@/components/Dashboard/FilterReport'
 import SectionOne from '@/components/Dashboard/SectionOne'
 import SectionTwo from '@/components/Dashboard/SectionTwo'
 
-export default function Home() {
+export default function HomePage() {
   return (
     <main>
       <div className="mb-4 flex items-center justify-between">
         <FilterReport />
-        <button className="flex items-center gap-1 rounded-xl border border-[#C4C4C4] bg-white py-1 px-2 text-xs font-medium uppercase hover:bg-primary-4 hover:fill-white hover:text-white">
+        <button className="flex items-center gap-1 rounded-xl border border-neutral-3 bg-white py-1 px-2 text-xs font-medium uppercase hover:bg-primary-4 hover:fill-white hover:text-white">
           <DownloadIcon className="h-4 w-4" />
           download
         </button>
