@@ -12,7 +12,7 @@ export default function Header() {
   const isDashboard = pathname === '/home'
 
   return (
-    <header className="flex items-center justify-between py-6">
+    <header className="flex items-center justify-between pt-4 pb-6">
       {isDashboard && (
         <div>
           <h1 className="mb-2 text-2xl font-semibold">Hello John,</h1>

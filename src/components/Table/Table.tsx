@@ -27,7 +27,7 @@ export default function Table({ columns, data }: { columns: any; data: any }) {
   })
 
   return (
-    <>
+    <div className="w-fit max-w-full">
       <div className="relative overflow-auto whitespace-nowrap rounded-lg text-[#3B3E45] shadow">
         <table>
           <thead>
@@ -84,7 +84,7 @@ export default function Table({ columns, data }: { columns: any; data: any }) {
         </table>
       </div>
       <PaginationHandler table={table} />
-    </>
+    </div>
   )
 }
 
