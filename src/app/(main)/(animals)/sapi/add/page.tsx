@@ -17,7 +17,6 @@ export default function AddSapiPage() {
         categories={{
           Pejantan: 'add pejantan form',
           Betina: 'add betina form',
-          Cempek: 'add cempek form',
         }}
       />
     </div>
