@@ -1,4 +1,7 @@
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
+import FormBetina from '@/components/Form/FormBetina'
+import FormCempek from '@/components/Form/FormCempek'
+import FormPejantan from '@/components/Form/FormPejantan'
 import PageTabs from '@/components/PageTabs'
 import Link from 'next/link'
 
@@ -15,9 +18,9 @@ export default function AddKambingPage() {
       </Link>
       <PageTabs
         categories={{
-          Pejantan: 'add pejantan form',
-          Betina: 'add betina form',
-          Cempek: 'add cempek form',
+          Pejantan: <FormPejantan animal="goat" />,
+          Betina: <FormBetina animal="goat" />,
+          Cempek: <FormCempek animal="goat" />,
         }}
       />
     </div>

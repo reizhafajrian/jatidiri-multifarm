@@ -37,7 +37,7 @@ export default function InputSelect(props: IProps) {
             {label}
           </label>
           <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-            <CaretIcon className="h-7 w-7" />
+            <CaretIcon className="h-7 w-7 fill-neutral-4" />
           </Combobox.Button>
         </div>
         <Transition
@@ -50,7 +50,8 @@ export default function InputSelect(props: IProps) {
           <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {filteredOptions.length === 0 && query !== '' ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
-                Nothing found.
+                {/* Nothing found. */}
+                Pilihan tidak ditemukan.
               </div>
             ) : (
               filteredOptions.map((option) => (
@@ -59,14 +60,14 @@ export default function InputSelect(props: IProps) {
                   value={option}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-teal-600 text-white' : 'text-gray-900'
+                      active ? 'bg-primary-7 text-white' : 'text-black'
                     }`
                   }
                 >
                   {({ selected }) => (
                     <span
                       className={`block truncate ${
-                        selected ? 'font-medium' : 'font-normal'
+                        selected ? 'font-medium' : 'font-light'
                       }`}
                     >
                       {option}

@@ -1,3 +1,4 @@
+import CalendarIcon from '@/assets/icons/calendar.svg'
 import { forwardRef, LegacyRef } from 'react'
 import DatePicker from 'react-datepicker'
 
@@ -29,6 +30,9 @@ export default function InputDate(props: IProps) {
         >
           {label}
         </label>
+        <div className="absolute inset-y-0 right-0 grid place-items-center pr-2.5">
+          <CalendarIcon className="fill-none stroke-neutral-4" />
+        </div>
       </div>
     )
   })

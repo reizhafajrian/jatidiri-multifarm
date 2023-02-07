@@ -41,14 +41,14 @@ const initial = {
   // certificate: '',
   purchase_price: '',
   description: '',
-  gender: 'male',
+  gender: 'female',
 }
 
 interface IProps {
   animal: 'goat' | 'sheep' | 'cow'
 }
 
-export default function FormPejantan({ animal }: IProps) {
+export default function FormBetina({ animal }: IProps) {
   const [formValues, setFormValues] = useState(initial)
   const [certificate, setCertificate] = useState()
 
@@ -62,7 +62,7 @@ export default function FormPejantan({ animal }: IProps) {
   return (
     <div>
       <h1 className="mb-6 text-base font-semibold">
-        Tambah Data {content.title} Pejantan
+        Tambah Data {content.title} Betina
       </h1>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">

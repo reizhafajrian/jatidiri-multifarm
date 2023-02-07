@@ -1,4 +1,6 @@
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
+import FormBetina from '@/components/Form/FormBetina'
+import FormPejantan from '@/components/Form/FormPejantan'
 import PageTabs from '@/components/PageTabs'
 import Link from 'next/link'
 
@@ -15,8 +17,8 @@ export default function AddSapiPage() {
       </Link>
       <PageTabs
         categories={{
-          Pejantan: 'add pejantan form',
-          Betina: 'add betina form',
+          Pejantan: <FormPejantan animal="cow" />,
+          Betina: <FormBetina animal="cow" />,
         }}
       />
     </div>

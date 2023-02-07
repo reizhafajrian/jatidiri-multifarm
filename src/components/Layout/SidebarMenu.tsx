@@ -8,8 +8,6 @@ import GoatIcon from '@/assets/icons/goat.svg'
 import HppIcon from '@/assets/icons/hpp.svg'
 import MilkIcon from '@/assets/icons/milk.svg'
 import SheepIcon from '@/assets/icons/sheep.svg'
-import { Disclosure } from '@headlessui/react'
-import clsx from 'clsx'
 import SidebarLink from './SidebarLink'
 
 export default function SidebarMenu() {
@@ -18,7 +16,7 @@ export default function SidebarMenu() {
       {menu.map((item, idx) => (
         <SidebarLink key={idx} item={item} />
       ))}
-      <Disclosure as="div" className="row-start-5">
+      {/* <Disclosure as="div" className="row-start-5">
         {({ open }) => (
           <>
             <Disclosure.Button className="flex w-full items-center gap-3 rounded-lg fill-white py-3 pl-12 text-white transition duration-200 ease-in-out hover:bg-white/25">
@@ -35,7 +33,7 @@ export default function SidebarMenu() {
             </Disclosure.Panel>
           </>
         )}
-      </Disclosure>
+      </Disclosure> */}
     </div>
   )
 }
@@ -45,6 +43,7 @@ const menu = [
   { name: 'Domba', link: '/domba', icon: <SheepIcon /> },
   { name: 'Kambing', link: '/kambing', icon: <GoatIcon /> },
   { name: 'Sapi', link: '/sapi', icon: <CowIcon /> },
+  { name: 'Cluster', link: '/cluster', icon: <ClusterIcon /> },
   { name: 'Kategori', link: '/category', icon: <CategoryIcon /> },
   { name: 'Susu', link: '/susu', icon: <MilkIcon /> },
   { name: 'HPP', link: '/hpp', icon: <HppIcon /> },
