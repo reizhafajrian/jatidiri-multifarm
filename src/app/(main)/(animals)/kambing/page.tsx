@@ -23,7 +23,7 @@ export default async function KambingPage() {
         Betina: <TabelBetina data={data.pejantan} />,
         Cempek: <TabelCempek data={data.pejantan} />,
       }}
-      addButton={{ title: 'tambah data domba' }}
+      addButton={{ title: 'tambah data kambing', link: '/kambing/add' }}
     />
   )
 }

@@ -36,7 +36,8 @@ export default function SectionOne() {
             </div>
           </div>
           <span className="mt-auto flex items-center gap-1 rounded-xl bg-[#E1F7E8] py-[2px] px-[10px] text-xs font-medium text-[#0F752E]">
-            <ArrowUpIcon /> {item.percentage} %
+            <ArrowUpIcon className="fill-[#16B364] stroke-[#16B364]" />{' '}
+            {item.percentage} %
           </span>
         </Card>
       ))}

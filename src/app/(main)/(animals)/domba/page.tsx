@@ -23,7 +23,7 @@ export default async function DombaPage() {
         Betina: <TabelBetina data={data.pejantan} />,
         Cempek: <TabelCempek data={data.pejantan} />,
       }}
-      addButton={{ title: 'tambah data domba' }}
+      addButton={{ title: 'tambah data domba', link: '/domba/add' }}
     />
   )
 }
