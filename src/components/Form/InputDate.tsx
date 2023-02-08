@@ -10,8 +10,11 @@ interface IProps {
 export default function InputDate(props: IProps) {
   const { selected, label, onChange } = props
 
-  const CustomInput = forwardRef(
-    ({ value, onClick }: any, ref: LegacyRef<HTMLDivElement> | undefined) => (
+  const CustomInput = forwardRef(function func(
+    { value, onClick }: any,
+    ref: LegacyRef<HTMLDivElement> | undefined
+  ) {
+    return (
       <div className="relative" ref={ref} onClick={onClick}>
         <input
           id={label}
@@ -28,7 +31,7 @@ export default function InputDate(props: IProps) {
         </label>
       </div>
     )
-  )
+  })
 
   return (
     <div className="z-50">

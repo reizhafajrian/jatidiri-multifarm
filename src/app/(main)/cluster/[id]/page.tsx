@@ -8,7 +8,7 @@ export default function ClusterPage() {
         Domba: 'domba cluster table',
         Sapi: 'sapi cluster table',
       }}
-      addButton={{ title: 'tambah kandang' }}
+      addButton={{ title: 'tambah kandang', link: '/cluster/add' }}
     />
   )
 }

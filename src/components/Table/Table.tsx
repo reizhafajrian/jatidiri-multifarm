@@ -14,7 +14,7 @@ import { useMemo, useState } from 'react'
 
 export default function Table({ columns, data }: { columns: any; data: any }) {
   const [tData] = useState(data)
-  const tColumns = useMemo<ColumnDef<any>[]>(() => columns, [])
+  const tColumns = useMemo<ColumnDef<any>[]>(() => columns, [columns])
   const [sorting, setSorting] = useState<SortingState>([])
 
   const table = useReactTable({
