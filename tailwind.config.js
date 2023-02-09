@@ -24,6 +24,7 @@ module.exports = {
           2: '#E3E8EF',
           3: '#C4C4C4',
           4: '#7B7B7B',
+          5: '#25282B',
         },
       },
       boxShadow: {

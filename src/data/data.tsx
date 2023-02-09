@@ -1,68 +1,45 @@
-import DeleteIcon from '@/assets/icons/delete.svg'
-import EditIcon from '@/assets/icons/edit.svg'
-import { longDateFormatter } from '@/utils/formatDate'
-import formatRupiah from '@/utils/formatRupiah'
-
-export const columns = [
+export const ShedInfoColumns = [
   {
     header: 'No',
     cell: ({ row }: any) => row.index + 1,
   },
   {
-    header: 'Tgl Tiba',
-    accessorKey: 'tgl_tiba',
-    cell: ({ value }: any) => longDateFormatter(value),
+    header: 'Tgl Update Data',
+    accessorKey: 'shed_code',
+    cell: () => '01-10-2022',
   },
   {
-    header: 'No Eartag',
-    accessorKey: 'no_eartag',
-    sticky: 'left',
+    header: 'Pakan',
+    accessorKey: 'feed',
+    cell: () => 'Rumput',
   },
   {
-    header: 'Jenis',
-    accessorKey: 'jenis',
+    header: 'Vitamin',
+    accessorKey: 'vitamin',
   },
   {
-    header: 'Asal',
-    accessorKey: 'asal',
+    header: 'Tgl Vitamin',
+    accessorKey: 'vitamin_date',
   },
   {
-    header: 'Berat',
-    accessorKey: 'berat',
+    header: 'Vaksin',
+    accessorKey: 'vaksin',
   },
   {
-    header: 'Usia',
-    accessorKey: 'usia',
+    header: 'Tgl Vaksin',
+    accessorKey: 'vaksin_date',
   },
   {
-    header: 'Asal Induk',
-    accessorKey: 'asal_induk',
+    header: 'Obat Cacing',
+    accessorKey: 'worm_medicine',
   },
   {
-    header: 'Asal Pejantan',
-    accessorKey: 'asal_pejantan',
+    header: 'Tgl Obat Cacing',
+    accessorKey: 'worm_medicine',
   },
   {
-    header: 'Harga Beli',
-    accessorKey: 'harga_beli',
-    cell: (data: any) => formatRupiah(data.getValue().toString()),
-  },
-  {
-    header: 'Aksi',
-    cell: () => (
-      <div className="flex gap-2">
-        <button className="grid h-6 w-6 place-items-center rounded-lg bg-[#40916C]">
-          <EditIcon />
-        </button>
-        <button className="grid h-6 w-6 place-items-center rounded-lg bg-[#E15E52]">
-          <DeleteIcon />
-        </button>
-      </div>
-    ),
-  },
-  {
-    header: 'Keterangan',
-    accessorKey: 'keterangan',
+    header: 'Range Usia',
+    accessorKey: 'worm_medicine',
   },
 ]
 

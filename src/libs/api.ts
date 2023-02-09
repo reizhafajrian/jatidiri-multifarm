@@ -1,6 +1,14 @@
-export const fetcher = async ({ url, method, body, json = true }: any) => {
+'use client'
+interface IProps {
+  url: string
+  method?: string
+  body?: object
+  json?: boolean
+}
+
+export const fetcher = async ({ url, method, body, json = true }: IProps) => {
   const res = await fetch(url, {
-    method,
+    method: method ?? 'get',
     ...(body && { body: JSON.stringify(body) }),
     headers: {
       Accept: 'application/json',
@@ -16,8 +24,4 @@ export const fetcher = async ({ url, method, body, json = true }: any) => {
     const data = await res.json()
     return data
   }
-}
-
-export const signin = (user: any) => {
-  return fetcher({ url: '/api/signin', method: 'post', body: user })
 }

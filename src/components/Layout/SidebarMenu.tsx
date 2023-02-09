@@ -16,36 +16,18 @@ export default function SidebarMenu() {
       {menu.map((item, idx) => (
         <SidebarLink key={idx} item={item} />
       ))}
-      {/* <Disclosure as="div" className="row-start-5">
-        {({ open }) => (
-          <>
-            <Disclosure.Button className="flex w-full items-center gap-3 rounded-lg fill-white py-3 pl-12 text-white transition duration-200 ease-in-out hover:bg-white/25">
-              <span className="h-5 w-5">{cluster.icon}</span>
-              {cluster.name}
-              <span className={clsx('ml-6 h-6 w-6', open && 'rotate-180')}>
-                {cluster.caretIcon}
-              </span>
-            </Disclosure.Button>
-            <Disclosure.Panel className="space-y-3 py-4 ">
-              {cluster.submenu?.map((item, idx) => (
-                <SidebarLink key={idx} item={item} />
-              ))}
-            </Disclosure.Panel>
-          </>
-        )}
-      </Disclosure> */}
     </div>
   )
 }
 
 const menu = [
   { name: 'Dashboard', link: '/home', icon: <DashboardIcon /> },
-  { name: 'Domba', link: '/domba', icon: <SheepIcon /> },
-  { name: 'Kambing', link: '/kambing', icon: <GoatIcon /> },
-  { name: 'Sapi', link: '/sapi', icon: <CowIcon /> },
-  { name: 'Cluster', link: '/cluster', icon: <ClusterIcon /> },
+  { name: 'Domba', link: '/sheep', icon: <SheepIcon /> },
+  { name: 'Kambing', link: '/goat', icon: <GoatIcon /> },
+  { name: 'Sapi', link: '/cow', icon: <CowIcon /> },
+  { name: 'Cluster', link: '/shed', icon: <ClusterIcon /> },
   { name: 'Kategori', link: '/category', icon: <CategoryIcon /> },
-  { name: 'Susu', link: '/susu', icon: <MilkIcon /> },
+  { name: 'Susu', link: '/milk', icon: <MilkIcon /> },
   { name: 'HPP', link: '/hpp', icon: <HppIcon /> },
 ]
 

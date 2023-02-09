@@ -10,7 +10,7 @@ interface IProps {
 export default function NavbarLink(props: IProps) {
   const { name, link } = props.item
   const pathname = usePathname()
-  const isActive = pathname?.includes(link)
+  const isActive = pathname === link
 
   return (
     <Link
