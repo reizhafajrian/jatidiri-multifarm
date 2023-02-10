@@ -1,6 +1,10 @@
+'use client'
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
+import PencilIcon from '@/assets/icons/pencil.svg'
 import Navbar from '@/components/Layout/Navbar'
+import ModalAddAnimal from '@/components/Shed/ModalAddAnimal'
 import Link from 'next/link'
+import { useState } from 'react'
 
 interface IProps {
   children: React.ReactNode
@@ -11,6 +15,7 @@ interface IProps {
 }
 
 export default function ShedDetailLayout(props: IProps) {
+  const [isOpen, closeModal] = useState(false)
   const {
     params: { animal_type, id },
     children,
@@ -30,7 +35,7 @@ export default function ShedDetailLayout(props: IProps) {
       : 'Sapi'
 
   return (
-    <div>
+    <>
       <Link
         href={`/shed/${animal_type}`}
         replace
@@ -48,9 +53,22 @@ export default function ShedDetailLayout(props: IProps) {
         <span className="font-semibold"> {title}</span>.
       </p>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
-        <button>Tambah {title}</button>
+        <button
+          onClick={() => closeModal(true)}
+          className="flex items-center gap-2 rounded-lg bg-primary-4 py-2 px-4 hover:bg-primary-5"
+        >
+          <span className="text-sm font-semibold capitalize text-white">
+            tambah {title}
+          </span>
+          <PencilIcon />
+        </button>
       </Navbar>
+      <ModalAddAnimal
+        isOpen={isOpen}
+        closeModal={() => closeModal(false)}
+        animal_type={animal_type}
+      />
       {children}
-    </div>
+    </>
   )
 }

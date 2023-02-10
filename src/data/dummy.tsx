@@ -105,6 +105,29 @@ export const dummyData = {
     age_range: '5-6',
     description: 'desc',
   },
+  shedDetail: {
+    data_id: '123',
+    shed_code: '1111',
+
+    updatedAt: new Date().toString(),
+
+    feed_date: new Date().toString(),
+    feed_type: 'rumput',
+    feed_price: 5000,
+    feed_stock: 50,
+
+    vitamin_date: new Date().toString(),
+    vitamin_type: 'vit C',
+    vitamin_price: 7500,
+
+    vaccine_date: new Date().toString(),
+    vaccine_type: 'rabies',
+    vaccine_price: 10000,
+
+    anthelmintic_date: new Date().toString(),
+    anthelmintic_type: 'test',
+    anthelmintic_price: 10000,
+  },
 }
 
 export const goatsData = [dummyData.goat]
@@ -125,4 +148,9 @@ for (let i = 0; i < 20; i++) {
 export const shedData = [dummyData.shed]
 for (let i = 0; i < 20; i++) {
   shedData.push(dummyData.shed)
+}
+
+export const shedDetailData = [dummyData.shedDetail]
+for (let i = 0; i < 5; i++) {
+  shedDetailData.push(dummyData.shedDetail)
 }

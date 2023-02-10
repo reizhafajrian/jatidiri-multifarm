@@ -27,14 +27,12 @@ export default function FormCluster() {
       <div className="mb-6 flex items-center gap-4">
         {animalTypes.map((item, idx) => (
           <div key={idx} className="flex items-center gap-3">
-            <div className="grid h-4 w-4 place-items-center rounded-full border border-neutral-4">
-              <input
-                type="radio"
-                name="animal_type"
-                id={item.value}
-                className="h-3 w-3 cursor-pointer appearance-none rounded-full bg-white transition duration-200 checked:bg-primary-4 focus:outline-none"
-              />
-            </div>
+            <input
+              type="radio"
+              name="animal_type"
+              id={item.value}
+              className="h-4 w-4 accent-primary-4 transition duration-200  focus:outline-none"
+            />
             <label htmlFor={item.value}>{item.label}</label>
           </div>
         ))}

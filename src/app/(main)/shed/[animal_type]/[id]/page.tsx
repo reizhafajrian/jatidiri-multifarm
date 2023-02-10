@@ -1,5 +1,7 @@
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
 import Navbar from '@/components/Layout/Navbar'
+import ShedInfo from '@/components/Shed/ShedInfo'
+import { shedData, shedDetailData } from '@/data/dummy'
 import Link from 'next/link'
 
 export default function ShedDetailPage({ params: { animal_type, id } }: any) {
@@ -27,15 +29,17 @@ export default function ShedDetailPage({ params: { animal_type, id } }: any) {
         kembali
       </Link>
       <h1 className="my-6 text-2xl font-semibold text-neutral-5">
-        Detail Kandang <span className="text-primary-5">#{id}</span>
+        Detail Kandang{' '}
+        <span className="text-primary-5">#{shedData[0].shed_code}</span>
       </h1>
       <p className="mb-8 font-light">
         Informasi Detail terkait Kandang Nomor
-        <span className="font-semibold"> {id}</span> yang berisi hewan
+        <span className="font-semibold"> {shedData[0].shed_code}</span> yang
+        berisi hewan
         <span className="font-semibold"> {title}</span>.
       </p>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between" />
-      <div>info shed</div>
+      <ShedInfo data={shedData[0]} detail={shedDetailData} />
     </div>
   )
 }

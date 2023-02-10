@@ -1,5 +1,15 @@
-export default async function ShedDetailPage({
+import ShedAnimalTable from '@/components/Table/ShedAnimalTable'
+import { cowsData, goatsData, sheepsData } from '@/data/dummy'
+
+export default function ShedDetailPage({
   params: { animal_type, id, gender },
 }: any) {
-  return <div>{`#${id} ${gender} ${animal_type}`}</div>
+  const data =
+    animal_type === 'goat'
+      ? goatsData
+      : animal_type === 'sheep'
+      ? sheepsData
+      : cowsData
+
+  return <ShedAnimalTable data={data} />
 }
