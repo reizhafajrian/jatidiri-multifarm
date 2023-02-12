@@ -1,5 +1,5 @@
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
-import FormCluster from '@/components/Form/FormCluster'
+import AddShedForm from '@/components/Form/AddShedForm'
 import Link from 'next/link'
 
 export default function AddClusterPage() {
@@ -13,7 +13,7 @@ export default function AddClusterPage() {
         <ArrowUpIcon className="-rotate-90 fill-primary-7 stroke-primary-7" />
         kembali
       </Link>
-      <FormCluster />
+      <AddShedForm />
     </div>
   )
 }

@@ -1,8 +1,9 @@
 'use client'
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
 import PencilIcon from '@/assets/icons/pencil.svg'
+import AddShedAnimalForm from '@/components/Form/AddShedAnimalForm'
 import Navbar from '@/components/Layout/Navbar'
-import ModalAddAnimal from '@/components/Shed/ModalAddAnimal'
+import Modal from '@/components/Modal'
 import Link from 'next/link'
 import { useState } from 'react'
 
@@ -63,11 +64,9 @@ export default function ShedDetailLayout(props: IProps) {
           <PencilIcon />
         </button>
       </Navbar>
-      <ModalAddAnimal
-        isOpen={isOpen}
-        closeModal={() => closeModal(false)}
-        animal_type={animal_type}
-      />
+      <Modal isOpen={isOpen} closeModal={() => closeModal(false)}>
+        <AddShedAnimalForm closeModal={() => closeModal(false)} title={title} />
+      </Modal>
       {children}
     </>
   )

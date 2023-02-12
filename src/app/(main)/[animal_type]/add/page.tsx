@@ -1,7 +1,6 @@
 import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
-import FormBetina from '@/components/Form/FormBetina'
-import FormCempek from '@/components/Form/FormCempek'
-import FormPejantan from '@/components/Form/FormPejantan'
+import AddAnimalForm from '@/components/Form/AddAnimalForm'
+import AddCempekForm from '@/components/Form/AddCempekForm'
 import PageTabs from '@/components/PageTabs'
 import Link from 'next/link'
 
@@ -18,9 +17,9 @@ export default function AddDombaPage({ params: { animal_type } }: any) {
       </Link>
       <PageTabs
         categories={{
-          Pejantan: <FormPejantan animal={animal_type} />,
-          Betina: <FormBetina animal={animal_type} />,
-          Cempek: <FormCempek animal={animal_type} />,
+          Pejantan: <AddAnimalForm animal_type={animal_type} gender="male" />,
+          Betina: <AddAnimalForm animal_type={animal_type} gender="female" />,
+          Cempek: <AddCempekForm animal_type={animal_type} />,
         }}
       />
     </div>

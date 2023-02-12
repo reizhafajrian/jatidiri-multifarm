@@ -1,6 +1,6 @@
 'use client'
 import CaretIcon from '@/assets/icons/caret.svg'
-import { dateOptions, indukOptions, pejantanOptions } from '@/data/data'
+import { dateOptions } from '@/data/data'
 import { shortDateFormatter } from '@/utils/formatDate'
 import { Popover, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
@@ -67,8 +67,8 @@ export default function FilterTable() {
           </Transition>
         </Popover>
       </div>
-      <SelectMenu title="Asal Induk" options={indukOptions} />
-      <SelectMenu title="Asal Pejantan" options={pejantanOptions} />
+      <SelectMenu title="Asal Induk" options={dateOptions} />
+      <SelectMenu title="Asal Pejantan" options={dateOptions} />
     </div>
   )
 }

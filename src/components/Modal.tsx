@@ -4,7 +4,7 @@ import { Fragment, ReactNode } from 'react'
 interface IProps {
   children: ReactNode
   isOpen: boolean
-  closeModal: () => void
+  closeModal: any
 }
 
 export default function Modal(props: IProps) {

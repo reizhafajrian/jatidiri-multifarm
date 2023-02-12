@@ -47,11 +47,11 @@ const columns = [
   },
   {
     header: 'Asal Induk',
-    accessorKey: 'female_parent_origin',
+    accessorKey: 'origin_female',
   },
   {
     header: 'Asal Pejantan',
-    accessorKey: 'male_parent_origin',
+    accessorKey: 'origin_male',
   },
   {
     header: 'Harga Beli',

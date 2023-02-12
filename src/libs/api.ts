@@ -1,27 +1,65 @@
-'use client'
-interface IProps {
+import Cookies from 'js-cookie'
+
+export const fetcher = async (props: {
   url: string
   method?: string
   body?: object
-  json?: boolean
-}
+  token?: string
+}) => {
+  const { url, method = 'get', body, token } = props
 
-export const fetcher = async ({ url, method, body, json = true }: IProps) => {
+  const headers: any = {
+    Accept: 'application/json',
+    'Content-Type': 'application/json',
+  }
+
+  if (token) headers.Authorization = `Bearer ${token}`
+
   const res = await fetch(url, {
-    method: method ?? 'get',
+    method,
+    credentials: 'include',
     ...(body && { body: JSON.stringify(body) }),
-    headers: {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
+    headers,
   })
 
-  if (!res.ok) {
-    throw new Error('API error')
-  }
+  const data = await res.json()
+  return data
+}
 
-  if (json) {
-    const data = await res.json()
-    return data
-  }
+interface IUser {
+  email: string
+  password: string
+  name: string
+}
+
+export const register = async (user: IUser) => {
+  const res = await fetcher({
+    url: '/api/auth/register',
+    method: 'post',
+    body: user,
+  })
+
+  Cookies.set('token', res.data.token, {
+    path: '/',
+    expires: 60 * 60 * 24 * 7,
+    secure: true,
+  })
+
+  return res
+}
+
+export const signin = async (user: IUser) => {
+  const res = await fetcher({
+    url: '/api/auth/login',
+    method: 'post',
+    body: user,
+  })
+
+  Cookies.set('token', res.data.token, {
+    path: '/',
+    expires: 60 * 60 * 24 * 7,
+    secure: true,
+  })
+
+  return res
 }

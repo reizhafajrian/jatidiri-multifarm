@@ -1,68 +1,27 @@
 'use client'
 import FileIcon from '@/assets/icons/file.svg'
+import { animalFormContent } from '@/data/data'
 import { useState } from 'react'
+import Button from '../Button'
 import Dropzone from './Dropzone'
 import InputDate from './InputDate'
 import InputSelect from './InputSelect'
 import InputText from './InputText'
 
-const sheepContent = {
-  title: 'Domba',
-  typeOptions: ['doorper', 'garut'],
-  femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  maleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  originOptions: ['garut', 'impor', 'australia'],
-}
-
-const goatContent = {
-  title: 'Kambing',
-  typeOptions: ['doorper', 'garut'],
-  femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  maleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  originOptions: ['garut', 'impor', 'australia'],
-}
-
-const cowContent = {
-  title: 'Sapi',
-  typeOptions: ['doorper', 'garut'],
-  femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  maleParentOriginOptions: ['garut', 'impor', 'swiss'],
-  originOptions: ['garut', 'impor', 'australia'],
-}
-
-const initial = {
-  type: '',
-  arrival_date: '',
-  birth_date: '',
-  female_parent_origin: '',
-  male_parent_origin: '',
-  origin: '',
-  weight: '',
-  // certificate: '',
-  purchase_price: '',
-  description: '',
-  gender: 'female',
-}
-
 interface IProps {
-  animal: 'goat' | 'sheep' | 'cow'
+  animal_type: 'goat' | 'sheep' | 'cow'
+  gender: 'male' | 'female'
 }
 
-export default function FormBetina({ animal }: IProps) {
-  const [formValues, setFormValues] = useState(initial)
+export default function AddAnimalForm(props: IProps) {
+  const content = animalFormContent[props.animal_type]
+  const [formValues, setFormValues] = useState(animalFormContent.initial.adult)
   const [certificate, setCertificate] = useState()
-
-  const content =
-    animal === 'sheep'
-      ? sheepContent
-      : animal === 'goat'
-      ? goatContent
-      : cowContent
 
   return (
     <div>
       <h1 className="mb-6 text-base font-semibold">
-        Tambah Data {content.title} Betina
+        Tambah Data {content.title} Pejantan
       </h1>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
@@ -70,20 +29,20 @@ export default function FormBetina({ animal }: IProps) {
             label={`Jenis ${content.title}`}
             options={content.typeOptions}
             value={formValues.type}
-            onChange={(value) => setFormValues({ ...formValues, type: value })}
+            onChange={(value) => setFormValues((s) => ({ ...s, type: value }))}
           />
           <InputDate
             label="Tgl Tiba"
             selected={formValues.arrival_date}
             onChange={(date) =>
-              setFormValues({ ...formValues, arrival_date: date })
+              setFormValues((s) => ({ ...s, arrival_date: date }))
             }
           />
           <InputDate
             label="Tgl Lahir"
             selected={formValues.birth_date}
             onChange={(date: any) =>
-              setFormValues({ ...formValues, birth_date: date })
+              setFormValues((s) => ({ ...s, birth_date: date }))
             }
           />
           <InputSelect
@@ -91,7 +50,7 @@ export default function FormBetina({ animal }: IProps) {
             options={content.femaleParentOriginOptions}
             value={formValues.female_parent_origin}
             onChange={(value) =>
-              setFormValues({ ...formValues, female_parent_origin: value })
+              setFormValues((s) => ({ ...s, female_parent_origin: value }))
             }
           />
           <Dropzone
@@ -125,25 +84,19 @@ export default function FormBetina({ animal }: IProps) {
             options={content.originOptions}
             value={formValues.origin}
             onChange={(value) =>
-              setFormValues({ ...formValues, origin: value })
+              setFormValues((s) => ({ ...s, origin: value }))
             }
           />
           <InputText
             label={`Berat ${content.title}`}
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                weight: e.currentTarget.value,
-              })
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormValues((s) => ({ ...s, weight: e.target.value }))
             }
           />
           <InputText
             label="Harga Beli"
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                purchase_price: e.currentTarget.value,
-              })
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormValues((s) => ({ ...s, purchase_price: e.target.value }))
             }
           />
           <InputSelect
@@ -151,27 +104,20 @@ export default function FormBetina({ animal }: IProps) {
             options={content.maleParentOriginOptions}
             value={formValues.male_parent_origin}
             onChange={(value) =>
-              setFormValues({ ...formValues, male_parent_origin: value })
+              setFormValues((s) => ({ ...s, purchase_price: value }))
             }
           />
           <InputText
             label="Keterangan"
-            onChange={(e) =>
-              setFormValues({
-                ...formValues,
-                description: e.currentTarget.value,
-              })
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setFormValues((s) => ({ ...s, description: e.target.value }))
             }
           />
         </div>
       </div>
       <div className="flex justify-end gap-3">
-        <button className="w-36 rounded-[10px] border border-neutral-3 bg-white py-2 text-xs font-semibold uppercase">
-          cancel
-        </button>
-        <button className="w-36 rounded-[10px] border border-primary-4 bg-primary-4 py-2 text-xs font-semibold uppercase text-white">
-          save
-        </button>
+        <Button intent="secondary">cancel</Button>
+        <Button>save</Button>
       </div>
     </div>
   )

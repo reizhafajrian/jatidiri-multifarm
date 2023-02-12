@@ -1,10 +1,11 @@
 'use client'
 import PencilIcon from '@/assets/icons/pencil.svg'
 import { useState } from 'react'
+import AddShedDataForm from '../Form/AddShedDataForm'
+import Modal from '../Modal'
 import FilterShedInfoTable from '../Table/FilterShedInfoTable'
 import ShedInfoTable from '../Table/ShedInfoTable'
 import InfoCard from './InfoCard'
-import ModalAddData from './ModalAddData'
 
 interface IProps {
   data: any
@@ -41,7 +42,9 @@ export default function ShedInfo({ data, detail }: IProps) {
         </button>
       </div>
       <ShedInfoTable data={detail} />
-      <ModalAddData isOpen={isOpen} closeModal={() => closeModal(false)} />
+      <Modal isOpen={isOpen} closeModal={closeModal}>
+        <AddShedDataForm closeModal={closeModal} />
+      </Modal>
     </>
   )
 }
