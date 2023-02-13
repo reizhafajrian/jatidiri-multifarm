@@ -1,21 +1,22 @@
 'use client'
 import CaretIcon from '@/assets/icons/caret.svg'
-import { Menu } from '@headlessui/react'
+import InfoIcon from '@/assets/icons/info.svg'
+import NotifIcon from '@/assets/icons/notif.svg'
+import LangImage from '@/assets/images/lang.png'
+import { Popover } from '@headlessui/react'
 import clsx from 'clsx'
 import Cookies from 'js-cookie'
+import Image from 'next/image'
+import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import Search from './Search'
-// import InfoIcon from '@/assets/icons/info.svg'
-// import NotifIcon from '@/assets/icons/notif.svg'
-// import LangImage from '@/assets/images/lang.png'
-// import Image from 'next/image'
 
 export default function Header() {
   const pathname = usePathname()
   const router = useRouter()
   const isDashboard = pathname === '/home'
 
-  function logoutHandler() {
+  function signoutHandler() {
     Cookies.remove('token')
     router.replace('/signin')
   }
@@ -36,10 +37,10 @@ export default function Header() {
       >
         {!isDashboard && <Search />}
         <div className="flex items-center gap-4">
-          {/* <NotifIcon className="h-6 w-6 stroke-primary-6" /> */}
-          {/* <InfoIcon className="h-6 w-6 stroke-primary-6" /> */}
-          <Menu as="div" className="relative">
-            <Menu.Button>
+          <NotifIcon className="h-6 w-6 stroke-primary-6" />
+          <InfoIcon className="h-6 w-6 stroke-primary-6" />
+          <Popover as="div" className="relative">
+            <Popover.Button className="outline-none">
               <div className="flex items-center gap-3">
                 <div className="h-8 w-8 rounded-full bg-gray-200" />
                 <div>
@@ -50,25 +51,44 @@ export default function Header() {
                 </div>
                 <CaretIcon className="h-7 w-7" />
               </div>
-            </Menu.Button>
-            <Menu.Items className="absolute right-0 mt-2 w-full origin-top-right divide-y divide-gray-100 rounded-md bg-white py-2 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={logoutHandler}
-                    className={`${
-                      active && 'bg-primary-4 font-semibold text-white'
-                    } w-full p-2`}
-                  >
-                    Log Out
-                  </button>
-                )}
-              </Menu.Item>
-            </Menu.Items>
-          </Menu>
-          {/* <div className="relative h-8 w-16">
+            </Popover.Button>
+            <Popover.Panel className="0 absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-none ring-0">
+              <div className="p-5 pb-3">
+                <h3 className="mb-3 font-semibold">Status</h3>
+                <div className="flex items-center gap-2 text-neutral-4">
+                  <div className="h-2 w-2 rounded-full bg-primary-3" />
+                  Online
+                </div>
+              </div>
+              <hr />
+              <div className="p-5 py-3">
+                <h3 className="mb-3 font-semibold">Account</h3>
+                <div className="grid gap-2 text-neutral-4">
+                  <Link href="/home">Edit Profile</Link>
+                  <Link href="/home">Change Password</Link>
+                </div>
+              </div>
+              <hr />
+              <div className="p-5 py-3">
+                <h3 className="mb-3 font-semibold">Manage</h3>
+                <Link href="/home" className="text-neutral-4">
+                  Role Management
+                </Link>
+              </div>
+              <hr />
+              <div className="p-5 pt-3">
+                <button
+                  onClick={signoutHandler}
+                  className="text-neutral-4 hover:text-primary-7"
+                >
+                  Sign Out
+                </button>
+              </div>
+            </Popover.Panel>
+          </Popover>
+          <div className="relative h-8 w-16">
             <Image src={LangImage} alt="lang" fill className="object-contain" />
-          </div> */}
+          </div>
         </div>
       </div>
     </header>

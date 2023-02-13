@@ -1,16 +1,16 @@
 'use client'
 import DownloadIcon from '@/assets/icons/download-outline.svg'
 import Navbar from '@/components/Layout/Navbar'
+import { animalTitle } from '@/data/data'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 
 interface IProps {
   children: React.ReactNode
+  params: any
 }
 
 export default function AnimalLayout(props: IProps) {
-  const pathname = usePathname()
-  const animal_type = pathname?.split('/')[1]
+  const { animal_type } = props.params
 
   const menu = [
     { name: 'Pejantan', link: `/${animal_type}/male` },
@@ -18,15 +18,8 @@ export default function AnimalLayout(props: IProps) {
     { name: 'Cempek', link: `/${animal_type}/cempek` },
   ]
 
-  const title =
-    animal_type === 'goat'
-      ? 'Kambing'
-      : animal_type === 'sheep'
-      ? 'Domba'
-      : 'Sapi'
-
   return (
-    <>
+    <div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Link
@@ -35,7 +28,7 @@ export default function AnimalLayout(props: IProps) {
             replace
           >
             <span className="text-sm font-semibold capitalize text-white">
-              tambah data {title}
+              tambah data {animalTitle(animal_type)}
             </span>
           </Link>
           <button className="group grid h-8 w-8 place-items-center rounded-lg border bg-white hover:bg-primary-5">
@@ -44,6 +37,6 @@ export default function AnimalLayout(props: IProps) {
         </div>
       </Navbar>
       {props.children}
-    </>
+    </div>
   )
 }

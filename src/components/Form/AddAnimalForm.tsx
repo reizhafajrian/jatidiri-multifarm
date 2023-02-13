@@ -21,13 +21,14 @@ export default function AddAnimalForm(props: IProps) {
   return (
     <div>
       <h1 className="mb-6 text-base font-semibold">
-        Tambah Data {content.title} Pejantan
+        Tambah Data {content?.title}{' '}
+        {props.gender === 'male' ? 'Pejantan' : 'Betina'}
       </h1>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
           <InputSelect
-            label={`Jenis ${content.title}`}
-            options={content.typeOptions}
+            label={`Jenis ${content?.title}`}
+            options={content?.typeOptions}
             value={formValues.type}
             onChange={(value) => setFormValues((s) => ({ ...s, type: value }))}
           />
@@ -47,7 +48,7 @@ export default function AddAnimalForm(props: IProps) {
           />
           <InputSelect
             label="Asal Induk"
-            options={content.femaleParentOriginOptions}
+            options={content?.femaleParentOriginOptions}
             value={formValues.female_parent_origin}
             onChange={(value) =>
               setFormValues((s) => ({ ...s, female_parent_origin: value }))
@@ -80,15 +81,15 @@ export default function AddAnimalForm(props: IProps) {
         </div>
         <div className="space-y-6">
           <InputSelect
-            label={`Asal ${content.title}`}
-            options={content.originOptions}
+            label={`Asal ${content?.title}`}
+            options={content?.originOptions}
             value={formValues.origin}
             onChange={(value) =>
               setFormValues((s) => ({ ...s, origin: value }))
             }
           />
           <InputText
-            label={`Berat ${content.title}`}
+            label={`Berat ${content?.title}`}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormValues((s) => ({ ...s, weight: e.target.value }))
             }
@@ -101,7 +102,7 @@ export default function AddAnimalForm(props: IProps) {
           />
           <InputSelect
             label="Asal Pejantan"
-            options={content.maleParentOriginOptions}
+            options={content?.maleParentOriginOptions}
             value={formValues.male_parent_origin}
             onChange={(value) =>
               setFormValues((s) => ({ ...s, purchase_price: value }))

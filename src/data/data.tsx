@@ -1,3 +1,12 @@
+// ANIMAL TITLE
+export const animalTitle = (animal_type: string) =>
+  animal_type === 'goat'
+    ? 'Kambing'
+    : animal_type === 'sheep'
+    ? 'Domba'
+    : 'Sapi'
+
+// DATE FILTER
 export const dateOptions = [
   { name: 'Today' },
   { name: 'This Week' },
@@ -13,14 +22,14 @@ export const authFormContent = {
     linkText: 'Already have an account?',
     header: 'Create a new account',
     subheader: 'Just a few things to get started',
-    buttonText: 'Register',
+    buttonText: 'register',
   },
   signin: {
     linkUrl: '/register',
     linkText: "Don't have an account?",
-    header: 'Welcome back!',
+    header: 'Sign In Here',
     subheader: 'Enter your credentials to access your account',
-    buttonText: 'Sign In',
+    buttonText: 'sign in',
   },
 }
 

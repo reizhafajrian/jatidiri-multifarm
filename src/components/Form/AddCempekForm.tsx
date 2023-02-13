@@ -12,18 +12,19 @@ interface IProps {
 
 export default function AddCempekForm(props: IProps) {
   const content = animalFormContent[props.animal_type]
+
   const [formValues, setFormValues] = useState(animalFormContent.initial.cempek)
 
   return (
     <div>
       <h1 className="mb-6 text-base font-semibold">
-        Tambah Data {content.title} Cempek
+        Tambah Data {content?.title} Cempek
       </h1>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
           <InputSelect
             label="Jenis Cempek"
-            options={content.typeOptions}
+            options={content?.typeOptions}
             value={formValues.type}
             onChange={(value) => setFormValues((s) => ({ ...s, type: value }))}
           />
@@ -35,7 +36,7 @@ export default function AddCempekForm(props: IProps) {
           />
           <InputSelect
             label="Asal Induk"
-            options={content.femaleParentOriginOptions}
+            options={content?.femaleParentOriginOptions}
             value={formValues.female_parent_origin}
             onChange={(value) =>
               setFormValues((s) => ({ ...s, female_parent_origin: value }))
@@ -66,7 +67,7 @@ export default function AddCempekForm(props: IProps) {
           />
           <InputSelect
             label="Asal Pejantan"
-            options={content.maleParentOriginOptions}
+            options={content?.maleParentOriginOptions}
             value={formValues.male_parent_origin}
             onChange={(value) =>
               setFormValues((s) => ({ ...s, male_parent_origin: value }))

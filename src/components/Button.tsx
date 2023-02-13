@@ -22,7 +22,7 @@ const buttonClasses = cva(
     'uppercase',
     'font-semibold',
     'rounded-[10px]',
-    'hover:scale-110',
+    'hover:scale-105',
     'active:scale-100',
     'transition',
     'duration-200',

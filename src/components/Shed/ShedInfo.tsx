@@ -1,6 +1,7 @@
 'use client'
 import PencilIcon from '@/assets/icons/pencil.svg'
 import { useState } from 'react'
+import Button from '../Button'
 import AddShedDataForm from '../Form/AddShedDataForm'
 import Modal from '../Modal'
 import FilterShedInfoTable from '../Table/FilterShedInfoTable'
@@ -17,7 +18,10 @@ export default function ShedInfo({ data, detail }: IProps) {
 
   return (
     <>
-      <div className="flex gap-8 py-5">
+      <Modal isOpen={isOpen} closeModal={closeModal}>
+        <AddShedDataForm closeModal={closeModal} />
+      </Modal>
+      <div className="mb-8 flex gap-8 py-5">
         <InfoCard title="Berat" content={`${data.animal_weight} kg`} />
         <InfoCard title="Range Usia" content={`${data.age_range} bulan`} />
         <InfoCard title="Berat Pakan" content={`${data.feed_weight} kg`} />
@@ -31,20 +35,15 @@ export default function ShedInfo({ data, detail }: IProps) {
           <span className="font-semibold">FILTER:</span>
           <FilterShedInfoTable />
         </div>
-        <button
+        <Button
           onClick={() => closeModal(true)}
-          className="flex items-center gap-2 rounded-lg bg-primary-4 py-2 px-4 hover:bg-primary-5"
+          className="flex items-center justify-center gap-2"
         >
-          <span className="text-sm font-semibold capitalize text-white">
-            tambah data
-          </span>
+          <span className="text-sm font-semibold capitalize">tambah data</span>
           <PencilIcon />
-        </button>
+        </Button>
       </div>
       <ShedInfoTable data={detail} />
-      <Modal isOpen={isOpen} closeModal={closeModal}>
-        <AddShedDataForm closeModal={closeModal} />
-      </Modal>
     </>
   )
 }

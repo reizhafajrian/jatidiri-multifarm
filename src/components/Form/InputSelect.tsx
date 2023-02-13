@@ -48,13 +48,13 @@ export default function InputSelect(props: IProps) {
           afterLeave={() => setQuery('')}
         >
           <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-            {filteredOptions.length === 0 && query !== '' ? (
+            {filteredOptions?.length === 0 && query !== '' ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                 {/* Nothing found. */}
                 Pilihan tidak ditemukan.
               </div>
             ) : (
-              filteredOptions.map((option) => (
+              filteredOptions?.map((option) => (
                 <Combobox.Option
                   key={option}
                   value={option}
