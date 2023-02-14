@@ -1,7 +1,6 @@
 import CloseIcon from '@/assets/icons/close.svg'
 import FileSmallIcon from '@/assets/icons/file-small.svg'
 import { useDropzone } from 'react-dropzone'
-import InputText from './InputText'
 
 interface IProps {
   label: string
@@ -19,20 +18,18 @@ export default function Dropzone(props: IProps) {
     },
   })
 
-  //   let previewFile = acceptedFiles.map((file: FileWithPath) => (
-  //     <div key={file.path}>
-  //       <p>{file.path}</p>
-  //       <p>{file.size} bytes</p>
-  //       <button onClick={deleteHandler}>x</button>
-  //     </div>
-  //   ))
-
   return (
     <div className="space-y-3">
       <div>
-        <InputText label={label} disabled />
+        <input
+          className={
+            'w-full appearance-none rounded-lg border border-neutral-4 bg-white px-2.5 py-2.5 text-sm text-neutral-4 disabled:border-neutral-3'
+          }
+          value={label}
+          disabled
+        />
         {value && (
-          <div className="flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
+          <div className="mt-2 flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
             <div className="flex gap-3">
               <FileSmallIcon className="fill-primary-3" />
               <div>
