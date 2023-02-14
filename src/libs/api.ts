@@ -29,7 +29,9 @@ export const fetcher = async (props: {
 interface IUser {
   email: string
   password: string
-  name: string
+  name?: string
+  whatsapp_number?: string
+  role?: string
 }
 
 export const register = async (user: IUser) => {
@@ -37,12 +39,6 @@ export const register = async (user: IUser) => {
     url: '/api/auth/register',
     method: 'post',
     body: user,
-  })
-
-  Cookies.set('token', res.data.token, {
-    path: '/',
-    expires: 60 * 60 * 24 * 7,
-    secure: true,
   })
 
   return res

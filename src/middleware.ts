@@ -38,4 +38,8 @@ export async function middleware(request: NextRequest) {
   if (pathname === '/shed') {
     return NextResponse.redirect(new URL('/shed/goat', request.url))
   }
+
+  if (pathname === '/hpp') {
+    return NextResponse.redirect(new URL('/hpp/goat', request.url))
+  }
 }

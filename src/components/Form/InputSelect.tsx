@@ -47,7 +47,7 @@ export default function InputSelect(props: IProps) {
           leaveTo="opacity-0"
           afterLeave={() => setQuery('')}
         >
-          <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+          <Combobox.Options className="absolute z-50 mt-1 max-h-40 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             {filteredOptions?.length === 0 && query !== '' ? (
               <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                 {/* Nothing found. */}
@@ -60,7 +60,7 @@ export default function InputSelect(props: IProps) {
                   value={option}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
-                      active ? 'bg-primary-7 text-white' : 'text-black'
+                      active ? 'bg-primary-4 text-white' : 'text-black'
                     }`
                   }
                 >

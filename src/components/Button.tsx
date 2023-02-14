@@ -1,3 +1,5 @@
+import DeleteIcon from '@/assets/icons/delete.svg'
+import EditIcon from '@/assets/icons/edit.svg'
 import { cva, VariantProps } from 'class-variance-authority'
 
 export interface ButtonProps
@@ -8,20 +10,23 @@ export default function Button(props: ButtonProps) {
   const { children, intent, className, ...rest } = props
   return (
     <button className={buttonClasses({ intent, className })} {...rest}>
-      {children}
+      {intent === 'edit' ? (
+        <EditIcon />
+      ) : intent === 'delete' ? (
+        <DeleteIcon />
+      ) : (
+        children
+      )}
     </button>
   )
 }
 
 const buttonClasses = cva(
   [
-    'py-2',
-    'w-36',
     'border',
     'text-xs',
     'uppercase',
     'font-semibold',
-    'rounded-[10px]',
     'hover:scale-105',
     'active:scale-100',
     'transition',
@@ -32,18 +37,41 @@ const buttonClasses = cva(
     variants: {
       intent: {
         primary: [
+          'w-36',
+          'py-2',
           'bg-primary-4',
           'text-white',
           'border-primary-4',
+          'rounded-[10px]',
           'hover:bg-primary-5',
           'hover:border-primary-5',
         ],
         secondary: [
+          'w-36',
+          'py-2',
           'bg-white',
-          'text-neutral-3',
+          'text-black',
           'border-neutral-3',
+          'rounded-[10px]',
           'hover:bg-neutral-3',
-          'hover:text-white',
+        ],
+        edit: [
+          'w-6',
+          'h-6',
+          'bg-primary-4',
+          'border-primary-4',
+          'rounded-lg',
+          'grid',
+          'place-items-center',
+        ],
+        delete: [
+          'w-6',
+          'h-6',
+          'bg-[#E15E52]',
+          'border-[#E15E52]',
+          'rounded-lg',
+          'grid',
+          'place-items-center',
         ],
       },
     },

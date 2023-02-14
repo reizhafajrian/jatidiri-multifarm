@@ -6,6 +6,16 @@ export const animalTitle = (animal_type: string) =>
     ? 'Domba'
     : 'Sapi'
 
+// CATEGORY TITLE
+export const categoryTitle = (category: string) =>
+  category === 'feed'
+    ? 'Pakan'
+    : category === 'vitamin'
+    ? 'Vitamin'
+    : category === 'vaccine'
+    ? 'Vaksin'
+    : 'Obat Cacing'
+
 // DATE FILTER
 export const dateOptions = [
   { name: 'Today' },
@@ -13,25 +23,6 @@ export const dateOptions = [
   { name: 'This Month' },
   { name: 'This Year' },
 ]
-
-// AUTH FORM
-export const authFormContent = {
-  initial: { email: '', password: '', name: '' },
-  register: {
-    linkUrl: '/signin',
-    linkText: 'Already have an account?',
-    header: 'Create a new account',
-    subheader: 'Just a few things to get started',
-    buttonText: 'register',
-  },
-  signin: {
-    linkUrl: '/register',
-    linkText: "Don't have an account?",
-    header: 'Sign In Here',
-    subheader: 'Enter your credentials to access your account',
-    buttonText: 'sign in',
-  },
-}
 
 // ANIMAL FORM
 export const animalFormContent = {
@@ -170,4 +161,62 @@ export const shedDataFormContent = {
       ],
     },
   ],
+}
+
+const feedTypes = {
+  name: 'feed',
+  placeholder: 'pakan',
+  options: [
+    { name: 'all' },
+    { name: 'opt-1' },
+    { name: 'opt-2' },
+    { name: 'opt-3' },
+  ],
+}
+
+const vitaminTypes = {
+  name: 'vitamin',
+  placeholder: 'vitamin',
+  options: [
+    { name: 'all' },
+    { name: 'opt-1' },
+    { name: 'opt-2' },
+    { name: 'opt-3' },
+  ],
+}
+
+const vaccineTypes = {
+  name: 'vaccine',
+  placeholder: 'vaksin',
+  options: [
+    { name: 'all' },
+    { name: 'opt-1' },
+    { name: 'opt-2' },
+    { name: 'opt-3' },
+  ],
+}
+
+const anthelminticTypes = {
+  name: 'anthelmintic',
+  placeholder: 'obat cacing',
+  options: [
+    { name: 'all' },
+    { name: 'opt-1' },
+    { name: 'opt-2' },
+    { name: 'opt-3' },
+  ],
+}
+
+export const shedInfoTypesOptions = [
+  feedTypes,
+  vitaminTypes,
+  vaccineTypes,
+  anthelminticTypes,
+]
+
+export const shedInfoInitial = {
+  feed: feedTypes.options[0],
+  vitamin: vitaminTypes.options[0],
+  vaccine: vaccineTypes.options[0],
+  anthelmintic: anthelminticTypes.options[0],
 }

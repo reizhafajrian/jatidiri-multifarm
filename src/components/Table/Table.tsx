@@ -7,6 +7,7 @@ import {
   SortingState,
   useReactTable,
 } from '@tanstack/react-table'
+import clsx from 'clsx'
 import { useMemo, useState } from 'react'
 import PaginationHandler from './PaginationHandler'
 import TD from './TD'
@@ -49,7 +50,10 @@ export default function Table(props: IProps) {
                 />
                 <TH
                   header={headerGroup.headers[1]}
-                  className="sticky left-[50px] min-w-[150px]"
+                  className={clsx(
+                    'sticky left-[50px]',
+                    props.fixedCol === 3 ? 'min-w-[150px]' : 'pr-3'
+                  )}
                 />
                 {props.fixedCol === 3 && (
                   <TH
@@ -81,7 +85,10 @@ export default function Table(props: IProps) {
                 />
                 <TD
                   cell={row.getVisibleCells()[1]}
-                  className="sticky left-[50px] min-w-[150px]"
+                  className={clsx(
+                    'sticky left-[50px]',
+                    props.fixedCol === 3 ? 'min-w-[150px]' : 'pr-3'
+                  )}
                 />
                 {props.fixedCol === 3 && (
                   <TD

@@ -11,7 +11,7 @@ export default function InputText(
     <div className="relative">
       <input
         id={label}
-        className="peer block w-full appearance-none rounded-lg border border-neutral-4 bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0"
+        className="peer block w-full appearance-none rounded-lg border border-neutral-4 bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4"
         placeholder=" "
         {...rest}
       />

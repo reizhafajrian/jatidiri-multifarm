@@ -1,12 +1,5 @@
-import ShedNavbar from '@/components/Shed/ShedNavbar'
-import ShedTable from '@/components/Table/ShedTable'
-import { shedData } from '@/data/dummy'
+import Shed from '@/components/Shed'
 
 export default async function ShedPage() {
-  return (
-    <>
-      <ShedNavbar />
-      <ShedTable data={shedData} />
-    </>
-  )
+  return <Shed />
 }

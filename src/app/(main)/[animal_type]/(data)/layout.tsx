@@ -1,39 +1,39 @@
-'use client'
 import DownloadIcon from '@/assets/icons/download-outline.svg'
+import Button from '@/components/Button'
 import Navbar from '@/components/Layout/Navbar'
 import { animalTitle } from '@/data/data'
+import { ILayoutProps } from '@/data/interfaces'
 import Link from 'next/link'
 
-interface IProps {
-  children: React.ReactNode
-  params: any
-}
-
-export default function AnimalLayout(props: IProps) {
+export default function AnimalLayout(props: ILayoutProps) {
   const { animal_type } = props.params
 
-  const menu = [
-    { name: 'Pejantan', link: `/${animal_type}/male` },
-    { name: 'Betina', link: `/${animal_type}/female` },
-    { name: 'Cempek', link: `/${animal_type}/cempek` },
-  ]
+  const menu =
+    animal_type === 'cow'
+      ? [
+          { name: 'Pejantan', link: `/${animal_type}/male` },
+          { name: 'Betina', link: `/${animal_type}/female` },
+        ]
+      : [
+          { name: 'Pejantan', link: `/${animal_type}/male` },
+          { name: 'Betina', link: `/${animal_type}/female` },
+          { name: 'Cempek', link: `/${animal_type}/cempek` },
+        ]
 
   return (
     <div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link
-            href={`/${animal_type}/add`}
-            className="rounded-lg bg-primary-4 py-2 px-4 hover:bg-primary-5"
-            replace
-          >
-            <span className="text-sm font-semibold capitalize text-white">
-              tambah data {animalTitle(animal_type)}
-            </span>
-          </Link>
-          <button className="group grid h-8 w-8 place-items-center rounded-lg border bg-white hover:bg-primary-5">
-            <DownloadIcon className="fill-black group-hover:fill-white" />
-          </button>
+          <Button className="w-fit px-2">
+            <Link href={`/${animal_type}/add`} replace>
+              <span className="text-sm capitalize">
+                tambah data {animalTitle(animal_type)}
+              </span>
+            </Link>
+          </Button>
+          <Button intent="secondary" className="w-fit px-2">
+            <DownloadIcon />
+          </Button>
         </div>
       </Navbar>
       {props.children}

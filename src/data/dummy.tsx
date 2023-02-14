@@ -128,6 +128,28 @@ export const dummyData = {
     anthelmintic_type: 'test',
     anthelmintic_price: 10000,
   },
+  hpp: {
+    eartag_code: '111',
+    type: 'Sapera',
+    origin: 'Garut',
+    weight: 20,
+    age: 3,
+    purchase_price: 1000000,
+    feed_price: 1000000,
+    other_price: 0,
+    hpp: 1000000,
+    selling_price: 1000000,
+    status: { name: 'Terjual', value: 'sold' },
+  },
+  milk: {
+    eartag_code: '111',
+    type: 'Sapera',
+    origin: 'Garut',
+    weight: 20,
+    age: 3,
+    milk: 1,
+    status: { name: 'Aktif', value: 'active' },
+  },
 }
 
 export const goatsData = [dummyData.goat]
@@ -153,4 +175,14 @@ for (let i = 0; i < 20; i++) {
 export const shedDetailData = [dummyData.shedDetail]
 for (let i = 0; i < 5; i++) {
   shedDetailData.push(dummyData.shedDetail)
+}
+
+export const hppData = [dummyData.hpp]
+for (let i = 0; i < 5; i++) {
+  hppData.push(dummyData.hpp)
+}
+
+export const milkData = [dummyData.milk]
+for (let i = 0; i < 5; i++) {
+  milkData.push(dummyData.milk)
 }

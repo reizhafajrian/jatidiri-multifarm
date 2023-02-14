@@ -1,13 +1,21 @@
-import AnimalTable from '@/components/Table/AnimalTable'
-import { cowsData, goatsData, sheepsData } from '@/data/dummy'
+import AnimalTable from '@/components/Animal/AnimalTable'
+import { IPageProps } from '@/data/interfaces'
+import { fetcher } from '@/libs/api'
+import { cookies } from 'next/headers'
 
-export default function FemaleAnimalPage({ params: { animal_type } }: any) {
-  const data =
-    animal_type === 'goat'
-      ? goatsData
-      : animal_type === 'sheep'
-      ? sheepsData
-      : cowsData
+export default async function FemaleAnimalPage(props: IPageProps) {
+  const data = await getData(props.params.animal_type)
 
   return <AnimalTable data={data} />
+}
+
+const getData = async (animal_type: string) => {
+  const nextCookies = cookies()
+
+  const response = await fetcher({
+    url: `${process.env.API_BASE_URL}/${animal_type && 'goat'}/get`,
+    token: nextCookies.get('token')?.value,
+  })
+
+  return response.data
 }

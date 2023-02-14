@@ -1,3 +1,5 @@
+import Milk from '@/components/Milk'
+
 export default function SusuPage() {
-  return <div>SusuPage</div>
+  return <Milk />
 }

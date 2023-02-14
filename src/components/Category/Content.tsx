@@ -1,65 +1,36 @@
 'use client'
+import { categoryTitle } from '@/data/data'
+import { ICategoryProps } from '@/data/interfaces'
 import { useState } from 'react'
 import Button from '../Button'
-import AddCategoryForm from '../Form/AddCategoryForm'
-import Modal from '../Modal'
-import Table from '../Table/Table'
+import AddCategoryForm from './AddCategoryForm'
+import CategoryCardList from './CategoryCardList'
+import CategoryTable from './CategoryTable'
 
-interface IProps {
-  category: string
-  title: string
-  data: any
-  cardList: {
-    icon?: any
-    title: string
-    value: string
-    label?: string
-  }[]
-  columns: any
-}
-
-export default function Content(props: IProps) {
+export default function Content(props: ICategoryProps) {
   const [isOpen, closeModal] = useState(false)
 
   return (
     <>
-      <Modal isOpen={isOpen} closeModal={closeModal}>
-        <AddCategoryForm
-          category={props.category}
-          title={props.title}
-          closeModal={closeModal}
-        />
-      </Modal>
+      <AddCategoryForm
+        category={props.category!}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
       <div>
         <h1 className="mb-8 text-2xl font-semibold text-primary-4">
-          {props.title}
+          {categoryTitle(props.category!)}
         </h1>
         <div className="mb-6 flex items-end justify-between">
-          <div className="flex gap-6">
-            {props.cardList.map((item, idx) => (
-              <div key={idx} className="rounded-lg bg-white p-6">
-                <div className="mb-6 flex items-center justify-between gap-6 text-xl font-medium">
-                  {item.icon} <h3>{item.title}</h3>
-                </div>
-                <div className="text-right">
-                  <p className="text-2xl font-semibold">
-                    {item.value}{' '}
-                    {item.label && (
-                      <span className="text-base font-normal text-neutral-4">
-                        {item.label}
-                      </span>
-                    )}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-          <Button className="capitalize" onClick={() => closeModal(true)}>
-            tambah {props.title}
+          <CategoryCardList cardList={props.cardList} />
+          <Button className="w-fit px-2" onClick={() => closeModal(true)}>
+            <span className="text-sm capitalize">
+              tambah {categoryTitle(props.category!)}
+            </span>
           </Button>
         </div>
-        <Table data={props.data} columns={props.columns} fixedCol={2} />
       </div>
+      <CategoryTable category={props.category} data={props.data} />
     </>
   )
 }

@@ -1,7 +1,7 @@
-import ShedAnimalTable from '@/components/Table/ShedAnimalTable'
+import AnimalShedTable from '@/components/Shed/AnimalShedTable'
 import { cowsData, goatsData, sheepsData } from '@/data/dummy'
 
-export default function ShedDetailPage({
+export default function AnimalShedPage({
   params: { animal_type, id, gender },
 }: any) {
   const data =
@@ -11,5 +11,5 @@ export default function ShedDetailPage({
       ? sheepsData
       : cowsData
 
-  return <ShedAnimalTable data={data} />
+  return <AnimalShedTable data={data} />
 }

@@ -1,13 +1,21 @@
-import CempekTable from '@/components/Table/CampekTable'
-import { cowsData, goatsData, sheepsData } from '@/data/dummy'
+import CempekTable from '@/components/Animal/CempekTable'
+import { IPageProps } from '@/data/interfaces'
+import { fetcher } from '@/libs/api'
+import { cookies } from 'next/headers'
 
-export default function CempekPage({ params: { animal_type } }: any) {
-  const data =
-    animal_type === 'goat'
-      ? goatsData
-      : animal_type === 'sheep'
-      ? sheepsData
-      : cowsData
+export default async function CempekPage(props: IPageProps) {
+  const data = await getData(props.params.animal_type)
 
   return <CempekTable data={data} />
+}
+
+const getData = async (animal_type: string) => {
+  const nextCookies = cookies()
+
+  const response = await fetcher({
+    url: `${process.env.API_BASE_URL}/${animal_type && 'goat'}/get`,
+    token: nextCookies.get('token')?.value,
+  })
+
+  return response.data
 }
