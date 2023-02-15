@@ -12,7 +12,7 @@ export default function Milk() {
   const [isOpen, closeModal] = useState(false)
 
   return (
-    <>
+    <main>
       <Modal isOpen={isOpen} closeModal={closeModal}>
         <AddMilkForm closeModal={closeModal} />
       </Modal>
@@ -34,6 +34,6 @@ export default function Milk() {
         <MilkCardList />
         <MilkTable />
       </div>
-    </>
+    </main>
   )
 }

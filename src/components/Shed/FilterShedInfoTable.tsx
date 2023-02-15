@@ -1,7 +1,8 @@
 'use client'
+import CaretIcon from '@/assets/icons/caret.svg'
 import { shedInfoInitial, shedInfoTypesOptions } from '@/data/data'
 import { IFilterShedInfo } from '@/data/interfaces'
-import { Listbox, Transition } from '@headlessui/react'
+import { Listbox as List, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 
 export default function FilterShedInfoTable() {
@@ -16,30 +17,31 @@ export default function FilterShedInfoTable() {
           const selected = filterSelected[name as keyof IFilterShedInfo]
           return (
             <div key={idx} className="relative">
-              <Listbox
+              <List
                 value={selected}
                 onChange={(val) =>
                   setFilterSelected({ ...filterSelected, [name]: val })
                 }
               >
-                <Listbox.Button className="relative cursor-default rounded-lg bg-white py-2 px-4 text-left shadow-md focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-                  <span className="block uppercase">
+                <List.Button className="relative flex cursor-default items-center justify-between gap-3 rounded-md border py-1 px-2 focus:outline-none">
+                  <span className="font-semibold uppercase text-neutral-5">
                     {selected.name === 'all' ? placeholder : selected.name}
                   </span>
-                </Listbox.Button>
+                  <CaretIcon className="w-7" />
+                </List.Button>
                 <Transition
                   as={Fragment}
                   leave="transition ease-in duration-100"
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Listbox.Options className="absolute top-10 z-10 mt-1 max-h-60 w-28 overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                  <List.Options className="absolute right-0 z-10 mt-1 max-h-60 min-w-[100px] overflow-auto rounded-md bg-white py-1 shadow">
                     {options.map((item, idx) => (
-                      <Listbox.Option
+                      <List.Option
                         key={idx}
                         className={({ active }) =>
                           `relative cursor-default select-none py-2 px-4 ${
-                            active ? 'bg-primary-4 text-white' : 'text-gray-900'
+                            active ? 'text-primary-4' : 'text-neutral-4'
                           }`
                         }
                         value={item}
@@ -53,11 +55,11 @@ export default function FilterShedInfoTable() {
                             {item.name}
                           </span>
                         )}
-                      </Listbox.Option>
+                      </List.Option>
                     ))}
-                  </Listbox.Options>
+                  </List.Options>
                 </Transition>
-              </Listbox>
+              </List>
             </div>
           )
         })}

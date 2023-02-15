@@ -3,9 +3,9 @@ import AddShedForm from '@/components/Shed/AddShedForm'
 
 export default function AddClusterPage() {
   return (
-    <div>
-      <BackLink href="/shed" />
+    <main>
+      <BackLink />
       <AddShedForm />
-    </div>
+    </main>
   )
 }

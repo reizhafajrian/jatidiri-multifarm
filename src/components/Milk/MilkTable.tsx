@@ -3,14 +3,24 @@ import EditIcon from '@/assets/icons/edit.svg'
 import { milkData } from '@/data/dummy'
 import { useState } from 'react'
 import Button from '../Button'
+import Listbox from '../Listbox'
 import Modal from '../Modal'
 import Table from '../Table/Table'
 import EditMilkForm from './EditMilkForm'
-import ListboxMilkStatus from './ListboxMilkStatus'
 
 export default function MilkTable() {
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
+  const [status, setStatus] = useState(statusOptions[0])
+
+  const changeStatusHandler = (value: any) => {
+    setStatus(value)
+  }
+
+  const editHandler = (eartag_code: string) => {
+    setEartagCode(eartag_code)
+    closeModal(true)
+  }
 
   return (
     <>
@@ -19,14 +29,19 @@ export default function MilkTable() {
       </Modal>
       <Table
         data={milkData}
-        columns={columns(closeModal, setEartagCode)}
+        columns={columns(status, changeStatusHandler, editHandler)}
         fixedCol={2}
       />
     </>
   )
 }
 
-const columns = (closeModal: any, setEartagCode: any) => [
+const statusOptions = [
+  { name: 'Aktif', bgColor: 'bg-[#E1F7E8]' },
+  { name: 'Non-Aktif', bgColor: 'bg-[#FFE2DC]' },
+]
+
+const columns = (status: any, changeStatusHandler: any, editHandler: any) => [
   {
     header: 'No',
     cell: ({ row }: any) => row.index + 1,
@@ -60,7 +75,15 @@ const columns = (closeModal: any, setEartagCode: any) => [
   {
     header: 'Status',
     accessorKey: 'status.name',
-    cell: (data: any) => <ListboxMilkStatus value={data.getValue()} />,
+    cell: (data: any) => (
+      <Listbox
+        options={statusOptions}
+        value={status}
+        onChange={changeStatusHandler}
+        className={`${status.bgColor} w-24`}
+        optionsClassname="w-24 bg-white"
+      />
+    ),
   },
   {
     header: 'Aksi',
@@ -68,10 +91,7 @@ const columns = (closeModal: any, setEartagCode: any) => [
     cell: (data: any) => (
       <Button
         className="w-fit px-2"
-        onClick={() => {
-          setEartagCode(data.getValue())
-          closeModal(true)
-        }}
+        onClick={() => editHandler(data.getValue())}
       >
         <EditIcon />
       </Button>

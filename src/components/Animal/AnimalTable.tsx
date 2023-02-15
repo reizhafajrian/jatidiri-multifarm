@@ -1,12 +1,19 @@
 'use client'
 import { longDateFormatter } from '@/utils/formatDate'
 import formatRupiah from '@/utils/formatRupiah'
+import { useRouter } from 'next/navigation'
 import Button from '../Button'
 import Table from '../Table/Table'
 import FilterAnimalTable from './FilterAnimalTable'
 
-export default function AnimalTable({ data }: any) {
-  const editAnimalData = () => {}
+export default function AnimalTable({ data, params }: any) {
+  const router = useRouter()
+  const { animal_type, gender } = params
+
+  const editAnimalData = (eartag_code: any) => {
+    router.push(`/${animal_type}/${gender}/edit?eartag_code=${eartag_code}`)
+  }
+
   const deleteAnimalData = () => {}
 
   return (

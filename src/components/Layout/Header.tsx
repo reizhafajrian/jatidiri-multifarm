@@ -52,15 +52,7 @@ export default function Header() {
                 <CaretIcon className="h-7 w-7" />
               </div>
             </Popover.Button>
-            <Popover.Panel className="0 absolute right-0 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-none ring-0">
-              <div className="p-5 pb-3">
-                <h3 className="mb-3 font-semibold">Status</h3>
-                <div className="flex items-center gap-2 text-neutral-4">
-                  <div className="h-2 w-2 rounded-full bg-primary-3" />
-                  Online
-                </div>
-              </div>
-              <hr />
+            <Popover.Panel className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-none ring-0">
               <div className="p-5 py-3">
                 <h3 className="mb-3 font-semibold">Account</h3>
                 <div className="grid gap-2 text-neutral-4">
@@ -71,7 +63,7 @@ export default function Header() {
               <hr />
               <div className="p-5 py-3">
                 <h3 className="mb-3 font-semibold">Manage</h3>
-                <Link href="/home" className="text-neutral-4">
+                <Link href="/role-management" className="text-neutral-4">
                   Role Management
                 </Link>
               </div>

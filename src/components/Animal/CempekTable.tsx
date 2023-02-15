@@ -1,11 +1,18 @@
 'use client'
 import { longDateFormatter } from '@/utils/formatDate'
+import { useRouter } from 'next/navigation'
 import Button from '../Button'
 import Table from '../Table/Table'
 import FilterAnimalTable from './FilterAnimalTable'
 
-export default function CempekTable({ data }: any) {
-  const editCempekData = () => {}
+export default function CempekTable({ data, params }: any) {
+  const router = useRouter()
+  const { animal_type } = params
+
+  const editCempekData = (eartag_code: any) => {
+    router.push(`/${animal_type}/cempek/edit?eartag_code=${eartag_code}`)
+  }
+
   const deleteCempekData = () => {}
 
   return (

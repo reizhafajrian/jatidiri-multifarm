@@ -2,13 +2,18 @@
 import formatRupiah from '@/utils/formatRupiah'
 import { useState } from 'react'
 import Button from '../Button'
+import Listbox from '../Listbox'
 import Table from '../Table/Table'
 import EditHppForm from './EditHppForm'
-import ListboxAnimalStatus from './ListboxAnimalStatus'
 
 export default function HppTable({ data }: any) {
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
+  const [status, setStatus] = useState(statusOptions[0])
+
+  const changeStatusHandler = (value: any) => {
+    setStatus(value)
+  }
 
   const editHandler = (value: string) => {
     setEartagCode(value)
@@ -22,12 +27,22 @@ export default function HppTable({ data }: any) {
         isOpen={isOpen}
         closeModal={closeModal}
       />
-      <Table data={data} columns={columns(editHandler)} fixedCol={2} />
+      <Table
+        data={data}
+        columns={columns(status, changeStatusHandler, editHandler)}
+        fixedCol={2}
+      />
     </>
   )
 }
 
-const columns = (editHandler: any) => [
+const statusOptions = [
+  { name: 'Terjual', bgColor: 'bg-[#FFE2DC]' },
+  { name: 'Tersedia', bgColor: 'bg-[#E1F7E8]' },
+  { name: 'Mati', bgColor: 'bg-[#BFC4C6] bg-opacity-20' },
+]
+
+const columns = (status: any, changeStatusHandler: any, editHandler: any) => [
   {
     header: 'No',
     cell: ({ row }: any) => row.index + 1,
@@ -80,7 +95,15 @@ const columns = (editHandler: any) => [
   {
     header: 'Status',
     accessorKey: 'status.name',
-    cell: (data: any) => <ListboxAnimalStatus value={data.getValue()} />,
+    cell: (data: any) => (
+      <Listbox
+        options={statusOptions}
+        value={status}
+        onChange={changeStatusHandler}
+        className={`${status.bgColor} w-24`}
+        optionsClassname="w-24 bg-white"
+      />
+    ),
   },
   {
     header: 'Aksi',

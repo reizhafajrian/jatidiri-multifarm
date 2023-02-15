@@ -13,11 +13,11 @@ export default function Shed() {
   ]
 
   return (
-    <div>
+    <main>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Button className="w-fit px-2">
-            <Link href="/shed/add" replace>
+            <Link href="/shed/add">
               <span className="text-sm capitalize">tambah kandang</span>
             </Link>
           </Button>
@@ -27,6 +27,6 @@ export default function Shed() {
         </div>
       </Navbar>
       <ShedTable data={shedData} />
-    </div>
+    </main>
   )
 }

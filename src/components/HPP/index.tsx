@@ -13,7 +13,7 @@ const menu = [
 
 export default function HPP() {
   return (
-    <div>
+    <main>
       <Navbar menu={menu} className="mb-6 flex items-center justify-between">
         <Button
           intent="secondary"
@@ -24,6 +24,6 @@ export default function HPP() {
       </Navbar>
       <FilterHppTable />
       <HppTable data={hppData} />
-    </div>
+    </main>
   )
 }

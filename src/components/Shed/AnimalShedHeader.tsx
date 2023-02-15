@@ -29,7 +29,7 @@ export default function AnimalShedHeader({ animal_type, id }: IProps) {
         animal_type={animal_type}
       />
 
-      <BackLink href={`/shed/${animal_type}`} />
+      <BackLink />
       <div className="mb-8">
         <h1 className="my-6 text-2xl font-semibold text-neutral-5">
           Detail Kandang <span className="text-primary-5">#{id}</span>

@@ -71,7 +71,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
                 }
               />
               <InputSelect
-                label="Asal Induk"
+                label="Role"
                 options={['Admin', 'Super Admin']}
                 value={formValues.role}
                 onChange={(value) =>

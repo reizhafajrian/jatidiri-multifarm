@@ -1,10 +1,11 @@
 import { ICategoryProps } from '@/data/interfaces'
+import Card from '../Card'
 
 export default function CategoryCardList(props: ICategoryProps) {
   return (
     <div className="flex gap-6">
       {props.cardList?.map((item, idx) => (
-        <div key={idx} className="rounded-lg bg-white p-6">
+        <Card key={idx}>
           <div className="mb-6 flex items-center justify-between gap-6 text-xl font-medium">
             {item.icon} <h3>{item.title}</h3>
           </div>
@@ -18,7 +19,7 @@ export default function CategoryCardList(props: ICategoryProps) {
               )}
             </p>
           </div>
-        </div>
+        </Card>
       ))}
     </div>
   )

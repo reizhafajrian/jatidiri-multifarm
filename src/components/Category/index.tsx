@@ -8,7 +8,7 @@ import Content from './Content'
 
 export default function Category() {
   return (
-    <div>
+    <main>
       <CategoryHeader />
       <div className="space-y-10">
         <Content category="feed" cardList={feedCardList} data={[{}, {}, {}]} />
@@ -23,7 +23,7 @@ export default function Category() {
           data={[{}, {}, {}]}
         />
       </div>
-    </div>
+    </main>
   )
 }
 

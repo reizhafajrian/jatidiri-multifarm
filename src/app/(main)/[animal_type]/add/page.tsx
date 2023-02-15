@@ -20,9 +20,9 @@ export default function AddAnimalPage(props: IPageProps) {
         }
 
   return (
-    <div>
-      <BackLink href={`/${animal_type}`} />
+    <main>
+      <BackLink />
       <PageTabs categories={categories} />
-    </div>
+    </main>
   )
 }

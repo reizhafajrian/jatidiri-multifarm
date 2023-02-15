@@ -1,15 +1,17 @@
+'use client'
 import ArrowLeftIcon from '@/assets/icons/arrow-left.svg'
-import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 
-export default function BackLink({ href }: { href: string }) {
+export default function BackLink() {
+  const router = useRouter()
+
   return (
-    <Link
-      href={href}
-      replace
+    <button
+      onClick={() => router.back()}
       className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase text-primary-7"
     >
       <ArrowLeftIcon />
       kembali
-    </Link>
+    </button>
   )
 }

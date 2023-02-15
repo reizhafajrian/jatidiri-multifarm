@@ -179,7 +179,7 @@ for (let i = 0; i < 5; i++) {
 
 export const hppData = [dummyData.hpp]
 for (let i = 0; i < 5; i++) {
-  hppData.push(dummyData.hpp)
+  hppData.push({ ...dummyData.hpp, eartag_code: `11${i + 2}` })
 }
 
 export const milkData = [dummyData.milk]

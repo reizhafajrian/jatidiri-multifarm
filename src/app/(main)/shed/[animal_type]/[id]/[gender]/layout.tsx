@@ -5,9 +5,9 @@ export default function ShedDetailLayout(props: ILayoutProps) {
   const { id, animal_type } = props.params
 
   return (
-    <div>
+    <main>
       <AnimalShedHeader animal_type={animal_type} id={id} />
       {props.children}
-    </div>
+    </main>
   )
 }

@@ -12,8 +12,8 @@ export default function ShedDetail({ animal_type, id }: any) {
   ]
 
   return (
-    <div>
-      <BackLink href={`/shed/${animal_type}`} />
+    <main>
+      <BackLink />
       <div className="mb-8">
         <h1 className="my-6 text-2xl font-semibold text-neutral-5">
           Detail Kandang{' '}
@@ -28,6 +28,6 @@ export default function ShedDetail({ animal_type, id }: any) {
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between" />
       <ShedInfo data={shedData[0]} detail={shedDetailData} />
-    </div>
+    </main>
   )
 }
