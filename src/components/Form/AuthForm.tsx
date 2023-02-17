@@ -1,6 +1,7 @@
 'use client'
 import EyesIcon from '@/assets/icons/eyes.svg'
 import { register, signin } from '@/libs/api'
+import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -19,6 +20,7 @@ const initial = {
 export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
   const router = useRouter()
   const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState(initial)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -26,7 +28,9 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
 
     try {
       if (mode === 'signin') {
+        setLoading(true)
         await signin(formValues)
+        setLoading(false)
       } else {
         await register(formValues)
       }
@@ -48,6 +52,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           {mode === 'register' && (
             <InputText
               label="Nama"
+              disabled={loading}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormValues((s) => ({ ...s, name: e.target.value }))
               }
@@ -55,6 +60,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           )}
           <InputText
             label="Email"
+            disabled={loading}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setFormValues((s) => ({ ...s, email: e.target.value }))
             }
@@ -63,6 +69,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             <>
               <InputText
                 label="Whatsapp Number"
+                disabled={loading}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                   setFormValues((s) => ({
                     ...s,
@@ -84,6 +91,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             <InputText
               type={showPassword ? 'password' : 'text'}
               label="Password"
+              disabled={loading}
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormValues((s) => ({ ...s, password: e.target.value }))
               }
@@ -102,7 +110,10 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             <Link href="/signin" className="text-base font-medium">
               Forgot Password?
             </Link>
-            <Button typeof="submit" className="w-full">
+            <Button
+              typeof="submit"
+              className={clsx('w-full', loading && 'animate-pulse')}
+            >
               signin
             </Button>
           </div>

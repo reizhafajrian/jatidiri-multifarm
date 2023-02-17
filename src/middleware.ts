@@ -4,42 +4,38 @@ const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
+  const jwt = request.cookies.get('token')
 
   if (
     pathname.startsWith('/_next') ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/static') ||
-    pathname.startsWith('/signin') ||
-    pathname.startsWith('/register') ||
     PUBLIC_FILE.test(pathname)
   ) {
     return NextResponse.next()
   }
 
-  const jwt = request.cookies.get('token')
-
-  if (!jwt) {
+  if (!jwt && !pathname.startsWith('/signin')) {
     request.nextUrl.pathname = '/signin'
     return NextResponse.redirect(request.nextUrl)
   }
 
-  if (pathname === '/sheep') {
-    return NextResponse.redirect(new URL('/sheep/male', request.url))
-  }
+  if (jwt) {
+    if (pathname === '/signin' || pathname === '/') {
+      request.nextUrl.pathname = '/home'
+      return NextResponse.redirect(request.nextUrl)
+    }
 
-  if (pathname === '/goat') {
-    return NextResponse.redirect(new URL('/goat/male', request.url))
-  }
+    const animalPath = ['/sheep', '/goat', '/cow'].find((p) => pathname === p)
+    if (animalPath) {
+      request.nextUrl.pathname = animalPath + '/male'
+      return NextResponse.redirect(request.nextUrl)
+    }
 
-  if (pathname === '/cow') {
-    return NextResponse.redirect(new URL('/cow/male', request.url))
-  }
-
-  if (pathname === '/shed') {
-    return NextResponse.redirect(new URL('/shed/goat', request.url))
-  }
-
-  if (pathname === '/hpp') {
-    return NextResponse.redirect(new URL('/hpp/goat', request.url))
+    const otherPath = ['/shed', '/hpp'].find((p) => pathname === p)
+    if (otherPath) {
+      request.nextUrl.pathname = otherPath + '/goat'
+      return NextResponse.redirect(request.nextUrl)
+    }
   }
 }
