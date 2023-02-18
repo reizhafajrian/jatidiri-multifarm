@@ -1,6 +1,6 @@
 'use client'
-import EyesIcon from '@/assets/icons/eyes.svg'
-import { register, signin } from '@/libs/api'
+import { IUser } from '@/data/interfaces'
+import { signin } from '@/libs/api'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -9,36 +9,55 @@ import Button from '../Button'
 import InputSelect from './InputSelect'
 import InputText from './InputText'
 
-const initial = {
-  email: '',
-  password: '',
-  name: '',
-  whatsapp_number: '',
-  role: '',
-}
-
 export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
   const router = useRouter()
-  const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [formValues, setFormValues] = useState(initial)
+  const [formValues, setFormValues] = useState({} as IUser)
+  const { name, email, role, whatsapp_number, password } = formValues
+  const [error, setError] = useState({} as IUser)
+  const isEmptyMsg = 'Data yang dimasukkan salah'
+
+  const isEmptyError = () => {
+    setLoading(false)
+    setError((s: any) => ({
+      ...s,
+      name: !name && isEmptyMsg,
+      email: !email && isEmptyMsg,
+      role: !role && isEmptyMsg,
+      whatsapp_number: !whatsapp_number && isEmptyMsg,
+      password: !password && isEmptyMsg,
+    }))
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((s) => ({ ...s, [e.target.name]: e.target.value }))
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
+    setError({} as IUser)
+    setLoading(true)
 
     try {
       if (mode === 'signin') {
-        setLoading(true)
+        if (!email || !password) return isEmptyError()
         await signin(formValues)
         setLoading(false)
+        router.push('/home')
       } else {
-        await register(formValues)
+        const isEmpty =
+          !name || !email || !role || !whatsapp_number || !password
+        if (isEmpty) return isEmptyError()
+        console.log(formValues)
+
+        // await register(formValues)
       }
 
-      router.push('/home')
-      setFormValues(initial)
-    } catch (e) {
-      console.error(e)
+      setFormValues({} as IUser)
+    } catch (e: any) {
+      setLoading(false)
+      console.error({ error: e.error })
+      setError({ email: ' ', password: ' ' })
     }
   }
 
@@ -47,65 +66,52 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
       {mode === 'signin' && (
         <h2 className="mb-8 text-[32px] font-medium">Sign In Here</h2>
       )}
-      <form onSubmit={handleSubmit} className="space-y-5">
-        <div className="space-y-4">
-          {mode === 'register' && (
-            <InputText
-              label="Nama"
-              disabled={loading}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormValues((s) => ({ ...s, name: e.target.value }))
-              }
-            />
-          )}
+      <form onSubmit={handleSubmit} className="space-y-4">
+        {mode === 'register' && (
           <InputText
-            label="Email"
+            label="Nama"
+            name="name"
+            onChange={handleChange}
+            errorMsg={error.name}
             disabled={loading}
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-              setFormValues((s) => ({ ...s, email: e.target.value }))
-            }
           />
-          {mode === 'register' && (
-            <>
-              <InputText
-                label="Whatsapp Number"
-                disabled={loading}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                  setFormValues((s) => ({
-                    ...s,
-                    whatsapp_number: e.target.value,
-                  }))
-                }
-              />
-              <InputSelect
-                label="Role"
-                options={['Admin', 'Super Admin']}
-                value={formValues.role}
-                onChange={(value) =>
-                  setFormValues((s) => ({ ...s, role: value }))
-                }
-              />
-            </>
-          )}
-          <div className="relative">
+        )}
+        <InputText
+          label="Email"
+          name="email"
+          onChange={handleChange}
+          errorMsg={error.email}
+          disabled={loading}
+        />
+        {mode === 'register' && (
+          <>
             <InputText
-              type={showPassword ? 'password' : 'text'}
-              label="Password"
+              label="Whatsapp Number"
+              name="whatsapp_number"
+              onChange={handleChange}
+              errorMsg={error.whatsapp_number}
               disabled={loading}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                setFormValues((s) => ({ ...s, password: e.target.value }))
-              }
             />
-            <button
-              type="button"
-              className="absolute inset-y-0 right-0 mr-4"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              <EyesIcon />
-            </button>
-          </div>
-        </div>
-        {mode === 'signin' && (
+            <InputSelect
+              label="Role"
+              options={['Admin', 'Super Admin']}
+              value={formValues.role ?? ''}
+              onChange={(value) =>
+                setFormValues((s) => ({ ...s, role: value }))
+              }
+              errorMsg={error.role}
+            />
+          </>
+        )}
+        <InputText
+          label="Password"
+          name="password"
+          onChange={handleChange}
+          errorMsg={error.password}
+          disabled={loading}
+          isSecured
+        />
+        {mode === 'signin' ? (
           <div className="space-y-8 text-right">
             <Link href="/signin" className="text-base font-medium">
               Forgot Password?
@@ -115,6 +121,12 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
               className={clsx('w-full', loading && 'animate-pulse')}
             >
               signin
+            </Button>
+          </div>
+        ) : (
+          <div className="text-right">
+            <Button typeof="submit" className="capitalize">
+              tambah member
             </Button>
           </div>
         )}

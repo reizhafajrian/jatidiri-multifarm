@@ -1,11 +1,8 @@
 import Header from '@/components/Layout/Header'
 import Sidebar from '@/components/Layout/Sidebar'
+import { ILayoutProps } from '@/data/interfaces'
 
-interface IProps {
-  children: React.ReactNode
-}
-
-export default function MainLayout(props: IProps) {
+export default function MainLayout(props: ILayoutProps) {
   return (
     <>
       <Sidebar />

@@ -7,7 +7,7 @@ export default function EventIncomeDiagram() {
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2">
-        <Doughnut options={options} data={data} />
+        <Doughnut options={options} data={data} className="font-sans" />
       </div>
       <div className="grid items-center">
         <div>

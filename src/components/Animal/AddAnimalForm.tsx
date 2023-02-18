@@ -46,7 +46,7 @@ export default function AddAnimalForm(props: IAnimalProps) {
             label="Asal Induk"
             options={content?.femaleParentOriginOptions}
             value={formValues.female_parent_origin}
-            onChange={(value) =>
+            onChange={(value: any) =>
               setFormValues((s) => ({ ...s, female_parent_origin: value }))
             }
           />

@@ -1,6 +1,4 @@
 import CloseIcon from '@/assets/icons/close.svg'
-import { useState } from 'react'
-import Button from '../Button'
 import AuthForm from '../Form/AuthForm'
 import Modal from '../Modal'
 
@@ -11,10 +9,6 @@ interface IProps {
 
 export default function AddMemberForm(props: IProps) {
   const { isOpen, closeModal } = props
-  const [formValues, setFormValues] = useState({
-    eartag_code: '',
-    description: '',
-  })
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
@@ -26,9 +20,6 @@ export default function AddMemberForm(props: IProps) {
       </div>
       <div className="my-5">
         <AuthForm mode="register" />
-      </div>
-      <div className="text-right">
-        <Button className="capitalize">Tambah Member</Button>
       </div>
     </Modal>
   )

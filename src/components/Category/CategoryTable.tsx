@@ -4,15 +4,23 @@ import { ICategoryProps } from '@/data/interfaces'
 import { useState } from 'react'
 import Button from '../Button'
 import Table from '../Table/Table'
+import EditCategoryForm from './EditCategoryForm'
 
 export default function CategoryTable(props: ICategoryProps) {
   const [isOpen, closeModal] = useState(false)
 
-  const editData = () => {}
+  const editData = () => {
+    closeModal(true)
+  }
   const deleteData = () => {}
 
   return (
     <>
+      <EditCategoryForm
+        category={props.category!}
+        isOpen={isOpen}
+        closeModal={closeModal}
+      />
       <Table
         data={props.data}
         columns={columns(editData, deleteData, props.category!)}

@@ -1,3 +1,11 @@
+export interface IUser {
+  email: string
+  password: string
+  name?: string
+  whatsapp_number?: string
+  role?: string
+}
+
 export interface ILayoutProps {
   children: React.ReactNode
   params?: any

@@ -1,3 +1,4 @@
+import { IUser } from '@/data/interfaces'
 import Cookies from 'js-cookie'
 
 export const fetcher = async (props: {
@@ -24,14 +25,6 @@ export const fetcher = async (props: {
 
   const data = await res.json()
   return data
-}
-
-interface IUser {
-  email: string
-  password: string
-  name?: string
-  whatsapp_number?: string
-  role?: string
 }
 
 export const register = async (user: IUser) => {
