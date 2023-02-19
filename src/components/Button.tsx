@@ -1,6 +1,5 @@
-import DeleteIcon from '@/assets/icons/delete.svg'
-import EditIcon from '@/assets/icons/edit.svg'
 import { cva, VariantProps } from 'class-variance-authority'
+import { Pencil, Trash } from './Icons'
 
 export interface ButtonProps
   extends React.HTMLAttributes<HTMLButtonElement>,
@@ -11,9 +10,9 @@ export default function Button(props: ButtonProps) {
   return (
     <button className={buttonClasses({ intent, className })} {...rest}>
       {intent === 'edit' ? (
-        <EditIcon />
+        <Pencil />
       ) : intent === 'delete' ? (
-        <DeleteIcon />
+        <Trash />
       ) : (
         children
       )}

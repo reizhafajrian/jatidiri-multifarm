@@ -18,7 +18,12 @@ export default function DeleteMemberModal(props: IProps) {
           dibatalkan
         </p>
         <div className="flex gap-4">
-          <Button className="w-full py-3 capitalize">Cancel</Button>
+          <Button
+            className="w-full py-3 capitalize"
+            onClick={() => closeModal(false)}
+          >
+            Cancel
+          </Button>
           <Button className="w-full py-3 capitalize" intent="secondary">
             Delete
           </Button>

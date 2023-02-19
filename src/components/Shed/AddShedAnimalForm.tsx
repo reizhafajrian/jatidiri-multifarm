@@ -27,7 +27,17 @@ export default function AddShedAnimalForm(props: IProps) {
       <div className="mb-8 space-y-6">
         <InputSelect
           label="No Eartag"
-          options={['111', '222', '333']}
+          options={[
+            '111',
+            '222',
+            '333',
+            '111',
+            '222',
+            '333',
+            '111',
+            '222',
+            '333',
+          ]}
           value={formValues.eartag_code}
           onChange={(value) =>
             setFormValues((s) => ({ ...s, eartag_code: value }))

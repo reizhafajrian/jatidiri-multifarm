@@ -1,6 +1,6 @@
-import SortIcon from '@/assets/icons/sort.svg'
 import { flexRender } from '@tanstack/react-table'
 import clsx from 'clsx'
+import { ChevronUpDown } from '../Icons'
 
 interface IProps {
   header: any
@@ -26,11 +26,12 @@ export default function TH(props: IProps) {
               : '',
             onClick: header.column.getToggleSortingHandler(),
           }}
+          className="flex items-center gap-4"
         >
           {flexRender(header.column.columnDef.header, header.getContext())}
           {{
-            asc: <SortIcon className="ml-4 inline" />,
-            desc: <SortIcon className="ml-4 inline" />,
+            asc: <ChevronUpDown />,
+            desc: <ChevronUpDown />,
           }[header.column.getIsSorted() as string] ?? null}
         </div>
       )}

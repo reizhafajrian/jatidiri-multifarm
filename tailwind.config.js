@@ -26,6 +26,12 @@ module.exports = {
           4: '#7B7B7B',
           5: '#25282B',
         },
+        error: '#CE0000',
+        success: {
+          1: '#16B364',
+          2: '#0F752E',
+          3: '#E1F7E8',
+        },
       },
       boxShadow: {
         header: '0px 0px 5px rgba(0, 0, 0, 0.06)',

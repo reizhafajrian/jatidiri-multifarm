@@ -1,7 +1,7 @@
 'use client'
-import PencilIcon from '@/assets/icons/pencil.svg'
 import { useState } from 'react'
 import Button from '../Button'
+import { PencilSolid } from '../Icons'
 import Modal from '../Modal'
 import AddShedDataForm from './AddShedDataForm'
 import FilterShedInfoTable from './FilterShedInfoTable'
@@ -33,7 +33,7 @@ export default function ShedInfo({ data, detail }: any) {
             className="flex items-center justify-center gap-2"
           >
             <span className="text-sm capitalize">tambah data</span>
-            <PencilIcon />
+            <PencilSolid />
           </Button>
         </div>
         <ShedInfoTable data={detail} />

@@ -1,4 +1,3 @@
-import Logo from '@/assets/images/logo-big.png'
 import AuthForm from '@/components/Form/AuthForm'
 import Image from 'next/image'
 
@@ -6,7 +5,7 @@ export default function SigninPage() {
   return (
     <div className="grid grid-cols-2">
       <div className="relative m-28">
-        <Image src={Logo} alt="logo" fill className="object-contain" />
+        <Image src="/logo-big.png" alt="logo" fill className="object-contain" />
       </div>
       <div className="grid h-screen place-items-center">
         <div className="w-full px-24">

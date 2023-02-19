@@ -1,7 +1,5 @@
-import AnthelminticIcon from '@/assets/icons/anthelmintic.svg'
-import FeedIcon from '@/assets/icons/feed.svg'
-import VitaminIcon from '@/assets/icons/vitamin.svg'
 import Card from '../Card'
+import { Anthelmintic, Feed, Vitamin } from '../Icons'
 
 export default function CategoryHeader() {
   return (
@@ -25,14 +23,14 @@ export default function CategoryHeader() {
 const categoryList = [
   {
     title: 'Obat Cacing',
-    icon: <AnthelminticIcon />,
+    icon: <Anthelmintic />,
   },
   {
     title: 'Vitamin',
-    icon: <VitaminIcon />,
+    icon: <Vitamin />,
   },
   {
     title: 'Pakan',
-    icon: <FeedIcon />,
+    icon: <Feed />,
   },
 ]

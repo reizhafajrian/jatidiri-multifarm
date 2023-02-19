@@ -1,5 +1,4 @@
-import DashboardCart from '@/assets/icons/dashboard-cart.svg'
-import DashboardWallet from '@/assets/icons/dashboard-wallet.svg'
+import { DashboardCart, DashboardWallet } from '../Icons'
 import CardInfo from './CardInfo'
 
 export default function CardInfoList() {

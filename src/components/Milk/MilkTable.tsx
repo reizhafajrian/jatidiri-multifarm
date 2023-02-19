@@ -1,5 +1,4 @@
 'use client'
-import EditIcon from '@/assets/icons/edit.svg'
 import { milkData } from '@/data/dummy'
 import { useState } from 'react'
 import Button from '../Button'
@@ -89,12 +88,7 @@ const columns = (status: any, changeStatusHandler: any, editHandler: any) => [
     header: 'Aksi',
     accessorKey: 'eartag_code',
     cell: (data: any) => (
-      <Button
-        className="w-fit px-2"
-        onClick={() => editHandler(data.getValue())}
-      >
-        <EditIcon />
-      </Button>
+      <Button intent="edit" onClick={() => editHandler(data.getValue())} />
     ),
   },
 ]

@@ -1,7 +1,7 @@
-import CaretIcon from '@/assets/icons/caret.svg'
 import { Listbox as List, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import { Fragment } from 'react'
+import { ChevronDown } from './Icons'
 
 interface IProps {
   value: any
@@ -19,12 +19,12 @@ export default function Listbox(props: IProps) {
       <List value={value} onChange={onChange}>
         <List.Button
           className={clsx(
-            'relative flex w-36 cursor-default items-center justify-between rounded-md py-1 px-2 focus:outline-none',
+            'relative flex w-36 cursor-default items-center justify-between gap-2 rounded-md py-1 px-2 focus:outline-none',
             className ?? 'bg-white text-neutral-5'
           )}
         >
           {value.name}
-          <CaretIcon className="w-7" />
+          <ChevronDown className="h-4 w-4" />
         </List.Button>
         <Transition
           as={Fragment}

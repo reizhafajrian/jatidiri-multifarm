@@ -1,7 +1,8 @@
 'use client'
-import DownloadIcon from '@/assets/icons/download-outline.svg'
 import { Tab } from '@headlessui/react'
 import Link from 'next/link'
+import Button from './Button'
+import { ArrowDownTray } from './Icons'
 
 interface IProps {
   categories: any
@@ -45,9 +46,9 @@ export default function PageTabs(props: IProps) {
                 {addButton.title}
               </span>
             </Link>
-            <button className="group grid h-8 w-8 place-items-center rounded-lg border bg-white hover:bg-primary-5">
-              <DownloadIcon className="fill-black group-hover:fill-white" />
-            </button>
+            <Button intent="secondary" className="w-fit px-2">
+              <ArrowDownTray />
+            </Button>
           </div>
         )}
       </Tab.List>

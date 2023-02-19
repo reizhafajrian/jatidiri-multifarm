@@ -1,7 +1,7 @@
 'use client'
-import EyesIcon from '@/assets/icons/eyes.svg'
 import clsx from 'clsx'
 import { useState } from 'react'
+import { Eye, EyeSlash } from '../Icons'
 
 interface IProps {
   label: string
@@ -25,7 +25,7 @@ export default function InputText(
           className={clsx(
             className,
             'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
-            errorMsg ? 'border-[#CE0000]' : 'border-neutral-4'
+            errorMsg ? 'border-error' : 'border-neutral-4'
           )}
           placeholder=" "
           {...rest}
@@ -34,7 +34,7 @@ export default function InputText(
           htmlFor={label}
           className={clsx(
             'absolute top-2 left-1 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black',
-            errorMsg ? 'text-[#CE0000]' : 'text-neutral-4'
+            errorMsg ? 'text-error' : 'text-neutral-4'
           )}
         >
           {label}
@@ -42,18 +42,20 @@ export default function InputText(
         {isSecured && (
           <button
             type="button"
-            className="absolute inset-y-0 right-0 mr-4"
+            className={clsx('absolute inset-y-0 right-0 mr-4')}
             onClick={() => setShowPassword(!showPassword)}
           >
-            <EyesIcon
-              className={errorMsg ? 'stroke-[#CE0000]' : 'stroke-neutral-4'}
-            />
+            {showPassword ? (
+              <EyeSlash
+                className={errorMsg ? 'stroke-error' : 'stroke-neutral-4'}
+              />
+            ) : (
+              <Eye className={errorMsg ? 'stroke-error' : 'stroke-neutral-4'} />
+            )}
           </button>
         )}
       </div>
-      {errorMsg && (
-        <span className="text-[10px] text-[#CE0000]">{errorMsg}</span>
-      )}
+      {errorMsg && <span className="text-[10px] text-error">{errorMsg}</span>}
     </>
   )
 }

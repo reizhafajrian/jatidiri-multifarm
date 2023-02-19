@@ -1,8 +1,8 @@
-import DownloadIcon from '@/assets/icons/download-outline.svg'
 import Button from '@/components/Button'
 import Navbar from '@/components/Layout/Navbar'
 import { animalTitle } from '@/data/data'
 import Link from 'next/link'
+import { ArrowDownTray } from '../Icons'
 
 export default function Header({ animal_type }: { animal_type: string }) {
   const menu =
@@ -28,7 +28,7 @@ export default function Header({ animal_type }: { animal_type: string }) {
           </Link>
         </Button>
         <Button intent="secondary" className="w-fit px-2">
-          <DownloadIcon />
+          <ArrowDownTray />
         </Button>
       </div>
     </Navbar>

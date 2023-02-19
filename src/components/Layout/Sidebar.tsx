@@ -1,4 +1,3 @@
-import LogoImage from '@/assets/images/logo.png'
 import Image from 'next/image'
 import SidebarMenu from './SidebarMenu'
 
@@ -8,7 +7,7 @@ export default function Sidebar() {
       <div className="relative mb-6 h-28">
         <Image
           className="object-contain object-left"
-          src={LogoImage}
+          src="/logo.png"
           alt="logo"
           priority
           fill

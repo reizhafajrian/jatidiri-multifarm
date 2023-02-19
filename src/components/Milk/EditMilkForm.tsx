@@ -30,7 +30,7 @@ export default function EditMilkForm({
               label="Tanggal"
               selected={formValues.milk_date}
               onChange={(date: any) =>
-                setFormValues((s) => ({ ...s, birth_date: date }))
+                setFormValues((s) => ({ ...s, milk_date: date }))
               }
             />
             <InputText
@@ -49,9 +49,9 @@ export default function EditMilkForm({
           <div className="grid grid-cols-2 gap-x-5 gap-y-4">
             <InputDate
               label="Tanggal"
-              selected={formValues.milk_date}
+              selected={formValues.history_milk_date}
               onChange={(date: any) =>
-                setFormValues((s) => ({ ...s, birth_date: date }))
+                setFormValues((s) => ({ ...s, history_milk_date: date }))
               }
             />
             <InputText
@@ -59,7 +59,7 @@ export default function EditMilkForm({
               onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
                 setFormValues((s: any) => ({
                   ...s,
-                  milk: e.target.value,
+                  history_milk: e.target.value,
                 }))
               }
             />

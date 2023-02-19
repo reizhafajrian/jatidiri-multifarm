@@ -13,8 +13,13 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [formValues, setFormValues] = useState({} as IUser)
-  const { name, email, role, whatsapp_number, password } = formValues
   const [error, setError] = useState({} as IUser)
+
+  const { name, email, role, whatsapp_number, password } = formValues
+  const isEmpty =
+    !email ||
+    !password ||
+    (mode === 'register' && (!name || !role || !whatsapp_number))
   const isEmptyMsg = 'Data yang dimasukkan salah'
 
   const isEmptyError = () => {
@@ -37,19 +42,15 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
     e.preventDefault()
     setError({} as IUser)
     setLoading(true)
+    if (isEmpty) return isEmptyError()
 
     try {
       if (mode === 'signin') {
-        if (!email || !password) return isEmptyError()
         await signin(formValues)
         setLoading(false)
         router.push('/home')
       } else {
-        const isEmpty =
-          !name || !email || !role || !whatsapp_number || !password
-        if (isEmpty) return isEmptyError()
         console.log(formValues)
-
         // await register(formValues)
       }
 

@@ -1,5 +1,5 @@
-import CloseIcon from '@/assets/icons/close.svg'
 import AuthForm from '../Form/AuthForm'
+import { Close } from '../Icons'
 import Modal from '../Modal'
 
 interface IProps {
@@ -15,7 +15,7 @@ export default function AddMemberForm(props: IProps) {
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-semibold">Tambah Member</h1>
         <button onClick={() => closeModal(false)}>
-          <CloseIcon />
+          <Close />
         </button>
       </div>
       <div className="my-5">

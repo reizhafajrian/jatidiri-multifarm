@@ -1,7 +1,7 @@
 'use client'
-import DownloadIcon from '@/assets/icons/download-outline.svg'
 import { useState } from 'react'
 import Button from '../Button'
+import { ArrowDownTray } from '../Icons'
 import Modal from '../Modal'
 import AddMilkForm from './AddMilkForm'
 import FilterMilkTable from './FilterMilkTable'
@@ -26,7 +26,7 @@ export default function Milk() {
               <span className="text-sm capitalize">tambah data susu</span>
             </Button>
             <Button intent="secondary" className="w-fit px-2">
-              <DownloadIcon className="fill-black group-hover:fill-white" />
+              <ArrowDownTray />
             </Button>
           </div>
         </div>

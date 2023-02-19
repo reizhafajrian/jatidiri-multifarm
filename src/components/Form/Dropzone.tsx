@@ -1,6 +1,5 @@
-import CloseIcon from '@/assets/icons/close.svg'
-import FileSmallIcon from '@/assets/icons/file-small.svg'
 import { useDropzone } from 'react-dropzone'
+import { Close, FileSmall } from '../Icons'
 
 interface IProps {
   label: string
@@ -31,14 +30,14 @@ export default function Dropzone(props: IProps) {
         {value && (
           <div className="mt-2 flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
             <div className="flex gap-3">
-              <FileSmallIcon className="fill-primary-3" />
+              <FileSmall />
               <div>
                 <p className="mb-1 font-semibold">{value.path}</p>
                 <p className="text-xs text-neutral-4">{value.size} bytes</p>
               </div>
             </div>
             <button onClick={() => setValue(undefined)}>
-              <CloseIcon />
+              <Close />
             </button>
           </div>
         )}

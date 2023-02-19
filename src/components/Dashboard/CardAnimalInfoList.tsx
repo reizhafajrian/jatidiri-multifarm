@@ -1,6 +1,4 @@
-import CowIcon from '@/assets/icons/dashboard-cow.svg'
-import GoatIcon from '@/assets/icons/dashboard-goat.svg'
-import SheepIcon from '@/assets/icons/dashboard-sheep.svg'
+import { DashboardCow, DashboardGoat, DashboardSheep } from '../Icons'
 import CardAnimalInfo from './CardAnimalInfo'
 
 export default function CardAnimalInfoList() {
@@ -17,7 +15,7 @@ export default function CardAnimalInfoList() {
 }
 
 const dataAnimal = [
-  { icon: <CowIcon />, animal_type: 'cow' },
-  { icon: <SheepIcon />, animal_type: 'sheep' },
-  { icon: <GoatIcon />, animal_type: 'goat' },
+  { icon: <DashboardCow />, animal_type: 'cow' },
+  { icon: <DashboardSheep />, animal_type: 'sheep' },
+  { icon: <DashboardGoat />, animal_type: 'goat' },
 ]

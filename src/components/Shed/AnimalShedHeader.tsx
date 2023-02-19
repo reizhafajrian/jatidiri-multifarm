@@ -1,11 +1,11 @@
 'use client'
-import PencilIcon from '@/assets/icons/pencil.svg'
 import BackLink from '@/components/BackLink'
 import Button from '@/components/Button'
 import Navbar from '@/components/Layout/Navbar'
 import AddShedAnimalForm from '@/components/Shed/AddShedAnimalForm'
 import { animalTitle } from '@/data/data'
 import { useState } from 'react'
+import { PencilSolid } from '../Icons'
 
 interface IProps {
   animal_type: string
@@ -48,7 +48,7 @@ export default function AnimalShedHeader({ animal_type, id }: IProps) {
           <span className="text-sm capitalize">
             tambah {animalTitle(animal_type)}
           </span>
-          <PencilIcon />
+          <PencilSolid />
         </Button>
       </Navbar>
     </>

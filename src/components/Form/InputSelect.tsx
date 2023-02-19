@@ -1,8 +1,8 @@
 'use client'
-import CaretIcon from '@/assets/icons/caret.svg'
 import { Combobox, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import { Fragment, useState } from 'react'
+import { ChevronDown } from '../Icons'
 
 interface IProps {
   label: string
@@ -10,11 +10,10 @@ interface IProps {
   value: string
   onChange: (value: string) => void
   errorMsg?: string
-  name?: string
 }
 
 export default function InputSelect(props: IProps) {
-  const { label, options, value, onChange, name, errorMsg } = props
+  const { label, options, value, onChange, errorMsg } = props
   const [query, setQuery] = useState('')
 
   const filteredOptions =
@@ -47,10 +46,10 @@ export default function InputSelect(props: IProps) {
               {label}
             </label>
             <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
-              <CaretIcon
+              <ChevronDown
                 className={clsx(
                   'h-7 w-7',
-                  errorMsg ? 'fill-[#CE0000]' : 'fill-neutral-4'
+                  errorMsg ? 'fill-error' : 'fill-neutral-4'
                 )}
               />
             </Combobox.Button>
@@ -62,7 +61,7 @@ export default function InputSelect(props: IProps) {
             leaveTo="opacity-0"
             afterLeave={() => setQuery('')}
           >
-            <Combobox.Options className="absolute z-50 mt-1 max-h-40 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               {filteredOptions?.length === 0 && query !== '' ? (
                 <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                   {/* Nothing found. */}

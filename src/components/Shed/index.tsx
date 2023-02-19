@@ -1,7 +1,7 @@
-import DownloadIcon from '@/assets/icons/download-outline.svg'
 import { shedData } from '@/data/dummy'
 import Link from 'next/link'
 import Button from '../Button'
+import { ArrowDownTray } from '../Icons'
 import Navbar from '../Layout/Navbar'
 import ShedTable from './ShedTable'
 
@@ -22,7 +22,7 @@ export default function Shed() {
             </Link>
           </Button>
           <Button intent="secondary" className="w-fit px-2">
-            <DownloadIcon />
+            <ArrowDownTray />
           </Button>
         </div>
       </Navbar>

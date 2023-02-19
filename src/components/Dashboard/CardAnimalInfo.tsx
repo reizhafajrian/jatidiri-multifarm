@@ -16,11 +16,11 @@ export default function CardAnimalInfo(props: IProps) {
 
   const content = ({ total, title, label }: any) => (
     <div className="space-y-1">
-      <p className="text-xl font-semibold text-[#25282B]">
+      <p className="text-xl font-semibold text-neutral-5">
         {total}
-        <span className="text-[10px] font-normal text-[#515356]"> Ekor</span>
+        <span className="text-[10px] font-normal text-neutral-4"> Ekor</span>
       </p>
-      <p className="text-xs text-[#818384]">
+      <p className="text-xs text-neutral-4">
         {title} <span className="font-medium">{label}</span>
       </p>
     </div>
@@ -32,7 +32,7 @@ export default function CardAnimalInfo(props: IProps) {
         <div className="h-12 w-12">{icon}</div>
         <div>
           <h1 className="mb-1 text-xl font-semibold text-neutral-5">{title}</h1>
-          <h2 className="text-xs text-[#818384]">total {title} hidup</h2>
+          <h2 className="text-xs text-neutral-4">total {title} hidup</h2>
         </div>
       </div>
       <div className="grid grid-cols-2">

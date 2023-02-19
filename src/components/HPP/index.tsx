@@ -1,6 +1,6 @@
-import DownloadIcon from '@/assets/icons/download.svg'
 import { hppData } from '@/data/dummy'
 import Button from '../Button'
+import { CloudArrowDown } from '../Icons'
 import Navbar from '../Layout/Navbar'
 import FilterHppTable from './FilterHppTable'
 import HppTable from './HppTable'
@@ -19,7 +19,7 @@ export default function HPP() {
           intent="secondary"
           className="flex justify-center gap-1 rounded-xl py-1"
         >
-          <DownloadIcon className="h-4 w-4" /> download
+          <CloudArrowDown /> download
         </Button>
       </Navbar>
       <FilterHppTable />

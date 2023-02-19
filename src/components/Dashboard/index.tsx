@@ -1,5 +1,5 @@
-import DownloadIcon from '@/assets/icons/download.svg'
 import Button from '../Button'
+import { CloudArrowDown } from '../Icons'
 import CardAnimalInfoList from './CardAnimalInfoList'
 import CardDiagramList from './CardDiagramList'
 import CardInfoList from './CardInfoList'
@@ -14,7 +14,7 @@ export default function Dashboard() {
           intent="secondary"
           className="flex justify-center gap-1 rounded-xl py-1"
         >
-          <DownloadIcon className="h-4 w-4" /> download
+          <CloudArrowDown /> download
         </Button>
       </div>
       <CardInfoList />

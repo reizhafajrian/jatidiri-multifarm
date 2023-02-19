@@ -1,19 +1,17 @@
-import ArrowUpIcon from '@/assets/icons/arrow-up.svg'
-import MilkIcon from '@/assets/icons/milk-circle.svg'
-import WalletIcon from '@/assets/icons/wallet-circle.svg'
 import formatRupiah from '@/utils/formatRupiah'
 import Card from '../Card'
+import { ArrowSmallUp, MilkCircle, WalletCircle } from '../Icons'
 
 const cardData = [
   {
-    icon: <WalletIcon />,
+    icon: <WalletCircle />,
     title: 'Total Pendapatan',
     date: 'Januari 2023',
     value: formatRupiah('1250000'),
     percentage: '5.2',
   },
   {
-    icon: <MilkIcon />,
+    icon: <MilkCircle />,
     title: 'Total Susu',
     date: 'Januari 2023',
     value: '35 Liter',
@@ -37,9 +35,11 @@ export default function MilkCardList() {
             <p className="text-base font-semibold text-primary-4">
               {item.date}
             </p>
-            <p className="ml-auto mt-auto flex h-fit w-fit items-center gap-1 rounded-xl bg-[#E1F7E8] py-[2px] px-[10px] text-xs font-medium text-[#0F752E]">
-              <ArrowUpIcon className="fill-[#16B364] stroke-[#16B364]" />
-              {item.percentage} %
+            <p className="ml-auto mt-auto flex h-fit w-fit items-center gap-1 rounded-xl bg-success-3 py-[2px] px-[10px]">
+              <ArrowSmallUp className="fill-success-1" />
+              <span className="text-xs font-medium text-success-2">
+                {item.percentage} %
+              </span>
             </p>
           </div>
         </Card>

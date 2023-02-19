@@ -1,8 +1,10 @@
-import CalcIcon from '@/assets/icons/calc-circle.svg'
-import CatIcon from '@/assets/icons/cat-circle.svg'
-import CowIcon from '@/assets/icons/cow-circle.svg'
-import GoatIcon from '@/assets/icons/goat-circle.svg'
-import SheepIcon from '@/assets/icons/sheep-circle.svg'
+import {
+  CalcCircle,
+  CowCircle,
+  FeedCircle,
+  GoatCircle,
+  SheepCircle,
+} from '../Icons'
 import CategoryHeader from './CategoryHeader'
 import Content from './Content'
 
@@ -28,24 +30,29 @@ export default function Category() {
 }
 
 const feedCardList = [
-  { title: 'Jenis Pakan', value: '4', label: 'Jenis', icon: <CatIcon /> },
+  { title: 'Jenis Pakan', value: '4', label: 'Jenis', icon: <FeedCircle /> },
   {
     title: 'Total Penggunaan',
     value: '250',
     label: 'Kilogram',
-    icon: <CalcIcon />,
+    icon: <CalcCircle />,
   },
-  { title: 'Total Stock', value: '150', label: 'Kilogram', icon: <CalcIcon /> },
+  {
+    title: 'Total Stock',
+    value: '150',
+    label: 'Kilogram',
+    icon: <CalcCircle />,
+  },
 ]
 
 const vitaminCardList = [
-  { title: 'Sapi', value: '4/10', icon: <CowIcon /> },
-  { title: 'Domba', value: '4/8', icon: <SheepIcon /> },
-  { title: 'Kambing', value: '4/6', icon: <GoatIcon /> },
+  { title: 'Sapi', value: '4/10', icon: <CowCircle /> },
+  { title: 'Domba', value: '4/8', icon: <SheepCircle /> },
+  { title: 'Kambing', value: '4/6', icon: <GoatCircle /> },
 ]
 
 const anthelminticCardList = [
-  { title: 'Sapi', value: '4/10', icon: <CowIcon /> },
-  { title: 'Domba', value: '4/8', icon: <SheepIcon /> },
-  { title: 'Kambing', value: '4/6', icon: <GoatIcon /> },
+  { title: 'Sapi', value: '4/10', icon: <CowCircle /> },
+  { title: 'Domba', value: '4/8', icon: <SheepCircle /> },
+  { title: 'Kambing', value: '4/6', icon: <GoatCircle /> },
 ]

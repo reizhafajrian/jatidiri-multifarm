@@ -1,6 +1,6 @@
-import CalendarIcon from '@/assets/icons/calendar.svg'
 import { forwardRef, LegacyRef } from 'react'
 import DatePicker from 'react-datepicker'
+import { Calendar } from '../Icons'
 
 interface IProps {
   selected: any
@@ -31,19 +31,20 @@ export default function InputDate(props: IProps) {
           {label}
         </label>
         <div className="absolute inset-y-0 right-0 grid place-items-center pr-2.5">
-          <CalendarIcon className="fill-none stroke-neutral-4" />
+          <Calendar className="stroke-neutral-4" />
         </div>
       </div>
     )
   })
 
   return (
-    <div className="z-50">
+    <div>
       <DatePicker
         showPopperArrow={false}
         selected={selected}
         onChange={onChange}
         customInput={<CustomInput />}
+        calendarClassName="z-50"
       />
     </div>
   )

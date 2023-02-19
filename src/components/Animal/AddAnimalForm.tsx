@@ -1,5 +1,4 @@
 'use client'
-import FileIcon from '@/assets/icons/file.svg'
 import { animalFormContent } from '@/data/data'
 import { IAnimalProps } from '@/data/interfaces'
 import { useState } from 'react'
@@ -8,6 +7,7 @@ import Dropzone from '../Form/Dropzone'
 import InputDate from '../Form/InputDate'
 import InputSelect from '../Form/InputSelect'
 import InputText from '../Form/InputText'
+import { File } from '../Icons'
 
 export default function AddAnimalForm(props: IAnimalProps) {
   const content = animalFormContent[props.animal_type!]
@@ -56,7 +56,7 @@ export default function AddAnimalForm(props: IAnimalProps) {
             setValue={setCertificate}
             placeholder={
               <>
-                <FileIcon className="fill-neutral-4" />
+                <File />
                 <p className="font-semibold">
                   Upload file atau
                   <span className="text-primary-5"> klik disini</span> untuk

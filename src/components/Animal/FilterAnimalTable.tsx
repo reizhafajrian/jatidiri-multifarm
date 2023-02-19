@@ -1,10 +1,10 @@
 'use client'
-import CaretIcon from '@/assets/icons/caret.svg'
 import { dateOptions } from '@/data/data'
 import { shortDateFormatter } from '@/utils/formatDate'
 import { Popover, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import DatePicker from 'react-datepicker'
+import { ChevronDown } from '../Icons'
 import SelectMenu from '../SelectMenu'
 
 export default function FilterAnimalTable() {
@@ -24,7 +24,7 @@ export default function FilterAnimalTable() {
         <Popover className="relative">
           <Popover.Button className="flex items-center px-2 text-sm focus:outline-none">
             Today
-            <CaretIcon className="ml-3 h-6 w-6 fill-neutral-4" />
+            <ChevronDown className="fill-neutral-4" />
           </Popover.Button>
           <Transition
             as={Fragment}

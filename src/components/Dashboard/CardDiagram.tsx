@@ -1,5 +1,5 @@
-import DashboardInfo from '@/assets/icons/dashboard-info.svg'
 import Card from '../Card'
+import { DashboardInfo } from '../Icons'
 
 interface IProps {
   className?: string

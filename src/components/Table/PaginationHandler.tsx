@@ -1,3 +1,5 @@
+import { ChevronLeft, ChevronRight } from '../Icons'
+
 interface IProps {
   table: any
 }
@@ -19,9 +21,9 @@ export default function PaginationHandler(props: IProps) {
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
-        {'<'}
+        <ChevronLeft />
       </button>
-      {[...Array(table.getPageCount())].map((val, i) => (
+      {[...Array(table.getPageCount())].map((_, i) => (
         <button
           key={i}
           className="rounded-lg px-3 py-2 text-xs disabled:bg-primary-4 disabled:text-white"
@@ -36,7 +38,7 @@ export default function PaginationHandler(props: IProps) {
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
-        {'>'}
+        <ChevronRight />
       </button>
       <button
         className="px-3 py-2 text-xs disabled:text-black/30"
