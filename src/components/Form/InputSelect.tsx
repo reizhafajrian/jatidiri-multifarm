@@ -32,7 +32,7 @@ export default function InputSelect(props: IProps) {
               onChange={(event) => setQuery(event.target.value)}
               className={clsx(
                 'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0',
-                errorMsg ? 'border-[#CE0000]' : 'border-neutral-4'
+                errorMsg ? 'border-error' : 'border-neutral-4'
               )}
               placeholder=" "
             />
@@ -40,7 +40,7 @@ export default function InputSelect(props: IProps) {
               htmlFor={label}
               className={clsx(
                 'absolute top-2 left-1 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black',
-                errorMsg ? 'text-[#CE0000]' : 'text-neutral-4'
+                errorMsg ? 'text-error' : 'text-neutral-4'
               )}
             >
               {label}

@@ -26,49 +26,22 @@ export const dateOptions = [
 
 // ANIMAL FORM
 export const animalFormContent = {
-  initial: {
-    adult: {
-      type: '',
-      arrival_date: '',
-      birth_date: '',
-      female_parent_origin: '',
-      male_parent_origin: '',
-      origin: '',
-      weight: '',
-      purchase_price: '',
-      gender: '',
-      description: '',
-    },
-    cempek: {
-      type: '',
-      birth_date: '',
-      female_parent_origin: '',
-      male_parent_origin: '',
-      birth_weight: '',
-      birth_condition: '',
-      gender: '',
-      description: '',
-    },
-  },
   sheep: {
-    title: 'Domba',
     typeOptions: ['doorper', 'garut'],
-    femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-    maleParentOriginOptions: ['garut', 'impor', 'swiss'],
+    femaleOriginOptions: ['garut', 'impor', 'swiss'],
+    maleOriginOptions: ['garut', 'impor', 'swiss'],
     originOptions: ['garut', 'impor', 'australia'],
   },
   goat: {
-    title: 'Kambing',
     typeOptions: ['doorper', 'garut'],
-    femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-    maleParentOriginOptions: ['garut', 'impor', 'swiss'],
+    femaleOriginOptions: ['garut', 'impor', 'swiss'],
+    maleOriginOptions: ['garut', 'impor', 'swiss'],
     originOptions: ['garut', 'impor', 'australia'],
   },
   cow: {
-    title: 'Sapi',
     typeOptions: ['doorper', 'garut'],
-    femaleParentOriginOptions: ['garut', 'impor', 'swiss'],
-    maleParentOriginOptions: ['garut', 'impor', 'swiss'],
+    femaleOriginOptions: ['garut', 'impor', 'swiss'],
+    maleOriginOptions: ['garut', 'impor', 'swiss'],
     originOptions: ['garut', 'impor', 'australia'],
   },
 }

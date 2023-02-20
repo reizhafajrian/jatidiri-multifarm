@@ -1,6 +1,7 @@
 'use client'
 import { IUser } from '@/data/interfaces'
 import { signin } from '@/libs/api'
+import { useStore } from '@/store/store'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -11,55 +12,58 @@ import InputText from './InputText'
 
 export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
   const router = useRouter()
-  const [loading, setLoading] = useState(false)
+  const { isLoading, isError, isEmptyMsg } = useStore()
   const [formValues, setFormValues] = useState({} as IUser)
-  const [error, setError] = useState({} as IUser)
-
-  const { name, email, role, whatsapp_number, password } = formValues
-  const isEmpty =
-    !email ||
-    !password ||
-    (mode === 'register' && (!name || !role || !whatsapp_number))
-  const isEmptyMsg = 'Data yang dimasukkan salah'
-
-  const isEmptyError = () => {
-    setLoading(false)
-    setError((s: any) => ({
-      ...s,
-      name: !name && isEmptyMsg,
-      email: !email && isEmptyMsg,
-      role: !role && isEmptyMsg,
-      whatsapp_number: !whatsapp_number && isEmptyMsg,
-      password: !password && isEmptyMsg,
-    }))
-  }
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormValues((s) => ({ ...s, [e.target.name]: e.target.value }))
-  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setError({} as IUser)
-    setLoading(true)
-    if (isEmpty) return isEmptyError()
+    useStore.setState({ isLoading: true, isError: {} })
+
+    // isEmptyErrorCheck
+    if (
+      !formValues.email ||
+      !formValues.password ||
+      (mode === 'register' &&
+        (!formValues.name || !formValues.role || !formValues.whatsapp_number))
+    )
+      return useStore.setState({
+        isLoading: false,
+        isError: {
+          name: !formValues.name && isEmptyMsg,
+          email: !formValues.email && isEmptyMsg,
+          role: !formValues.role && isEmptyMsg,
+          whatsapp_number: !formValues.whatsapp_number && isEmptyMsg,
+          password: !formValues.password && isEmptyMsg,
+        },
+      })
 
     try {
       if (mode === 'signin') {
         await signin(formValues)
-        setLoading(false)
+        useStore.setState({ isLoading: false })
+        setFormValues({} as IUser)
         router.push('/home')
       } else {
         console.log(formValues)
         // await register(formValues)
       }
-
-      setFormValues({} as IUser)
     } catch (e: any) {
-      setLoading(false)
       console.error({ error: e.error })
-      setError({ email: ' ', password: ' ' })
+      useStore.setState({
+        isLoading: false,
+        isError: {
+          name: !e.name && '',
+          email: !e.email && '',
+          role: !e.role && '',
+          whatsapp_number: !e.whatsapp_number && '',
+          password: !e.password && '',
+        },
+      })
     }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormValues((s) => ({ ...s, [e.target.name]: e.target.value }))
   }
 
   return (
@@ -73,16 +77,16 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             label="Nama"
             name="name"
             onChange={handleChange}
-            errorMsg={error.name}
-            disabled={loading}
+            errorMsg={isError.name}
+            disabled={isLoading}
           />
         )}
         <InputText
           label="Email"
           name="email"
           onChange={handleChange}
-          errorMsg={error.email}
-          disabled={loading}
+          errorMsg={isError.email}
+          disabled={isLoading}
         />
         {mode === 'register' && (
           <>
@@ -90,8 +94,8 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
               label="Whatsapp Number"
               name="whatsapp_number"
               onChange={handleChange}
-              errorMsg={error.whatsapp_number}
-              disabled={loading}
+              errorMsg={isError.whatsapp_number}
+              disabled={isLoading}
             />
             <InputSelect
               label="Role"
@@ -100,7 +104,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
               onChange={(value) =>
                 setFormValues((s) => ({ ...s, role: value }))
               }
-              errorMsg={error.role}
+              errorMsg={isError.role}
             />
           </>
         )}
@@ -108,8 +112,8 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
           label="Password"
           name="password"
           onChange={handleChange}
-          errorMsg={error.password}
-          disabled={loading}
+          errorMsg={isError.password}
+          disabled={isLoading}
           isSecured
         />
         {mode === 'signin' ? (
@@ -119,7 +123,7 @@ export default function AuthForm({ mode }: { mode: 'register' | 'signin' }) {
             </Link>
             <Button
               typeof="submit"
-              className={clsx('w-full', loading && 'animate-pulse')}
+              className={clsx('w-full', isLoading && 'animate-pulse')}
             >
               signin
             </Button>

@@ -1,8 +1,8 @@
 import { ILayoutProps } from '@/data/interfaces'
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
+import '@/styles/ReactToastify.css'
 import { Poppins } from '@next/font/google'
-import 'react-toastify/dist/ReactToastify.min.css'
 
 const poppins = Poppins({
   subsets: ['latin'],

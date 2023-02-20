@@ -1,4 +1,5 @@
 'use client'
+import { useStore } from '@/store/store'
 import { Tab } from '@headlessui/react'
 import Link from 'next/link'
 import Button from './Button'
@@ -23,6 +24,7 @@ export default function PageTabs(props: IProps) {
           {Object.keys(categories).map((category) => (
             <Tab
               key={category}
+              onClick={() => useStore.setState({ isError: {} })}
               className={({ selected }) =>
                 `border-b py-3 px-4 text-xs focus:outline-none ${
                   selected
