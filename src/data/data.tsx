@@ -6,6 +6,9 @@ export const animalTitle = (animal_type: string) =>
     ? 'Domba'
     : 'Sapi'
 
+export const genderTitle = (gender: string) =>
+  gender === 'male' ? 'Pejantan' : 'Betina'
+
 // CATEGORY TITLE
 export const categoryTitle = (category: string) =>
   category === 'feed'
@@ -48,15 +51,6 @@ export const animalFormContent = {
 
 // SHED FORM
 export const shedFormContent = {
-  initial: {
-    shed_code: '',
-    animal_type: '',
-    animal_weight: '',
-    feed: '',
-    feed_weight: '',
-    age_range: '',
-    description: '',
-  },
   animal_types: [
     { value: 'goat', label: 'Kambing' },
     { value: 'sheep', label: 'Domba' },

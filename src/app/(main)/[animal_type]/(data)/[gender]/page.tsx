@@ -1,21 +1,22 @@
-import AnimalTable from '@/components/Animal/AnimalTable'
-import Header from '@/components/Animal/Header'
+import AnimalHeader from '@/components/layout/AnimalHeader'
+import AnimalTable from '@/components/table/AnimalTable'
 import { IPageProps } from '@/data/interfaces'
-import { fetcher } from '@/libs/api'
+import { fetcher } from '@/utils/fetcher'
 import { cookies } from 'next/headers'
 
 export default async function MaleAnimalPage(props: IPageProps) {
-  const data = await getData(props.params.animal_type)
+  const { animal_type, gender } = props.params
+  const data = await getData({ animal_type })
 
   return (
     <main>
-      <Header animal_type={props.params.animal_type} />
-      <AnimalTable data={data} params={props.params} />
+      <AnimalHeader animal_type={animal_type} />
+      <AnimalTable data={data} params={{ animal_type, gender }} />
     </main>
   )
 }
 
-const getData = async (animal_type: string) => {
+const getData = async ({ animal_type }: any) => {
   const nextCookies = cookies()
 
   const response = await fetcher({

@@ -1,5 +1,14 @@
-import HPP from '@/components/HPP'
+import HppFilter from '@/components/filter/HppFilter'
+import HppHeader from '@/components/layout/HppHeader'
+import HppTable from '@/components/table/HppTable'
+import { hppData } from '@/data/dummy'
 
 export default function HppPage() {
-  return <HPP />
+  return (
+    <main>
+      <HppHeader />
+      <HppFilter />
+      <HppTable data={hppData} />
+    </main>
+  )
 }

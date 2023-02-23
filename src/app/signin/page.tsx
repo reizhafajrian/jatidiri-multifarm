@@ -1,4 +1,4 @@
-import AuthForm from '@/components/Form/AuthForm'
+import SignInForm from '@/components/form/SignInForm'
 import Image from 'next/image'
 
 export default function SigninPage() {
@@ -18,7 +18,10 @@ export default function SigninPage() {
               </span>
             </span>
           </h1>
-          <AuthForm mode="signin" />
+          <div className="w-full">
+            <h2 className="mb-8 text-[32px] font-medium">Sign In Here</h2>
+            <SignInForm />
+          </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
-import AddAnimalForm from '@/components/Animal/AddAnimalForm'
-import AddCempekForm from '@/components/Animal/AddCempekForm'
-import BackLink from '@/components/BackLink'
-import PageTabs from '@/components/PageTabs'
+import AddAnimalForm from '@/components/form/AddAnimalForm'
+import AddCempekForm from '@/components/form/AddCempekForm'
+import BackLink from '@/components/shared/BackLink'
+import PageTabs from '@/components/shared/PageTabs'
 import { IPageProps } from '@/data/interfaces'
 
 export default function AddAnimalPage(props: IPageProps) {

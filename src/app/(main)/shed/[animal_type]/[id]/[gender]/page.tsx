@@ -1,9 +1,11 @@
-import AnimalShedTable from '@/components/Shed/AnimalShedTable'
+import ShedAnimalHeader from '@/components/layout/ShedAnimalHeader'
+import ShedAnimalTable from '@/components/table/ShedAnimalTable'
 import { cowsData, goatsData, sheepsData } from '@/data/dummy'
+import { IPageProps } from '@/data/interfaces'
 
-export default function AnimalShedPage({
-  params: { animal_type, id, gender },
-}: any) {
+export default function AnimalShedPage(props: IPageProps) {
+  const { animal_type, id, gender } = props.params
+
   const data =
     animal_type === 'goat'
       ? goatsData
@@ -11,5 +13,10 @@ export default function AnimalShedPage({
       ? sheepsData
       : cowsData
 
-  return <AnimalShedTable data={data} />
+  return (
+    <main>
+      <ShedAnimalHeader animal_type={animal_type} id={id} />
+      <ShedAnimalTable data={data} />
+    </main>
+  )
 }

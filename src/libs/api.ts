@@ -1,41 +1,6 @@
-import { IUser } from '@/data/interfaces'
+import { IAnimalFields, IUser } from '@/data/interfaces'
+import { fetcher } from '@/utils/fetcher'
 import Cookies from 'js-cookie'
-
-export const fetcher = async (props: {
-  url: string
-  method?: string
-  body?: object
-  token?: string
-}) => {
-  const { url, method = 'get', body, token } = props
-
-  const headers: any = {
-    Accept: 'application/json',
-    'Content-Type': 'application/json',
-  }
-
-  if (token) headers.Authorization = `Bearer ${token}`
-
-  const res = await fetch(url, {
-    method,
-    credentials: 'include',
-    ...(body && { body: JSON.stringify(body) }),
-    headers,
-  })
-
-  const data = await res.json()
-  return data
-}
-
-export const register = async (user: IUser) => {
-  const res = await fetcher({
-    url: '/api/auth/register',
-    method: 'post',
-    body: user,
-  })
-
-  return res
-}
 
 export const signin = async (user: IUser) => {
   const res = await fetcher({
@@ -51,4 +16,38 @@ export const signin = async (user: IUser) => {
   })
 
   return res
+}
+
+export const addAnimal = async (data: {
+  animal_type?: string
+  gender?: string
+  values: IAnimalFields
+}) => {
+  const { animal_type, gender, values } = data
+  const genderValue = gender === 'male' ? 'true' : 'false'
+
+  const formData = new FormData()
+  formData.append('created_by', '63e5bdd29536b95a6759a525')
+  formData.append('gender', genderValue)
+
+  for (let value in values) {
+    if (value.includes('date')) {
+      formData.append(value, values[value].toISOString())
+    } else {
+      formData.append(value, values[value])
+    }
+  }
+  formData.set('files', values.files[0])
+
+  try {
+    const res = await fetcher({
+      url: `/api/${animal_type}/create`,
+      method: 'post',
+      formData,
+    })
+
+    return res
+  } catch (e) {
+    return e
+  }
 }
