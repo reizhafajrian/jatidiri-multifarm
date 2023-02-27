@@ -1,4 +1,4 @@
-import { IAnimalFields, IUser } from '@/data/interfaces'
+import { IAnimalFields, IAnimalProps, IUser } from '@/data/interfaces'
 import { fetcher } from '@/utils/fetcher'
 import Cookies from 'js-cookie'
 
@@ -18,17 +18,14 @@ export const signin = async (user: IUser) => {
   return res
 }
 
-export const addAnimal = async (data: {
-  animal_type?: string
-  gender?: string
-  values: IAnimalFields
-}) => {
+export const addAnimal = async (
+  data: { values: IAnimalFields } & IAnimalProps
+) => {
   const { animal_type, gender, values } = data
-  const genderValue = gender === 'male' ? 'true' : 'false'
 
   const formData = new FormData()
   formData.append('created_by', '63e5bdd29536b95a6759a525')
-  formData.append('gender', genderValue)
+  formData.append('gender', gender === 'male' ? 'true' : 'false')
 
   for (let value in values) {
     if (value.includes('date')) {

@@ -20,6 +20,7 @@ export default function AddAnimalForm(props: IAnimalProps) {
   const { animal_type, gender } = props
   const content = animalFormContent[animal_type!]
   const animal = animalTitle(animal_type!)
+  console.log(gender)
 
   const addAnimalHandler = async (values: IAnimalFields) => {
     try {

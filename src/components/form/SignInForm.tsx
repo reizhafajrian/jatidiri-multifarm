@@ -23,6 +23,7 @@ export default function SignInForm() {
     <Formik
       initialValues={{} as IUser}
       validationSchema={signinSchema}
+      validateOnChange={false}
       onSubmit={(values) => signinHandler(values)}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
@@ -53,7 +54,10 @@ export default function SignInForm() {
             </button>
             <Button
               type="submit"
-              className={clsx('min-w-full', isSubmitting && 'animate-pulse')}
+              className={clsx(
+                'min-w-full rounded-lg py-2',
+                isSubmitting && 'animate-pulse'
+              )}
               disabled={isSubmitting}
             >
               signin

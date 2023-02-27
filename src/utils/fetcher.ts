@@ -9,29 +9,27 @@ export const fetcher = async (props: {
 }) => {
   const { url, method = 'get', body, token, formData } = props
 
-  const headers: any = {
-    // Accept: 'application/json',
-    // 'Content-Type': formData ? 'multipart/form-data' : 'application/json',
-  }
+  let Authorization
 
   if (token) {
-    headers.Authorization = `Bearer ${token}`
+    Authorization = `Bearer ${token}`
   } else {
     const jwt = Cookies.get('token')
     if (jwt) {
-      headers.Authorization = `Bearer ${jwt}`
+      Authorization = `Bearer ${jwt}`
     }
   }
 
-  const options = {
+  const res = await fetch(url, {
     method,
     credentials: 'include',
     ...(body && { body: JSON.stringify(body) }),
     ...(formData && { body: formData }),
-    headers,
-  }
-
-  const res = await fetch(url, { ...options })
+    headers: {
+      Authorization,
+      'Content-Type': !formData ? 'application/json' : undefined,
+    },
+  })
 
   const data = await res.json()
   return data

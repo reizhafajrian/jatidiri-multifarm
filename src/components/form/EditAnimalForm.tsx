@@ -26,6 +26,7 @@ export default function EditAnimalForm(props: IAnimalProps) {
     <Formik
       initialValues={{} as IAnimalFields}
       validationSchema={animalSchema}
+      validateOnChange={false}
       onSubmit={(values) => editAnimalHandler(values)}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (

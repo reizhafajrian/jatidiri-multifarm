@@ -2,7 +2,9 @@ export interface IUser {
   email: string
   password: string
   name?: string
-  whatsapp_number?: string
+  gender?: string
+  phone_number?: string
+  job_title?: string
   role?: string
 }
 

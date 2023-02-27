@@ -6,9 +6,24 @@ export const signinSchema = Yup.object().shape({
   password: Yup.string().required(isEmptyMsg),
 })
 
+export const changePassSchema = Yup.object().shape({
+  old_pass: Yup.string().required(isEmptyMsg),
+  new_pass: Yup.string().required(isEmptyMsg),
+  confirm_pass: Yup.string().required(isEmptyMsg),
+})
+
+export const editProfileSchema = Yup.object().shape({
+  avatar: Yup.array().required(isEmptyMsg),
+  name: Yup.string().required(isEmptyMsg),
+  email: Yup.string().email().required(isEmptyMsg),
+  gender: Yup.string().required(isEmptyMsg),
+  phone_number: Yup.string().required(isEmptyMsg),
+  job_title: Yup.string().required(isEmptyMsg),
+})
+
 export const memberSchema = Yup.object().shape({
   name: Yup.string().required(isEmptyMsg),
-  whatsapp_number: Yup.string().required(isEmptyMsg),
+  phone_number: Yup.string().required(isEmptyMsg),
   role: Yup.string().required(isEmptyMsg),
   email: Yup.string().email().required(isEmptyMsg),
   password: Yup.string().required(isEmptyMsg),

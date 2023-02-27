@@ -42,12 +42,12 @@ export default function AddMemberForm({ isOpen, closeModal }: any) {
               errorMsg={errors.email}
             />
             <InputText
-              name="whatsapp_number"
+              name="phone_number"
               label="No Whatsapp"
-              defaultValue={values.whatsapp_number}
+              defaultValue={values.phone_number}
               onChange={handleChange}
               disabled={isSubmitting}
-              errorMsg={errors.whatsapp_number}
+              errorMsg={errors.phone_number}
             />
             <InputSelect
               name="role"

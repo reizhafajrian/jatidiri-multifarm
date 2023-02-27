@@ -4,7 +4,7 @@ const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const jwt = request.cookies.get('token')
+  const jwt = request.cookies.get('token') ?? null
 
   if (
     pathname.startsWith('/_next') ||

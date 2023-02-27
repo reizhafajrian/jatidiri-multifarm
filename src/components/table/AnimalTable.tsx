@@ -69,21 +69,15 @@ const columns = (editAnimalData: any, deleteAnimalData: any) => [
   {
     header: 'Aksi',
     accessorKey: 'eartag_code',
-    cell: (data: any) => {
-      console.log(data)
-      return (
-        <div className="flex gap-2">
-          <Button
-            intent="edit"
-            onClick={() => editAnimalData(data.getValue())}
-          />
-          <Button
-            intent="delete"
-            onClick={() => deleteAnimalData(data.getValue())}
-          />
-        </div>
-      )
-    },
+    cell: (data: any) => (
+      <div className="flex gap-2">
+        <Button intent="edit" onClick={() => editAnimalData(data.getValue())} />
+        <Button
+          intent="delete"
+          onClick={() => deleteAnimalData(data.getValue())}
+        />
+      </div>
+    ),
   },
   {
     header: 'Keterangan',

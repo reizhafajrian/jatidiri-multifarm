@@ -33,10 +33,16 @@ export default function HeaderMenu() {
         <div className="p-5 py-3">
           <h3 className="mb-3 font-semibold">Account</h3>
           <div className="grid gap-2 text-neutral-4">
-            <Link href="/home" onClick={() => buttonRef.current.click()}>
+            <Link
+              href="/edit-profile"
+              onClick={() => buttonRef.current.click()}
+            >
               Edit Profile
             </Link>
-            <Link href="/home" onClick={() => buttonRef.current.click()}>
+            <Link
+              href="/change-password"
+              onClick={() => buttonRef.current.click()}
+            >
               Change Password
             </Link>
           </div>
