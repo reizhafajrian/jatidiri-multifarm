@@ -7,26 +7,40 @@ import {
   Modal,
 } from '@/components/shared'
 import { shedDataFormContent } from '@/data/data'
-import { IShedDataFields, IShedProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { shedDataSchema } from '@/data/validations'
+import { IShedDetail, useShedStore } from '@/store/shed'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useState } from 'react'
 
-export default function AddShedDataForm(props: IShedProps) {
+export default function AddShedDataForm(props: IModal) {
   const { isOpen, closeModal } = props
-  const { category, content } = shedDataFormContent
-  const [categories, setCategories] = useState<any>(category.initial)
+  const { shedDetail, addShedDetail } = useShedStore()
+  const [categories, setCategories] = useState<any>({ feed: true })
 
-  const addShedDataHandler = async (values: IShedDataFields) => {
-    return console.log({ ...values })
+  const addShedDataHandler = async (values: IShedDetail) => {
+    try {
+      const res = await addShedDetail({
+        ...values,
+        uid: '63e5bdd29536b95a6759a525',
+      })
+      // if (res.status === 201) {
+      //   toast.success(res.message)
+      //   router.replace(`/${animal_type}`)
+      // } else {
+      //   toast.error(res.errors[0].msg)
+      // }
+    } catch (e: any) {
+      // toast.error(e.message)
+    }
   }
 
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">Tambah Data</h1>
       <Formik
-        initialValues={{} as IShedDataFields}
+        initialValues={shedDetail}
         validationSchema={shedDataSchema}
         onSubmit={(values) => addShedDataHandler(values)}
       >
@@ -35,7 +49,7 @@ export default function AddShedDataForm(props: IShedProps) {
             <div className="mb-8 space-y-5">
               {/* category radio options */}
               <div className="flex justify-between">
-                {category.options.map((item, idx) => (
+                {shedDataFormContent.options.map((item, idx) => (
                   <InputCheckbox
                     key={idx}
                     label={item.label}
@@ -50,7 +64,7 @@ export default function AddShedDataForm(props: IShedProps) {
                 ))}
               </div>
               {/* form fields */}
-              {content.map((item, idx) => (
+              {shedDataFormContent.content.map((item, idx) => (
                 <div
                   key={idx}
                   className={categories[item.name] ? 'block' : 'hidden'}

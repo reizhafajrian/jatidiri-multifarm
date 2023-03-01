@@ -1,34 +1,31 @@
-import { IHppFields } from '@/data/interfaces'
+'use client'
+import { IModal } from '@/data/interfaces'
 import { hppSchema } from '@/data/validations'
+import { IEditHpp, useHppStore } from '@/store/hpp'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { Button, InputText, Modal } from '../shared'
 
-interface IProps {
-  eartagCode: string
-  isOpen: boolean
-  closeModal: any
-}
+export default function EditHppForm(props: IModal & { eartag_code: string }) {
+  const { eartag_code, isOpen, closeModal } = props
+  const { hpp, editHpp } = useHppStore()
 
-export default function EditHppForm(props: IProps) {
-  const { eartagCode, isOpen, closeModal } = props
-
-  const editHppHandler = async (values: IHppFields) => {
-    return console.log({ ...values })
+  const editHppHandler = async (values: IEditHpp) => {
+    // editHpp({...values})
   }
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <h1 className="mb-5 text-base font-semibold">Edit Data HPP</h1>
       <Formik
-        initialValues={{} as IHppFields}
+        initialValues={{} as IEditHpp}
         validationSchema={hppSchema}
         onSubmit={(values) => editHppHandler(values)}
       >
         {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit}>
             <div className="mb-8 space-y-5">
-              <InputText label="" defaultValue={eartagCode} disabled />
+              <InputText label="" defaultValue={eartag_code} disabled />
               <div className="grid grid-cols-2 gap-5">
                 <InputText label="" defaultValue={3000000} disabled />
                 <InputText

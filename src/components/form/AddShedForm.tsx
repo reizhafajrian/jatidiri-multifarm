@@ -1,23 +1,41 @@
 'use client'
 import { Button, InputRadio, InputText } from '@/components/shared'
-import { shedFormContent } from '@/data/data'
-import { IShedFields } from '@/data/interfaces'
 import { shedSchema } from '@/data/validations'
+import { IShed, useShedStore } from '@/store/shed'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
 
+const animal_types = [
+  { value: 'goat', label: 'Kambing' },
+  { value: 'sheep', label: 'Domba' },
+  { value: 'cow', label: 'Sapi' },
+]
+
 export default function AddShedForm() {
   const router = useRouter()
-  const { animal_types } = shedFormContent
+  const { shed, addShed } = useShedStore()
 
-  const addShedForm = (values: IShedFields) => {
-    return console.log({ ...values })
+  const addShedForm = async (values: IShed) => {
+    try {
+      const res = await addShed({
+        ...values,
+        uid: '63e5bdd29536b95a6759a525',
+      })
+      // if (res.status === 201) {
+      //   toast.success(res.message)
+      //   router.replace(`/${animal_type}`)
+      // } else {
+      //   toast.error(res.errors[0].msg)
+      // }
+    } catch (e: any) {
+      // toast.error(e.message)
+    }
   }
 
   return (
     <Formik
-      initialValues={{} as IShedFields}
+      initialValues={shed}
       validationSchema={shedSchema}
       onSubmit={(values) => addShedForm(values)}
     >

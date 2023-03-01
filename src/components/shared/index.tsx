@@ -10,8 +10,8 @@ import InputSelect from './InputSelect'
 import InputText from './InputText'
 import Listbox from './Listbox'
 import Modal from './Modal'
-import PageTabs from './PageTabs'
 import SelectMenu from './SelectMenu'
+import StoreInitializer from './StoreInitializer'
 import Table from './Table'
 
 export {
@@ -26,7 +26,7 @@ export {
   InputText,
   Listbox,
   Modal,
-  PageTabs,
   SelectMenu,
   Table,
+  StoreInitializer,
 }

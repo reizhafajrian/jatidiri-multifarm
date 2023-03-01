@@ -1,21 +1,16 @@
+import { IModal } from '@/data/interfaces'
 import { Button, Modal } from '../shared'
 
-interface IProps {
-  isOpen: boolean
-  closeModal: any
-}
-
-export default function DeleteMember(props: IProps) {
-  const { isOpen, closeModal } = props
+export default function DeleteModal(
+  props: IModal & { title: string; desc: string; deleteHandler: any }
+) {
+  const { isOpen, closeModal, title, desc, deleteHandler } = props
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <div className="space-y-6 p-3 text-center">
-        <h1 className="text-2xl font-semibold">Hapus Member Ini?</h1>
-        <p className="text-base text-neutral-4">
-          Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa
-          dibatalkan
-        </p>
+        <h1 className="text-2xl font-semibold">{title}</h1>
+        <p className="text-base text-neutral-4">{desc}</p>
         <div className="flex gap-4">
           <Button
             className="w-full rounded-lg py-3 capitalize"
@@ -26,6 +21,7 @@ export default function DeleteMember(props: IProps) {
           <Button
             className="w-full rounded-lg py-3 capitalize"
             intent="secondary"
+            onClick={deleteHandler}
           >
             Delete
           </Button>

@@ -1,10 +1,12 @@
 'use client'
 import { Button, Table } from '@/components/shared'
+import { useShedStore } from '@/store/shed'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
-export default function ShedTable({ data }: any) {
-  return <Table data={data} columns={columns} fixedCol={2} />
+export default function ShedTable() {
+  const { shedList } = useShedStore()
+  return <Table data={shedList} columns={columns} fixedCol={2} />
 }
 
 export const columns = [
@@ -26,11 +28,11 @@ export const columns = [
     cell: function Func(data: any) {
       const pathname = usePathname()
       return (
-        <Link href={`${pathname}/${data.getValue()}`}>
-          <Button className="rounded-[10px] px-3 py-1 capitalize">
+        <Button className="rounded-[10px] capitalize">
+          <Link href={`${pathname}/${data.getValue()}`} className="px-3 py-1">
             Detail
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       )
     },
   },

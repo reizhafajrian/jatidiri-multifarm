@@ -1,10 +1,13 @@
 'use client'
+import { useHppStore } from '@/store/hpp'
 import formatRupiah from '@/utils/formatRupiah'
 import { useState } from 'react'
 import EditHppForm from '../form/EditHppForm'
 import { Button, Listbox, Table } from '../shared'
 
-export default function HppTable({ data }: any) {
+export default function HppTable() {
+  const { hppList } = useHppStore()
+
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
   const [status, setStatus] = useState(statusOptions[0])
@@ -21,12 +24,12 @@ export default function HppTable({ data }: any) {
   return (
     <>
       <EditHppForm
-        eartagCode={eartagCode}
+        eartag_code={eartagCode}
         isOpen={isOpen}
         closeModal={closeModal}
       />
       <Table
-        data={data}
+        data={hppList}
         columns={columns(status, changeStatusHandler, editHandler)}
         fixedCol={2}
       />

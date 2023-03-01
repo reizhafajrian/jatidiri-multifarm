@@ -1,4 +1,5 @@
 'use client'
+import { useShedStore } from '@/store/shed'
 import { useState } from 'react'
 import ShedInfoFilter from '../filter/ShedInfoFilter'
 import AddShedDataForm from '../form/AddShedDataForm'
@@ -7,21 +8,18 @@ import { Button } from '../shared'
 import { PencilSolid } from '../shared/Icons'
 import ShedInfoTable from '../table/ShedInfoTable'
 
-export default function ShedInfo({ data, detail }: any) {
+export default function ShedInfo() {
   const [isOpen, closeModal] = useState(false)
+  const { shed_code } = useShedStore().shed
 
   return (
     <>
       <AddShedDataForm isOpen={isOpen} closeModal={closeModal} />
-      <ShedInfoList
-        animal_weight={data.animal_weight}
-        age_range={data.age_range}
-        feed_weight={data.feed_weight}
-      />
+      <ShedInfoList />
       <div className="space-y-5">
         <h1 className="text-2xl font-semibold text-neutral-5">
           History Kandang
-          <span className="text-primary-5"> #{data.shed_code}</span>
+          <span className="text-primary-5"> #{shed_code}</span>
         </h1>
         <div className="flex items-center justify-between">
           <ShedInfoFilter />
@@ -30,7 +28,7 @@ export default function ShedInfo({ data, detail }: any) {
             <PencilSolid />
           </Button>
         </div>
-        <ShedInfoTable data={detail} />
+        <ShedInfoTable />
       </div>
     </>
   )

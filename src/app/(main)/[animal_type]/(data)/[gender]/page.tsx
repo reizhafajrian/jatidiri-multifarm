@@ -1,28 +1,24 @@
 import AnimalHeader from '@/components/layout/AnimalHeader'
+import { StoreInitializer } from '@/components/shared'
 import AnimalTable from '@/components/table/AnimalTable'
 import { IPageProps } from '@/data/interfaces'
 import { fetcher } from '@/utils/fetcher'
 import { cookies } from 'next/headers'
 
 export default async function MaleAnimalPage(props: IPageProps) {
+  const nextCookies = cookies()
   const { animal_type, gender } = props.params
-  const data = await getData({ animal_type })
+
+  const token = nextCookies.get('token')?.value
+  const url = `${process.env.API_BASE_URL}/${animal_type && 'goat'}/get`
+  const { data: animalList } = await fetcher({ url, token })
+  const animal = { animal_type, animalList, gender }
 
   return (
     <main>
-      <AnimalHeader animal_type={animal_type} />
-      <AnimalTable data={data} params={{ animal_type, gender }} />
+      <StoreInitializer data={{ animal }} />
+      <AnimalHeader />
+      <AnimalTable />
     </main>
   )
-}
-
-const getData = async ({ animal_type }: any) => {
-  const nextCookies = cookies()
-
-  const response = await fetcher({
-    url: `${process.env.API_BASE_URL}/${animal_type && 'goat'}/get`,
-    token: nextCookies.get('token')?.value,
-  })
-
-  return response.data
 }

@@ -1,20 +1,22 @@
 'use client'
 import { changePassSchema } from '@/data/validations'
+import { IChangePass, useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
 import { Button, InputText } from '../shared'
 
-interface IChangePass {
-  old_pass: string
-  new_pass: string
-  confirm_pass: string
-}
-
 export default function ChangePasswordForm() {
   const router = useRouter()
-  const changePassHandler = (values: IChangePass) => {
-    console.log(values)
+  const { changePassword } = useAuthStore()
+
+  const changePassHandler = async (values: IChangePass) => {
+    try {
+      await changePassword(values)
+      router.replace('/home')
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (

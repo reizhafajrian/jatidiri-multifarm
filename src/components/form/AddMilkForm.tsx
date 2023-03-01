@@ -6,23 +6,25 @@ import {
   InputText,
   Modal,
 } from '@/components/shared'
-import { IMilkFields, IMilkProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { milkSchema } from '@/data/validations'
+import { IMilk, useMilkStore } from '@/store/milk'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 
-export default function AddMilkForm(props: IMilkProps) {
+export default function AddMilkForm(props: IModal) {
   const { isOpen, closeModal } = props
+  const { milk, addMilk } = useMilkStore()
 
-  const addMilkHandler = async (values: IMilkFields) => {
-    return console.log({ ...values })
+  const addMilkHandler = async (values: IMilk) => {
+    // await addMilk({ ...values })
   }
 
   return (
-    <Modal isOpen={isOpen!} closeModal={closeModal}>
+    <Modal isOpen={isOpen} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">Tambah Data Susu</h1>
       <Formik
-        initialValues={{} as IMilkFields}
+        initialValues={milk}
         validationSchema={milkSchema}
         onSubmit={(values) => addMilkHandler(values)}
       >
@@ -33,14 +35,14 @@ export default function AddMilkForm(props: IMilkProps) {
                 name="eartag_code"
                 label="No Eartag"
                 options={['111', '222', '333']}
-                value={values.eartag_code}
+                value={values?.eartag_code}
                 errorMsg={errors.eartag_code}
                 disabled={isSubmitting}
               />
               <InputText
                 name="milk"
                 label="Berapa liter susu?"
-                defaultValue={values.milk}
+                defaultValue={values?.milk ?? 0}
                 onChange={handleChange}
                 errorMsg={errors.milk}
                 disabled={isSubmitting}
@@ -48,7 +50,7 @@ export default function AddMilkForm(props: IMilkProps) {
               <InputDate
                 name="milk_date"
                 label="Tanggal"
-                selected={values.milk_date}
+                selected={values?.milk_date}
                 errorMsg={errors.milk_date}
                 disabled={isSubmitting}
               />

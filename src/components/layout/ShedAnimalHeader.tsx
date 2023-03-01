@@ -4,21 +4,18 @@ import Navbar from '@/components/layout/Navbar'
 import BackLink from '@/components/shared/BackLink'
 import Button from '@/components/shared/Button'
 import { animalTitle } from '@/data/data'
+import { useShedStore } from '@/store/shed'
 import { useState } from 'react'
 import { PencilSolid } from '../shared/Icons'
 
-interface IProps {
-  animal_type: string
-  id: string
-}
-
-export default function ShedAnimalHeader({ animal_type, id }: IProps) {
+export default function ShedAnimalHeader() {
   const [isOpen, closeModal] = useState(false)
+  const { animal_type, shed_code } = useShedStore().shed
 
   const menu = [
-    { name: 'Informasi', link: `/shed/${animal_type}/${id}` },
-    { name: 'Pejantan', link: `/shed/${animal_type}/${id}/male` },
-    { name: 'Betina', link: `/shed/${animal_type}/${id}/female` },
+    { name: 'Informasi', link: `/shed/${animal_type}/${shed_code}` },
+    { name: 'Pejantan', link: `/shed/${animal_type}/${shed_code}/male` },
+    { name: 'Betina', link: `/shed/${animal_type}/${shed_code}/female` },
   ]
 
   return (
@@ -32,11 +29,11 @@ export default function ShedAnimalHeader({ animal_type, id }: IProps) {
       <BackLink />
       <div className="mb-8">
         <h1 className="my-6 text-2xl font-semibold text-neutral-5">
-          Detail Kandang <span className="text-primary-5">#{id}</span>
+          Detail Kandang <span className="text-primary-5">#{shed_code}</span>
         </h1>
         <p className="font-light">
           Informasi Detail terkait Kandang Nomor
-          <span className="font-semibold"> {id}</span> yang berisi hewan
+          <span className="font-semibold"> {shed_code}</span> yang berisi hewan
           <span className="font-semibold"> {animalTitle(animal_type)}</span>.
         </p>
       </div>

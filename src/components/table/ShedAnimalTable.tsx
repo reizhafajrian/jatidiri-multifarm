@@ -1,10 +1,12 @@
 'use client'
 import { Listbox, Table } from '@/components/shared'
+import { useAnimalStore } from '@/store/animal'
 import { longDateFormatter } from '@/utils/formatDate'
 import { useState } from 'react'
 
-export default function ShedAnimalTable({ data }: any) {
+export default function ShedAnimalTable() {
   const [shedCode, setShedCode] = useState(options[0])
+  const { animalList } = useAnimalStore()
 
   const changeShedHandler = (value: any) => {
     setShedCode(value)
@@ -12,7 +14,7 @@ export default function ShedAnimalTable({ data }: any) {
 
   return (
     <Table
-      data={data}
+      data={animalList}
       columns={columns(shedCode, changeShedHandler)}
       fixedCol={2}
     />
@@ -29,8 +31,8 @@ const options = [
 const columns = (shedCode: any, changeShedHandler: any) => [
   {
     header: 'Tgl Tiba',
-    accessorKey: 'arrival_at',
-    cell: ({ value }: any) => longDateFormatter(value),
+    accessorKey: 'arrival_date',
+    cell: (data: any) => longDateFormatter(new Date(data.getValue())),
   },
   {
     header: 'No Eartag',

@@ -1,9 +1,12 @@
 'use client'
 import { Table } from '@/components/shared'
+import { useShedStore } from '@/store/shed'
 import { longDateFormatter, shortDateFormatter } from '@/utils/formatDate'
 
-export default function ShedInfoTable({ data }: any) {
-  return <Table data={data} columns={columns} fixedCol={2} />
+export default function ShedInfoTable() {
+  const { shedDetailList } = useShedStore()
+
+  return <Table data={shedDetailList} columns={columns} fixedCol={2} />
 }
 
 const columns = [

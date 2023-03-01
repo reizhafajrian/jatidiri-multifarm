@@ -26,10 +26,14 @@ export default function Table(props: IProps) {
     () => props.columns,
     [props.columns]
   )
-  const [sorting, setSorting] = useState<SortingState>([
-    { id: 'updated_at', desc: true },
-  ])
-  const [columnVisibility] = useState<VisibilityState>({ updated_at: false })
+
+  const [sorting, setSorting] = useState<SortingState>(
+    props.data &&
+      props.data[0]?.updated_at && [{ id: 'updated_at', desc: true }]
+  )
+  const [columnVisibility] = useState<VisibilityState>(
+    props.data && props.data[0]?.updated_at && { updated_at: false }
+  )
 
   const table = useReactTable({
     data: tData,

@@ -7,24 +7,39 @@ import {
   InputText,
 } from '@/components/shared'
 import { animalFormContent, animalTitle, genderTitle } from '@/data/data'
-import { IAnimalFields, IAnimalProps } from '@/data/interfaces'
 import { animalSchema } from '@/data/validations'
+import { IAnimal, useAnimalStore } from '@/store/animal'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
 
-export default function EditAnimalForm(props: IAnimalProps) {
+export default function EditAnimalForm() {
   const router = useRouter()
-  const content = animalFormContent[props.animal_type!]
-  const animal = animalTitle(props.animal_type!)
+  const { animal, editAnimal, animal_type, gender } = useAnimalStore()
+  const content = animalFormContent[animal_type]
 
-  const editAnimalHandler = async (values: IAnimalFields) => {
-    return console.log({ ...values })
+  const editAnimalHandler = async (values: IAnimal) => {
+    try {
+      // const res = await editAnimal({
+      //   ...values,
+      //   animal_type,
+      //   gender,
+      //   uid: '63e5bdd29536b95a6759a525',
+      // })
+      // if (res.status === 201) {
+      //   toast.success(res.message)
+      //   router.replace(`/${animal_type}`)
+      // } else {
+      //   toast.error(res.errors[0].msg)
+      // }
+    } catch (e: any) {
+      // toast.error(e.message)
+    }
   }
 
   return (
     <Formik
-      initialValues={{} as IAnimalFields}
+      initialValues={{} as IAnimal}
       validationSchema={animalSchema}
       validateOnChange={false}
       onSubmit={(values) => editAnimalHandler(values)}
@@ -32,13 +47,13 @@ export default function EditAnimalForm(props: IAnimalProps) {
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
         <form onSubmit={handleSubmit}>
           <h1 className="mb-6 text-base font-semibold">
-            Edit Data {animal} {genderTitle(props.gender!)}
+            Edit Data {animalTitle(animal_type)} {genderTitle(gender)}
           </h1>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-6">
               <InputSelect
                 name="type"
-                label={`Jenis ${animal}`}
+                label={`Jenis ${animalTitle(animal_type)}`}
                 options={content?.typeOptions}
                 value={values.type}
                 errorMsg={errors.type}
@@ -76,7 +91,7 @@ export default function EditAnimalForm(props: IAnimalProps) {
             <div className="space-y-6">
               <InputSelect
                 name="origin"
-                label={`Asal ${animal}`}
+                label={`Asal ${animalTitle(animal_type)}`}
                 options={content?.originOptions}
                 value={values.origin}
                 errorMsg={errors.origin}
@@ -84,7 +99,7 @@ export default function EditAnimalForm(props: IAnimalProps) {
               />
               <InputText
                 name="weight"
-                label={`Berat ${animal}`}
+                label={`Berat ${animalTitle(animal_type)}`}
                 defaultValue={values.weight}
                 onChange={handleChange}
                 errorMsg={errors.weight}

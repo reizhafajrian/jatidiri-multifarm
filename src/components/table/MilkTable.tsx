@@ -1,10 +1,12 @@
 'use client'
-import { milkData } from '@/data/dummy'
+import { useMilkStore } from '@/store/milk'
 import { useState } from 'react'
 import EditMilkForm from '../form/EditMilkForm'
 import { Button, Listbox, Table } from '../shared'
 
 export default function MilkTable() {
+  const { milkList } = useMilkStore()
+
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
   const [status, setStatus] = useState(statusOptions[0])
@@ -26,7 +28,7 @@ export default function MilkTable() {
         eartag_code={eartagCode}
       />
       <Table
-        data={milkData}
+        data={milkList}
         columns={columns(status, changeStatusHandler, editHandler)}
         fixedCol={2}
       />

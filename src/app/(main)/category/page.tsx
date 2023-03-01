@@ -1,52 +1,69 @@
-import Content from '@/components/layout/CategoryContent'
+import CategoryContent from '@/components/layout/CategoryContent'
 import CategoryHeader from '@/components/layout/CategoryHeader'
-import {
-  CalcCircle,
-  CowCircle,
-  FeedCircle,
-  GoatCircle,
-  SheepCircle,
-} from '@/components/shared/Icons'
-
-const data = [{}, {}, {}]
+import { StoreInitializer } from '@/components/shared'
 
 export default function CategoryPage() {
   return (
     <main>
+      <StoreInitializer
+        data={{
+          category: {
+            feedList: feed.data,
+            feedInfo: feed.info,
+            vitaminList: vitamin.data,
+            vitaminInfo: vitamin.info,
+            anthelminticList: anthelmintic.data,
+            anthelminticInfo: anthelmintic.info,
+          },
+        }}
+      />
       <CategoryHeader />
-      <div className="space-y-10">
-        <Content category="feed" cardList={fCardList} data={data} />
-        <Content category="vitamin" cardList={vCardList} data={data} />
-        <Content category="anthelmintic" cardList={aCardList} data={data} />
-      </div>
+      <CategoryContent />
     </main>
   )
 }
 
-const fCardList = [
-  { title: 'Jenis Pakan', value: '4', label: 'Jenis', icon: <FeedCircle /> },
-  {
-    title: 'Total Penggunaan',
-    value: '250',
-    label: 'Kilogram',
-    icon: <CalcCircle />,
+const feed = {
+  info: {
+    total_type: 4,
+    total_usage: 250,
+    total_stock: 150,
   },
-  {
-    title: 'Total Stock',
-    value: '150',
-    label: 'Kilogram',
-    icon: <CalcCircle />,
+  data: [
+    {
+      feed_type: 'example',
+      feed_stock: 50,
+      feed_price: 10000,
+    },
+  ],
+}
+
+const vitamin = {
+  info: {
+    cow_value: '4/10',
+    sheep_value: '4/8',
+    goat_value: '4/6',
   },
-]
+  data: [
+    {
+      vitamin_type: 'example',
+      vitamin_stock: 50,
+      vitamin_price: 5000,
+    },
+  ],
+}
 
-const vCardList = [
-  { title: 'Sapi', value: '4/10', icon: <CowCircle /> },
-  { title: 'Domba', value: '4/8', icon: <SheepCircle /> },
-  { title: 'Kambing', value: '4/6', icon: <GoatCircle /> },
-]
-
-const aCardList = [
-  { title: 'Sapi', value: '4/10', icon: <CowCircle /> },
-  { title: 'Domba', value: '4/8', icon: <SheepCircle /> },
-  { title: 'Kambing', value: '4/6', icon: <GoatCircle /> },
-]
+const anthelmintic = {
+  info: {
+    cow_value: '4/10',
+    sheep_value: '4/8',
+    goat_value: '4/6',
+  },
+  data: [
+    {
+      anthelmintic_type: 'example',
+      anthelmintic_stock: 50,
+      anthelmintic_price: 5000,
+    },
+  ],
+}

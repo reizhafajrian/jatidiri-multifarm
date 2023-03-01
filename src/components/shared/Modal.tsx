@@ -1,5 +1,4 @@
 'use client'
-import { useStore } from '@/store/store'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode } from 'react'
 
@@ -24,10 +23,7 @@ export default function Modal(props: IProps) {
           leaveFrom="opacity-100"
           leaveTo="opacity-0"
         >
-          <div
-            className="fixed inset-0 z-10 bg-black bg-opacity-50"
-            onClick={() => useStore.getState().reset()}
-          />
+          <div className="fixed inset-0 z-10 bg-black bg-opacity-50" />
         </Transition.Child>
 
         <div className="fixed inset-0 z-50 overflow-y-auto">

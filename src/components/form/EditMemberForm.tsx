@@ -1,13 +1,23 @@
-import { IUser } from '@/data/interfaces'
+'use client'
 import { memberSchema } from '@/data/validations'
+import { IUser, useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
 import { Formik } from 'formik'
+import { useRouter } from 'next/navigation'
 import { Button, InputSelect, InputText, Modal } from '../shared'
 import { Close } from '../shared/Icons'
 
 export default function EditMemberForm({ isOpen, closeModal }: any) {
-  const addMemberHandler = async (values: IUser) => {
-    return console.log({ ...values })
+  const router = useRouter()
+  const { user, editMember } = useAuthStore()
+
+  const editMemberHandler = async (values: IUser) => {
+    try {
+      await editMember(values)
+      router.refresh()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -19,9 +29,9 @@ export default function EditMemberForm({ isOpen, closeModal }: any) {
         </button>
       </div>
       <Formik
-        initialValues={{} as IUser}
+        initialValues={user}
         validationSchema={memberSchema}
-        onSubmit={(values) => addMemberHandler(values)}
+        onSubmit={(values) => editMemberHandler(values)}
       >
         {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
           <form onSubmit={handleSubmit} className="mt-5 space-y-4">

@@ -1,27 +1,16 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import { animalTitle } from '@/data/data'
-import { IAnimalProps } from '@/data/interfaces'
+import { useAnimalStore } from '@/store/animal'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { Button } from '../shared'
 import { ArrowDownTray, ExclamationTriangle } from '../shared/Icons'
 
-export default function AnimalHeader({ animal_type }: IAnimalProps) {
+export default function AnimalHeader() {
   const router = useRouter()
-  const [alertCluster, setAlertCluster] = useState(false)
-
-  const menu =
-    animal_type === 'cow'
-      ? [
-          { name: 'Pejantan', link: `/${animal_type}/male` },
-          { name: 'Betina', link: `/${animal_type}/female` },
-        ]
-      : [
-          { name: 'Pejantan', link: `/${animal_type}/male` },
-          { name: 'Betina', link: `/${animal_type}/female` },
-          { name: 'Cempek', link: `/${animal_type}/cempek` },
-        ]
+  const { animal_type, headerMenu } = useAnimalStore()
+  const [alertCluster] = useState(false)
 
   return (
     <>
@@ -37,14 +26,17 @@ export default function AnimalHeader({ animal_type }: IAnimalProps) {
           </div>
         </div>
       )}
-      <Navbar menu={menu} className="mb-5 flex items-center justify-between">
+      <Navbar
+        menu={headerMenu()}
+        className="mb-5 flex items-center justify-between"
+      >
         <div className="flex items-center justify-end gap-2">
           <Button
             className="rounded-lg p-2"
             onClick={() => router.push(`/${animal_type}/add`)}
           >
             <span className="text-sm capitalize">
-              tambah data {animalTitle(animal_type!)}
+              tambah data {animalTitle(animal_type)}
             </span>
           </Button>
           <Button intent="secondary" className="rounded-lg p-2">

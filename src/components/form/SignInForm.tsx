@@ -1,7 +1,6 @@
 'use client'
-import { IUser } from '@/data/interfaces'
 import { signinSchema } from '@/data/validations'
-import { signin } from '@/libs/api'
+import { IUser, useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
@@ -9,10 +8,11 @@ import { Button, InputText } from '../shared'
 
 export default function SignInForm() {
   const router = useRouter()
+  const { user, signIn } = useAuthStore()
 
   const signinHandler = async (values: IUser) => {
     try {
-      await signin(values)
+      await signIn(values)
       router.push('/home')
     } catch (e) {
       console.log(e)
@@ -21,7 +21,7 @@ export default function SignInForm() {
 
   return (
     <Formik
-      initialValues={{} as IUser}
+      initialValues={user}
       validationSchema={signinSchema}
       validateOnChange={false}
       onSubmit={(values) => signinHandler(values)}

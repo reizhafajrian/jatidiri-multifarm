@@ -1,6 +1,14 @@
 import { animalTitle } from '@/data/data'
-import { IDAnimalInfoProps } from '@/data/interfaces'
 import { Card } from '../shared'
+
+interface IDAnimalInfoProps {
+  data: {
+    icon: any
+    animal_type: string
+    totalAdult: number
+    totalCempek: number
+  }
+}
 
 export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
   const { icon, animal_type, totalAdult, totalCempek } = props.data

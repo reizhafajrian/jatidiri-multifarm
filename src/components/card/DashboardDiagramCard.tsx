@@ -1,6 +1,11 @@
-import { IDDiagramProps } from '@/data/interfaces'
 import { Card } from '../shared'
 import { DashboardInfo } from '../shared/Icons'
+
+interface IDDiagramProps {
+  className?: string
+  title: string
+  children?: React.ReactNode
+}
 
 export default function DashboardDiagramCard(props: IDDiagramProps) {
   const { className, children, title } = props

@@ -1,9 +1,23 @@
 'use client'
 import { shedInfoInitial, shedInfoTypesOptions } from '@/data/data'
-import { IFilterShedInfo } from '@/data/interfaces'
 import { Listbox as List, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import { ChevronDown } from '../shared/Icons'
+
+interface IFilterShedInfo {
+  feed: {
+    name: string
+  }
+  vitamin: {
+    name: string
+  }
+  vaccine: {
+    name: string
+  }
+  anthelmintic: {
+    name: string
+  }
+}
 
 export default function ShedInfoFilter() {
   const [filterSelected, setFilterSelected] =

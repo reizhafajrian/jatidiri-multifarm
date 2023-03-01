@@ -1,7 +1,6 @@
 'use client'
-
-import { IUser } from '@/data/interfaces'
 import { editProfileSchema } from '@/data/validations'
+import { IUser, useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
@@ -9,14 +8,20 @@ import { Button, InputSelect, InputText } from '../shared'
 
 export default function EditProfileForm() {
   const router = useRouter()
+  const { user, editProfile } = useAuthStore()
 
-  const editProfileHandler = (values: IUser) => {
-    console.log(values)
+  const editProfileHandler = async (values: IUser) => {
+    try {
+      await editProfile(values)
+      router.replace('/home')
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
     <Formik
-      initialValues={{} as IUser}
+      initialValues={user}
       validationSchema={editProfileSchema}
       onSubmit={(values) => editProfileHandler(values)}
     >

@@ -1,22 +1,24 @@
 'use client'
 import { Button, InputDate, InputText, Modal } from '@/components/shared'
-import { IMilkFields, IMilkProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { milkSchema } from '@/data/validations'
+import { IMilk, useMilkStore } from '@/store/milk'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 
-export default function EditMilkForm(props: IMilkProps) {
+export default function EditMilkForm(props: IModal & { eartag_code: string }) {
   const { eartag_code, isOpen, closeModal } = props
+  const { milk, editMilk } = useMilkStore()
 
-  const editMilkHandler = async (values: IMilkFields) => {
-    return console.log({ ...values })
+  const editMilkHandler = async (values: IMilk) => {
+    // await editMilk({...values})
   }
 
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">Edit Data Susu</h1>
       <Formik
-        initialValues={{} as IMilkFields}
+        initialValues={milk}
         validationSchema={milkSchema}
         onSubmit={(values) => editMilkHandler(values)}
       >
@@ -30,14 +32,14 @@ export default function EditMilkForm(props: IMilkProps) {
                   <InputDate
                     name="milk_date"
                     label="Tanggal"
-                    selected={values.milk_date}
+                    selected={values?.milk_date}
                     errorMsg={errors.milk_date}
                     disabled={isSubmitting}
                   />
                   <InputText
                     name="milk"
                     label="Berapa liter susu?"
-                    defaultValue={values.milk}
+                    defaultValue={values?.milk ?? 0}
                     onChange={handleChange}
                     errorMsg={errors.milk}
                     disabled={isSubmitting}
@@ -50,7 +52,7 @@ export default function EditMilkForm(props: IMilkProps) {
                   <InputDate
                     name="milk_date"
                     label="Tanggal"
-                    selected={values.history_milk_date}
+                    selected={values?.history_milk_date}
                     errorMsg={errors.history_milk_date}
                     disabled={isSubmitting}
                   />
@@ -58,7 +60,7 @@ export default function EditMilkForm(props: IMilkProps) {
                     name="history_milk"
                     label="History Susu"
                     disabled
-                    defaultValue={values.history_milk ? values.history_milk : 0}
+                    defaultValue={values?.history_milk ?? 0}
                   />
                 </div>
               </div>

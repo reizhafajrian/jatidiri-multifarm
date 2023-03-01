@@ -1,16 +1,20 @@
 'use client'
 import { Button, InputSelect, InputText, Modal } from '@/components/shared'
 import { animalTitle } from '@/data/data'
-import { IShedAnimalFields, IShedProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { shedAnimalSchema } from '@/data/validations'
+import { IShedAnimal, useShedStore } from '@/store/shed'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 
-export default function AddShedAnimalForm(props: IShedProps) {
+export default function AddShedAnimalForm(
+  props: IModal & { animal_type: string }
+) {
   const { isOpen, closeModal, animal_type } = props
+  const { addShedAnimal } = useShedStore()
 
-  const addShedAnimalForm = async (values: IShedAnimalFields) => {
-    return console.log({ ...values })
+  const addShedAnimalForm = async (values: IShedAnimal) => {
+    // await addShedAnimal({...values})
   }
 
   return (
@@ -19,7 +23,7 @@ export default function AddShedAnimalForm(props: IShedProps) {
         Tambah Data {animalTitle(animal_type!)}
       </h1>
       <Formik
-        initialValues={{} as IShedAnimalFields}
+        initialValues={{} as IShedAnimal}
         validationSchema={shedAnimalSchema}
         onSubmit={(values) => addShedAnimalForm(values)}
       >

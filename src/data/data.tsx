@@ -49,46 +49,14 @@ export const animalFormContent = {
   },
 }
 
-// SHED FORM
-export const shedFormContent = {
-  animal_types: [
-    { value: 'goat', label: 'Kambing' },
-    { value: 'sheep', label: 'Domba' },
-    { value: 'cow', label: 'Sapi' },
-  ],
-}
-
 // SHED DETAILS DATA FORM
 export const shedDataFormContent = {
-  initial: {
-    feed_date: '',
-    feed_type: '',
-    feed_price: '',
-    feed_stock: '',
-    vitamin_date: '',
-    vitamin_type: '',
-    vitamin_price: '',
-    vaccine_date: '',
-    vaccine_type: '',
-    vaccine_price: '',
-    anthelmintic_date: '',
-    anthelmintic_type: '',
-    anthelmintic_price: '',
-  },
-  category: {
-    options: [
-      { label: 'Pakan', name: 'feed' },
-      { label: 'Vitamin', name: 'vitamin' },
-      { label: 'Vaksin', name: 'vaccine' },
-      { label: 'Obat Cacing', name: 'anthelmintic' },
-    ],
-    initial: {
-      feed: true,
-      vitamin: false,
-      vaccine: false,
-      anthelmintic: false,
-    },
-  },
+  options: [
+    { label: 'Pakan', name: 'feed' },
+    { label: 'Vitamin', name: 'vitamin' },
+    { label: 'Vaksin', name: 'vaccine' },
+    { label: 'Obat Cacing', name: 'anthelmintic' },
+  ],
   content: [
     {
       name: 'feed',
@@ -123,7 +91,11 @@ export const shedDataFormContent = {
       title: 'Obat Cacing',
       fields: [
         { type: 'date', label: 'Tanggal', name: 'anthelmintic_date' },
-        { type: 'text', label: 'Jenis Obat Cacing', name: 'anthelmintic_type' },
+        {
+          type: 'text',
+          label: 'Jenis Obat Cacing',
+          name: 'anthelmintic_type',
+        },
         { type: 'number', label: 'Harga', name: 'anthelmintic_price' },
       ],
     },

@@ -1,30 +1,48 @@
 'use client'
 import { Button, InputDate, InputSelect, InputText } from '@/components/shared'
 import { animalFormContent, animalTitle } from '@/data/data'
-import { IAnimalProps, ICempekFields } from '@/data/interfaces'
 import { cempekSchema } from '@/data/validations'
+import { useAnimalStore } from '@/store/animal'
+import { ICempek, useCempekStore } from '@/store/cempek'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
 
-export default function EditCempekForm(props: IAnimalProps) {
+export default function EditCempekForm() {
   const router = useRouter()
-  const content = animalFormContent[props.animal_type!]
+  const { animal_type } = useAnimalStore()
+  const { cempek, editCempek } = useCempekStore()
+  const content = animalFormContent[animal_type]
 
-  const editCempekHandler = async (values: ICempekFields) => {
-    return console.log({ ...values })
+  const editCempekHandler = async (values: ICempek) => {
+    try {
+      const res = await editCempek({
+        ...values,
+        animal_type,
+        uid: '63e5bdd29536b95a6759a525',
+      })
+
+      // if (res.status === 201) {
+      //   toast.success(res.message)
+      //   router.replace(`/${animal_type}`)
+      // } else {
+      //   toast.error(res.errors[0].msg)
+      // }
+    } catch (e: any) {
+      // toast.error(e.message)
+    }
   }
 
   return (
     <Formik
-      initialValues={{} as ICempekFields}
+      initialValues={cempek}
       validationSchema={cempekSchema}
       onSubmit={(values) => editCempekHandler(values)}
     >
       {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
         <form onSubmit={handleSubmit}>
           <h1 className="mb-6 text-base font-semibold">
-            Edit Data {animalTitle(props.animal_type!)} Cempek
+            Edit Data {animalTitle(animal_type)} Cempek
           </h1>
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-6">

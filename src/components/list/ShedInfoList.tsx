@@ -1,15 +1,13 @@
+import { useShedStore } from '@/store/shed'
 import { Card } from '../shared'
 
-interface IProps {
-  animal_weight: string
-  age_range: string
-  feed_weight: string
-}
-export default function ShedInfoList(props: IProps) {
+export default function ShedInfoList() {
+  const { animal_weight, age_range, feed_weight } = useShedStore.getState().shed
+
   const cardList = [
-    { title: 'Berat', content: `${props.animal_weight} kg` },
-    { title: 'Range Usia', content: `${props.age_range} bulan` },
-    { title: 'Berat Pakan', content: `${props.feed_weight} kg` },
+    { title: 'Berat', content: `${animal_weight} kg` },
+    { title: 'Range Usia', content: `${age_range} bulan` },
+    { title: 'Berat Pakan', content: `${feed_weight} kg` },
   ]
 
   return (

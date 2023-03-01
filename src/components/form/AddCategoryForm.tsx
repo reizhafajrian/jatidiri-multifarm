@@ -1,22 +1,30 @@
 'use client'
 import { Button, InputText, Modal } from '@/components/shared'
 import { categoryTitle } from '@/data/data'
-import { ICategoryFields, ICategoryProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { categorySchema } from '@/data/validations'
+import { useCategoryStore } from '@/store/category'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 
-export default function AddCategoryForm(props: ICategoryProps) {
+export interface ICategoryFields {
+  type: string
+  stock: number
+  price: number
+}
+
+export default function AddCategoryForm(props: IModal & { category: string }) {
   const { category, isOpen, closeModal } = props
+  const { addCategory } = useCategoryStore()
 
   const addCategoryHandler = async (values: ICategoryFields) => {
-    return console.log({ ...values })
+    // await addCategory({...values})
   }
 
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">
-        Tambah {categoryTitle(category!)}
+        Tambah {categoryTitle(category)}
       </h1>
       <Formik
         initialValues={{} as ICategoryFields}
@@ -28,7 +36,7 @@ export default function AddCategoryForm(props: ICategoryProps) {
             <div className="mb-8 space-y-6">
               <InputText
                 name="type"
-                label={`Jenis ${categoryTitle(category!)}`}
+                label={`Jenis ${categoryTitle(category)}`}
                 defaultValue={values.type}
                 onChange={handleChange}
                 errorMsg={errors.type}

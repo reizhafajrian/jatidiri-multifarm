@@ -1,13 +1,23 @@
-import { IUser } from '@/data/interfaces'
+'use client'
 import { memberSchema } from '@/data/validations'
+import { IUser, useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
 import { Formik } from 'formik'
+import { useRouter } from 'next/navigation'
 import { Button, InputSelect, InputText, Modal } from '../shared'
 import { Close } from '../shared/Icons'
 
 export default function AddMemberForm({ isOpen, closeModal }: any) {
+  const router = useRouter()
+  const { user, addMember } = useAuthStore()
+
   const addMemberHandler = async (values: IUser) => {
-    return console.log({ ...values })
+    try {
+      await addMember(values)
+      router.refresh()
+    } catch (e) {
+      console.log(e)
+    }
   }
 
   return (
@@ -19,7 +29,7 @@ export default function AddMemberForm({ isOpen, closeModal }: any) {
         </button>
       </div>
       <Formik
-        initialValues={{} as IUser}
+        initialValues={user}
         validationSchema={memberSchema}
         onSubmit={(values) => addMemberHandler(values)}
       >

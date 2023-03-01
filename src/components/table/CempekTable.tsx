@@ -1,32 +1,52 @@
 'use client'
+import { useAnimalStore } from '@/store/animal'
+import { useCempekStore } from '@/store/cempek'
 import { longDateFormatter } from '@/utils/formatDate'
 import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import AnimalFilter from '../filter/AnimalFilter'
+import DeleteModal from '../form/DeleteModal'
 import { Button, Table } from '../shared'
 
-export default function CempekTable({ data, params }: any) {
+export default function CempekTable() {
   const router = useRouter()
-  const { animal_type } = params
+  const { animal_type } = useAnimalStore()
+  const { deleteCempek, cempekList } = useCempekStore()
+  const [isOpen, closeModal] = useState(false)
+  const [id, setId] = useState('')
 
-  const editCempekData = (eartag_code: any) => {
-    router.push(`/${animal_type}/cempek/edit?eartag_code=${eartag_code}`)
+  const editCempekData = (id: any) => {
+    router.push(`/${animal_type}/cempek/edit?id=${id}`)
   }
 
-  const deleteCempekData = () => {}
+  const deleteHandler = async () => {
+    try {
+      await deleteCempek(id)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <>
       <AnimalFilter />
+      <DeleteModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title={`Hapus Data Ini?`}
+        desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
+        deleteHandler={deleteHandler}
+      />
       <Table
-        data={data}
-        columns={columns(editCempekData, deleteCempekData)}
+        data={cempekList}
+        columns={columns(editCempekData, setId, closeModal)}
         fixedCol={3}
       />
     </>
   )
 }
 
-const columns = (editCempekData: any, deleteCempekData: any) => [
+const columns = (editCempekData: any, setId: any, closeModal: any) => [
   {
     header: 'Tgl Lahir',
     accessorKey: 'birth_date',
@@ -67,13 +87,16 @@ const columns = (editCempekData: any, deleteCempekData: any) => [
   },
   {
     header: 'Aksi',
-    accessorKey: 'eartag_code',
+    accessorKey: '_id',
     cell: (data: any) => (
       <div className="flex gap-2">
         <Button intent="edit" onClick={() => editCempekData(data.getValue())} />
         <Button
           intent="delete"
-          onClick={() => deleteCempekData(data.getValue())}
+          onClick={() => {
+            closeModal(true)
+            setId(data.getValue())
+          }}
         />
       </div>
     ),

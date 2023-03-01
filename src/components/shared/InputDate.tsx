@@ -28,7 +28,7 @@ export default function InputDate(props: IProps) {
             id={label}
             className={clsx(
               'peer block w-full appearance-none rounded-lg border px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0',
-              errorMsg ? 'disabled:border-error' : 'disabled:border-neutral-3',
+              errorMsg ? 'disabled:border-error' : 'disabled:border-neutral-4',
               disabled
                 ? 'disabled:bg-[#ebebeb] disabled:text-neutral-4'
                 : 'bg-white'

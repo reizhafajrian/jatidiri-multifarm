@@ -1,7 +1,15 @@
-import { IDInfoProps } from '@/data/interfaces'
 import formatRupiah from '@/utils/formatRupiah'
 import { Card } from '../shared'
 import { ArrowSmallUp } from '../shared/Icons'
+
+interface IDInfoProps {
+  data: {
+    icon: any
+    title: string
+    value: string
+    percentage: string
+  }
+}
 
 export default function DashboardInfoCard({ data }: IDInfoProps) {
   return (

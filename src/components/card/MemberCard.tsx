@@ -1,6 +1,7 @@
 'use client'
+import { useAuthStore } from '@/store/auth'
 import { useState } from 'react'
-import DeleteMember from '../form/DeleteMember'
+import DeleteModal from '../form/DeleteModal'
 import EditMemberForm from '../form/EditMemberForm'
 import { Button, Listbox } from '../shared'
 
@@ -12,11 +13,26 @@ const options = [
 export default function MemberCard({ data }: any) {
   const [isOpen, closeModal] = useState(false)
   const [isEditOpen, closeEditModal] = useState(false)
+  const { deleteMember } = useAuthStore()
   const [role, setRole] = useState(options[0])
+
+  const deleteHandler = async () => {
+    try {
+      await deleteMember(data._id)
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   return (
     <>
-      <DeleteMember isOpen={isOpen} closeModal={closeModal} />
+      <DeleteModal
+        isOpen={isOpen}
+        closeModal={closeModal}
+        title={`Hapus Member Ini?`}
+        desc={`Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa dibatalkan`}
+        deleteHandler={deleteHandler}
+      />
       <EditMemberForm isOpen={isEditOpen} closeModal={closeEditModal} />
       <div className="grid grid-cols-4 items-center rounded-lg border bg-white py-4 px-5">
         <div className="flex items-center gap-4">

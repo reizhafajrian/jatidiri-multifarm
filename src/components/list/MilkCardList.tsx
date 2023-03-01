@@ -1,25 +1,29 @@
+import { useMilkStore } from '@/store/milk'
+import { shortDateFormatter } from '@/utils/formatDate'
 import formatRupiah from '@/utils/formatRupiah'
 import { Card } from '../shared'
 import { ArrowSmallUp, MilkCircle, WalletCircle } from '../shared/Icons'
 
-const cardData = [
-  {
-    icon: <WalletCircle />,
-    title: 'Total Pendapatan',
-    date: 'Januari 2023',
-    value: formatRupiah('1250000'),
-    percentage: '5.2',
-  },
-  {
-    icon: <MilkCircle />,
-    title: 'Total Susu',
-    date: 'Januari 2023',
-    value: '35 Liter',
-    percentage: '5.2',
-  },
-]
-
 export default function MilkCardList() {
+  const info = useMilkStore.getState().milkInfo
+
+  const cardData = [
+    {
+      icon: <WalletCircle />,
+      title: 'Total Pendapatan',
+      date: shortDateFormatter(info.income_date),
+      value: formatRupiah(info.income_total.toString()),
+      percentage: info.income_percentage,
+    },
+    {
+      icon: <MilkCircle />,
+      title: 'Total Susu',
+      date: shortDateFormatter(info.milk_date),
+      value: `${info.milk_total} Liter`,
+      percentage: info.milk_percentage,
+    },
+  ]
+
   return (
     <div className="my-4 grid grid-cols-2 gap-10">
       {cardData.map((item, idx) => (

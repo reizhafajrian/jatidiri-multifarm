@@ -1,36 +1,55 @@
 'use client'
 import { categoryTitle } from '@/data/data'
 import { ICategoryProps } from '@/data/interfaces'
+import formatRupiah from '@/utils/formatRupiah'
 import { useState } from 'react'
+import DeleteModal from '../form/DeleteModal'
 import EditCategoryForm from '../form/EditCategoryForm'
 import { Button, Table } from '../shared'
 
 export default function CategoryTable(props: ICategoryProps) {
-  const [isOpen, closeModal] = useState(false)
+  const [isOpenEdit, closeModalEdit] = useState(false)
+  const [isOpenDelete, closeModalDelete] = useState(false)
+  const [id, setId] = useState('')
 
-  const editData = () => {
-    closeModal(true)
+  const deleteHandler = () => {
+    console.log(id)
   }
-
-  const deleteData = () => {}
 
   return (
     <>
       <EditCategoryForm
         category={props.category!}
-        isOpen={isOpen}
-        closeModal={closeModal}
+        isOpen={isOpenEdit}
+        closeModal={closeModalEdit}
+      />
+      <DeleteModal
+        isOpen={isOpenDelete}
+        closeModal={closeModalDelete}
+        title={`Hapus Data Ini?`}
+        desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
+        deleteHandler={deleteHandler}
       />
       <Table
         data={props.data}
-        columns={columns(editData, deleteData, props.category!)}
+        columns={columns(
+          closeModalEdit,
+          closeModalDelete,
+          setId,
+          props.category!
+        )}
         fixedCol={2}
       />
     </>
   )
 }
 
-const columns = (editData: any, deleteData: any, category: string) => [
+const columns = (
+  closeModalEdit: any,
+  closeModalDelete: any,
+  setId: any,
+  category: string
+) => [
   {
     header: categoryTitle(category),
     accessorKey: `${category}_type`,
@@ -46,14 +65,27 @@ const columns = (editData: any, deleteData: any, category: string) => [
   {
     header: `Harga ${categoryTitle(category)}`,
     accessorKey: `${category}_price`,
+    cell: (data: any) => formatRupiah(data.getValue().toString()),
   },
   {
     header: 'Aksi',
     accessorKey: `${category}_type`,
     cell: (data: any) => (
       <div className="flex gap-2">
-        <Button intent="edit" onClick={() => editData(data.getValue())} />
-        <Button intent="delete" onClick={() => deleteData(data.getValue())} />
+        <Button
+          intent="edit"
+          onClick={() => {
+            closeModalEdit(true)
+            setId(data.getValue)
+          }}
+        />
+        <Button
+          intent="delete"
+          onClick={() => {
+            closeModalDelete(true)
+            setId(data.getValue)
+          }}
+        />
       </div>
     ),
   },

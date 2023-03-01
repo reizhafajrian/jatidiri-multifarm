@@ -1,16 +1,18 @@
 'use client'
 import { Button, InputText, Modal } from '@/components/shared'
 import { categoryTitle } from '@/data/data'
-import { ICategoryFields, ICategoryProps } from '@/data/interfaces'
+import { IModal } from '@/data/interfaces'
 import { categorySchema } from '@/data/validations'
+import { ICategory, useCategoryStore } from '@/store/category'
 import clsx from 'clsx'
 import { Formik } from 'formik'
 
-export default function EditCategoryForm(props: ICategoryProps) {
+export default function EditCategoryForm(props: IModal & { category: string }) {
   const { category, isOpen, closeModal } = props
+  const { editCategory } = useCategoryStore()
 
-  const editCategoryHandler = async (values: ICategoryFields) => {
-    return console.log({ ...values })
+  const editCategoryHandler = async (values: ICategory) => {
+    // await editCategory({ ...values })
   }
 
   return (
@@ -19,7 +21,7 @@ export default function EditCategoryForm(props: ICategoryProps) {
         Edit {categoryTitle(category!)}
       </h1>
       <Formik
-        initialValues={{} as ICategoryFields}
+        initialValues={{} as ICategory}
         validationSchema={categorySchema}
         onSubmit={(values) => editCategoryHandler(values)}
       >
