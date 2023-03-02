@@ -1,6 +1,6 @@
 'use client'
 import { useAnimalStore } from '@/store/animal'
-import { Card, StoreInitializer } from '../shared'
+import { Card } from '../shared'
 
 interface IDAnimalInfoProps {
   data: {
@@ -13,6 +13,7 @@ interface IDAnimalInfoProps {
 
 export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
   const { icon, animal_type, totalAdult, totalCempek } = props.data
+  useAnimalStore.setState({ animal_type })
   const { animalTitle } = useAnimalStore()
   const title = animalTitle()
 
@@ -30,7 +31,6 @@ export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
 
   return (
     <>
-      <StoreInitializer data={{ animal: { animal_type } }} />
       <Card className="space-y-7 capitalize">
         <div className="flex items-center gap-3">
           <div className="h-12 w-12">{icon}</div>
