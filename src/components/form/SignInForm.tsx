@@ -1,70 +1,46 @@
 'use client'
 import { signinSchema } from '@/data/validations'
 import { IUser, useAuthStore } from '@/store/auth'
-import clsx from 'clsx'
-import { Formik } from 'formik'
 import { useRouter } from 'next/navigation'
+import { toast } from 'react-toastify'
 import { Button, InputText } from '../shared'
+import Form from '../shared/Form'
 
 export default function SignInForm() {
   const router = useRouter()
-  const { user, signIn } = useAuthStore()
+  const { signIn } = useAuthStore()
 
   const signinHandler = async (values: IUser) => {
     try {
       await signIn(values)
       router.push('/home')
-    } catch (e) {
-      console.log(e)
+    } catch (e: any) {
+      toast.error(e.errors[0].message)
     }
   }
 
   return (
-    <Formik
-      initialValues={user}
-      validationSchema={signinSchema}
-      validateOnChange={false}
+    <Form
+      schema={signinSchema}
       onSubmit={(values) => signinHandler(values)}
+      className="space-y-4"
     >
-      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <InputText
-            name="email"
-            label="Email"
-            defaultValue={values.email}
-            onChange={handleChange}
-            disabled={isSubmitting}
-            errorMsg={errors.email}
-          />
-          <InputText
-            isSecured
-            name="password"
-            label="Password"
-            defaultValue={values.password}
-            onChange={handleChange}
-            disabled={isSubmitting}
-            errorMsg={errors.password}
-          />
-          <div className="grid gap-8">
-            <button
-              className="ml-auto text-base font-medium"
-              onClick={() => router.replace('/signin')}
-            >
-              Forgot Password?
-            </button>
-            <Button
-              type="submit"
-              className={clsx(
-                'min-w-full rounded-lg py-2',
-                isSubmitting && 'animate-pulse'
-              )}
-              disabled={isSubmitting}
-            >
-              signin
-            </Button>
-          </div>
-        </form>
-      )}
-    </Formik>
+      <InputText name="email" label="Email" />
+      <InputText name="password" label="Password" isSecured />
+      <div className="grid gap-8">
+        <button
+          className="ml-auto text-base font-medium"
+          onClick={() => router.replace('/signin')}
+        >
+          Forgot Password?
+        </button>
+        <Button
+          type="submit"
+          className="min-w-full rounded-lg py-2 disabled:animate-pulse"
+        >
+          signin
+        </Button>
+      </div>
+    </Form>
   )
 }

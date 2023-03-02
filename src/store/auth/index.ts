@@ -2,7 +2,11 @@ import { create } from 'zustand'
 import * as h from './handlers'
 
 export const useAuthStore = create<IState>((set) => ({
-  user: {} as IUser,
+  user: {
+    id: '63e5bdd29536b95a6759a525',
+    name: 'john doe',
+    email: 'johndoe@gmail.com',
+  } as IUser,
   signIn: h.signInHandler,
   addMember: h.addMemberHandler,
   editMember: h.editMemberHandler,
@@ -22,6 +26,7 @@ interface IState {
 }
 
 interface IUser {
+  id?: string
   email: string
   password: string
   name?: string

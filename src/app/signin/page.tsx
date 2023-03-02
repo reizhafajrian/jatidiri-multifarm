@@ -9,15 +9,15 @@ export default function SigninPage() {
       </div>
       <div className="grid h-screen place-items-center">
         <div className="w-full px-24">
-          <h1 className="mb-32 grid gap-9 text-[40px] font-medium">
-            <span>Welcome</span>
-            <span>
+          <div className="mb-32 space-y-9 text-[40px] font-medium">
+            <h1>Welcome</h1>
+            <h1>
               to{' '}
               <span className="font-semibold text-primary-4">
                 Jatidiri Multifarm
               </span>
-            </span>
-          </h1>
+            </h1>
+          </div>
           <div className="w-full">
             <h2 className="mb-8 text-[32px] font-medium">Sign In Here</h2>
             <SignInForm />

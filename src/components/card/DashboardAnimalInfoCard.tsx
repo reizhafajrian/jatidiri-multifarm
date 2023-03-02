@@ -1,10 +1,11 @@
-import { animalTitle } from '@/data/data'
-import { Card } from '../shared'
+'use client'
+import { useAnimalStore } from '@/store/animal'
+import { Card, StoreInitializer } from '../shared'
 
 interface IDAnimalInfoProps {
   data: {
     icon: any
-    animal_type: string
+    animal_type: 'goat' | 'sheep' | 'cow' | undefined
     totalAdult: number
     totalCempek: number
   }
@@ -12,7 +13,8 @@ interface IDAnimalInfoProps {
 
 export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
   const { icon, animal_type, totalAdult, totalCempek } = props.data
-  const title = animalTitle(animal_type)
+  const { animalTitle } = useAnimalStore()
+  const title = animalTitle()
 
   const content = ({ total, title, label }: any) => (
     <div className="space-y-1">
@@ -27,18 +29,23 @@ export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
   )
 
   return (
-    <Card className="space-y-7 capitalize">
-      <div className="flex items-center gap-3">
-        <div className="h-12 w-12">{icon}</div>
-        <div>
-          <h1 className="mb-1 text-xl font-semibold text-neutral-5">{title}</h1>
-          <h2 className="text-xs text-neutral-4">total {title} hidup</h2>
+    <>
+      <StoreInitializer data={{ animal: { animal_type } }} />
+      <Card className="space-y-7 capitalize">
+        <div className="flex items-center gap-3">
+          <div className="h-12 w-12">{icon}</div>
+          <div>
+            <h1 className="mb-1 text-xl font-semibold text-neutral-5">
+              {title}
+            </h1>
+            <h2 className="text-xs text-neutral-4">total {title} hidup</h2>
+          </div>
         </div>
-      </div>
-      <div className="grid grid-cols-2">
-        {content({ title, total: totalAdult, label: 'Dewasa' })}
-        {content({ title, total: totalCempek, label: 'Cempek' })}
-      </div>
-    </Card>
+        <div className="grid grid-cols-2">
+          {content({ title, total: totalAdult, label: 'Dewasa' })}
+          {content({ title, total: totalCempek, label: 'Cempek' })}
+        </div>
+      </Card>
+    </>
   )
 }

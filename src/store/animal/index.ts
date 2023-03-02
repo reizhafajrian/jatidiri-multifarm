@@ -6,11 +6,30 @@ export const useAnimalStore = create<IState>((set, get) => ({
   animal_type: 'goat',
   animal: {} as IAnimal,
   animalList: [],
-  headerMenu: () => h.getHeaderMenu(get),
+  headerMenu: () => h.getHeaderMenu(get().animal_type),
   addAnimal: h.addAnimalHandler,
   editAnimal: h.editAnimalHandler,
   deleteAnimal: h.deleteAnimalHandler,
+  animalTitle: () => h.animalTitle(get().animal_type),
+  genderTitle: () => h.genderTitle(get().gender),
+  animalFormContent: {},
 }))
+
+interface IState {
+  gender: 'male' | 'female'
+  animal_type: 'goat' | 'sheep' | 'cow'
+  animal: IAnimal
+  animalList: IAnimal[]
+  headerMenu: () => Array<any>
+  addAnimal: (payload: IAnimal & IAnimalProps & { uid: string }) => Promise<any>
+  editAnimal: (
+    payload: IAnimal & IAnimalProps & { uid: string }
+  ) => Promise<void>
+  deleteAnimal: (payload: string) => Promise<void>
+  animalFormContent: any
+  animalTitle: () => string
+  genderTitle: () => string
+}
 
 interface IAnimalProps {
   eartag_code?: string
@@ -30,19 +49,6 @@ interface IAnimal {
   purchase_price: number
   description: string
   files: any
-}
-
-interface IState {
-  gender: 'male' | 'female'
-  animal_type: 'goat' | 'sheep' | 'cow'
-  animal: IAnimal
-  animalList: IAnimal[]
-  headerMenu: () => Array<any>
-  addAnimal: (payload: IAnimal & IAnimalProps & { uid: string }) => Promise<any>
-  editAnimal: (
-    payload: IAnimal & IAnimalProps & { uid: string }
-  ) => Promise<void>
-  deleteAnimal: (payload: string) => Promise<void>
 }
 
 export type { IState, IAnimal, IAnimalProps }

@@ -27,7 +27,7 @@ export const fetcher = async (props: {
     ...(formData && { body: formData }),
     headers: {
       Authorization,
-      'Content-Type': !formData ? 'application/json' : undefined,
+      ...(!formData && { 'Content-Type': 'application/json' }),
     },
   })
 

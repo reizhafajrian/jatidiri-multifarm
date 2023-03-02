@@ -5,18 +5,18 @@ import AddAnimalForm from '../form/AddAnimalForm'
 import AddCempekForm from '../form/AddCempekForm'
 
 export default function AnimalAddWrapper() {
-  const { animal_type } = useAnimalStore()
+  const { animal_type } = useAnimalStore.getState()
 
   const categories =
     animal_type === 'cow'
       ? {
-          Pejantan: <AddAnimalForm animal_type={animal_type} gender="male" />,
-          Betina: <AddAnimalForm animal_type={animal_type} gender="female" />,
+          Pejantan: <AddAnimalForm gender="male" />,
+          Betina: <AddAnimalForm gender="female" />,
         }
       : {
-          Pejantan: <AddAnimalForm animal_type={animal_type} gender="male" />,
-          Betina: <AddAnimalForm animal_type={animal_type} gender="female" />,
-          Cempek: <AddCempekForm animal_type={animal_type} />,
+          Pejantan: <AddAnimalForm gender="male" />,
+          Betina: <AddAnimalForm gender="female" />,
+          Cempek: <AddCempekForm />,
         }
 
   return (

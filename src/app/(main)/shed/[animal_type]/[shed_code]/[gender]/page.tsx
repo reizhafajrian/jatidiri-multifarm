@@ -14,7 +14,7 @@ export default async function AnimalShedPage(props: IPageProps) {
   const url = `${process.env.API_BASE_URL}/${animal_type && 'goat'}/get`
   const { data: animalList } = await fetcher({ url, token })
 
-  const animal = { animalList }
+  const animal = { animalList, animal_type, gender }
   const shed = { shed: dummyData.shed }
 
   return (

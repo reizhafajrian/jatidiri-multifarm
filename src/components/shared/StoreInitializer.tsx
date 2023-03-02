@@ -23,8 +23,15 @@ export default function StoreInitializer({ data }: IData) {
 
   if (!initialized.current) {
     if (data.animal) {
-      const { animal, animalList, animal_type, gender } = data.animal
-      useAnimalStore.setState({ animal, animalList, animal_type, gender })
+      const { animal, animalList, animal_type, gender, animalFormContent } =
+        data.animal
+      useAnimalStore.setState({
+        animal,
+        animalList,
+        animal_type,
+        gender,
+        animalFormContent,
+      })
     }
 
     if (data.cempek) {
@@ -71,6 +78,7 @@ export default function StoreInitializer({ data }: IData) {
 interface IAnimalState {
   animal?: IAnimal
   animalList?: IAnimal[]
+  animalFormContent?: any
 }
 
 interface ICempekState {

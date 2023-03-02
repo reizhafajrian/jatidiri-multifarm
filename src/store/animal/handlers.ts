@@ -1,9 +1,14 @@
-import { IAnimal, IAnimalProps, IState } from '@/store/animal'
+import { IAnimal, IAnimalProps } from '@/store/animal'
 import { fetcher } from '@/utils/fetcher'
 
-export const getHeaderMenu = (get: () => IState) => {
-  const animal_type = get().animal_type
+export const animalTitle = (payload: string) => {
+  return payload === 'goat' ? 'Kambing' : payload === 'sheep' ? 'Domba' : 'Sapi'
+}
 
+export const genderTitle = (payload: string) =>
+  payload === 'male' ? 'Pejantan' : 'Betina'
+
+export const getHeaderMenu = (animal_type: string) => {
   if (animal_type === 'cow') {
     return [
       { name: 'Pejantan', link: `/${animal_type}/male` },
@@ -41,6 +46,7 @@ export const addAnimalHandler = async (
     method: 'post',
     formData,
   })
+  console.log(res)
 
   return res
 }

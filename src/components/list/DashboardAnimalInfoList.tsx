@@ -14,7 +14,12 @@ export default function DashboardAnimalInfoList() {
   )
 }
 
-const dataAnimal = [
+interface IData {
+  icon: any
+  animal_type: 'goat' | 'sheep' | 'cow' | undefined
+}
+
+const dataAnimal: IData[] = [
   { icon: <DashboardCow />, animal_type: 'cow' },
   { icon: <DashboardSheep />, animal_type: 'sheep' },
   { icon: <DashboardGoat />, animal_type: 'goat' },

@@ -1,10 +1,12 @@
-import { animalTitle } from '@/data/data'
+'use client'
+import { useAnimalStore } from '@/store/animal'
 import { useShedStore } from '@/store/shed'
 import { BackLink } from '../shared'
 import Navbar from './Navbar'
 
 export default function ShedDetailHeader() {
-  const { animal_type, shed_code } = useShedStore.getState().shed
+  const { shed_code } = useShedStore().shed
+  const { animal_type, animalTitle } = useAnimalStore()
 
   const menu = [
     { name: 'Informasi', link: `/shed/${animal_type}/${shed_code}` },
@@ -22,7 +24,7 @@ export default function ShedDetailHeader() {
         <p className="font-light">
           Informasi Detail terkait Kandang Nomor
           <span className="font-semibold"> {shed_code}</span> yang berisi hewan
-          <span className="font-semibold"> {animalTitle(animal_type!)}</span>.
+          <span className="font-semibold"> {animalTitle()}</span>.
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between" />

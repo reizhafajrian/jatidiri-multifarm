@@ -6,9 +6,6 @@ export const animalTitle = (animal_type: string) =>
     ? 'Domba'
     : 'Sapi'
 
-export const genderTitle = (gender: string) =>
-  gender === 'male' ? 'Pejantan' : 'Betina'
-
 // CATEGORY TITLE
 export const categoryTitle = (category: string) =>
   category === 'feed'

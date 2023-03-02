@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { addCategoryHandler, editCategoryHandler } from './handler'
 
 export const useCategoryStore = create<IState>((set) => ({
+  formValues: {} as ICategory,
   feed: {} as IFeed,
   feedInfo: {} as IFeedInfo,
   feedList: [],
@@ -16,6 +17,7 @@ export const useCategoryStore = create<IState>((set) => ({
 }))
 
 interface IState {
+  formValues: ICategory
   feed: IFeed
   feedInfo: IFeedInfo
   feedList: IFeed[]

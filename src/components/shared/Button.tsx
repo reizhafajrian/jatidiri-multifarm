@@ -1,3 +1,4 @@
+'use client'
 import { cva, VariantProps } from 'class-variance-authority'
 import { Pencil, Trash } from './Icons'
 
@@ -15,6 +16,7 @@ export interface ButtonProps
 
 export default function Button(props: ButtonProps) {
   const { children, intent, className, type, disabled, onClick } = props
+
   return (
     <button
       type={type ?? 'button'}
@@ -47,6 +49,7 @@ const buttonClasses = cva(
     'transition',
     'duration-200',
     'ease-in-out',
+    'disabled:animate-pulse',
   ],
   {
     variants: {

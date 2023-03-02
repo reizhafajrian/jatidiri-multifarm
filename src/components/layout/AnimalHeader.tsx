@@ -1,6 +1,5 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
-import { animalTitle } from '@/data/data'
 import { useAnimalStore } from '@/store/animal'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -9,7 +8,7 @@ import { ArrowDownTray, ExclamationTriangle } from '../shared/Icons'
 
 export default function AnimalHeader() {
   const router = useRouter()
-  const { animal_type, headerMenu } = useAnimalStore()
+  const { animal_type, animalTitle, headerMenu } = useAnimalStore()
   const [alertCluster] = useState(false)
 
   return (
@@ -36,7 +35,7 @@ export default function AnimalHeader() {
             onClick={() => router.push(`/${animal_type}/add`)}
           >
             <span className="text-sm capitalize">
-              tambah data {animalTitle(animal_type)}
+              tambah data {animalTitle()}
             </span>
           </Button>
           <Button intent="secondary" className="rounded-lg p-2">

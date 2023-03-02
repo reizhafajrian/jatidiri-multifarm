@@ -3,7 +3,6 @@ import ShedInfo from '@/components/layout/ShedInfo'
 import { StoreInitializer } from '@/components/shared'
 import { dummyData, shedDetailData } from '@/data/dummy'
 import { IPageProps } from '@/data/interfaces'
-import { useShedStore } from '@/store/shed'
 
 export default function ShedDetailPage(props: IPageProps) {
   // todo: get data by shed_code from api
@@ -11,11 +10,11 @@ export default function ShedDetailPage(props: IPageProps) {
   const shed = dummyData.shed
   const shedDetailList = shedDetailData
 
-  useShedStore.setState({ shed })
-
   return (
     <main>
-      <StoreInitializer data={{ shed: { shed, shedDetailList } }} />
+      <StoreInitializer
+        data={{ animal: { animal_type }, shed: { shed, shedDetailList } }}
+      />
       <ShedDetailHeader />
       <ShedInfo />
     </main>
