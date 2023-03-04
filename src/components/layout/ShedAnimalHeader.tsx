@@ -3,7 +3,6 @@ import AddShedAnimalForm from '@/components/form/AddShedAnimalForm'
 import Navbar from '@/components/layout/Navbar'
 import BackLink from '@/components/shared/BackLink'
 import Button from '@/components/shared/Button'
-import { animalTitle } from '@/data/data'
 import { useShedStore } from '@/store/shed'
 import { useState } from 'react'
 import { PencilSolid } from '../shared/Icons'
@@ -11,6 +10,7 @@ import { PencilSolid } from '../shared/Icons'
 export default function ShedAnimalHeader() {
   const [isOpen, closeModal] = useState(false)
   const { animal_type, shed_code } = useShedStore().shed
+  const title = setTitle(animal_type)
 
   const menu = [
     { name: 'Informasi', link: `/shed/${animal_type}/${shed_code}` },
@@ -34,17 +34,22 @@ export default function ShedAnimalHeader() {
         <p className="font-light">
           Informasi Detail terkait Kandang Nomor
           <span className="font-semibold"> {shed_code}</span> yang berisi hewan
-          <span className="font-semibold"> {animalTitle(animal_type)}</span>.
+          <span className="font-semibold"> {title}</span>.
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         <Button onClick={() => closeModal(true)} className="rounded-lg p-2">
-          <span className="text-sm capitalize">
-            tambah {animalTitle(animal_type)}
-          </span>
+          <span className="text-sm capitalize">tambah {title}</span>
           <PencilSolid />
         </Button>
       </Navbar>
     </>
   )
 }
+
+const setTitle = (animal_type: string) =>
+  animal_type === 'goat'
+    ? 'Kambing'
+    : animal_type === 'sheep'
+    ? 'Domba'
+    : 'Sapi'

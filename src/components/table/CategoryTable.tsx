@@ -1,5 +1,4 @@
 'use client'
-import { categoryTitle } from '@/data/data'
 import { ICategoryProps } from '@/data/interfaces'
 import formatRupiah from '@/utils/formatRupiah'
 import { useState } from 'react'
@@ -43,6 +42,15 @@ export default function CategoryTable(props: ICategoryProps) {
     </>
   )
 }
+
+const categoryTitle = (category: string) =>
+  category === 'feed'
+    ? 'Pakan'
+    : category === 'vitamin'
+    ? 'Vitamin'
+    : category === 'vaccine'
+    ? 'Vaksin'
+    : 'Obat Cacing'
 
 const columns = (
   closeModalEdit: any,

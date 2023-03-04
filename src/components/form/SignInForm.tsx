@@ -3,30 +3,26 @@ import { signinSchema } from '@/data/validations'
 import { IUser, useAuthStore } from '@/store/auth'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
-import { Button, InputText } from '../shared'
+import { Field } from '../shared'
 import Form from '../shared/Form'
 
 export default function SignInForm() {
   const router = useRouter()
   const { signIn } = useAuthStore()
 
-  const signinHandler = async (values: IUser) => {
+  const onSubmit = async (values: IUser) => {
     try {
       await signIn(values)
       router.push('/home')
     } catch (e: any) {
-      toast.error(e.errors[0].message)
+      toast.error(e.errors[0].message ?? e.message)
     }
   }
 
   return (
-    <Form
-      schema={signinSchema}
-      onSubmit={(values) => signinHandler(values)}
-      className="space-y-4"
-    >
-      <InputText name="email" label="Email" />
-      <InputText name="password" label="Password" isSecured />
+    <Form schema={signinSchema} onSubmit={onSubmit} className="space-y-4">
+      <Field type="input" name="email" label="Email" />
+      <Field type="input" name="password" label="Password" isSecured />
       <div className="grid gap-8">
         <button
           className="ml-auto text-base font-medium"
@@ -34,12 +30,7 @@ export default function SignInForm() {
         >
           Forgot Password?
         </button>
-        <Button
-          type="submit"
-          className="min-w-full rounded-lg py-2 disabled:animate-pulse"
-        >
-          signin
-        </Button>
+        <Field type="submit" label="signin" className="min-w-full" />
       </div>
     </Form>
   )

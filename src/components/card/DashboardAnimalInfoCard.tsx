@@ -1,11 +1,9 @@
-'use client'
-import { useAnimalStore } from '@/store/animal'
 import { Card } from '../shared'
 
 interface IDAnimalInfoProps {
   data: {
     icon: any
-    animal_type: 'goat' | 'sheep' | 'cow' | undefined
+    animal_type: 'goat' | 'sheep' | 'cow'
     totalAdult: number
     totalCempek: number
   }
@@ -13,9 +11,12 @@ interface IDAnimalInfoProps {
 
 export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
   const { icon, animal_type, totalAdult, totalCempek } = props.data
-  useAnimalStore.setState({ animal_type })
-  const { animalTitle } = useAnimalStore()
-  const title = animalTitle()
+  const title =
+    animal_type === 'goat'
+      ? 'Kambing'
+      : animal_type === 'sheep'
+      ? 'Domba'
+      : 'Sapi'
 
   const content = ({ total, title, label }: any) => (
     <div className="space-y-1">

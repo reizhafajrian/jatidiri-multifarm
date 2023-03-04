@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { useFormikContext } from 'formik'
 import Button from './Button'
 import Dropzone from './Dropzone'
@@ -12,10 +13,12 @@ interface IProps {
   options?: string[]
   cancelHandler?: any
   isSecured?: boolean
+  className?: string
 }
 
 export default function Field(props: IProps) {
-  const { name, label, type, options, cancelHandler, isSecured } = props
+  const { name, label, type, options, cancelHandler, isSecured, className } =
+    props
   const { isSubmitting } = useFormikContext()
 
   switch (type) {
@@ -30,16 +33,18 @@ export default function Field(props: IProps) {
     case 'submit':
       return (
         <>
-          <Button
-            onClick={cancelHandler}
-            intent="secondary"
-            className="w-36 rounded-lg py-2"
-          >
-            cancel
-          </Button>
+          {cancelHandler && (
+            <Button
+              onClick={cancelHandler}
+              intent="secondary"
+              className="w-36 rounded-lg py-2"
+            >
+              cancel
+            </Button>
+          )}
           <Button
             type="submit"
-            className="w-36 rounded-lg py-2"
+            className={clsx('w-36 rounded-lg py-2', className)}
             disabled={isSubmitting}
           >
             {props.label ?? 'save'}

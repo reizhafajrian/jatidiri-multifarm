@@ -1,5 +1,6 @@
 'use client'
 import { cva, VariantProps } from 'class-variance-authority'
+import Link from 'next/link'
 import { Pencil, Trash } from './Icons'
 
 interface IProps {
@@ -8,6 +9,7 @@ interface IProps {
   type?: 'button' | 'submit'
   disabled?: boolean
   onClick?: any
+  href?: string
 }
 
 export interface ButtonProps
@@ -15,7 +17,14 @@ export interface ButtonProps
     VariantProps<typeof buttonClasses> {}
 
 export default function Button(props: ButtonProps) {
-  const { children, intent, className, type, disabled, onClick } = props
+  const { href, children, intent, className, type, disabled, onClick } = props
+
+  if (href)
+    return (
+      <Link href={href} className={buttonClasses({ intent, className })}>
+        {children}
+      </Link>
+    )
 
   return (
     <button

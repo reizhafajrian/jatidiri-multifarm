@@ -1,11 +1,17 @@
 'use client'
-import { dateOptions } from '@/data/data'
 import { shortDateFormatter } from '@/utils/formatDate'
 import { Popover, Transition } from '@headlessui/react'
 import { Fragment, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { SelectMenu } from '../shared'
 import { ChevronDown } from '../shared/Icons'
+
+const dateOptions = [
+  { name: 'Today' },
+  { name: 'This Week' },
+  { name: 'This Month' },
+  { name: 'This Year' },
+]
 
 export default function AnimalFilter() {
   const [startDate, setStartDate] = useState(new Date())

@@ -46,7 +46,6 @@ export const addAnimalHandler = async (
     method: 'post',
     formData,
   })
-  console.log(res)
 
   return res
 }

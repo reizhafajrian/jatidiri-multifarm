@@ -1,6 +1,6 @@
 'use client'
 import { Field, Form, InputCheckbox, Modal } from '@/components/shared'
-import { shedDataFormContent } from '@/data/data'
+// import { shedDataFormContent } from '@/data/data'
 import { IModal } from '@/data/interfaces'
 import { shedDataSchema as schema } from '@/data/validations'
 import { useAuthStore } from '@/store/auth'
@@ -37,43 +37,27 @@ export default function AddShedDataForm(props: IModal) {
         <div className="mb-8 space-y-5">
           {/* category radio options */}
           <div className="flex justify-between">
-            {shedDataFormContent.options.map((item, idx) => (
+            {shedDataFormContent.options.map(({ name, label }, idx) => (
               <InputCheckbox
                 key={idx}
-                label={item.label}
-                defaultChecked={categories[item.name]}
-                onChange={(e: any) =>
-                  setCategories((s: any) => ({
-                    ...s,
-                    [item.name]: e.target.checked,
-                  }))
+                label={label}
+                defaultChecked={categories[name]}
+                onChange={({ target: { checked } }: any) =>
+                  setCategories((s: any) => ({ ...s, [name]: checked }))
                 }
               />
             ))}
           </div>
           {/* form fields */}
-          {shedDataFormContent.content.map((item, idx) => (
-            <div
-              key={idx}
-              className={categories[item.name] ? 'block' : 'hidden'}
-            >
-              <h3 className="mb-4 text-base font-medium">{item.title}</h3>
+          {shedDataFormContent.content.map(({ fields, name, title }, idx) => (
+            <div key={idx} className={categories[name] ? 'block' : 'hidden'}>
+              <h3 className="mb-4 text-base font-medium">{title}</h3>
               <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                {item.fields.map((field, idx) =>
-                  field.type === 'date' ? (
-                    <Field
-                      type="date"
-                      key={idx}
-                      name={field.name}
-                      label={field.label}
-                    />
+                {fields.map(({ name, label, type }, idx) =>
+                  type === 'date' ? (
+                    <Field type="date" key={idx} name={name} label={label} />
                   ) : (
-                    <Field
-                      type="input"
-                      key={idx}
-                      name={field.name}
-                      label={field.label}
-                    />
+                    <Field type="input" key={idx} name={name} label={label} />
                   )
                 )}
               </div>
@@ -86,4 +70,56 @@ export default function AddShedDataForm(props: IModal) {
       </Form>
     </Modal>
   )
+}
+
+const shedDataFormContent = {
+  options: [
+    { label: 'Pakan', name: 'feed' },
+    { label: 'Vitamin', name: 'vitamin' },
+    { label: 'Vaksin', name: 'vaccine' },
+    { label: 'Obat Cacing', name: 'anthelmintic' },
+  ],
+  content: [
+    {
+      name: 'feed',
+      title: 'Pakan',
+      fields: [
+        { type: 'date', label: 'Tanggal', name: 'feed_date' },
+        { type: 'text', label: 'Jenis Pakan', name: 'feed_type' },
+        { type: 'number', label: 'Harga', name: 'feed_price' },
+        { type: 'number', label: 'Stok', name: 'feed_stock' },
+      ],
+    },
+    {
+      name: 'vitamin',
+      title: 'Vitamin',
+      fields: [
+        { type: 'date', label: 'Tanggal', name: 'vitamin_date' },
+        { type: 'text', label: 'Jenis vitamin', name: 'vitamin_type' },
+        { type: 'number', label: 'Harga', name: 'vitamin_price' },
+      ],
+    },
+    {
+      name: 'vaccine',
+      title: 'Vaksin',
+      fields: [
+        { type: 'date', label: 'Tanggal', name: 'vaccine_date' },
+        { type: 'text', label: 'Jenis Vaksin', name: 'vaccine_type' },
+        { type: 'number', label: 'Harga', name: 'vaccine_price' },
+      ],
+    },
+    {
+      name: 'anthelmintic',
+      title: 'Obat Cacing',
+      fields: [
+        { type: 'date', label: 'Tanggal', name: 'anthelmintic_date' },
+        {
+          type: 'text',
+          label: 'Jenis Obat Cacing',
+          name: 'anthelmintic_type',
+        },
+        { type: 'number', label: 'Harga', name: 'anthelmintic_price' },
+      ],
+    },
+  ],
 }

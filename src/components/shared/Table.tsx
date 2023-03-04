@@ -1,6 +1,5 @@
 'use client'
 import {
-  ColumnDef,
   getCoreRowModel,
   getPaginationRowModel,
   getSortedRowModel,
@@ -21,11 +20,8 @@ interface IProps {
 }
 
 export default function Table(props: IProps) {
-  const [tData] = useState(props.data)
-  const tColumns = useMemo<ColumnDef<any>[]>(
-    () => props.columns,
-    [props.columns]
-  )
+  const tData = useMemo<any[]>(() => props.data, [props.data])
+  const tColumns = useMemo<any[]>(() => props.columns, [props.columns])
 
   const [sorting, setSorting] = useState<SortingState>(
     props.data &&
@@ -38,7 +34,8 @@ export default function Table(props: IProps) {
   const table = useReactTable({
     data: tData,
     columns: tColumns,
-    state: { sorting, columnVisibility },
+    // state: { sorting, columnVisibility },
+    state: { columnVisibility },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
