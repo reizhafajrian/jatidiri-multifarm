@@ -49,7 +49,7 @@ interface IState {
   cempekTColumns: any
 
   // OTHERS
-  gender?: 'male' | 'female'
+  gender?: 'true' | 'false'
   animal_type?: 'goat' | 'sheep' | 'cow'
   animalFormContent: any
   animalTitle: (payload: string) => string
@@ -60,7 +60,7 @@ interface IState {
 interface IAnimalProps {
   eartag_code?: string
   animal_type?: 'goat' | 'sheep' | 'cow'
-  gender?: 'male' | 'female'
+  gender?: 'false' | 'true'
 }
 
 interface IAnimal {

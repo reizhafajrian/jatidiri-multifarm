@@ -1,5 +1,6 @@
 'use client'
 import { animalSchema, cempekSchema } from '@/data/validations'
+import { useAnimalDetail } from '@/hooks/useAnimal'
 import { ICempek, useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
@@ -20,6 +21,7 @@ export default function AnimalForm(props: IProps) {
 
   const opt = store.animalFormContent
   const eartag_code = useSearchParams().get('eartag_code')
+  const data = useAnimalDetail(eartag_code as string)
   const { formType, cempekForm, gender } = props
   const schema = cempekForm ? cempekSchema : animalSchema
 
@@ -49,6 +51,7 @@ export default function AnimalForm(props: IProps) {
     toast.success(res.message)
     router.replace(`/${store.animal_type}`)
   }
+
 
   const onSubmitCempek = async (values: ICempek) => {
     let res

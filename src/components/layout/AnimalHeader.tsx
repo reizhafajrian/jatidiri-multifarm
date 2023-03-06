@@ -37,16 +37,31 @@ export default function AnimalHeader({ animal_type }: IProps) {
   const animalFormContent = content[animal_type]
 
   const type = searchParams.get('type')
+
   const { animalTitle } = useAnimalStore()
   const [alertCluster] = useState(false)
   const headerMenu = getHeaderMenu(animal_type)
-  const gender: any = type !== 'cempek' ? type : undefined
+
+  const findGender = (type: string) => {
+    if (type === "female") return true
+    return false
+  }
+
+  const gender: any = type !== 'cempek' ? findGender(type as string) : undefined
+
+  StoreInitializer({
+    data: {
+      animal: { animal_type, gender, animalFormContent }
+    }
+  })
+
+
 
   return (
     <>
-      <StoreInitializer
+      {/* <StoreInitializer
         data={{ animal: { animal_type, gender, animalFormContent } }}
-      />
+      /> */}
       {type ? (
         <>
           {alertCluster && <AlertCluster />}

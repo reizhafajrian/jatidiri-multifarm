@@ -4,7 +4,7 @@ import * as cat from '@/store/category'
 import { IHpp, useHppStore } from '@/store/hpp'
 import { IMilk, IMilkInfo, useMilkStore } from '@/store/milk'
 import { IShed, useShedStore } from '@/store/shed'
-import { useRef } from 'react'
+import { useEffect } from 'react'
 
 interface IData {
   data: {
@@ -17,12 +17,9 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
-  const initialized = useRef(false)
-
-  if (!initialized.current) {
+  useEffect(() => {
     if (data.animal) {
       const a = data.animal
-
       useAnimalStore.setState({
         animal: a.animal,
         cempek: a.cempek,
@@ -62,10 +59,7 @@ export default function StoreInitializer({ data }: IData) {
       const { hpp, hppList } = data.hpp
       useHppStore.setState({ hpp, hppList })
     }
-
-    initialized.current = true
-  }
-  return null
+  }, [JSON.stringify(data)])
 }
 
 interface IAnimalState {
