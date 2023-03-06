@@ -1,0 +1,119 @@
+'use client'
+import { Combobox, Transition } from '@headlessui/react'
+import clsx from 'clsx'
+import { Field, useField, useFormikContext } from 'formik'
+import { Fragment, useState } from 'react'
+import { ChevronDown } from './Icons'
+
+interface IProps {
+  name: string
+  label: string
+  options: string[]
+}
+
+export default function InputSelect(props: IProps) {
+  const { name, label, ...rest } = props
+  const [field, meta] = useField({ name })
+
+  return (
+    <div>
+      <Field type="select" label={label} as={Select} {...field} {...rest} />
+      {(meta.touched || meta.error) && (
+        <span className="text-[10px] text-error">{meta.error}</span>
+      )}
+    </div>
+  )
+}
+
+const Select = (props: IProps) => {
+  const { name, label, options = [] } = props
+  const [query, setQuery] = useState('')
+  const [field, meta] = useField({ name })
+  const { isSubmitting } = useFormikContext()
+
+  const filteredOptions =
+    query === ''
+      ? options
+      : options.filter((option) => {
+          return option.toLowerCase().includes(query.toLowerCase())
+        })
+
+  return (
+    <Combobox
+      name={name}
+      defaultValue={meta.value}
+      onChange={(value: string) => {
+        field.onChange({ target: { value, name } })
+      }}
+      disabled={isSubmitting}
+    >
+      <div className="relative">
+        <div className="relative">
+          <Combobox.Input
+            onChange={(event) => setQuery(event.target.value)}
+            className={clsx(
+              'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
+              meta.error ? 'border-error' : 'border-neutral-4'
+            )}
+            placeholder=" "
+          />
+          <label
+            htmlFor={label}
+            className={clsx(
+              'absolute top-2 left-1 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-300 peer-placeholder-shown:top-1/2 peer-placeholder-shown:-translate-y-1/2 peer-placeholder-shown:scale-100 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black',
+              meta.error ? 'text-error' : 'text-neutral-4'
+            )}
+          >
+            {label}
+          </label>
+          <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+            <ChevronDown
+              className={clsx(
+                'h-7 w-7',
+                meta.error ? 'fill-error' : 'fill-neutral-4'
+              )}
+            />
+          </Combobox.Button>
+        </div>
+        <Transition
+          as={Fragment}
+          leave="transition ease-in duration-100"
+          leaveFrom="opacity-100"
+          leaveTo="opacity-0"
+          afterLeave={() => setQuery('')}
+        >
+          <Combobox.Options className="absolute z-50 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            {filteredOptions?.length === 0 && query !== '' ? (
+              <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
+                {/* Nothing found. */}
+                Pilihan tidak ditemukan.
+              </div>
+            ) : (
+              filteredOptions?.map((option) => (
+                <Combobox.Option
+                  key={option}
+                  value={option}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                      active ? 'bg-primary-4 text-white' : 'text-black'
+                    }`
+                  }
+                >
+                  {({ selected }) => (
+                    <span
+                      className={`block truncate ${
+                        selected ? 'font-medium' : 'font-light'
+                      }`}
+                    >
+                      {option}
+                    </span>
+                  )}
+                </Combobox.Option>
+              ))
+            )}
+          </Combobox.Options>
+        </Transition>
+      </div>
+    </Combobox>
+  )
+}

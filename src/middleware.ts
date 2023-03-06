@@ -4,7 +4,7 @@ const PUBLIC_FILE = /\.(.*)$/
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
-  const jwt = request.cookies.get('token')
+  const jwt = request.cookies.get('token') ?? null
 
   if (
     pathname.startsWith('/_next') ||
@@ -23,18 +23,6 @@ export async function middleware(request: NextRequest) {
   if (jwt) {
     if (pathname === '/signin' || pathname === '/') {
       request.nextUrl.pathname = '/home'
-      return NextResponse.redirect(request.nextUrl)
-    }
-
-    const animalPath = ['/sheep', '/goat', '/cow'].find((p) => pathname === p)
-    if (animalPath) {
-      request.nextUrl.pathname = animalPath + '/male'
-      return NextResponse.redirect(request.nextUrl)
-    }
-
-    const otherPath = ['/shed', '/hpp'].find((p) => pathname === p)
-    if (otherPath) {
-      request.nextUrl.pathname = otherPath + '/goat'
       return NextResponse.redirect(request.nextUrl)
     }
   }

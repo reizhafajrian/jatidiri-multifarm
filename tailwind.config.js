@@ -32,6 +32,7 @@ module.exports = {
           2: '#0F752E',
           3: '#E1F7E8',
         },
+        warning: '#FCDF8D',
       },
       boxShadow: {
         header: '0px 0px 5px rgba(0, 0, 0, 0.06)',

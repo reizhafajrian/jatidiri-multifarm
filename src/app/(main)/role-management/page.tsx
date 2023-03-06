@@ -1,5 +1,11 @@
-import RoleManagement from '@/components/RoleManagement'
+import RoleManagementHeader from '@/components/layout/RoleManagementHeader'
+import MemberCardList from '@/components/list/MemberCardList'
 
 export default function RoleManagementPage() {
-  return <RoleManagement />
+  return (
+    <>
+      <RoleManagementHeader />
+      <MemberCardList />
+    </>
+  )
 }
