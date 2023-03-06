@@ -4,7 +4,7 @@ import { StoreInitializer } from '@/components/shared'
 
 export default function CategoryPage() {
   return (
-    <main>
+    <>
       <StoreInitializer
         data={{
           category: {
@@ -19,7 +19,7 @@ export default function CategoryPage() {
       />
       <CategoryHeader />
       <CategoryContent />
-    </main>
+    </>
   )
 }
 

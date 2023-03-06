@@ -11,7 +11,7 @@ const animal_types = [
   { value: 'cow', label: 'Sapi' },
 ]
 
-export default function AddShedForm() {
+export default function ShedForm() {
   const router = useRouter()
   const { user } = useAuthStore()
   const { shed, addShed } = useShedStore()

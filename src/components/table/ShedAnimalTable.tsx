@@ -1,20 +1,23 @@
 'use client'
 import { Listbox, Table } from '@/components/shared'
-import { useAnimalStore } from '@/store/animal'
+import { useShedAnimalList } from '@/hooks/useShed'
 import { longDateFormatter } from '@/utils/formatDate'
 import { useState } from 'react'
 
 export default function ShedAnimalTable() {
   const [shedCode, setShedCode] = useState(options[0])
-  const { animalList } = useAnimalStore()
+  const { data, loading, error } = useShedAnimalList()
 
   const changeShedHandler = (value: any) => {
     setShedCode(value)
   }
 
+  if (loading) return <p>loading...</p>
+  if (error) return <p>{error.message}</p>
+
   return (
     <Table
-      data={animalList}
+      data={data}
       columns={columns(shedCode, changeShedHandler)}
       fixedCol={2}
     />

@@ -2,35 +2,61 @@ import { create } from 'zustand'
 import * as h from './handlers'
 
 export const useAnimalStore = create<IState>((set, get) => ({
-  gender: 'male',
-  animal_type: 'goat',
+  eartag_code: '',
+
+  // ADULT
   animal: {} as IAnimal,
-  animalList: [],
-  headerMenu: () => h.getHeaderMenu(get().animal_type),
   addAnimal: h.addAnimalHandler,
   editAnimal: h.editAnimalHandler,
   deleteAnimal: h.deleteAnimalHandler,
-  animalTitle: () => h.animalTitle(get().animal_type),
-  genderTitle: () => h.genderTitle(get().gender),
+  animalTColumns: h.animalTColumns,
+
+  // CEMPEK
+  cempek: {} as ICempek,
+  addCempek: h.addCempekHandler,
+  editCempek: h.editCempekHandler,
+  deleteCempek: h.deleteCempekHandler,
+  cempekTColumns: h.cempekTColumns,
+
+  // OTHERS
+  gender: undefined,
+  animal_type: undefined,
+  animalTitle: h.animalTitle,
+  genderTitle: h.genderTitle,
   animalFormContent: {},
 }))
 
 interface IState {
-  gender: 'male' | 'female'
-  animal_type: 'goat' | 'sheep' | 'cow'
+  eartag_code: string
+  // ADULT
   animal: IAnimal
-  animalList: IAnimal[]
-  headerMenu: () => Array<any>
   addAnimal: (payload: IAnimal & IAnimalProps & { uid: string }) => Promise<any>
   editAnimal: (
     payload: IAnimal & IAnimalProps & { uid: string }
   ) => Promise<void>
   deleteAnimal: (payload: string) => Promise<void>
+  animalTColumns: any
+
+  // CEMPEK
+  cempek: ICempek
+  addCempek: (
+    payload: ICempek & IAnimalProps & { uid: string }
+  ) => Promise<void>
+  editCempek: (
+    payload: ICempek & IAnimalProps & { uid: string }
+  ) => Promise<void>
+  deleteCempek: (payload: string) => Promise<void>
+  cempekTColumns: any
+
+  // OTHERS
+  gender?: 'male' | 'female'
+  animal_type?: 'goat' | 'sheep' | 'cow'
   animalFormContent: any
-  animalTitle: () => string
-  genderTitle: () => string
+  animalTitle: (payload: string) => string
+  genderTitle: (payload: string) => string
 }
 
+// INTERFACES
 interface IAnimalProps {
   eartag_code?: string
   animal_type?: 'goat' | 'sheep' | 'cow'
@@ -51,4 +77,16 @@ interface IAnimal {
   files: any
 }
 
-export type { IState, IAnimal, IAnimalProps }
+interface ICempek {
+  _id?: string
+  type: string
+  birth_date: Date
+  female_origin: string
+  male_origin: string
+  birth_weight: number
+  birth_condition: string
+  gender: string
+  description: string
+}
+
+export type { IState, IAnimalProps, IAnimal, ICempek }

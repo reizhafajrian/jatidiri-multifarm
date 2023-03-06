@@ -1,13 +1,12 @@
 'use client'
 import { Field, Form, InputCheckbox, Modal } from '@/components/shared'
-// import { shedDataFormContent } from '@/data/data'
 import { IModal } from '@/data/interfaces'
 import { shedDataSchema as schema } from '@/data/validations'
 import { useAuthStore } from '@/store/auth'
 import { IShedDetail, useShedStore } from '@/store/shed'
 import { useState } from 'react'
 
-export default function AddShedDataForm(props: IModal) {
+export default function ShedDetailForm(props: IModal) {
   const { isOpen, closeModal } = props
   const { user } = useAuthStore()
   const { shedDetail, addShedDetail } = useShedStore()

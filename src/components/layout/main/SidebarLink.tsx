@@ -10,7 +10,8 @@ interface IProps {
 export default function SidebarLink(props: IProps) {
   const { name, link, icon } = props.item
   const pathname = usePathname()
-  const isActive = pathname?.startsWith(link)
+  const pathLink = link.split('?')[0]
+  const isActive = pathname?.startsWith(pathLink)
 
   return (
     <Link

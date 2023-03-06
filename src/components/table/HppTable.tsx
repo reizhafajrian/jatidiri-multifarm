@@ -1,16 +1,15 @@
 'use client'
-import { useHppStore } from '@/store/hpp'
+import { useHppList } from '@/hooks/useHpp'
 import formatRupiah from '@/utils/formatRupiah'
 import { useState } from 'react'
 import EditHppForm from '../form/EditHppForm'
 import { Button, Listbox, Table } from '../shared'
 
 export default function HppTable() {
-  const { hppList } = useHppStore()
-
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
   const [status, setStatus] = useState(statusOptions[0])
+  const { data, loading, error } = useHppList()
 
   const changeStatusHandler = (value: any) => {
     setStatus(value)
@@ -21,6 +20,9 @@ export default function HppTable() {
     closeModal(true)
   }
 
+  if (loading) return <p>loading...</p>
+  if (error) return <p>{error.message}</p>
+
   return (
     <>
       <EditHppForm
@@ -29,7 +31,7 @@ export default function HppTable() {
         closeModal={closeModal}
       />
       <Table
-        data={hppList}
+        data={data}
         columns={columns(status, changeStatusHandler, editHandler)}
         fixedCol={2}
       />

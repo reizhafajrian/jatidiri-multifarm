@@ -1,16 +1,14 @@
 'use client'
-import { IAnimal, IAnimalProps, useAnimalStore } from '@/store/animal'
+import { IAnimal, IAnimalProps, ICempek, useAnimalStore } from '@/store/animal'
 import * as cat from '@/store/category'
-import { ICempek, ICempekProps, useCempekStore } from '@/store/cempek'
 import { IHpp, useHppStore } from '@/store/hpp'
 import { IMilk, IMilkInfo, useMilkStore } from '@/store/milk'
-import { IShed, IShedDetail, useShedStore } from '@/store/shed'
+import { IShed, useShedStore } from '@/store/shed'
 import { useRef } from 'react'
 
 interface IData {
   data: {
     animal?: IAnimalState & IAnimalProps
-    cempek?: ICempekState & ICempekProps
     shed?: IShedState
     category?: ICategoryState
     milk?: IMilkState
@@ -23,25 +21,20 @@ export default function StoreInitializer({ data }: IData) {
 
   if (!initialized.current) {
     if (data.animal) {
-      const { animal, animalList, animal_type, gender, animalFormContent } =
-        data.animal
+      const a = data.animal
+
       useAnimalStore.setState({
-        animal,
-        animalList,
-        animal_type,
-        gender,
-        animalFormContent,
+        animal: a.animal,
+        cempek: a.cempek,
+        animal_type: a.animal_type,
+        gender: a.gender,
+        animalFormContent: a.animalFormContent,
       })
     }
 
-    if (data.cempek) {
-      const { cempek, cempekList, animal_type } = data.cempek
-      useCempekStore.setState({ cempek, cempekList, animal_type })
-    }
-
     if (data.shed) {
-      const { shed, shedList, shedDetailList } = data.shed
-      useShedStore.setState({ shed, shedList, shedDetailList })
+      const { shed_code, shed } = data.shed
+      useShedStore.setState({ shed_code, shed })
     }
 
     if (data.category) {
@@ -78,18 +71,14 @@ export default function StoreInitializer({ data }: IData) {
 interface IAnimalState {
   animal?: IAnimal
   animalList?: IAnimal[]
+  cempek?: ICempek
+  cempekList?: ICempek[]
   animalFormContent?: any
 }
 
-interface ICempekState {
-  cempek?: ICempek
-  cempekList?: ICempek[]
-}
-
 interface IShedState {
+  shed_code: string
   shed?: IShed
-  shedList?: IShed[]
-  shedDetailList?: IShedDetail[]
 }
 
 interface ICategoryState {

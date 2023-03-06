@@ -1,6 +1,6 @@
 import { IChangePass, IUser } from '@/store/auth'
 import { fetcher } from '@/utils/fetcher'
-import Cookies from 'js-cookie'
+import { setCookie } from 'cookies-next'
 
 export const signInHandler = async (payload: IUser) => {
   const res = await fetcher({
@@ -9,10 +9,10 @@ export const signInHandler = async (payload: IUser) => {
     body: payload,
   })
 
-  Cookies.set('token', res.data.token, {
+  setCookie('token', res.data.token, {
     path: '/',
-    expires: 60 * 60 * 24 * 7,
-    secure: true,
+    maxAge: 60 * 60 * 24 * 7,
+    // httpOnly: true,
   })
 
   return res

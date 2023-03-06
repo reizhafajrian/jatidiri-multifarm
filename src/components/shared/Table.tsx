@@ -22,20 +22,22 @@ interface IProps {
 export default function Table(props: IProps) {
   const tData = useMemo<any[]>(() => props.data, [props.data])
   const tColumns = useMemo<any[]>(() => props.columns, [props.columns])
+  const [sorting, setSorting] = useState<SortingState>([])
 
-  const [sorting, setSorting] = useState<SortingState>(
-    props.data &&
-      props.data[0]?.updated_at && [{ id: 'updated_at', desc: true }]
-  )
   const [columnVisibility] = useState<VisibilityState>(
     props.data && props.data[0]?.updated_at && { updated_at: false }
   )
 
+  // const [sorting, setSorting] = useState<SortingState>(
+  //   props.data &&
+  //     props.data[0]?.updated_at && [{ id: 'updated_at', desc: true }]
+  // )
+
   const table = useReactTable({
-    data: tData,
+    data: tData ?? [{}],
     columns: tColumns,
     // state: { sorting, columnVisibility },
-    state: { columnVisibility },
+    state: { sorting, columnVisibility },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),

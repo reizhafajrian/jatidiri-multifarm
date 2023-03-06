@@ -1,3 +1,4 @@
+import Toast from '@/components/shared/Toast'
 import { ILayoutProps } from '@/data/interfaces'
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
@@ -15,7 +16,10 @@ export default function RootLayout(props: ILayoutProps) {
     <html lang="en">
       <head />
       <body className={`${poppins.variable} font-sans text-sm`}>
-        <div className="mx-auto max-w-screen-2xl">{props.children}</div>
+        <Toast />
+        <div className="mx-auto max-w-screen-2xl bg-neutral-1">
+          {props.children}
+        </div>
       </body>
     </html>
   )

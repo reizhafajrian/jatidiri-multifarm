@@ -1,14 +1,5 @@
 'use client'
-import {
-  Category,
-  Cluster,
-  Cow,
-  Dashboard,
-  Goat,
-  HPP,
-  Milk,
-  Sheep,
-} from '../../shared/Icons'
+import * as ICON from '../../shared/Icons'
 import SidebarLink from './SidebarLink'
 
 export default function SidebarMenu() {
@@ -22,12 +13,12 @@ export default function SidebarMenu() {
 }
 
 const menu = [
-  { name: 'Dashboard', link: '/home', icon: <Dashboard /> },
-  { name: 'Domba', link: '/sheep', icon: <Sheep /> },
-  { name: 'Kambing', link: '/goat', icon: <Goat /> },
-  { name: 'Sapi', link: '/cow', icon: <Cow /> },
-  { name: 'Cluster', link: '/shed', icon: <Cluster /> },
-  { name: 'Kategori', link: '/category', icon: <Category /> },
-  { name: 'Susu', link: '/milk', icon: <Milk /> },
-  { name: 'HPP', link: '/hpp', icon: <HPP /> },
+  { name: 'Dashboard', link: '/home', icon: <ICON.Dashboard /> },
+  { name: 'Domba', link: '/sheep?type=male', icon: <ICON.Sheep /> },
+  { name: 'Kambing', link: '/goat?type=male', icon: <ICON.Goat /> },
+  { name: 'Sapi', link: '/cow?type=male', icon: <ICON.Cow /> },
+  { name: 'Cluster', link: '/shed?type=goat', icon: <ICON.Cluster /> },
+  { name: 'Kategori', link: '/category', icon: <ICON.Category /> },
+  { name: 'Susu', link: '/milk', icon: <ICON.Milk /> },
+  { name: 'HPP', link: '/hpp?type=goat', icon: <ICON.HPP /> },
 ]

@@ -1,21 +1,21 @@
 import { create } from 'zustand'
 import * as h from './handler'
 
-export const useShedStore = create<IState>((set) => ({
+export const useShedStore = create<IState>(() => ({
+  shed_code: '',
   shed: {} as IShed,
   shedDetail: {} as IShedDetail,
-  shedList: [],
-  shedDetailList: [],
+
   addShed: h.addShedHandler,
   addShedDetail: h.addShedDetailHandler,
   addShedAnimal: h.addShedAnimalHandler,
 }))
 
 interface IState {
+  shed_code: string
   shed: IShed
   shedDetail: IShedDetail
-  shedList: IShed[]
-  shedDetailList: IShedDetail[]
+
   addShed: (payload: IShed & { uid: string }) => Promise<void>
   addShedDetail: (payload: IShedDetail & { uid: string }) => Promise<void>
   addShedAnimal: (payload: IShedAnimal & { uid: string }) => Promise<void>

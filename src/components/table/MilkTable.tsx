@@ -1,15 +1,14 @@
 'use client'
-import { useMilkStore } from '@/store/milk'
+import { useMilkList } from '@/hooks/useMilk'
 import { useState } from 'react'
-import EditMilkForm from '../form/EditMilkForm'
+import MilkForm from '../form/MilkForm'
 import { Button, Listbox, Table } from '../shared'
 
 export default function MilkTable() {
-  const { milkList } = useMilkStore()
-
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
   const [status, setStatus] = useState(statusOptions[0])
+  const { data, loading, error } = useMilkList()
 
   const changeStatusHandler = (value: any) => {
     setStatus(value)
@@ -20,15 +19,19 @@ export default function MilkTable() {
     closeModal(true)
   }
 
+  if (loading) return <p>loading...</p>
+  if (error) return <p>{error.message}</p>
+
   return (
     <>
-      <EditMilkForm
+      <MilkForm
+        formType="edit"
         isOpen={isOpen}
         closeModal={closeModal}
         eartag_code={eartagCode}
       />
       <Table
-        data={milkList}
+        data={data}
         columns={columns(status, changeStatusHandler, editHandler)}
         fixedCol={2}
       />
@@ -75,7 +78,7 @@ const columns = (status: any, changeStatusHandler: any, editHandler: any) => [
       <Listbox
         options={statusOptions}
         value={status}
-        onChange={changeStatusHandler}
+        onChange={() => changeStatusHandler(data.getValue())}
         className={`${status.bgColor} w-24`}
         optionsClassname="w-24 bg-white"
       />

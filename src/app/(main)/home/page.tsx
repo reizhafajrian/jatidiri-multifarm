@@ -5,11 +5,11 @@ import DashboardInfoList from '@/components/list/DashboardInfoList'
 
 export default function HomePage() {
   return (
-    <main className="space-y-6">
+    <div className="space-y-6">
       <DashboardHeader />
       <DashboardInfoList />
       <DashboardAnimalInfoList />
       <DashboardDiagramList />
-    </main>
+    </div>
   )
 }

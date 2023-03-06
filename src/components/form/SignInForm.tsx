@@ -14,8 +14,8 @@ export default function SignInForm() {
     try {
       await signIn(values)
       router.push('/home')
-    } catch (e: any) {
-      toast.error(e.errors[0].message ?? e.message)
+    } catch (e) {
+      toast.error('credentials error')
     }
   }
 

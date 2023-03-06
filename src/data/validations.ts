@@ -39,7 +39,7 @@ export const animalSchema = Yup.object().shape({
   weight: Yup.number().required(isEmptyMsg),
   purchase_price: Yup.number().required(isEmptyMsg),
   files: Yup.array().required(isEmptyMsg),
-  description: Yup.string(),
+  description: Yup.string().required(isEmptyMsg),
 })
 
 export const cempekSchema = Yup.object().shape({
@@ -50,7 +50,7 @@ export const cempekSchema = Yup.object().shape({
   birth_weight: Yup.number().required(isEmptyMsg),
   birth_condition: Yup.string().required(isEmptyMsg),
   gender: Yup.string().required(isEmptyMsg),
-  description: Yup.string(),
+  description: Yup.string().required(isEmptyMsg),
 })
 
 export const shedSchema = Yup.object().shape({

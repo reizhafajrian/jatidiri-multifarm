@@ -14,16 +14,32 @@ interface IProps {
   cancelHandler?: any
   isSecured?: boolean
   className?: string
+  disabled?: boolean
 }
 
 export default function Field(props: IProps) {
-  const { name, label, type, options, cancelHandler, isSecured, className } =
-    props
+  const {
+    name,
+    label,
+    type,
+    options,
+    cancelHandler,
+    isSecured,
+    className,
+    disabled,
+  } = props
   const { isSubmitting } = useFormikContext()
 
   switch (type) {
     case 'input':
-      return <InputText name={name!} label={label!} isSecured={isSecured} />
+      return (
+        <InputText
+          name={name!}
+          label={label!}
+          isSecured={isSecured}
+          disabled={disabled}
+        />
+      )
     case 'select':
       return <InputSelect options={options!} name={name!} label={label!} />
     case 'date':
@@ -37,7 +53,7 @@ export default function Field(props: IProps) {
             <Button
               onClick={cancelHandler}
               intent="secondary"
-              className="w-36 rounded-lg py-2"
+              className={clsx('w-36 rounded-lg py-2', className)}
             >
               cancel
             </Button>

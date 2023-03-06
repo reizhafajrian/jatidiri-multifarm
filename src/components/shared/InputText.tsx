@@ -8,22 +8,17 @@ interface IProps {
   label: string
   name: string
   isSecured?: boolean
+  disabled?: boolean
 }
 
 export default function InputText(props: IProps) {
-  const { label, name, isSecured, ...rest } = props
+  const { name, ...rest } = props
   const [field, meta] = useField({ name })
 
   return (
     <div>
       <div className="relative">
-        <Field
-          label={label}
-          isSecured={isSecured}
-          as={Input}
-          {...field}
-          {...rest}
-        />
+        <Field as={Input} {...field} {...rest} />
       </div>
       {(meta.touched || meta.error) && (
         <span className="text-[10px] text-error">{meta.error}</span>
@@ -33,7 +28,7 @@ export default function InputText(props: IProps) {
 }
 
 const Input = (props: IProps) => {
-  const { label, name, isSecured } = props
+  const { label, name, isSecured, disabled } = props
   const [showPassword, setShowPassword] = useState(false)
   const [field, meta] = useField({ name })
   const { isSubmitting } = useFormikContext()
@@ -43,6 +38,7 @@ const Input = (props: IProps) => {
       <input
         id={label}
         type={isSecured ? (showPassword ? 'text' : 'password') : 'text'}
+        defaultValue={field.value}
         className={clsx(
           'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
           meta?.error ? 'border-error' : 'border-neutral-4'
@@ -51,7 +47,7 @@ const Input = (props: IProps) => {
         onChange={(e) => {
           field.onChange({ target: { value: e.target.value, name } })
         }}
-        disabled={isSubmitting}
+        disabled={isSubmitting || disabled}
       />
       <label
         htmlFor={label}

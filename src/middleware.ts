@@ -25,17 +25,5 @@ export async function middleware(request: NextRequest) {
       request.nextUrl.pathname = '/home'
       return NextResponse.redirect(request.nextUrl)
     }
-
-    const animalPath = ['/sheep', '/goat', '/cow'].find((p) => pathname === p)
-    if (animalPath) {
-      request.nextUrl.pathname = animalPath + '/male'
-      return NextResponse.redirect(request.nextUrl)
-    }
-
-    const otherPath = ['/shed', '/hpp'].find((p) => pathname === p)
-    if (otherPath) {
-      request.nextUrl.pathname = otherPath + '/goat'
-      return NextResponse.redirect(request.nextUrl)
-    }
   }
 }

@@ -1,8 +1,7 @@
 'use client'
 import { useAnimalStore } from '@/store/animal'
 import { Tab } from '@headlessui/react'
-import AddAnimalForm from '../form/AddAnimalForm'
-import AddCempekForm from '../form/AddCempekForm'
+import AnimalForm from '../form/AnimalForm'
 
 export default function AnimalAddWrapper() {
   const { animal_type } = useAnimalStore.getState()
@@ -10,13 +9,13 @@ export default function AnimalAddWrapper() {
   const categories =
     animal_type === 'cow'
       ? {
-          Pejantan: <AddAnimalForm gender="male" />,
-          Betina: <AddAnimalForm gender="female" />,
+          Pejantan: <AnimalForm formType="add" />,
+          Betina: <AnimalForm formType="add" gender="female" />,
         }
       : {
-          Pejantan: <AddAnimalForm gender="male" />,
-          Betina: <AddAnimalForm gender="female" />,
-          Cempek: <AddCempekForm />,
+          Pejantan: <AnimalForm formType="add" gender="male" />,
+          Betina: <AnimalForm formType="add" gender="female" />,
+          Cempek: <AnimalForm formType="add" cempekForm />,
         }
 
   return (

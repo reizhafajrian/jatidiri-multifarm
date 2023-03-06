@@ -2,7 +2,7 @@
 import { useShedStore } from '@/store/shed'
 import { useState } from 'react'
 import ShedInfoFilter from '../filter/ShedInfoFilter'
-import AddShedDataForm from '../form/AddShedDataForm'
+import ShedDetailForm from '../form/ShedDetailForm'
 import ShedInfoList from '../list/ShedInfoList'
 import { Button } from '../shared'
 import { PencilSolid } from '../shared/Icons'
@@ -14,7 +14,7 @@ export default function ShedInfo() {
 
   return (
     <>
-      <AddShedDataForm isOpen={isOpen} closeModal={closeModal} />
+      <ShedDetailForm isOpen={isOpen} closeModal={closeModal} />
       <ShedInfoList />
       <div className="space-y-5">
         <h1 className="text-2xl font-semibold text-neutral-5">

@@ -1,4 +1,6 @@
-export default function formatRupiah(angka: string, prefix?: string) {
+export default function formatRupiah(angka?: string, prefix?: string) {
+  if (!angka) return
+
   let number_string = angka.replace(/[^,\d]/g, '').toString(),
     split = number_string.split(','),
     sisa = split[0].length % 3,

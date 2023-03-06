@@ -1,12 +1,15 @@
 'use client'
 import { Table } from '@/components/shared'
-import { useShedStore } from '@/store/shed'
+import { useShedDetailList } from '@/hooks/useShed'
 import { longDateFormatter, shortDateFormatter } from '@/utils/formatDate'
 
 export default function ShedInfoTable() {
-  const { shedDetailList } = useShedStore()
+  const { data, loading, error } = useShedDetailList()
 
-  return <Table data={shedDetailList} columns={columns} fixedCol={2} />
+  if (loading) return <p>loading...</p>
+  if (error) return <p>{error.message}</p>
+
+  return <Table data={data} columns={columns} fixedCol={2} />
 }
 
 const columns = [

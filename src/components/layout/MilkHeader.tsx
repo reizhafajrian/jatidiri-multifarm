@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react'
-import AddMilkForm from '../form/AddMilkForm'
+import MilkForm from '../form/MilkForm'
 import { Button } from '../shared'
 import { ArrowDownTray } from '../shared/Icons'
 
@@ -9,7 +9,7 @@ export default function MilkHeader() {
 
   return (
     <>
-      <AddMilkForm isOpen={isOpen} closeModal={closeModal} />
+      <MilkForm formType="add" isOpen={isOpen} closeModal={closeModal} />
       <div className="mb-8 flex items-center justify-between">
         <h1 className="text-2xl font-semibold text-neutral-5">
           Penghasilan Susu

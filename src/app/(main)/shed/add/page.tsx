@@ -1,11 +1,11 @@
-import AddShedForm from '@/components/form/AddShedForm'
+import ShedForm from '@/components/form/ShedForm'
 import BackLink from '@/components/shared/BackLink'
 
-export default function AddClusterPage() {
+export default function AddShedPage() {
   return (
-    <main>
+    <>
       <BackLink />
-      <AddShedForm />
-    </main>
+      <ShedForm />
+    </>
   )
 }
