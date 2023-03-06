@@ -23,6 +23,14 @@ module.exports = {
           1: '#F6F6F6',
           2: '#E3E8EF',
           3: '#C4C4C4',
+          4: '#7B7B7B',
+          5: '#25282B',
+        },
+        error: '#CE0000',
+        success: {
+          1: '#16B364',
+          2: '#0F752E',
+          3: '#E1F7E8',
         },
       },
       boxShadow: {
@@ -30,5 +38,5 @@ module.exports = {
       },
     },
   },
-  plugins: [],
+  plugins: [require('tailwind-scrollbar-hide')],
 }

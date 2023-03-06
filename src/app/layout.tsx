@@ -1,5 +1,7 @@
+import { ILayoutProps } from '@/data/interfaces'
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
+import '@/styles/ReactToastify.css'
 import { Poppins } from '@next/font/google'
 
 const poppins = Poppins({
@@ -8,16 +10,12 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-interface IProps {
-  children: React.ReactNode
-}
-
-export default function RootLayout(props: IProps) {
+export default function RootLayout(props: ILayoutProps) {
   return (
     <html lang="en">
       <head />
       <body className={`${poppins.variable} font-sans text-sm`}>
-        {props.children}
+        <div className="mx-auto max-w-screen-2xl">{props.children}</div>
       </body>
     </html>
   )

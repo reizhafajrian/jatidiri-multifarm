@@ -1,4 +1,4 @@
-import SearchIcon from '@/assets/icons/search.svg'
+import { MagnifyingGlass } from '../Icons'
 
 export default function Search() {
   return (
@@ -6,10 +6,10 @@ export default function Search() {
       <input
         type="text"
         placeholder="Search"
-        className="placeholder:font-ligh border-secondary-4 w-full rounded-full border py-2 px-3 text-sm placeholder:text-sm focus:border-primary-2 focus:outline-none"
+        className="placeholder:font-ligh border-secondary-4 w-full rounded-full border py-2 px-3 text-sm placeholder:text-sm focus:border-black focus:outline-none"
       />
-      <button className="fill-secondary-2 absolute inset-y-0 right-3 hover:fill-primary-2">
-        <SearchIcon />
+      <button className="absolute inset-y-0 right-3">
+        <MagnifyingGlass />
       </button>
     </div>
   )

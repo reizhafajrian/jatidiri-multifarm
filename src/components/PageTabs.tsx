@@ -1,12 +1,15 @@
 'use client'
-import DownloadIcon from '@/assets/icons/download-outline.svg'
+import { useStore } from '@/store/store'
 import { Tab } from '@headlessui/react'
+import Link from 'next/link'
+import Button from './Button'
+import { ArrowDownTray } from './Icons'
 
 interface IProps {
   categories: any
-  addButton: {
+  addButton?: {
     title: string
-    onClick?: () => void
+    link: string
   }
   downloadHandler?: () => void
 }
@@ -16,13 +19,14 @@ export default function PageTabs(props: IProps) {
 
   return (
     <Tab.Group>
-      <Tab.List className="flex flex-col items-center justify-between gap-3 md:flex-row">
+      <Tab.List className="flex items-center justify-between gap-3">
         <div>
           {Object.keys(categories).map((category) => (
             <Tab
               key={category}
+              onClick={() => useStore.setState({ isError: {} })}
               className={({ selected }) =>
-                `border-b py-3 px-4 focus:outline-none ${
+                `border-b py-3 px-4 text-xs focus:outline-none ${
                   selected
                     ? 'border-primary-3 font-medium'
                     : 'font-light hover:border-primary-3'
@@ -33,16 +37,22 @@ export default function PageTabs(props: IProps) {
             </Tab>
           ))}
         </div>
-        <div className="flex items-center gap-2">
-          <button className="rounded-lg bg-primary-4 py-2 px-4 hover:bg-primary-5">
-            <span className="text-sm font-semibold capitalize text-white">
-              {addButton.title}
-            </span>
-          </button>
-          <button className="group grid h-8 w-8 place-items-center rounded-lg border bg-white hover:bg-primary-5">
-            <DownloadIcon className="fill-black group-hover:fill-white" />
-          </button>
-        </div>
+        {addButton && (
+          <div className="flex items-center gap-2">
+            <Link
+              href={addButton.link ?? '/'}
+              className="rounded-lg bg-primary-4 py-2 px-4 hover:bg-primary-5"
+              replace
+            >
+              <span className="text-sm font-semibold capitalize text-white">
+                {addButton.title}
+              </span>
+            </Link>
+            <Button intent="secondary" className="w-fit px-2">
+              <ArrowDownTray />
+            </Button>
+          </div>
+        )}
       </Tab.List>
 
       <Tab.Panels>
