@@ -1,22 +1,18 @@
 'use client'
-import { useAnimalStore } from '@/store/animal'
+import AnimalForm from '@/components/form/AnimalForm'
+import { IPageProps } from '@/data/interfaces'
 import { Tab } from '@headlessui/react'
-import AnimalForm from '../form/AnimalForm'
 
-export default function AnimalAddWrapper() {
-  const { animal_type } = useAnimalStore.getState()
+export default function AddAnimalPage(props: IPageProps) {
+  const animal = props.params.animal
 
-  const categories =
-    animal_type === 'cow'
-      ? {
-          Pejantan: <AnimalForm formType="add" />,
-          Betina: <AnimalForm formType="add" gender="female" />,
-        }
-      : {
-          Pejantan: <AnimalForm formType="add" gender="male" />,
-          Betina: <AnimalForm formType="add" gender="female" />,
-          Cempek: <AnimalForm formType="add" cempekForm />,
-        }
+  const categories = {
+    Pejantan: <AnimalForm formType="add" gender="male" animal={animal} />,
+    Betina: <AnimalForm formType="add" gender="female" animal={animal} />,
+    ...(animal !== 'cow' && {
+      Cempek: <AnimalForm formType="add" cempekForm animal={animal} />,
+    }),
+  }
 
   return (
     <Tab.Group>

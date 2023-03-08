@@ -70,7 +70,7 @@ const DateField = (props: IProps) => {
       <DatePicker
         name={name}
         showPopperArrow={false}
-        selected={meta.value}
+        selected={meta.value && new Date(meta.value)}
         onChange={(value) => field.onChange({ target: { value, name } })}
         customInput={<CustomInput />}
         calendarClassName="z-50"

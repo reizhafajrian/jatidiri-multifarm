@@ -1,16 +1,18 @@
 'use client'
 import { Table } from '@/components/shared'
-import { useShedDetailList } from '@/hooks/useShed'
+import { IShedDetail } from '@/store/shed'
 import { longDateFormatter, shortDateFormatter } from '@/utils/formatDate'
+import { FC } from 'react'
 
-export default function ShedInfoTable() {
-  const { data, loading, error } = useShedDetailList()
+interface ShedInfoTableProps {
+  data: IShedDetail[]
+}
 
-  if (loading) return <p>loading...</p>
-  if (error) return <p>{error.message}</p>
-
+const ShedInfoTable: FC<ShedInfoTableProps> = ({ data }) => {
   return <Table data={data} columns={columns} fixedCol={2} />
 }
+
+export default ShedInfoTable
 
 const columns = [
   {
@@ -21,6 +23,11 @@ const columns = [
   {
     header: 'Pakan',
     accessorKey: 'feed_type',
+    cell: () => 'Rumput',
+  },
+  {
+    header: 'Tgl Pakan',
+    accessorKey: 'feed_date',
     cell: () => 'Rumput',
   },
   {

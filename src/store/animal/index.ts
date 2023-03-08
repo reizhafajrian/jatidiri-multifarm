@@ -3,6 +3,8 @@ import * as h from './handlers'
 
 export const useAnimalStore = create<IState>((set, get) => ({
   eartag_code: '',
+  listData: [],
+  type: '',
 
   // ADULT
   animal: {} as IAnimal,
@@ -28,6 +30,9 @@ export const useAnimalStore = create<IState>((set, get) => ({
 
 interface IState {
   eartag_code: string
+  listData: IAnimal[] | ICempek[]
+  type: string
+
   // ADULT
   animal: IAnimal
   addAnimal: (payload: IAnimal & IAnimalProps & { uid: string }) => Promise<any>
@@ -49,7 +54,7 @@ interface IState {
   cempekTColumns: any
 
   // OTHERS
-  gender?: 'true' | 'false'
+  gender?: 'true' | 'false' | undefined
   animal_type?: 'goat' | 'sheep' | 'cow'
   animalFormContent: any
   animalTitle: (payload: string) => string

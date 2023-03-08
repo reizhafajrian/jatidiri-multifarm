@@ -4,9 +4,9 @@ import { ArrowDownTray } from '../shared/Icons'
 
 export default function ShedHeader() {
   const menu = [
-    { name: 'Kambing', link: '/shed?type=goat' },
-    { name: 'Domba', link: '/shed?type=sheep' },
-    { name: 'Sapi', link: '/shed?type=cow' },
+    { name: 'Kambing', link: '/shed/goat' },
+    { name: 'Domba', link: '/shed/sheep' },
+    { name: 'Sapi', link: '/shed/cow' },
   ]
 
   return (

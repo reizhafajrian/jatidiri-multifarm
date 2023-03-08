@@ -1,6 +1,5 @@
 'use client'
 import { Popover } from '@headlessui/react'
-import Cookies from 'js-cookie'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useRef } from 'react'
@@ -10,8 +9,8 @@ export default function HeaderMenu() {
   const router = useRouter()
   const buttonRef = useRef<any>(null)
 
-  const signoutHandler = () => {
-    Cookies.remove('token')
+  const signoutHandler = async () => {
+    await fetch('/api/signout')
     router.replace('/signin')
   }
 

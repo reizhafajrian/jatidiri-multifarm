@@ -11,10 +11,14 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export default function RootLayout(props: ILayoutProps) {
+export const metadata = {
+  title: 'Jatidiri Multifarm',
+  description: 'jatidiri multifarm cms',
+}
+
+export default async function RootLayout(props: ILayoutProps) {
   return (
     <html lang="en">
-      <head />
       <body className={`${poppins.variable} font-sans text-sm`}>
         <Toast />
         <div className="mx-auto max-w-screen-2xl bg-neutral-1">

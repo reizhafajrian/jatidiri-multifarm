@@ -5,7 +5,6 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
-  VisibilityState,
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { useMemo, useState } from 'react'
@@ -24,20 +23,10 @@ export default function Table(props: IProps) {
   const tColumns = useMemo<any[]>(() => props.columns, [props.columns])
   const [sorting, setSorting] = useState<SortingState>([])
 
-  const [columnVisibility] = useState<VisibilityState>(
-    props.data && props.data[0]?.updated_at && { updated_at: false }
-  )
-
-  // const [sorting, setSorting] = useState<SortingState>(
-  //   props.data &&
-  //     props.data[0]?.updated_at && [{ id: 'updated_at', desc: true }]
-  // )
-
   const table = useReactTable({
     data: tData ?? [{}],
     columns: tColumns,
-    // state: { sorting, columnVisibility },
-    state: { sorting, columnVisibility },
+    state: { sorting },
     onSortingChange: setSorting,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -46,7 +35,7 @@ export default function Table(props: IProps) {
 
   return (
     <div className="max-w-full">
-      <div className="max-w-full overflow-x-auto whitespace-nowrap rounded-lg text-[#3B3E45] shadow">
+      <div className="max-w-full overflow-auto whitespace-nowrap rounded-lg text-[#3B3E45] shadow">
         <table className="w-full">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

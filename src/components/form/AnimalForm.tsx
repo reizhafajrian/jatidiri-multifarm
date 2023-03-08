@@ -1,95 +1,66 @@
 'use client'
 import { animalSchema, cempekSchema } from '@/data/validations'
-import { useAnimalDetail } from '@/hooks/useAnimal'
-import { ICempek, useAnimalStore } from '@/store/animal'
+import { useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
 import clsx from 'clsx'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
+import { FC } from 'react'
 import { toast } from 'react-toastify'
 import { Field, Form } from '../shared'
 
-interface IProps {
+interface AnimalFormProps {
   formType: 'add' | 'edit'
   cempekForm?: boolean
   gender?: string
+  animal: string
+  values?: any
+  id?: string
 }
 
-export default function AnimalForm(props: IProps) {
+const AnimalForm: FC<AnimalFormProps> = (props) => {
+  const { formType, cempekForm, gender, animal, values, id } = props
   const router = useRouter()
+  const opt = getOptions(animal)
   const { user } = useAuthStore()
-  const store = useAnimalStore.getState()
-
-  const opt = store.animalFormContent
-  const eartag_code = useSearchParams().get('eartag_code')
-  const data = useAnimalDetail(eartag_code as string)
-  const { formType, cempekForm, gender } = props
-  const schema = cempekForm ? cempekSchema : animalSchema
-
-  const form_title = formType == 'add' ? 'Tambah' : 'Edit'
-  const animal_title = store.animalTitle(store.animal_type!)
-  const gender_title = cempekForm ? 'cempek' : store.genderTitle(gender!)
-  const title = `${form_title} Data ${animal_title} ${gender_title}`
+  const a = useAnimalStore()
+  const body = {
+    animal,
+    formType,
+    gender: gender == 'male' ? 'true' : 'false',
+    cempek: cempekForm ? 'true' : 'false',
+    uid: user.id!,
+    id: id,
+  }
 
   const onSubmit = async (values: any) => {
-    let res
-
-    if (formType == 'add') {
-      res = await store.addAnimal({
-        ...values,
-        animal_type: store.animal_type,
-        gender: gender,
-        uid: user.id!,
-      })
-    } else {
-      return console.log({ edit_animal: values })
-    }
+    const res = await fetch('/api/animal', {
+      method: 'post',
+      body: JSON.stringify({ ...values, ...body }),
+    }).then((res) => res.json())
 
     if (res.errors) {
       return toast.error(res.errors[0].msg)
     }
 
     toast.success(res.message)
-    router.replace(`/${store.animal_type}`)
+    router.replace(`/${animal}/male`)
   }
 
-
-  const onSubmitCempek = async (values: ICempek) => {
-    let res
-
-    if (formType == 'add') {
-      return console.log({ add_cempek: values })
-    } else {
-      return console.log({ edit_cempek: values })
-    }
-
-    // if (res.errors) {
-    //   return toast.error(res.errors[0].msg)
-    // }
-
-    // toast.success(res.message)
-    // router.replace(`/${store.animal_type}`)
-  }
-
+  const content = getContent({ a, animal, gender, formType, cempekForm })
   return (
     <>
-      <h1 className="mb-6 text-base font-semibold">{title}</h1>
+      <h1 className="mb-6 text-base font-semibold">{content.title}</h1>
       <Form
-        values={
-          formType == 'edit'
-            ? cempekForm
-              ? store.cempek
-              : store.animal
-            : undefined
-        }
-        schema={schema}
-        onSubmit={cempekForm ? onSubmitCempek : onSubmit}
+        values={formType == 'edit' ? values : undefined}
+        schema={cempekForm ? cempekSchema : animalSchema}
+        onSubmit={onSubmit}
         className="grid grid-cols-2 gap-4"
       >
         <div className="space-y-6">
           <Field
             type="select"
             name="type"
-            label={`Jenis ${cempekForm ? 'Cempek' : animal_title}`}
+            label={`Jenis ${cempekForm ? 'Cempek' : content.animal_title}`}
             options={opt.typeOptions}
           />
 
@@ -132,15 +103,20 @@ export default function AnimalForm(props: IProps) {
                 <Field
                   type="select"
                   name="origin"
-                  label={`Asal ${animal_title}`}
+                  label={`Asal ${content.animal_title}`}
                   options={opt.originOptions}
                 />
                 <Field
                   type="input"
                   name="weight"
-                  label={`Berat ${animal_title}`}
+                  label={`Berat ${content.animal_title}`}
                 />
-                <Field type="input" name="purchase_price" label="Harga Beli" />
+                <Field
+                  type="input"
+                  name="purchase_price"
+                  label="Harga Beli"
+                  rupiah
+                />
               </>
             )}
             <Field
@@ -157,10 +133,52 @@ export default function AnimalForm(props: IProps) {
               cempekForm ? 'mt-10' : 'mt-auto'
             )}
           >
-            <Field type="submit" cancelHandler={() => router.back()} />
+            <Field
+              type="submit"
+              cancelHandler={() => router.replace(`/${animal}/male`)}
+            />
           </div>
         </div>
       </Form>
     </>
   )
+}
+
+export default AnimalForm
+
+const getOptions = (animal: string) => {
+  const options = {
+    sheep: {
+      typeOptions: ['doorper', 'garut'],
+      femaleOriginOptions: ['garut', 'impor', 'swiss'],
+      maleOriginOptions: ['garut', 'impor', 'swiss'],
+      originOptions: ['garut', 'impor', 'australia'],
+    },
+    goat: {
+      typeOptions: ['doorper', 'garut'],
+      femaleOriginOptions: ['garut', 'impor', 'swiss'],
+      maleOriginOptions: ['garut', 'impor', 'swiss'],
+      originOptions: ['garut', 'impor', 'australia'],
+    },
+    cow: {
+      typeOptions: ['doorper', 'garut'],
+      femaleOriginOptions: ['garut', 'impor', 'swiss'],
+      maleOriginOptions: ['garut', 'impor', 'swiss'],
+      originOptions: ['garut', 'impor', 'australia'],
+    },
+  }
+
+  return options[animal]
+}
+
+const getContent = ({ formType, a, animal, gender, cempekForm }: any) => {
+  const form_title = formType == 'add' ? 'Tambah' : 'Edit'
+  const animal_title = a.animalTitle(animal)
+  const gender_title = cempekForm ? 'cempek' : a.genderTitle(gender!)
+
+  return {
+    title: `${form_title} Data ${animal_title} ${gender_title}`,
+    animal_title,
+    gender_title,
+  }
 }

@@ -14,7 +14,8 @@ export const changePassSchema = Yup.object().shape({
 
 export const editProfileSchema = Yup.object().shape({
   avatar: Yup.array().required(isEmptyMsg),
-  name: Yup.string().required(isEmptyMsg),
+  first_name: Yup.string().required(isEmptyMsg),
+  last_name: Yup.string().required(isEmptyMsg),
   email: Yup.string().email().required(isEmptyMsg),
   gender: Yup.string().required(isEmptyMsg),
   phone_number: Yup.string().required(isEmptyMsg),
@@ -37,9 +38,11 @@ export const animalSchema = Yup.object().shape({
   origin_male: Yup.string().required(isEmptyMsg),
   origin: Yup.string().required(isEmptyMsg),
   weight: Yup.number().required(isEmptyMsg),
-  purchase_price: Yup.number().required(isEmptyMsg),
+  purchase_price: Yup.string()
+    .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+    .required(isEmptyMsg),
   files: Yup.array().required(isEmptyMsg),
-  description: Yup.string().required(isEmptyMsg),
+  description: Yup.string(),
 })
 
 export const cempekSchema = Yup.object().shape({
@@ -50,7 +53,7 @@ export const cempekSchema = Yup.object().shape({
   birth_weight: Yup.number().required(isEmptyMsg),
   birth_condition: Yup.string().required(isEmptyMsg),
   gender: Yup.string().required(isEmptyMsg),
-  description: Yup.string().required(isEmptyMsg),
+  description: Yup.string(),
 })
 
 export const shedSchema = Yup.object().shape({
@@ -63,22 +66,56 @@ export const shedSchema = Yup.object().shape({
   description: Yup.string(),
 })
 
-export const shedDataSchema = Yup.object().shape({
-  feed_date: Yup.date(),
-  feed_type: Yup.string(),
-  feed_price: Yup.number(),
-  feed_stock: Yup.number(),
-  vitamin_date: Yup.date(),
-  vitamin_type: Yup.string(),
-  vitamin_price: Yup.number(),
-  vaccine_date: Yup.date(),
-  vaccine_type: Yup.string(),
-  vaccine_price: Yup.number(),
-  anthelmintic_date: Yup.date(),
-  anthelmintic_type: Yup.string(),
-  anthelmintic_price: Yup.number(),
-})
+export const shedDataSchema = (categories: any) => {
+  let shape = {}
 
+  if (categories.feed) {
+    shape = {
+      ...shape,
+      feed_date: Yup.date().required(isEmptyMsg),
+      feed_type: Yup.string().required(isEmptyMsg),
+      feed_price: Yup.string()
+        .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+        .required(isEmptyMsg),
+      feed_stock: Yup.number().required(isEmptyMsg),
+    }
+  }
+
+  if (categories.vitamin) {
+    shape = {
+      ...shape,
+      vitamin_date: Yup.date().required(isEmptyMsg),
+      vitamin_type: Yup.string().required(isEmptyMsg),
+      vitamin_price: Yup.string()
+        .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+        .required(isEmptyMsg),
+    }
+  }
+
+  if (categories.vaccine) {
+    shape = {
+      ...shape,
+      vaccine_date: Yup.date().required(isEmptyMsg),
+      vaccine_type: Yup.string().required(isEmptyMsg),
+      vaccine_price: Yup.string()
+        .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+        .required(isEmptyMsg),
+    }
+  }
+
+  if (categories.anthelmintic) {
+    shape = {
+      ...shape,
+      anthelmintic_date: Yup.date().required(isEmptyMsg),
+      anthelmintic_type: Yup.string().required(isEmptyMsg),
+      anthelmintic_price: Yup.string()
+        .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+        .required(isEmptyMsg),
+    }
+  }
+
+  return Yup.object().shape(shape)
+}
 export const shedAnimalSchema = Yup.object().shape({
   eartag_code: Yup.string().required(isEmptyMsg),
   description: Yup.string(),
@@ -87,7 +124,9 @@ export const shedAnimalSchema = Yup.object().shape({
 export const categorySchema = Yup.object().shape({
   type: Yup.string().required(isEmptyMsg),
   stock: Yup.number().required(isEmptyMsg),
-  price: Yup.number().required(isEmptyMsg),
+  price: Yup.string()
+    .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+    .required(isEmptyMsg),
 })
 
 export const milkSchema = Yup.object().shape({
@@ -99,6 +138,8 @@ export const milkSchema = Yup.object().shape({
 export const hppSchema = Yup.object().shape({
   eartag_code: Yup.string().required(isEmptyMsg),
   hpp: Yup.number().required(isEmptyMsg),
-  selling_price: Yup.number().required(isEmptyMsg),
+  selling_price: Yup.string()
+    .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+    .required(isEmptyMsg),
   description: Yup.string(),
 })

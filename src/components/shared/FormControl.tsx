@@ -15,6 +15,7 @@ interface IProps {
   isSecured?: boolean
   className?: string
   disabled?: boolean
+  rupiah?: boolean
 }
 
 export default function Field(props: IProps) {
@@ -27,6 +28,7 @@ export default function Field(props: IProps) {
     isSecured,
     className,
     disabled,
+    rupiah,
   } = props
   const { isSubmitting } = useFormikContext()
 
@@ -38,6 +40,7 @@ export default function Field(props: IProps) {
           label={label!}
           isSecured={isSecured}
           disabled={disabled}
+          rupiah={rupiah}
         />
       )
     case 'select':

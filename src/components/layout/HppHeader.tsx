@@ -13,7 +13,7 @@ export default function HppHeader() {
 }
 
 const menu = [
-  { name: 'Kambing', link: `/hpp?type=goat` },
-  { name: 'Domba', link: `/hpp?type=sheep` },
-  { name: 'Sapi', link: `/hpp?type=cow` },
+  { name: 'Kambing', link: `/hpp/goat` },
+  { name: 'Domba', link: `/hpp/sheep` },
+  { name: 'Sapi', link: `/hpp/cow` },
 ]

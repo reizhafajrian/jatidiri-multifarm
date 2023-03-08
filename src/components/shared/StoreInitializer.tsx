@@ -25,7 +25,9 @@ export default function StoreInitializer({ data }: IData) {
         cempek: a.cempek,
         animal_type: a.animal_type,
         gender: a.gender,
+        type: a.type,
         animalFormContent: a.animalFormContent,
+        listData: a.listData,
       })
     }
 
@@ -60,18 +62,21 @@ export default function StoreInitializer({ data }: IData) {
       useHppStore.setState({ hpp, hppList })
     }
   }, [JSON.stringify(data)])
+
+  return null
 }
 
 interface IAnimalState {
+  type?: string
   animal?: IAnimal
-  animalList?: IAnimal[]
+  listData?: IAnimal[] | ICempek[]
   cempek?: ICempek
   cempekList?: ICempek[]
   animalFormContent?: any
 }
 
 interface IShedState {
-  shed_code: string
+  shed_code?: string
   shed?: IShed
 }
 

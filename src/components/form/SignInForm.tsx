@@ -1,6 +1,6 @@
 'use client'
 import { signinSchema } from '@/data/validations'
-import { IUser, useAuthStore } from '@/store/auth'
+import { IUser } from '@/store/auth'
 import { useRouter } from 'next/navigation'
 import { toast } from 'react-toastify'
 import { Field } from '../shared'
@@ -8,11 +8,14 @@ import Form from '../shared/Form'
 
 export default function SignInForm() {
   const router = useRouter()
-  const { signIn } = useAuthStore()
 
   const onSubmit = async (values: IUser) => {
     try {
-      await signIn(values)
+      await fetch('/api/signin', {
+        method: 'post',
+        body: JSON.stringify(values),
+      })
+
       router.push('/home')
     } catch (e) {
       toast.error('credentials error')

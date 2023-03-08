@@ -17,6 +17,8 @@ export default function ShedForm() {
   const { shed, addShed } = useShedStore()
 
   const onSubmit = async (values: IShed) => {
+    console.log(values)
+
     // try {
     //   const res = await addShed({
     //     ...values,
@@ -49,7 +51,12 @@ export default function ShedForm() {
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
           <Field type="input" name="shed_code" label="No Kandang" />
-          <Field type="input" name="feed" label="Pakan" />
+          <Field
+            type="select"
+            name="feed"
+            label="Pakan"
+            options={['opt1', 'opt2', 'opt3']}
+          />
           <Field type="input" name="age_range" label="Range Usia" />
         </div>
         <div className="space-y-6">

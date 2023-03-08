@@ -6,11 +6,10 @@ import formatRupiah from '@/utils/formatRupiah'
 export const addAnimalHandler = async (
   payload: IAnimal & IAnimalProps & { uid: string }
 ) => {
-  const { animal_type, gender, ...rest } = payload
+  const { animal_type, ...rest } = payload
 
   const formData = new FormData()
   formData.append('created_by', payload.uid)
-  formData.append('gender', gender === 'male' ? 'true' : 'false')
 
   for (let value in rest) {
     if (value.includes('date')) {
@@ -19,10 +18,11 @@ export const addAnimalHandler = async (
       formData.append(value, rest[value])
     }
   }
+
   formData.set('files', rest.files[0])
 
   const res = await fetcher({
-    url: `/api/${animal_type}/create`,
+    url: `http://52.221.241.95/api/v1/${animal_type}/create`,
     method: 'post',
     formData,
   })
