@@ -61,7 +61,7 @@ const MilkTable: FC<MilkTableProps> = ({ data }) => {
         <Listbox
           options={statusOptions}
           value={status}
-          onChange={() => changeStatusHandler(data.getValue())}
+          onChange={changeStatusHandler}
           className={`${status.bgColor} w-24`}
           optionsClassname="w-24 bg-white"
         />

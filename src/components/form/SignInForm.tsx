@@ -16,7 +16,7 @@ export default function SignInForm() {
         body: JSON.stringify(values),
       })
 
-      router.push('/home')
+      router.push('/')
     } catch (e) {
       toast.error('credentials error')
     }

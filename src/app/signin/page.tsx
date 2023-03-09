@@ -1,7 +1,13 @@
 import SignInForm from '@/components/form/SignInForm'
+import { cookies } from 'next/headers'
 import Image from 'next/image'
+import { redirect } from 'next/navigation'
 
 export default function SigninPage() {
+  const isAuthenticated = cookies().get('token')?.value
+
+  if (isAuthenticated) redirect('/')
+
   return (
     <div className="grid grid-cols-2">
       <div className="relative m-28">

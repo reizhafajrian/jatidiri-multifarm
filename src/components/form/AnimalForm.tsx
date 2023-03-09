@@ -23,19 +23,38 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
   const opt = getOptions(animal)
   const { user } = useAuthStore()
   const a = useAnimalStore()
-  const body = {
-    animal,
-    formType,
-    gender: gender == 'male' ? 'true' : 'false',
-    cempek: cempekForm ? 'true' : 'false',
-    uid: user.id!,
-    id: id,
-  }
 
   const onSubmit = async (values: any) => {
+    const body = {
+      animal,
+      formType,
+      gender: gender == 'male' ? 'true' : 'false',
+      cempek: cempekForm ? 'true' : 'false',
+      uid: user.id!,
+      id: id,
+      ...values,
+    }
+
+    const formData = new FormData()
+
+    for (let value in body) {
+      if (value.includes('date')) {
+        formData.append(value, body[value].toISOString())
+      } else {
+        formData.append(value, body[value])
+      }
+    }
+
+    formData.set('files', body.files[0])
+    formData.append('created_by', body.uid)
+
+    if (formType === 'edit') {
+      formData.append('_id', body.id)
+    }
+
     const res = await fetch('/api/animal', {
       method: 'post',
-      body: JSON.stringify({ ...values, ...body }),
+      body: formData,
     }).then((res) => res.json())
 
     if (res.errors) {
@@ -115,7 +134,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
                   type="input"
                   name="purchase_price"
                   label="Harga Beli"
-                  rupiah
+                  // rupiah
                 />
               </>
             )}

@@ -137,7 +137,9 @@ export const milkSchema = Yup.object().shape({
 
 export const hppSchema = Yup.object().shape({
   eartag_code: Yup.string().required(isEmptyMsg),
-  hpp: Yup.number().required(isEmptyMsg),
+  hpp: Yup.string()
+    .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
+    .required(isEmptyMsg),
   selling_price: Yup.string()
     .matches(/(\d)(?=(\d\d\d)+(?!\d))/g, 'invalid input')
     .required(isEmptyMsg),

@@ -13,7 +13,7 @@ export default function SidebarMenu() {
 }
 
 const menu = [
-  { name: 'Dashboard', link: '/home', icon: <ICON.Dashboard /> },
+  { name: 'Dashboard', link: '/', icon: <ICON.Dashboard /> },
   { name: 'Domba', link: '/sheep/male', icon: <ICON.Sheep /> },
   { name: 'Kambing', link: '/goat/male', icon: <ICON.Goat /> },
   { name: 'Sapi', link: '/cow/male', icon: <ICON.Cow /> },

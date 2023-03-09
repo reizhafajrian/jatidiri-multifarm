@@ -34,22 +34,17 @@ const Input = (props: IProps) => {
   const [showPassword, setShowPassword] = useState(false)
   const [field, meta] = useField({ name })
   const { isSubmitting } = useFormikContext()
-  const defaultValue = rupiah ? formatRupiah(meta.value, 'prefix') : field.value
-
-  const formatNumber = (value: string) => {
-    const stringNum = value?.replace('Rp ', '').split('.').join()
-    const number = parseInt(stringNum)
-    console.log(number)
-
-    return number
-  }
 
   return (
     <>
       <input
         id={label}
         type={isSecured ? (showPassword ? 'text' : 'password') : 'text'}
-        defaultValue={defaultValue}
+        defaultValue={
+          rupiah
+            ? formatRupiah(field.value?.toString() ?? ' ', 'prefix')
+            : field.value
+        }
         value={rupiah ? formatRupiah(field.value, 'prefix') : field.value}
         className={clsx(
           'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',

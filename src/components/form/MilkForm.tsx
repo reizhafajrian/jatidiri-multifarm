@@ -1,7 +1,7 @@
 import { IModal } from '@/data/interfaces'
 import { milkSchema as schema } from '@/data/validations'
 import { IMilk, useMilkStore } from '@/store/milk'
-import { Field, Form, Modal, StoreInitializer } from '../shared'
+import { Field, Form, Modal } from '../shared'
 
 interface IProps {
   eartag_code?: string
@@ -20,7 +20,7 @@ export default function MilkForm(props: IModal & IProps) {
   }
 
   const { milk, addMilk, editMilk } = useMilkStore()
-  const values = props.formType == 'edit' ? milk : undefined
+  const values = props.formType == 'edit' ? dummyMilkData : undefined
 
   const onSubmit = async (values: IMilk) => {
     if (props.formType == 'add') {
@@ -32,7 +32,6 @@ export default function MilkForm(props: IModal & IProps) {
 
   return (
     <Modal isOpen={props.isOpen} closeModal={props.closeModal}>
-      <StoreInitializer data={{ milk: { milk: dummyMilkData } }} />
       <h1 className="mb-6 text-xl font-semibold">{title}</h1>
       <Form values={values} schema={schema} onSubmit={onSubmit}>
         <div className="mb-8 space-y-5">

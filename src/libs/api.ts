@@ -1,11 +1,11 @@
 import { cookies } from 'next/headers'
 
-const baseUrl = process.env.API_BASE_URL
+export const baseUrl = process.env.API_BASE_URL
 
 export const Get = async (url: string) => {
   const res = await fetch(`${baseUrl}${url}`, {
     headers: {
-      Authorization: `bearer ${cookies().get('token')?.value!}`,
+      Authorization: `bearer ${cookies().get('token')?.value}`,
     },
     cache: 'no-store',
   }).then((res) => res.json())
@@ -20,7 +20,7 @@ export const Post = async (url: string, body?: any, formData?: any) => {
     ...(body && { body: JSON.stringify(body) }),
     ...(formData && { body: formData }),
     headers: {
-      Authorization: `bearer ${cookies().get('token')?.value!}`,
+      Authorization: `bearer ${cookies().get('token')?.value}`,
       ...(!formData && { 'Content-Type': 'application/json' }),
     },
   }).then((res) => res.json())
