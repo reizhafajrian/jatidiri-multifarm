@@ -1,8 +1,8 @@
 'use client'
+import { Download } from 'lucide-react'
 import { useState } from 'react'
 import MilkForm from '../form/MilkForm'
 import { Button } from '../shared'
-import { ArrowDownTray } from '../shared/Icons'
 
 export default function MilkHeader() {
   const [isOpen, closeModal] = useState(false)
@@ -15,11 +15,11 @@ export default function MilkHeader() {
           Penghasilan Susu
         </h1>
         <div className="flex items-center gap-2">
-          <Button className="rounded-lg p-2" onClick={() => closeModal(true)}>
-            <span className="text-sm capitalize">tambah data susu</span>
+          <Button className="capitalize" onClick={() => closeModal(true)}>
+            tambah data susu
           </Button>
-          <Button intent="secondary" className="rounded-lg p-2">
-            <ArrowDownTray />
+          <Button variant="outline" className="px-3">
+            <Download className="h-4 w-4" />
           </Button>
         </div>
       </div>

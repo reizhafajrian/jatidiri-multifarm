@@ -17,6 +17,13 @@ export default function ShedAnimalForm(
     // await addShedAnimal({...values})
   }
 
+  const codeOptions = [
+    { name: '111', value: '111' },
+    { name: '222', value: '222' },
+    { name: '333', value: '333' },
+    { name: '444', value: '444' },
+  ]
+
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">Tambah Data {title}</h1>
@@ -26,7 +33,7 @@ export default function ShedAnimalForm(
             type="select"
             name="eartag_code"
             label="No Eartag"
-            options={['111', '222', '333']}
+            options={codeOptions}
           />
           <Field type="input" name="description" label="Keterangan" />
         </div>

@@ -10,6 +10,7 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { FC } from 'react'
 import { Line } from 'react-chartjs-2'
 
 ChartJS.register(
@@ -22,28 +23,9 @@ ChartJS.register(
   Legend
 )
 
-export default function SoldAnimalsDiagram() {
-  return <Line options={options} data={data} />
-}
-
-export const options: any = {
-  responsive: true,
-  plugins: {
-    legend: {
-      align: 'start' as const,
-      labels: {
-        boxWidth: 4,
-        boxHeight: 4,
-        usePointStyle: true,
-      },
-    },
-  },
-  cutout: '90%',
-}
-
 const labels = ['1 January', '2 January', '3 January', 'Today']
 
-export const data: ChartData<'line', number[], string> = {
+const data: ChartData<'line', number[], string> = {
   labels,
   datasets: [
     {
@@ -72,3 +54,30 @@ export const data: ChartData<'line', number[], string> = {
     },
   ],
 }
+
+interface SoldAnimalsDiagramProps {}
+
+const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({}) => {
+  return (
+    <Line
+      options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            align: 'start' as const,
+            labels: {
+              boxWidth: 4,
+              boxHeight: 4,
+              usePointStyle: true,
+            },
+          },
+        },
+        // cutout: '90%',
+      }}
+      data={data}
+      className="font-sans"
+    />
+  )
+}
+
+export default SoldAnimalsDiagram

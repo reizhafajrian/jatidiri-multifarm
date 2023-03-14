@@ -60,7 +60,11 @@ export default function ShedDetailForm(props: IModal) {
                     name={name}
                     label={label}
                     rupiah={rupiah}
-                    options={['opt1', 'opt2', 'opt3']}
+                    options={[
+                      { name: 'opt-1', value: 'opt-1' },
+                      { name: 'opt-2', value: 'opt-2' },
+                      { name: 'opt-3', value: 'opt-3' },
+                    ]}
                   />
                 ))}
               </div>

@@ -12,17 +12,10 @@ export default function DeleteModal(
         <h1 className="text-2xl font-semibold">{title}</h1>
         <p className="text-base text-neutral-4">{desc}</p>
         <div className="flex gap-4">
-          <Button
-            className="w-full rounded-lg py-3 capitalize"
-            onClick={() => closeModal(false)}
-          >
-            cancel
+          <Button className="w-full" onClick={() => closeModal(false)}>
+            Cancel
           </Button>
-          <Button
-            className="w-full rounded-lg py-3 capitalize"
-            intent="secondary"
-            onClick={deleteHandler}
-          >
+          <Button className="w-full" variant="outline" onClick={deleteHandler}>
             Delete
           </Button>
         </div>

@@ -48,8 +48,8 @@ export const animalSchema = Yup.object().shape({
 export const cempekSchema = Yup.object().shape({
   type: Yup.string().required(isEmptyMsg),
   birth_date: Yup.date().required(isEmptyMsg),
-  female_origin: Yup.string().required(isEmptyMsg),
-  male_origin: Yup.string().required(isEmptyMsg),
+  origin_female: Yup.string().required(isEmptyMsg),
+  origin_male: Yup.string().required(isEmptyMsg),
   birth_weight: Yup.number().required(isEmptyMsg),
   birth_condition: Yup.string().required(isEmptyMsg),
   gender: Yup.string().required(isEmptyMsg),

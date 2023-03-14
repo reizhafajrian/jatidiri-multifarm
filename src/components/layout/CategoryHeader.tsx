@@ -21,16 +21,7 @@ export default function CategoryHeader() {
 }
 
 const categoryList = [
-  {
-    title: 'Obat Cacing',
-    icon: <Anthelmintic />,
-  },
-  {
-    title: 'Vitamin',
-    icon: <Vitamin />,
-  },
-  {
-    title: 'Pakan',
-    icon: <Feed />,
-  },
+  { title: 'Obat Cacing', icon: <Anthelmintic /> },
+  { title: 'Vitamin', icon: <Vitamin /> },
+  { title: 'Pakan', icon: <Feed /> },
 ]

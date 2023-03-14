@@ -6,7 +6,7 @@ import { redirect } from 'next/navigation'
 export default function SigninPage() {
   const isAuthenticated = cookies().get('token')?.value
 
-  if (isAuthenticated) redirect('/')
+  if (isAuthenticated) redirect('/dashboard')
 
   return (
     <div className="grid grid-cols-2">

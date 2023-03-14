@@ -2,9 +2,9 @@
 import { signinSchema } from '@/data/validations'
 import { IUser } from '@/store/auth'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
 import { Field } from '../shared'
 import Form from '../shared/Form'
+import { toast } from '../shared/Toast'
 
 export default function SignInForm() {
   const router = useRouter()
@@ -16,9 +16,12 @@ export default function SignInForm() {
         body: JSON.stringify(values),
       })
 
-      router.push('/')
+      router.push('/dashboard')
     } catch (e) {
-      toast.error('credentials error')
+      toast({
+        type: 'error',
+        message: 'wrong credentials!',
+      })
     }
   }
 

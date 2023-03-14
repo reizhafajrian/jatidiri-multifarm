@@ -1,9 +1,9 @@
 'use client'
 import { useAnimalStore } from '@/store/animal'
+import { Pen } from 'lucide-react'
 import { FC, useState } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
 import { BackLink, Button } from '../shared'
-import { PencilSolid } from '../shared/Icons'
 import Navbar from './Navbar'
 
 interface ShedDetailHeaderProps {
@@ -47,9 +47,9 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         {type && (
-          <Button onClick={() => closeModal(true)} className="rounded-lg p-2">
-            <span className="text-sm capitalize">tambah {title}</span>
-            <PencilSolid />
+          <Button onClick={() => closeModal(true)}>
+            Tambah {title}
+            <Pen className="ml-3 h-4 w-4 fill-white" />
           </Button>
         )}
       </Navbar>

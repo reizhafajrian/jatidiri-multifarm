@@ -44,7 +44,10 @@ export default function EditProfileForm() {
             type="select"
             name="gender"
             label="Jenis Kelamin"
-            options={['female', 'male']}
+            options={[
+              { name: 'perempuan', value: 'female' },
+              { name: 'laki-laki', value: 'male' },
+            ]}
           />
           <Field type="input" name="phone_number" label="Phone Number" />
         </div>

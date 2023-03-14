@@ -1,10 +1,12 @@
-import { Post } from '@/libs/api'
 import { serialize } from 'cookie'
 
 export async function POST(request: Request) {
   const body = await request.json()
 
-  const res = await Post('/auth/login', body)
+  const res = await fetch(process.env.API_BASE_URL + '/auth/login', {
+    body,
+    method: 'POST',
+  }).then((res) => res.json())
 
   return new Response(null, {
     status: 200,

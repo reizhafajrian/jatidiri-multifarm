@@ -1,13 +1,27 @@
-export default function GoatsDiagram() {
+'use client'
+import { FC } from 'react'
+import SimpleBar from 'simplebar-react'
+
+interface GoatsDiagramProps {}
+
+const GoatsDiagram: FC<GoatsDiagramProps> = ({}) => {
+  const data = [
+    { type: 'Kambing 1', value: '80' },
+    { type: 'Kambing 2', value: '80' },
+    { type: 'Kambing 3', value: '80' },
+    { type: 'Kambing 4', value: '80' },
+    { type: 'Kambing 5', value: '80' },
+  ]
+
   return (
     <div>
       <div className="my-3 text-center text-3xl font-semibold">100</div>
       <span className="mb-2 text-[10px] uppercase text-neutral-4">
         jenis kambing
       </span>
-      <div className="max-h-28 space-y-3 overflow-auto scrollbar-hide">
+      <SimpleBar className="max-h-28">
         {data.map((item, idx) => (
-          <div key={idx}>
+          <div key={idx} className="mb-3">
             <div className="flex justify-between text-[10px] font-medium">
               <p>{item.type}</p>
               <p>{item.value}</p>
@@ -17,15 +31,9 @@ export default function GoatsDiagram() {
             </div>
           </div>
         ))}
-      </div>
+      </SimpleBar>
     </div>
   )
 }
 
-const data = [
-  { type: 'Kambing 1', value: '80' },
-  { type: 'Kambing 2', value: '80' },
-  { type: 'Kambing 3', value: '80' },
-  { type: 'Kambing 4', value: '80' },
-  { type: 'Kambing 5', value: '80' },
-]
+export default GoatsDiagram

@@ -1,38 +1,77 @@
 'use client'
+import useDataList from '@/hooks/useDataList'
 import { useAnimalStore } from '@/store/animal'
+import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import { Button, Table } from '../shared'
+import { toast } from '../shared/Toast'
 
 interface AnimalTableProps {
-  data: {
-    animal: string
-    type: string
-    data: any
-  }
+  animal?: 'goat' | 'sheep' | 'cow'
+  type: string
 }
 
-const AnimalTable: FC<AnimalTableProps> = ({
-  data: { animal, type, data },
-}) => {
-  const [isOpen, closeModal] = useState(false)
+const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
-  const a = useAnimalStore()
-  const columns = type === 'cempek' ? a.cempekTColumns : a.animalTColumns
+  const isCempek = type === 'cempek'
+  const [isOpen, closeModal] = useState(false)
+  const { origin_female, origin_male, ...a } = useAnimalStore()
 
-  const deleteToggle = (id: string) => {
-    closeModal(true)
-    useAnimalStore.setState({ eartag_code: id })
-  }
+  const queries = []
+  !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
+  origin_male !== 'all' && queries.push('origin_male=' + origin_male)
+  origin_female !== 'all' && queries.push('origin_female=' + origin_female)
+
+  const { data, loading } = useDataList(
+    isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
+    queries
+  )
 
   const deleteHandler = async () => {
     try {
-      await a.deleteAnimal(a.eartag_code)
+      const res = await a.deleteAnimal({
+        animal,
+        eartag_code: a.eartag_code,
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+
+      router.refresh()
     } catch (e) {
       console.log(e)
     }
   }
+
+  const columns: ColumnDef<any, any>[] = [
+    ...(type === 'cempek' ? a.cempekTColumns : a.animalTColumns),
+    {
+      header: 'Aksi',
+      accessorKey: '_id',
+      cell: (data) => (
+        <div className="flex gap-2">
+          <Button
+            size="xs"
+            variant="edit"
+            onClick={() => router.replace(`/${animal}/edit/${data.getValue()}`)}
+          />
+          <Button
+            size="xs"
+            variant="delete"
+            onClick={() => {
+              closeModal(true)
+              useAnimalStore.setState({ eartag_code: data.getValue() })
+            }}
+          />
+        </div>
+      ),
+    },
+    { header: 'Keterangan', accessorKey: 'description' },
+  ]
 
   return (
     <>
@@ -44,30 +83,10 @@ const AnimalTable: FC<AnimalTableProps> = ({
         deleteHandler={deleteHandler}
       />
       <Table
+        isLoading={loading}
         fixedCol={3}
-        data={data}
-        columns={[
-          ...columns,
-          {
-            header: 'Aksi',
-            accessorKey: '_id',
-            cell: (data: any) => (
-              <div className="flex gap-2">
-                <Button
-                  intent="edit"
-                  onClick={() =>
-                    router.replace(`/${animal}/edit/${data.getValue()}`)
-                  }
-                />
-                <Button
-                  intent="delete"
-                  onClick={() => deleteToggle(data.getValue())}
-                />
-              </div>
-            ),
-          },
-          { header: 'Keterangan', accessorKey: 'description' },
-        ]}
+        data={data?.filter((i: any) => i._id !== null)}
+        columns={columns}
       />
     </>
   )

@@ -1,13 +1,44 @@
 'use client'
 import formatRupiah from '@/utils/formatRupiah'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
+import { FC } from 'react'
 import { Doughnut } from 'react-chartjs-2'
 
-export default function EventIncomeDiagram() {
+ChartJS.register(ArcElement, Tooltip, Legend)
+
+const data = {
+  labels: ['Valentine Day', 'New Year', 'Chinese New Year'],
+  datasets: [
+    {
+      data: [12, 19, 3],
+      backgroundColor: ['#40916C', '#775DFE', '#C1E5D5'],
+    },
+  ],
+}
+
+interface EventIncomeDiagramProps {}
+
+const EventIncomeDiagram: FC<EventIncomeDiagramProps> = ({}) => {
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2">
-        <Doughnut options={options} data={data} className="font-sans" />
+        <Doughnut
+          options={{
+            responsive: true,
+            plugins: {
+              legend: {
+                position: 'bottom' as const,
+                align: 'start' as const,
+                labels: {
+                  boxWidth: 8,
+                  boxHeight: 8,
+                },
+              },
+            },
+          }}
+          data={data}
+          className="font-sans"
+        />
       </div>
       <div className="grid items-center">
         <div>
@@ -27,28 +58,4 @@ export default function EventIncomeDiagram() {
   )
 }
 
-ChartJS.register(ArcElement, Tooltip, Legend)
-
-export const data = {
-  labels: ['Valentine Day', 'New Year', 'Chinese New Year'],
-  datasets: [
-    {
-      data: [12, 19, 3],
-      backgroundColor: ['#40916C', '#775DFE', '#C1E5D5'],
-    },
-  ],
-}
-
-export const options: any = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'bottom' as const,
-      align: 'start' as const,
-      labels: {
-        boxWidth: 8,
-        boxHeight: 8,
-      },
-    },
-  },
-}
+export default EventIncomeDiagram

@@ -1,12 +1,13 @@
 'use client'
+import { getAnimalFormContent, getAnimalFormOptions } from '@/data/data'
 import { animalSchema, cempekSchema } from '@/data/validations'
+import { cn } from '@/lib/utils'
 import { useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
-import clsx from 'clsx'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
-import { toast } from 'react-toastify'
 import { Field, Form } from '../shared'
+import { toast } from '../shared/Toast'
 
 interface AnimalFormProps {
   formType: 'add' | 'edit'
@@ -17,55 +18,57 @@ interface AnimalFormProps {
   id?: string
 }
 
-const AnimalForm: FC<AnimalFormProps> = (props) => {
-  const { formType, cempekForm, gender, animal, values, id } = props
+const AnimalForm: FC<AnimalFormProps> = ({
+  formType,
+  cempekForm,
+  gender,
+  animal,
+  values,
+  id,
+}) => {
   const router = useRouter()
-  const opt = getOptions(animal)
+  const opt = getAnimalFormOptions(animal)
   const { user } = useAuthStore()
   const a = useAnimalStore()
+  const content = getAnimalFormContent({
+    animal,
+    gender,
+    formType,
+    cempekForm,
+  })
 
   const onSubmit = async (values: any) => {
-    const body = {
-      animal,
-      formType,
-      gender: gender == 'male' ? 'true' : 'false',
+    const data = {
       cempek: cempekForm ? 'true' : 'false',
       uid: user.id!,
       id: id,
+      animal,
+      gender,
       ...values,
     }
 
-    const formData = new FormData()
-
-    for (let value in body) {
-      if (value.includes('date')) {
-        formData.append(value, body[value].toISOString())
-      } else {
-        formData.append(value, body[value])
-      }
+    let res
+    if (formType === 'add') {
+      res = await a.addAnimal(data)
+    } else {
+      res = await a.editAnimal(data)
     }
-
-    formData.set('files', body.files[0])
-    formData.append('created_by', body.uid)
-
-    if (formType === 'edit') {
-      formData.append('_id', body.id)
-    }
-
-    const res = await fetch('/api/animal', {
-      method: 'post',
-      body: formData,
-    }).then((res) => res.json())
 
     if (res.errors) {
-      return toast.error(res.errors[0].msg)
+      return toast({
+        type: 'error',
+        message: res.errors[0].msg,
+      })
     }
 
-    toast.success(res.message)
+    toast({
+      type: 'success',
+      message: res.message,
+    })
+
     router.replace(`/${animal}/male`)
   }
 
-  const content = getContent({ a, animal, gender, formType, cempekForm })
   return (
     <>
       <h1 className="mb-6 text-base font-semibold">{content.title}</h1>
@@ -114,7 +117,10 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
                   type="select"
                   name="gender"
                   label="Jenis Kelamin"
-                  options={['female', 'male']}
+                  options={[
+                    { name: 'Jantan', value: 'male' },
+                    { name: 'Betina', value: 'female' },
+                  ]}
                 />
               </>
             ) : (
@@ -147,7 +153,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
             <Field type="input" name="description" label="Keterangan" />
           </div>
           <div
-            className={clsx(
+            className={cn(
               'flex justify-end gap-3',
               cempekForm ? 'mt-10' : 'mt-auto'
             )}
@@ -164,40 +170,3 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
 }
 
 export default AnimalForm
-
-const getOptions = (animal: string) => {
-  const options = {
-    sheep: {
-      typeOptions: ['doorper', 'garut'],
-      femaleOriginOptions: ['garut', 'impor', 'swiss'],
-      maleOriginOptions: ['garut', 'impor', 'swiss'],
-      originOptions: ['garut', 'impor', 'australia'],
-    },
-    goat: {
-      typeOptions: ['doorper', 'garut'],
-      femaleOriginOptions: ['garut', 'impor', 'swiss'],
-      maleOriginOptions: ['garut', 'impor', 'swiss'],
-      originOptions: ['garut', 'impor', 'australia'],
-    },
-    cow: {
-      typeOptions: ['doorper', 'garut'],
-      femaleOriginOptions: ['garut', 'impor', 'swiss'],
-      maleOriginOptions: ['garut', 'impor', 'swiss'],
-      originOptions: ['garut', 'impor', 'australia'],
-    },
-  }
-
-  return options[animal]
-}
-
-const getContent = ({ formType, a, animal, gender, cempekForm }: any) => {
-  const form_title = formType == 'add' ? 'Tambah' : 'Edit'
-  const animal_title = a.animalTitle(animal)
-  const gender_title = cempekForm ? 'cempek' : a.genderTitle(gender!)
-
-  return {
-    title: `${form_title} Data ${animal_title} ${gender_title}`,
-    animal_title,
-    gender_title,
-  }
-}

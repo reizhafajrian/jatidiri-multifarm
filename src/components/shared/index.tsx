@@ -1,6 +1,6 @@
 'use client'
 import BackLink from './BackLink'
-import Button from './Button'
+import { Button, buttonVariants } from './Button'
 import Card from './Card'
 import Dropzone from './Dropzone'
 import Form from './Form'
@@ -12,13 +12,14 @@ import InputSelect from './InputSelect'
 import InputText from './InputText'
 import Listbox from './Listbox'
 import Modal from './Modal'
-import SelectMenu from './SelectMenu'
+import SelectFilter from './SelectFilter'
 import StoreInitializer from './StoreInitializer'
 import Table from './Table'
 
 export {
   BackLink,
   Button,
+  buttonVariants,
   Card,
   Dropzone,
   InputCheckbox,
@@ -28,9 +29,9 @@ export {
   InputText,
   Listbox,
   Modal,
-  SelectMenu,
   Table,
   StoreInitializer,
+  SelectFilter,
   Field,
   Form,
 }

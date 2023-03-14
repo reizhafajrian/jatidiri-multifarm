@@ -1,6 +1,6 @@
 import ShedAnimalTable from '@/components/table/ShedAnimalTable'
 import { IPageProps } from '@/data/interfaces'
-import { Get } from '@/libs/api'
+import { Get } from '@/lib/api'
 import { use } from 'react'
 
 export default function AnimalShedPage(props: IPageProps) {

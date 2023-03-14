@@ -4,10 +4,10 @@ import ShedInfoFilter from '../filter/ShedInfoFilter'
 import ShedDetailForm from '../form/ShedDetailForm'
 import ShedInfoList from '../list/ShedInfoList'
 import { Button } from '../shared'
-import { PencilSolid } from '../shared/Icons'
 import ShedInfoTable from '../table/ShedInfoTable'
 
 import { IShedDetail } from '@/store/shed'
+import { Pen } from 'lucide-react'
 import { FC } from 'react'
 
 interface ShedInfoProps {
@@ -29,9 +29,9 @@ const ShedInfo: FC<ShedInfoProps> = ({ shed_code, data }) => {
         </h1>
         <div className="flex items-center justify-between">
           <ShedInfoFilter />
-          <Button onClick={() => closeModal(true)} className="rounded-lg p-2">
-            <span className="text-sm capitalize">tambah data</span>
-            <PencilSolid />
+          <Button onClick={() => closeModal(true)}>
+            Tambah Data
+            <Pen className="ml-3 h-4 w-4 fill-white" />
           </Button>
         </div>
         <ShedInfoTable data={data} />

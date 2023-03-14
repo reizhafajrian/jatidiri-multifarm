@@ -8,6 +8,7 @@ export const useAuthStore = create<IState>((set) => ({
     last_name: 'doe',
     email: 'johndoe@gmail.com',
   } as IUser,
+  token: '',
   signIn: h.signInHandler,
   addMember: h.addMemberHandler,
   editMember: h.editMemberHandler,
@@ -18,6 +19,7 @@ export const useAuthStore = create<IState>((set) => ({
 
 interface IState {
   user: IUser
+  token: string
   signIn: (payload: IUser) => Promise<void>
   addMember: (payload: IUser) => Promise<void>
   editMember: (payload: IUser) => Promise<void>

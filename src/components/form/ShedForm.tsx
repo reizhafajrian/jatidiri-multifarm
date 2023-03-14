@@ -55,7 +55,11 @@ export default function ShedForm() {
             type="select"
             name="feed"
             label="Pakan"
-            options={['opt1', 'opt2', 'opt3']}
+            options={[
+              { name: 'opt-1', value: 'opt-1' },
+              { name: 'opt-2', value: 'opt-2' },
+              { name: 'opt-3', value: 'opt-3' },
+            ]}
           />
           <Field type="input" name="age_range" label="Range Usia" />
         </div>

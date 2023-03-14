@@ -59,8 +59,12 @@ export default function MemberCard({ data }: any) {
           <p>{data.whatsapp_number}</p>
         </div>
         <div className="flex justify-end gap-2">
-          <Button intent="edit" onClick={() => closeEditModal(true)} />
-          <Button intent="delete" onClick={() => closeModal(true)} />
+          <Button
+            variant="edit"
+            size="xs"
+            onClick={() => closeEditModal(true)}
+          />
+          <Button variant="delete" size="xs" onClick={() => closeModal(true)} />
         </div>
       </div>
     </>

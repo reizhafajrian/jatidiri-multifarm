@@ -1,19 +1,22 @@
-import clsx from 'clsx'
+import { cn } from '@/lib/utils'
+import React, { FC } from 'react'
 
-interface IProps {
+interface CardProps {
   children: React.ReactNode
   className?: string
 }
 
-export default function Card(props: IProps) {
+const Card: FC<CardProps> = ({ className, children }) => {
   return (
     <div
-      className={clsx(
-        props.className,
-        'rounded-xl border border-neutral-2 bg-white p-6'
+      className={cn(
+        'rounded-xl border border-neutral-2 bg-white p-6',
+        className
       )}
     >
-      {props.children}
+      {children}
     </div>
   )
 }
+
+export default Card

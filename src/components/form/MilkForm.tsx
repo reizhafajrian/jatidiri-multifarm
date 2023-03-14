@@ -9,7 +9,13 @@ interface IProps {
 }
 
 export default function MilkForm(props: IModal & IProps) {
-  const codeOptions = ['111', '222', '333']
+  const codeOptions = [
+    { name: '111', value: '111' },
+    { name: '222', value: '222' },
+    { name: '333', value: '333' },
+    { name: '444', value: '444' },
+  ]
+
   const title = `${props.formType == 'add' ? 'Tambah' : 'Edit'} Data Susu`
 
   const dummyMilkData = {

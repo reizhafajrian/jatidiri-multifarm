@@ -1,15 +1,18 @@
+import React, { FC } from 'react'
 import { Card } from '../shared'
 import { DashboardInfo } from '../shared/Icons'
 
-interface IDDiagramProps {
+interface DashboardDiagramCardProps {
   className?: string
   title: string
   children?: React.ReactNode
 }
 
-export default function DashboardDiagramCard(props: IDDiagramProps) {
-  const { className, children, title } = props
-
+const DashboardDiagramCard: FC<DashboardDiagramCardProps> = ({
+  className,
+  title,
+  children,
+}) => {
   return (
     <Card className={className}>
       <div className="mb-4 flex items-center justify-between capitalize">
@@ -20,3 +23,5 @@ export default function DashboardDiagramCard(props: IDDiagramProps) {
     </Card>
   )
 }
+
+export default DashboardDiagramCard

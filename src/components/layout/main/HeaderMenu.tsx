@@ -1,13 +1,18 @@
 'use client'
-import { Popover } from '@headlessui/react'
-import Link from 'next/link'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/shared/DropdownMenu'
+import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import { useRouter } from 'next/navigation'
-import { useRef } from 'react'
 import { ChevronDown } from '../../shared/Icons'
 
-export default function HeaderMenu() {
+const HeaderMenu = () => {
   const router = useRouter()
-  const buttonRef = useRef<any>(null)
 
   const signoutHandler = async () => {
     await fetch('/api/signout')
@@ -15,9 +20,9 @@ export default function HeaderMenu() {
   }
 
   return (
-    <Popover as="div" className="relative">
-      <Popover.Button ref={buttonRef} className="outline-none">
-        <div className="flex items-center gap-3">
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="flex items-center gap-3 outline-none">
           <div className="h-8 w-8 rounded-full bg-gray-200" />
           <div>
             <p className="mb-1 text-sm">John Doe</p>
@@ -26,47 +31,40 @@ export default function HeaderMenu() {
             </p>
           </div>
           <ChevronDown />
-        </div>
-      </Popover.Button>
-      <Popover.Panel className="absolute right-0 z-50 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg outline-none ring-0">
-        <div className="p-5 py-3">
-          <h3 className="mb-3 font-semibold">Account</h3>
-          <div className="grid gap-2 text-neutral-4">
-            <Link
-              href="/edit-profile"
-              onClick={() => buttonRef.current.click()}
-            >
-              Edit Profile
-            </Link>
-            <Link
-              href="/change-password"
-              onClick={() => buttonRef.current.click()}
-            >
-              Change Password
-            </Link>
-          </div>
-        </div>
-        <hr />
-        <div className="p-5 py-3">
-          <h3 className="mb-3 font-semibold">Manage</h3>
-          <Link
-            href="/role-management"
-            className="text-neutral-4"
-            onClick={() => buttonRef.current.click()}
-          >
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" forceMount className="w-56">
+        <DropdownMenuGroup className="p-5">
+          <DropdownMenuLabel className="mb-3 font-semibold">
+            Account
+          </DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => router.replace('/edit-profile')}>
+            Edit Profile
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={() => router.replace('/change-password')}>
+            Change Password
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup className="p-5">
+          <DropdownMenuLabel className="mb-3 font-semibold">
+            Manage
+          </DropdownMenuLabel>
+          <DropdownMenuItem onClick={() => router.replace('/role-management')}>
             Role Management
-          </Link>
-        </div>
-        <hr />
-        <div className="p-5 pt-3">
-          <button
-            onClick={signoutHandler}
-            className="text-neutral-4 hover:text-primary-7"
-          >
-            Sign Out
-          </button>
-        </div>
-      </Popover.Panel>
-    </Popover>
+          </DropdownMenuItem>
+        </DropdownMenuGroup>
+
+        <DropdownMenuSeparator />
+
+        <DropdownMenuItem className="p-5" onClick={signoutHandler}>
+          Sign Out
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   )
 }
+
+export default HeaderMenu

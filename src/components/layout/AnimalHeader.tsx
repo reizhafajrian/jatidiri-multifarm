@@ -1,11 +1,11 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
-import { useAnimalStore } from '@/store/animal'
+import { animalTitle } from '@/store/animal/handlers'
+import { Download } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
-import AnimalFilter from '../filter/AnimalFilter'
 import { BackLink, Button } from '../shared'
-import { ArrowDownTray, ExclamationTriangle } from '../shared/Icons'
+import { ExclamationTriangle } from '../shared/Icons'
 
 interface AnimalHeaderProps {
   animal: string
@@ -14,7 +14,6 @@ interface AnimalHeaderProps {
 const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
   const router = useRouter()
   const path = usePathname()
-  const { animalTitle } = useAnimalStore()
 
   const [alertCluster] = useState(false)
   const isListData =
@@ -32,19 +31,16 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
           >
             <div className="flex items-center justify-end gap-2">
               <Button
-                className="rounded-lg p-2"
+                className="capitalize"
                 onClick={() => router.replace(`/${animal}/add`)}
               >
-                <span className="text-sm capitalize">
-                  tambah data {animalTitle(animal)}
-                </span>
+                tambah data {animalTitle(animal)}
               </Button>
-              <Button intent="secondary" className="rounded-lg p-2">
-                <ArrowDownTray />
+              <Button variant="outline" className="px-3">
+                <Download className="h-4 w-4" />
               </Button>
             </div>
           </Navbar>
-          <AnimalFilter />
         </>
       ) : (
         <BackLink href={`/${animal}/male`} />

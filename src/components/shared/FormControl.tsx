@@ -1,6 +1,6 @@
-import clsx from 'clsx'
+'use client'
 import { useFormikContext } from 'formik'
-import Button from './Button'
+import { Button } from './Button'
 import Dropzone from './Dropzone'
 import InputDate from './InputDate'
 import InputSelect from './InputSelect'
@@ -10,7 +10,7 @@ interface IProps {
   name?: string
   label?: string
   type: string
-  options?: string[]
+  options?: { name: string; value: string }[]
   cancelHandler?: any
   isSecured?: boolean
   className?: string
@@ -54,17 +54,19 @@ export default function Field(props: IProps) {
         <>
           {cancelHandler && (
             <Button
+              type="button"
+              variant="outline"
               onClick={cancelHandler}
-              intent="secondary"
-              className={clsx('w-36 rounded-lg py-2', className)}
+              disabled={isSubmitting}
+              className="w-36 uppercase"
             >
               cancel
             </Button>
           )}
           <Button
             type="submit"
-            className={clsx('w-36 rounded-lg py-2', className)}
-            disabled={isSubmitting}
+            isLoading={isSubmitting}
+            className="w-36 uppercase"
           >
             {props.label ?? 'save'}
           </Button>
