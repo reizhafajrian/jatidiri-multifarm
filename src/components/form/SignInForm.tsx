@@ -10,19 +10,17 @@ export default function SignInForm() {
   const router = useRouter()
 
   const onSubmit = async (values: IUser) => {
-    try {
-      await fetch('/api/signin', {
-        method: 'post',
-        body: JSON.stringify(values),
-      })
+    const res = await fetch('/api/signin', {
+      method: 'post',
+      body: JSON.stringify(values),
+    })
 
-      router.push('/dashboard')
-    } catch (e) {
-      toast({
-        type: 'error',
-        message: 'wrong credentials!',
-      })
-    }
+    if (res.status === 200) return router.push('/dashboard')
+
+    toast({
+      type: 'error',
+      message: 'wrong credentials!',
+    })
   }
 
   return (

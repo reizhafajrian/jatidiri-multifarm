@@ -23,7 +23,7 @@ export const Post = async ({ url, body, formData }: postType) => {
     ...(body && { body: JSON.stringify(body) }),
     ...(formData && { body: formData }),
     headers: {
-      Authorization: `bearer ${useAuthStore.getState().token}`,
+      Authorization: `bearer ${useAuthStore.getState().token ?? undefined}`,
       ...(!formData && { 'Content-Type': 'application/json' }),
     },
   }).then((res) => res.json())
