@@ -4,7 +4,6 @@ import { shedSchema as schema } from '@/data/validations'
 import { useAuthStore } from '@/store/auth'
 import { IShed, useShedStore } from '@/store/shed'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
 
 const animal_types = [
   { value: 'goat', label: 'Kambing' },
@@ -17,22 +16,22 @@ export default function ShedForm() {
   const { user } = useAuthStore()
   const { shed, addShed } = useShedStore()
   const onSubmit = async (values: IShed) => {
-    try {
-      console.log(values,"sysysy")
-      // const res = await addShed({
-      //   ...values,
-      //   uid: user.id!,
-      // })
-      // if (res.status === 201) {
-      //   toast.success(res.message)
-      //   router.replace(`/${animal_type}`)
-      // } else {
-      //   toast.error(res.errors[0].msg)
-      // }
-    } catch (e: any) {
-      console.log(e)
-      toast.error(e.message)
-    }
+    console.log(values)
+
+    // try {
+    //   const res = await addShed({
+    //     ...values,
+    //     uid: user.id!,
+    //   })
+    //   if (res.status === 201) {
+    //     toast.success(res.message)
+    //     router.replace(`/${animal_type}`)
+    //   } else {
+    //     toast.error(res.errors[0].msg)
+    //   }
+    // } catch (e: any) {
+    //   toast.error(e.message)
+    // }
   }
 
   return (
@@ -49,11 +48,20 @@ export default function ShedForm() {
         ))}
       </div>
       <div className="grid grid-cols-2 gap-4">
-        {/* <div className="space-y-6"> */}
-          {/* <Field type="input" name="shed_code" label="No Kandang" />
-          <Field type="input" name="feed" label="Pakan" />
-          <Field type="input" name="age_range" label="Range Usia" /> */}
-        {/* </div> */}
+        <div className="space-y-6">
+          <Field type="input" name="shed_code" label="No Kandang" />
+          <Field
+            type="select"
+            name="feed"
+            label="Pakan"
+            options={[
+              { name: 'opt-1', value: 'opt-1' },
+              { name: 'opt-2', value: 'opt-2' },
+              { name: 'opt-3', value: 'opt-3' },
+            ]}
+          />
+          <Field type="input" name="age_range" label="Range Usia" />
+        </div>
         <div className="space-y-6">
           {/* <Field type="input" name="animal_weight" label="Berat Hewan" />
           <Field type="input" name="feed_weight" label="Berat Pakan" /> */}

@@ -35,9 +35,7 @@ const DateField = (props: IProps) => {
               meta.error
                 ? 'disabled:border-error'
                 : 'disabled:border-neutral-4',
-              isSubmitting
-                ? 'disabled:bg-[#ebebeb] disabled:text-neutral-4'
-                : 'bg-white'
+              isSubmitting ? 'border-neutral-3 bg-[#ebebeb]' : 'bg-white'
             )}
             placeholder=" "
             defaultValue={value}
@@ -70,8 +68,10 @@ const DateField = (props: IProps) => {
       <DatePicker
         name={name}
         showPopperArrow={false}
-        selected={meta.value}
-        onChange={(value) => field.onChange({ target: { value, name } })}
+        selected={meta.value && new Date(meta.value)}
+        onChange={(value) =>
+          field.onChange({ target: { value: value?.toISOString(), name } })
+        }
         customInput={<CustomInput />}
         calendarClassName="z-50"
       />

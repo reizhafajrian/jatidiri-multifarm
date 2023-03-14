@@ -1,21 +1,27 @@
 'use client'
 import { signinSchema } from '@/data/validations'
-import { IUser, useAuthStore } from '@/store/auth'
+import { IUser } from '@/store/auth'
 import { useRouter } from 'next/navigation'
-import { toast } from 'react-toastify'
 import { Field } from '../shared'
 import Form from '../shared/Form'
+import { toast } from '../shared/Toast'
 
 export default function SignInForm() {
   const router = useRouter()
-  const { signIn } = useAuthStore()
 
   const onSubmit = async (values: IUser) => {
     try {
-      await signIn(values)
-      router.push('/home')
+      await fetch('/api/signin', {
+        method: 'post',
+        body: JSON.stringify(values),
+      })
+
+      router.push('/dashboard')
     } catch (e) {
-      toast.error('credentials error')
+      toast({
+        type: 'error',
+        message: 'wrong credentials!',
+      })
     }
   }
 

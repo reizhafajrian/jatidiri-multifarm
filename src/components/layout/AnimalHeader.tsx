@@ -1,68 +1,28 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
-import { useAnimalStore } from '@/store/animal'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import { BackLink, Button, StoreInitializer } from '../shared'
-import { ArrowDownTray, ExclamationTriangle } from '../shared/Icons'
+import { animalTitle } from '@/store/animal/handlers'
+import { Download } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { FC, useState } from 'react'
+import { BackLink, Button } from '../shared'
+import { ExclamationTriangle } from '../shared/Icons'
 
-const content = {
-  sheep: {
-    typeOptions: ['doorper', 'garut'],
-    femaleOriginOptions: ['garut', 'impor', 'swiss'],
-    maleOriginOptions: ['garut', 'impor', 'swiss'],
-    originOptions: ['garut', 'impor', 'australia'],
-  },
-  goat: {
-    typeOptions: ['doorper', 'garut'],
-    femaleOriginOptions: ['garut', 'impor', 'swiss'],
-    maleOriginOptions: ['garut', 'impor', 'swiss'],
-    originOptions: ['garut', 'impor', 'australia'],
-  },
-  cow: {
-    typeOptions: ['doorper', 'garut'],
-    femaleOriginOptions: ['garut', 'impor', 'swiss'],
-    maleOriginOptions: ['garut', 'impor', 'swiss'],
-    originOptions: ['garut', 'impor', 'australia'],
-  },
+interface AnimalHeaderProps {
+  animal: string
 }
 
-interface IProps {
-  animal_type: 'cow' | 'sheep' | 'goat'
-}
-
-export default function AnimalHeader({ animal_type }: IProps) {
+const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
   const router = useRouter()
-  const searchParams = useSearchParams()
-  const animalFormContent = content[animal_type]
+  const path = usePathname()
 
-  const type = searchParams.get('type')
-
-  const { animalTitle } = useAnimalStore()
   const [alertCluster] = useState(false)
-  const headerMenu = getHeaderMenu(animal_type)
-
-  const findGender = (type: string) => {
-    if (type === "female") return true
-    return false
-  }
-
-  const gender: any = type !== 'cempek' ? findGender(type as string) : undefined
-
-  StoreInitializer({
-    data: {
-      animal: { animal_type, gender, animalFormContent }
-    }
-  })
-
-
+  const isListData =
+    !path.startsWith(`/${animal}/add`) && !path.startsWith(`/${animal}/edit`)
+  const headerMenu = getHeaderMenu(animal)
 
   return (
     <>
-      {/* <StoreInitializer
-        data={{ animal: { animal_type, gender, animalFormContent } }}
-      /> */}
-      {type ? (
+      {isListData ? (
         <>
           {alertCluster && <AlertCluster />}
           <Navbar
@@ -71,39 +31,37 @@ export default function AnimalHeader({ animal_type }: IProps) {
           >
             <div className="flex items-center justify-end gap-2">
               <Button
-                className="rounded-lg p-2"
-                onClick={() => router.push(`/${animal_type}/add`)}
+                className="capitalize"
+                onClick={() => router.replace(`/${animal}/add`)}
               >
-                <span className="text-sm capitalize">
-                  tambah data {animalTitle(animal_type)}
-                </span>
+                tambah data {animalTitle(animal)}
               </Button>
-              <Button intent="secondary" className="rounded-lg p-2">
-                <ArrowDownTray />
+              <Button variant="outline" className="px-3">
+                <Download className="h-4 w-4" />
               </Button>
             </div>
           </Navbar>
         </>
       ) : (
-        <BackLink />
+        <BackLink href={`/${animal}/male`} />
       )}
     </>
   )
 }
 
-const getHeaderMenu = (animal_type: string) => {
-  if (animal_type === 'cow') {
-    return [
-      { name: 'Pejantan', link: `/${animal_type}`, type: 'male' },
-      { name: 'Betina', link: `/${animal_type}`, type: 'female' },
-    ]
-  } else {
-    return [
-      { name: 'Pejantan', link: `/${animal_type}`, type: 'male' },
-      { name: 'Betina', link: `/${animal_type}`, type: 'female' },
-      { name: 'Cempek', link: `/${animal_type}`, type: 'cempek' },
-    ]
+export default AnimalHeader
+
+const getHeaderMenu = (animal: string) => {
+  const links = [
+    { name: 'Pejantan', link: `/${animal}/male` },
+    { name: 'Betina', link: `/${animal}/female` },
+  ]
+
+  if (animal !== 'cow') {
+    links.push({ name: 'Cempek', link: `/${animal}/cempek` })
   }
+
+  return links
 }
 
 const AlertCluster = () => {

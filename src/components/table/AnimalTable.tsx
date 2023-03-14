@@ -1,66 +1,80 @@
 'use client'
-import { useAnimalList } from '@/hooks/useAnimal'
+import useDataList from '@/hooks/useDataList'
 import { useAnimalStore } from '@/store/animal'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useState } from 'react'
-import AnimalFilter from '../filter/AnimalFilter'
+import { ColumnDef } from '@tanstack/react-table'
+import { useRouter } from 'next/navigation'
+import { FC, useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import { Button, Table } from '../shared'
+import { toast } from '../shared/Toast'
 
-export default function AnimalTable() {
+interface AnimalTableProps {
+  animal?: 'goat' | 'sheep' | 'cow'
+  type: string
+}
+
+const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
-  const store = useAnimalStore()
-  const type = useSearchParams().get('type')
+  const isCempek = type === 'cempek'
   const [isOpen, closeModal] = useState(false)
-  const { data, loading, error } = useAnimalList()
+  const { origin_female, origin_male, ...a } = useAnimalStore()
 
-  const editAnimalData = (eartag_code: any) => {
-    router.push(`/${store.animal_type}/edit?eartag_code=${eartag_code}`)
-  }
+  const queries = []
+  !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
+  origin_male !== 'all' && queries.push('origin_male=' + origin_male)
+  origin_female !== 'all' && queries.push('origin_female=' + origin_female)
 
-  const deleteToggle = (id: string) => {
-    closeModal(true)
-    useAnimalStore.setState((state) => ({ ...state, eartag_code: id }))
-  }
+  const { data, loading } = useDataList(
+    isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
+    queries
+  )
 
   const deleteHandler = async () => {
     try {
-      await store.deleteAnimal(store.eartag_code)
+      const res = await a.deleteAnimal({
+        animal,
+        eartag_code: a.eartag_code,
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+
+      router.refresh()
     } catch (e) {
       console.log(e)
     }
   }
 
-  if (loading) return <p>loading...</p>
-  if (error) return <p>{error.message}</p>
-
-  const columns = [
-    ...(type != undefined && type != 'cempek'
-      ? store.animalTColumns
-      : store.cempekTColumns),
+  const columns: ColumnDef<any, any>[] = [
+    ...(type === 'cempek' ? a.cempekTColumns : a.animalTColumns),
     {
       header: 'Aksi',
       accessorKey: '_id',
-      cell: (data: any) => (
+      cell: (data) => (
         <div className="flex gap-2">
           <Button
-            intent="edit"
-            onClick={() => editAnimalData(data.getValue())}
+            size="xs"
+            variant="edit"
+            onClick={() => router.replace(`/${animal}/edit/${data.getValue()}`)}
           />
           <Button
-            intent="delete"
-            onClick={() => deleteToggle(data.getValue())}
+            size="xs"
+            variant="delete"
+            onClick={() => {
+              closeModal(true)
+              useAnimalStore.setState({ eartag_code: data.getValue() })
+            }}
           />
         </div>
       ),
     },
     { header: 'Keterangan', accessorKey: 'description' },
-    { header: 'updated_at', accessorKey: 'updated_at' },
   ]
 
   return (
     <>
-      <AnimalFilter />
       <DeleteModal
         isOpen={isOpen}
         closeModal={closeModal}
@@ -68,7 +82,14 @@ export default function AnimalTable() {
         desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
         deleteHandler={deleteHandler}
       />
-      <Table data={data} columns={columns} fixedCol={3} />
+      <Table
+        isLoading={loading}
+        fixedCol={3}
+        data={data?.filter((i: any) => i._id !== null)}
+        columns={columns}
+      />
     </>
   )
 }
+
+export default AnimalTable

@@ -1,103 +1,65 @@
 'use client'
+import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
-import Link from 'next/link'
-import { Pencil, Trash } from './Icons'
+import { Loader2, Pencil, Trash2 } from 'lucide-react'
+import * as React from 'react'
 
-interface IProps {
-  children?: React.ReactNode
-  className?: string
-  type?: 'button' | 'submit'
-  disabled?: boolean
-  onClick?: any
-  href?: string
-}
-
-export interface ButtonProps
-  extends IProps,
-    VariantProps<typeof buttonClasses> {}
-
-export default function Button(props: ButtonProps) {
-  const { href, children, intent, className, type, disabled, onClick } = props
-
-  if (href)
-    return (
-      <Link href={href} className={buttonClasses({ intent, className })}>
-        {children}
-      </Link>
-    )
-
-  return (
-    <button
-      type={type ?? 'button'}
-      disabled={disabled}
-      onClick={onClick}
-      className={buttonClasses({ intent, className })}
-    >
-      {intent === 'edit' ? (
-        <Pencil />
-      ) : intent === 'delete' ? (
-        <Trash />
-      ) : (
-        children
-      )}
-    </button>
-  )
-}
-
-const buttonClasses = cva(
-  [
-    'flex',
-    'justify-center',
-    'gap-1',
-    'border',
-    'text-xs',
-    'uppercase',
-    'font-semibold',
-    'hover:scale-105',
-    'active:scale-100',
-    'transition',
-    'duration-200',
-    'ease-in-out',
-    'disabled:animate-pulse',
-  ],
+const buttonVariants = cva(
+  'active:scale-95 inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none',
   {
     variants: {
-      intent: {
-        primary: [
-          'bg-primary-4',
-          'text-white',
-          'border-primary-4',
-          'hover:bg-primary-5',
-          'hover:border-primary-5',
-        ],
-        secondary: [
-          'bg-white',
-          'text-black',
-          'border-neutral-3',
-          'hover:bg-neutral-3',
-        ],
-        edit: [
-          'w-6',
-          'h-6',
-          'bg-primary-4',
-          'border-primary-4',
-          'rounded-lg',
-          'grid',
-          'place-items-center',
-        ],
-        delete: [
-          'w-6',
-          'h-6',
-          'bg-[#E15E52]',
-          'border-[#E15E52]',
-          'rounded-lg',
-          'grid',
-          'place-items-center',
-        ],
+      variant: {
+        default: 'bg-primary-4 text-white hover:bg-primary-5',
+        outline:
+          'bg-white text-neutral-5 hover:bg-neutral-3 border border-neutral-3',
+        delete: 'bg-[#E15E52] text-white',
+        edit: 'bg-primary-4 text-white',
+      },
+      size: {
+        default: 'h-10 py-2 px-4',
+        xs: 'h-7 w-7',
+        sm: 'h-9 px-2 rounded-md',
+        lg: 'h-11 px-8 rounded-md',
       },
     },
     defaultVariants: {
-      intent: 'primary',
+      variant: 'default',
+      size: 'default',
     },
   }
 )
+
+export interface ButtonProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+    VariantProps<typeof buttonVariants> {
+  isLoading?: boolean
+}
+
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ className, children, variant, isLoading, size, ...props }, ref) => {
+    return (
+      <button
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        disabled={isLoading}
+        {...props}
+      >
+        {variant === 'delete' ? (
+          <Trash2 className="h-4 w-4" />
+        ) : variant === 'edit' ? (
+          <Pencil className="h-4 w-4" />
+        ) : (
+          <>
+            {isLoading ? (
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+            ) : null}
+            {children}
+          </>
+        )}
+      </button>
+    )
+  }
+)
+Button.displayName = 'Button'
+
+export { Button, buttonVariants }

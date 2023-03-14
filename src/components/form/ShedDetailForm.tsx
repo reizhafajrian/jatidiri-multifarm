@@ -1,7 +1,7 @@
 'use client'
 import { Field, Form, InputCheckbox, Modal } from '@/components/shared'
 import { IModal } from '@/data/interfaces'
-import { shedDataSchema as schema } from '@/data/validations'
+import { shedDataSchema } from '@/data/validations'
 import { useAuthStore } from '@/store/auth'
 import { IShedDetail, useShedStore } from '@/store/shed'
 import { useState } from 'react'
@@ -11,6 +11,7 @@ export default function ShedDetailForm(props: IModal) {
   const { user } = useAuthStore()
   const { shedDetail, addShedDetail } = useShedStore()
   const [categories, setCategories] = useState<any>({ feed: true })
+  const schema = shedDataSchema(categories)
 
   const onSubmit = async (values: IShedDetail) => {
     // try {
@@ -52,13 +53,20 @@ export default function ShedDetailForm(props: IModal) {
             <div key={idx} className={categories[name] ? 'block' : 'hidden'}>
               <h3 className="mb-4 text-base font-medium">{title}</h3>
               <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                {fields.map(({ name, label, type }, idx) =>
-                  type === 'date' ? (
-                    <Field type="date" key={idx} name={name} label={label} />
-                  ) : (
-                    <Field type="input" key={idx} name={name} label={label} />
-                  )
-                )}
+                {fields.map(({ name, label, type, rupiah }, idx) => (
+                  <Field
+                    type={type}
+                    key={idx}
+                    name={name}
+                    label={label}
+                    rupiah={rupiah}
+                    options={[
+                      { name: 'opt-1', value: 'opt-1' },
+                      { name: 'opt-2', value: 'opt-2' },
+                      { name: 'opt-3', value: 'opt-3' },
+                    ]}
+                  />
+                ))}
               </div>
             </div>
           ))}
@@ -84,9 +92,9 @@ const shedDataFormContent = {
       title: 'Pakan',
       fields: [
         { type: 'date', label: 'Tanggal', name: 'feed_date' },
-        { type: 'text', label: 'Jenis Pakan', name: 'feed_type' },
-        { type: 'number', label: 'Harga', name: 'feed_price' },
-        { type: 'number', label: 'Stok', name: 'feed_stock' },
+        { type: 'select', label: 'Jenis Pakan', name: 'feed_type' },
+        { type: 'input', label: 'Harga', name: 'feed_price', rupiah: true },
+        { type: 'input', label: 'Stok', name: 'feed_stock' },
       ],
     },
     {
@@ -94,8 +102,8 @@ const shedDataFormContent = {
       title: 'Vitamin',
       fields: [
         { type: 'date', label: 'Tanggal', name: 'vitamin_date' },
-        { type: 'text', label: 'Jenis vitamin', name: 'vitamin_type' },
-        { type: 'number', label: 'Harga', name: 'vitamin_price' },
+        { type: 'select', label: 'Jenis vitamin', name: 'vitamin_type' },
+        { type: 'input', label: 'Harga', name: 'vitamin_price', rupiah: true },
       ],
     },
     {
@@ -103,8 +111,8 @@ const shedDataFormContent = {
       title: 'Vaksin',
       fields: [
         { type: 'date', label: 'Tanggal', name: 'vaccine_date' },
-        { type: 'text', label: 'Jenis Vaksin', name: 'vaccine_type' },
-        { type: 'number', label: 'Harga', name: 'vaccine_price' },
+        { type: 'select', label: 'Jenis Vaksin', name: 'vaccine_type' },
+        { type: 'input', label: 'Harga', name: 'vaccine_price', rupiah: true },
       ],
     },
     {
@@ -113,11 +121,16 @@ const shedDataFormContent = {
       fields: [
         { type: 'date', label: 'Tanggal', name: 'anthelmintic_date' },
         {
-          type: 'text',
+          type: 'select',
           label: 'Jenis Obat Cacing',
           name: 'anthelmintic_type',
         },
-        { type: 'number', label: 'Harga', name: 'anthelmintic_price' },
+        {
+          type: 'input',
+          label: 'Harga',
+          name: 'anthelmintic_price',
+          rupiah: true,
+        },
       ],
     },
   ],

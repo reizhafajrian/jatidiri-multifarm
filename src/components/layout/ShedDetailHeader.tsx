@@ -1,23 +1,29 @@
 'use client'
 import { useAnimalStore } from '@/store/animal'
-import { useShedStore } from '@/store/shed'
-import { useState } from 'react'
+import { Pen } from 'lucide-react'
+import { FC, useState } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
 import { BackLink, Button } from '../shared'
-import { PencilSolid } from '../shared/Icons'
 import Navbar from './Navbar'
 
-export default function ShedDetailHeader() {
-  const [isOpen, closeModal] = useState(false)
-  const { shed_code, animal_type } = useShedStore().shed
-  const { animalTitle, gender } = useAnimalStore()
+interface ShedDetailHeaderProps {
+  animal: string
+  shed_code: string
+  type?: string
+}
 
-  const title = animalTitle(animal_type)
+const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
+  const { animal, shed_code, type } = props
+  const [isOpen, closeModal] = useState(false)
+  const { animalTitle } = useAnimalStore()
+  const title = animalTitle(animal)
+  const baseUrl = `/shed/${animal}/${shed_code}`
 
   const menu = [
-    { name: 'Informasi', link: `/shed/${shed_code}` },
-    { name: 'Pejantan', link: `/shed/${shed_code}/male` },
-    { name: 'Betina', link: `/shed/${shed_code}/female` },
+    { name: 'Informasi', link: baseUrl },
+    { name: 'Pejantan', link: baseUrl + '/male' },
+    { name: 'Betina', link: baseUrl + '/female' },
+    { name: 'Cempek', link: baseUrl + '/cempek' },
   ]
 
   return (
@@ -25,10 +31,10 @@ export default function ShedDetailHeader() {
       <ShedAnimalForm
         isOpen={isOpen}
         closeModal={closeModal}
-        animal_type={animal_type}
+        animal_type={animal}
       />
 
-      <BackLink href="/shed?type=goat" />
+      <BackLink href="/shed/goat" />
       <div className="mb-8">
         <h1 className="my-6 text-2xl font-semibold text-neutral-5">
           Detail Kandang <span className="text-primary-5">#{shed_code}</span>
@@ -40,13 +46,15 @@ export default function ShedDetailHeader() {
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
-        {gender && (
-          <Button onClick={() => closeModal(true)} className="rounded-lg p-2">
-            <span className="text-sm capitalize">tambah {title}</span>
-            <PencilSolid />
+        {type && (
+          <Button onClick={() => closeModal(true)}>
+            Tambah {title}
+            <Pen className="ml-3 h-4 w-4 fill-white" />
           </Button>
         )}
       </Navbar>
     </>
   )
 }
+
+export default ShedDetailHeader

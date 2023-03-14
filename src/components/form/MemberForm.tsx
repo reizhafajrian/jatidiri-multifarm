@@ -14,7 +14,10 @@ export default function MemberForm(props: IProps & IModal) {
   const { formType, isOpen, closeModal } = props
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Member`
 
-  const roleOptions = ['Admin', 'Super Admin']
+  const roleOptions = [
+    { name: 'Admin', value: 'admin' },
+    { name: 'Super Admin', value: 'super-admin' },
+  ]
   const { user, addMember, editMember } = useAuthStore()
 
   const onSubmit = async (values: IUser) => {
@@ -49,7 +52,8 @@ export default function MemberForm(props: IProps & IModal) {
         onSubmit={onSubmit}
         className="mt-5 space-y-4"
       >
-        <Field type="input" name="name" label="Nama" />
+        <Field type="input" name="first_name" label="First Name" />
+        <Field type="input" name="last_name" label="Last Name" />
         <Field type="input" name="email" label="Email" />
         <Field type="input" name="phone_number" label="No Whatsapp" />
         <Field type="select" name="role" label="Role" options={roleOptions} />

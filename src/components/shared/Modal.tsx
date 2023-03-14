@@ -1,6 +1,7 @@
 'use client'
 import { Dialog, Transition } from '@headlessui/react'
 import { Fragment, ReactNode } from 'react'
+import SimpleBar from 'simplebar-react'
 
 interface IProps {
   children: ReactNode
@@ -38,7 +39,7 @@ export default function Modal(props: IProps) {
               leaveTo="opacity-0 scale-95"
             >
               <Dialog.Panel className="w-full max-w-xl transform overflow-visible rounded-lg bg-white p-6 transition-all">
-                {children}
+                <SimpleBar>{children}</SimpleBar>
               </Dialog.Panel>
             </Transition.Child>
           </div>

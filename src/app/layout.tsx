@@ -1,9 +1,11 @@
-import Toast from '@/components/shared/Toast'
+import { Toaster } from '@/components/shared/Toast'
 import { ILayoutProps } from '@/data/interfaces'
+import { cn } from '@/lib/utils'
+import { Poppins } from '@next/font/google'
+
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
 import '@/styles/ReactToastify.css'
-import { Poppins } from '@next/font/google'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -11,15 +13,18 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export default function RootLayout(props: ILayoutProps) {
+export default async function RootLayout(props: ILayoutProps) {
   return (
-    <html lang="en">
-      <head />
-      <body className={`${poppins.variable} font-sans text-sm`}>
-        <Toast />
-        <div className="mx-auto max-w-screen-2xl bg-neutral-1">
-          {props.children}
-        </div>
+    <html
+      lang="en"
+      className={cn(
+        'bg-white text-sm text-neutral-5 antialiased',
+        poppins.variable
+      )}
+    >
+      <body className="min-h-screen bg-neutral-1 antialiased">
+        <Toaster position="top-center" />
+        {props.children}
       </body>
     </html>
   )

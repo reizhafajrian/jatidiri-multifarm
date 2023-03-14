@@ -1,5 +1,4 @@
 /** @type {import('tailwindcss').Config} */
-
 const { fontFamily } = require('tailwindcss/defaultTheme')
 
 module.exports = {
@@ -39,5 +38,6 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwind-scrollbar-hide')],
+  plugins: [require('tailwindcss-animate')],
 }
+// require('tailwind-scrollbar-hide')

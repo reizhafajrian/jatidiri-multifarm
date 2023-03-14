@@ -1,16 +1,18 @@
+import { FC } from 'react'
 import { Card } from '../shared'
 
-interface IDAnimalInfoProps {
+interface DashboardAnimalInfoCardProps {
   data: {
     icon: any
-    animal_type: 'goat' | 'sheep' | 'cow'
+    animal_type: string
     totalAdult: number
     totalCempek: number
   }
 }
 
-export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
-  const { icon, animal_type, totalAdult, totalCempek } = props.data
+const DashboardAnimalInfoCard: FC<DashboardAnimalInfoCardProps> = ({
+  data: { icon, animal_type, totalAdult, totalCempek },
+}) => {
   const title =
     animal_type === 'goat'
       ? 'Kambing'
@@ -50,3 +52,5 @@ export default function DashboardAnimalInfoCard(props: IDAnimalInfoProps) {
     </>
   )
 }
+
+export default DashboardAnimalInfoCard

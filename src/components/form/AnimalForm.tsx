@@ -1,95 +1,88 @@
 'use client'
+import { getAnimalFormContent, getAnimalFormOptions } from '@/data/data'
 import { animalSchema, cempekSchema } from '@/data/validations'
-import { useAnimalDetail } from '@/hooks/useAnimal'
-import { ICempek, useAnimalStore } from '@/store/animal'
+import { cn } from '@/lib/utils'
+import { useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
-import clsx from 'clsx'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { toast } from 'react-toastify'
+import { useRouter } from 'next/navigation'
+import { FC } from 'react'
 import { Field, Form } from '../shared'
+import { toast } from '../shared/Toast'
 
-interface IProps {
+interface AnimalFormProps {
   formType: 'add' | 'edit'
   cempekForm?: boolean
   gender?: string
+  animal: string
+  values?: any
+  id?: string
 }
 
-export default function AnimalForm(props: IProps) {
+const AnimalForm: FC<AnimalFormProps> = ({
+  formType,
+  cempekForm,
+  gender,
+  animal,
+  values,
+  id,
+}) => {
   const router = useRouter()
+  const opt = getAnimalFormOptions(animal)
   const { user } = useAuthStore()
-  const store = useAnimalStore.getState()
-
-  const opt = store.animalFormContent
-  const eartag_code = useSearchParams().get('eartag_code')
-  const data = useAnimalDetail(eartag_code as string)
-  const { formType, cempekForm, gender } = props
-  const schema = cempekForm ? cempekSchema : animalSchema
-
-  const form_title = formType == 'add' ? 'Tambah' : 'Edit'
-  const animal_title = store.animalTitle(store.animal_type!)
-  const gender_title = cempekForm ? 'cempek' : store.genderTitle(gender!)
-  const title = `${form_title} Data ${animal_title} ${gender_title}`
+  const a = useAnimalStore()
+  const content = getAnimalFormContent({
+    animal,
+    gender,
+    formType,
+    cempekForm,
+  })
 
   const onSubmit = async (values: any) => {
+    const data = {
+      cempek: cempekForm ? 'true' : 'false',
+      uid: user.id!,
+      id: id,
+      animal,
+      gender,
+      ...values,
+    }
+
     let res
-    console.log({ values })
-    if (formType == 'add') {
-      res = await store.addAnimal({
-        ...values,
-        animal_type: store.animal_type,
-        gender: gender,
-        uid: user.id!,
-      })
+    if (formType === 'add') {
+      res = await a.addAnimal(data)
     } else {
-      return console.log({ edit_animal: values })
+      res = await a.editAnimal(data)
     }
 
     if (res.errors) {
-      return toast.error(res.errors[0].msg)
+      return toast({
+        type: 'error',
+        message: res.errors[0].msg,
+      })
     }
 
-    toast.success(res.message)
-    router.replace(`/${store.animal_type}`)
-  }
+    toast({
+      type: 'success',
+      message: res.message,
+    })
 
-
-  const onSubmitCempek = async (values: ICempek) => {
-    let res
-
-    if (formType == 'add') {
-      return console.log({ add_cempek: values })
-    } else {
-      return console.log({ edit_cempek: values })
-    }
-
-    // if (res.errors) {
-    //   return toast.error(res.errors[0].msg)
-    // }
-
-    // toast.success(res.message)
-    // router.replace(`/${store.animal_type}`)
+    router.replace(`/${animal}/male`)
   }
 
   return (
     <>
-      <h1 className="mb-6 text-base font-semibold">{title}</h1>
+      <h1 className="mb-6 text-base font-semibold">{content.title}</h1>
       <Form
-        values={
-          formType == 'edit'
-            ? cempekForm
-              ? store.cempek
-              : store.animal
-            : undefined
-        }
-        schema={schema}
-        onSubmit={cempekForm ? onSubmitCempek : onSubmit}
+        values={formType == 'edit' ? values : undefined}
+        schema={cempekForm ? cempekSchema : animalSchema}
+        onSubmit={onSubmit}
         className="grid grid-cols-2 gap-4"
       >
         <div className="space-y-6">
           <Field
             type="select"
             name="type"
-            label={`Jenis ${cempekForm ? 'Cempek' : animal_title}`}
+            label={`Jenis ${cempekForm ? 'Cempek' : content.animal_title}`}
             options={opt.typeOptions}
           />
 
@@ -124,7 +117,10 @@ export default function AnimalForm(props: IProps) {
                   type="select"
                   name="gender"
                   label="Jenis Kelamin"
-                  options={['female', 'male']}
+                  options={[
+                    { name: 'Jantan', value: 'male' },
+                    { name: 'Betina', value: 'female' },
+                  ]}
                 />
               </>
             ) : (
@@ -132,15 +128,20 @@ export default function AnimalForm(props: IProps) {
                 <Field
                   type="select"
                   name="origin"
-                  label={`Asal ${animal_title}`}
+                  label={`Asal ${content.animal_title}`}
                   options={opt.originOptions}
                 />
                 <Field
                   type="input"
                   name="weight"
-                  label={`Berat ${animal_title}`}
+                  label={`Berat ${content.animal_title}`}
                 />
-                <Field type="input" name="purchase_price" label="Harga Beli" />
+                <Field
+                  type="input"
+                  name="purchase_price"
+                  label="Harga Beli"
+                  // rupiah
+                />
               </>
             )}
             <Field
@@ -152,15 +153,20 @@ export default function AnimalForm(props: IProps) {
             <Field type="input" name="description" label="Keterangan" />
           </div>
           <div
-            className={clsx(
+            className={cn(
               'flex justify-end gap-3',
               cempekForm ? 'mt-10' : 'mt-auto'
             )}
           >
-            <Field type="submit" cancelHandler={() => router.back()} />
+            <Field
+              type="submit"
+              cancelHandler={() => router.replace(`/${animal}/male`)}
+            />
           </div>
         </div>
       </Form>
     </>
   )
 }
+
+export default AnimalForm

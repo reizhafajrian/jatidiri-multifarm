@@ -26,7 +26,7 @@ export const fetcher = async (props: {
 export const get = async (url: string) => {
   const r = await fetch(url, {
     headers: {
-      Authorization: `Bearer ${getCookie('token')}`,
+      // Authorization: `Bearer ${getCookie('token')}`,
     },
   })
 

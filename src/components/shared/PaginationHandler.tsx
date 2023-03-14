@@ -1,12 +1,12 @@
+import { Table } from '@tanstack/react-table'
+import { FC } from 'react'
 import { ChevronLeft, ChevronRight } from './Icons'
 
-interface IProps {
-  table: any
+interface PaginationHandlerProps {
+  table: Table<any>
 }
 
-export default function PaginationHandler(props: IProps) {
-  const { table } = props
-
+const PaginationHandler: FC<PaginationHandlerProps> = ({ table }) => {
   return (
     <div className="mt-5 flex items-center justify-center gap-2">
       <button
@@ -26,7 +26,7 @@ export default function PaginationHandler(props: IProps) {
       {[...Array(table.getPageCount())].map((_, i) => (
         <button
           key={i}
-          className="rounded-lg px-3 py-2 text-xs disabled:bg-primary-4 disabled:text-white"
+          className="grid h-6 w-6 place-items-center rounded-lg text-xs disabled:bg-primary-4 disabled:text-white"
           disabled={table.getState().pagination.pageIndex === i}
           onClick={() => table.setPageIndex(i)}
         >
@@ -50,3 +50,5 @@ export default function PaginationHandler(props: IProps) {
     </div>
   )
 }
+
+export default PaginationHandler

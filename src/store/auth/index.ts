@@ -4,9 +4,11 @@ import * as h from './handlers'
 export const useAuthStore = create<IState>((set) => ({
   user: {
     id: '63e5bdd29536b95a6759a525',
-    name: 'john doe',
+    first_name: 'john',
+    last_name: 'doe',
     email: 'johndoe@gmail.com',
   } as IUser,
+  token: '',
   signIn: h.signInHandler,
   addMember: h.addMemberHandler,
   editMember: h.editMemberHandler,
@@ -17,6 +19,7 @@ export const useAuthStore = create<IState>((set) => ({
 
 interface IState {
   user: IUser
+  token: string
   signIn: (payload: IUser) => Promise<void>
   addMember: (payload: IUser) => Promise<void>
   editMember: (payload: IUser) => Promise<void>
@@ -29,7 +32,8 @@ interface IUser {
   id?: string
   email: string
   password: string
-  name?: string
+  first_name?: string
+  last_name?: string
   gender?: string
   phone_number?: string
   job_title?: string

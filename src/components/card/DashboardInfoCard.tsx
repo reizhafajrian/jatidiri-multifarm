@@ -1,8 +1,9 @@
-import formatRupiah from '@/utils/formatRupiah'
+import { formatRupiah } from '@/lib/utils'
+import { FC } from 'react'
 import { Card } from '../shared'
 import { ArrowSmallUp } from '../shared/Icons'
 
-interface IDInfoProps {
+interface DashboardInfoCardProps {
   data: {
     icon: any
     title: string
@@ -11,7 +12,7 @@ interface IDInfoProps {
   }
 }
 
-export default function DashboardInfoCard({ data }: IDInfoProps) {
+const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
   return (
     <Card className="flex items-center">
       <div className="mr-6 h-14 w-14">{data.icon}</div>
@@ -28,3 +29,5 @@ export default function DashboardInfoCard({ data }: IDInfoProps) {
     </Card>
   )
 }
+
+export default DashboardInfoCard

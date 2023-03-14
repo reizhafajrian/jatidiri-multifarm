@@ -1,4 +1,5 @@
 'use client'
+import formatRupiah from '@/utils/formatRupiah'
 import clsx from 'clsx'
 import { Field, useField, useFormikContext } from 'formik'
 import { useState } from 'react'
@@ -9,6 +10,7 @@ interface IProps {
   name: string
   isSecured?: boolean
   disabled?: boolean
+  rupiah?: boolean
 }
 
 export default function InputText(props: IProps) {
@@ -28,7 +30,7 @@ export default function InputText(props: IProps) {
 }
 
 const Input = (props: IProps) => {
-  const { label, name, isSecured, disabled } = props
+  const { label, name, isSecured, disabled, rupiah } = props
   const [showPassword, setShowPassword] = useState(false)
   const [field, meta] = useField({ name })
   const { isSubmitting } = useFormikContext()
@@ -38,7 +40,12 @@ const Input = (props: IProps) => {
       <input
         id={label}
         type={isSecured ? (showPassword ? 'text' : 'password') : 'text'}
-        defaultValue={field.value}
+        defaultValue={
+          rupiah
+            ? formatRupiah(field.value?.toString() ?? ' ', 'prefix')
+            : field.value
+        }
+        value={rupiah ? formatRupiah(field.value, 'prefix') : field.value}
         className={clsx(
           'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm focus:border-black focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
           meta?.error ? 'border-error' : 'border-neutral-4'

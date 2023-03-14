@@ -32,13 +32,12 @@ export default function CategoryContent() {
               <div className="mb-6 flex items-end justify-between">
                 <CategoryCardList cardList={cardList} />
                 <Button
-                  className="rounded-lg p-2"
                   onClick={() => {
                     setCat(category)
                     closeModal(true)
                   }}
                 >
-                  <p className="text-sm capitalize">tambah {title(category)}</p>
+                  Tambah {title(category)}
                 </Button>
               </div>
             </div>

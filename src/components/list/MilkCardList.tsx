@@ -1,18 +1,14 @@
-import { useMilkStore } from '@/store/milk'
-import { shortDateFormatter } from '@/utils/formatDate'
-import formatRupiah from '@/utils/formatRupiah'
+import { formatRupiah, shortDateFormatter } from '@/lib/utils'
 import { Card } from '../shared'
 import { ArrowSmallUp, MilkCircle, WalletCircle } from '../shared/Icons'
 
-export default function MilkCardList() {
-  const info = useMilkStore.getState().milkInfo
-
+export default function MilkCardList({ info }: any) {
   const cardData = [
     {
       icon: <WalletCircle />,
       title: 'Total Pendapatan',
       date: shortDateFormatter(info.income_date),
-      value: formatRupiah(info.income_total.toString()),
+      value: formatRupiah(info.income_total),
       percentage: info.income_percentage,
     },
     {

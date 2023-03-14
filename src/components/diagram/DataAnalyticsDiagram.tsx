@@ -9,31 +9,14 @@ import {
   Title,
   Tooltip,
 } from 'chart.js'
+import { FC } from 'react'
 import { Bar } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-export default function DataAnalyticsDiagram() {
-  return <Bar options={options} data={data} />
-}
-
-export const options: any = {
-  responsive: true,
-  plugins: {
-    legend: {
-      align: 'start' as const,
-      labels: {
-        boxWidth: 4,
-        boxHeight: 4,
-        usePointStyle: true,
-      },
-    },
-  },
-}
-
 const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 
-export const data: ChartData<'bar', number[], string> = {
+const data: ChartData<'bar', number[], string> = {
   labels,
   datasets: [
     {
@@ -53,3 +36,28 @@ export const data: ChartData<'bar', number[], string> = {
     },
   ],
 }
+
+interface DataAnalyticsDiagramProps {}
+
+const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({}) => {
+  return (
+    <Bar
+      options={{
+        responsive: true,
+        plugins: {
+          legend: {
+            align: 'start' as const,
+            labels: {
+              boxWidth: 4,
+              boxHeight: 4,
+              usePointStyle: true,
+            },
+          },
+        },
+      }}
+      data={data}
+    />
+  )
+}
+
+export default DataAnalyticsDiagram

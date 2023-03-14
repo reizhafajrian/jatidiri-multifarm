@@ -1,14 +1,15 @@
-import { SelectMenu } from '../shared'
+import { SelectFilter } from '../shared'
 
 export default function MilkFilter() {
-  const statusOptions = [{ name: 'Aktif' }, { name: 'Non-Aktif' }]
+  const statusOptions = [
+    { name: 'All', value: 'all' },
+    { name: 'Aktif', value: 'active' },
+    { name: 'Non-Aktif', value: 'non-active' },
+  ]
 
   return (
     <div className="mb-5">
-      <SelectMenu
-        title="Status"
-        options={[{ name: 'All' }, ...statusOptions]}
-      />
+      <SelectFilter title="status" options={statusOptions} />
     </div>
   )
 }

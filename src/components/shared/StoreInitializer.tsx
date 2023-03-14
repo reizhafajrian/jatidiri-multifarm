@@ -1,5 +1,6 @@
 'use client'
-import { IAnimal, IAnimalProps, ICempek, useAnimalStore } from '@/store/animal'
+import { IAnimal, IAnimalProps, useAnimalStore } from '@/store/animal'
+import { useAuthStore } from '@/store/auth'
 import * as cat from '@/store/category'
 import { IHpp, useHppStore } from '@/store/hpp'
 import { IMilk, IMilkInfo, useMilkStore } from '@/store/milk'
@@ -13,20 +14,19 @@ interface IData {
     category?: ICategoryState
     milk?: IMilkState
     hpp?: IHppState
+    token?: string
   }
 }
 
 export default function StoreInitializer({ data }: IData) {
   useEffect(() => {
+    if (data.token) {
+      useAuthStore.setState({ token: data.token })
+    }
+
     if (data.animal) {
       const a = data.animal
-      useAnimalStore.setState({
-        animal: a.animal,
-        cempek: a.cempek,
-        animal_type: a.animal_type,
-        gender: a.gender,
-        animalFormContent: a.animalFormContent,
-      })
+      useAnimalStore.setState({ animal: a.animal, type: a.type })
     }
 
     if (data.shed) {
@@ -60,18 +60,17 @@ export default function StoreInitializer({ data }: IData) {
       useHppStore.setState({ hpp, hppList })
     }
   }, [JSON.stringify(data)])
+
+  return null
 }
 
 interface IAnimalState {
+  type?: string
   animal?: IAnimal
-  animalList?: IAnimal[]
-  cempek?: ICempek
-  cempekList?: ICempek[]
-  animalFormContent?: any
 }
 
 interface IShedState {
-  shed_code: string
+  shed_code?: string
   shed?: IShed
 }
 

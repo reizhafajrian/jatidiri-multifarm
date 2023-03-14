@@ -1,74 +1,74 @@
-import { IAnimal, IAnimalProps, ICempek } from '@/store/animal'
-import { fetcher } from '@/utils/fetcher'
-import { longDateFormatter } from '@/utils/formatDate'
-import formatRupiah from '@/utils/formatRupiah'
+import { Delete, Post } from '@/lib/api'
+import { formatRupiah, longDateFormatter } from '@/lib/utils'
+import { IPayload } from '@/store/animal'
+import { ColumnDef } from '@tanstack/react-table'
 
-export const addAnimalHandler = async (
-  payload: IAnimal & IAnimalProps & { uid: string }
-) => {
-  const { animal_type, gender, ...rest } = payload
-
+const addAnimalHandler = async (payload: IPayload) => {
+  const isCempek = payload.cempek === 'true'
   const formData = new FormData()
-  formData.append('created_by', payload.uid)
-  formData.append('gender', gender === 'male' ? 'true' : 'false')
 
-  for (let value in rest) {
-    if (value.includes('date')) {
-      formData.append(value, rest[value].toISOString())
-    } else {
-      formData.append(value, rest[value])
-    }
+  for (let value in payload) {
+    formData.append(value, payload[value])
   }
-  formData.set('files', rest.files[0])
 
-  const res = await fetcher({
-    url: `/api/${animal_type}/create`,
-    method: 'post',
-    formData,
-  })
+  if (!isCempek) formData.set('files', payload.files[0])
+
+  formData.append('created_by', payload.uid!)
+
+  const url = isCempek
+    ? `/api/${payload.animal}/cempek/create`
+    : `/api/${payload.animal}/create`
+
+  const res = await Post({ url, formData })
 
   return res
 }
 
-export const editAnimalHandler = async (
-  payload: IAnimal & IAnimalProps & { uid: string }
-) => {
-  return
+const editAnimalHandler = async (payload: IPayload) => {
+  const formData = new FormData()
+
+  for (let value in payload) {
+    formData.append(value, payload[value])
+  }
+
+  formData.set('files', payload.files[0])
+  formData.append('created_by', payload.uid!)
+  formData.append('formType', 'edit')
+
+  const res = await fetch('/api/animal', {
+    method: 'post',
+    body: formData,
+  })
+
+  const data = await res.json()
+
+  return data
 }
 
-export const deleteAnimalHandler = async (payload: string) => {
-  return
+const deleteAnimalHandler = async (payload: IPayload) => {
+  const res = await Delete(
+    `/api/${payload.animal}/delete/${payload.eartag_code}`
+  )
+  console.log(res)
+
+  return res
 }
 
-export const addCempekHandler = async (
-  payload: ICempek & IAnimalProps & { uid: string }
-) => {
-  return
-}
-
-export const editCempekHandler = async (
-  payload: ICempek & IAnimalProps & { uid: string }
-) => {
-  return
-}
-
-export const deleteCempekHandler = async (payload: string) => {
-  return
-}
+export { addAnimalHandler, editAnimalHandler, deleteAnimalHandler }
 
 export const animalTitle = (payload: string) => {
   return payload === 'goat' ? 'Kambing' : payload === 'sheep' ? 'Domba' : 'Sapi'
 }
 
 export const genderTitle = (payload: string) => {
-  return payload === 'male' ? 'Pejantan' : 'Betina'
+  return payload === 'true' ? 'Pejantan' : 'Betina'
 }
 
-export const cempekTColumns = [
+export const cempekTColumns: ColumnDef<any, any>[] = [
   {
     header: 'Tgl Lahir',
     accessorKey: 'birth_date',
-    cell: (data: any) => longDateFormatter(new Date(data.getValue())),
+    cell: (data) => longDateFormatter(new Date(data.getValue())),
   },
   {
     header: 'No Eartag',
@@ -81,7 +81,7 @@ export const cempekTColumns = [
   {
     header: 'Jenis Kelamin',
     accessorKey: 'gender',
-    cell: (data: any) => (data.getValue() ? 'male' : 'female'),
+    cell: (data) => (data.getValue() ? 'jantan' : 'betina'),
   },
   {
     header: 'Berat',
@@ -105,11 +105,11 @@ export const cempekTColumns = [
   },
 ]
 
-export const animalTColumns = [
+export const animalTColumns: ColumnDef<any, any>[] = [
   {
     header: 'Tgl Tiba',
     accessorKey: 'arrival_date',
-    cell: (data: any) => longDateFormatter(new Date(data.getValue())),
+    cell: (data) => longDateFormatter(new Date(data.getValue())),
   },
   {
     header: 'No Eartag',
@@ -142,6 +142,6 @@ export const animalTColumns = [
   {
     header: 'Harga Beli',
     accessorKey: 'purchase_price',
-    cell: (data: any) => formatRupiah(data.getValue().toString()),
+    cell: (data) => formatRupiah(data.getValue()),
   },
 ]
