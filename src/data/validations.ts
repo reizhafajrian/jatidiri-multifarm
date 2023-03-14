@@ -54,12 +54,12 @@ export const cempekSchema = Yup.object().shape({
 })
 
 export const shedSchema = Yup.object().shape({
-  shed_code: Yup.string().required(isEmptyMsg),
+  // shed_code: Yup.string().required(isEmptyMsg),
   animal_type: Yup.string().required(isEmptyMsg),
-  animal_weight: Yup.number().required(isEmptyMsg),
-  feed: Yup.string().required(isEmptyMsg),
-  feed_weight: Yup.number().required(isEmptyMsg),
-  age_range: Yup.string().required(isEmptyMsg),
+  // animal_weight: Yup.number().required(isEmptyMsg),
+  // feed: Yup.string().required(isEmptyMsg),
+  // feed_weight: Yup.number().required(isEmptyMsg),
+  // age_range: Yup.string().required(isEmptyMsg),
   description: Yup.string(),
 })
 

@@ -32,7 +32,7 @@ export default function AnimalForm(props: IProps) {
 
   const onSubmit = async (values: any) => {
     let res
-
+    console.log({ values })
     if (formType == 'add') {
       res = await store.addAnimal({
         ...values,

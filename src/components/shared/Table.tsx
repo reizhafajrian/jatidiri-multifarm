@@ -5,7 +5,7 @@ import {
   getSortedRowModel,
   SortingState,
   useReactTable,
-  VisibilityState,
+  VisibilityState
 } from '@tanstack/react-table'
 import clsx from 'clsx'
 import { useMemo, useState } from 'react'

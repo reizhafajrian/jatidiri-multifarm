@@ -15,7 +15,6 @@ interface IState {
   shed_code: string
   shed: IShed
   shedDetail: IShedDetail
-
   addShed: (payload: IShed & { uid: string }) => Promise<void>
   addShedDetail: (payload: IShedDetail & { uid: string }) => Promise<void>
   addShedAnimal: (payload: IShedAnimal & { uid: string }) => Promise<void>
@@ -23,11 +22,11 @@ interface IState {
 
 interface IShed {
   shed_code: string
-  animal_type: string
-  animal_weight: string
-  feed: string
-  feed_weight: number
-  age_range: string
+  // animal_type: string
+  // animal_weight: string
+  // feed: string
+  // feed_weight: number
+  // age_range: string
   description: string
 }
 
