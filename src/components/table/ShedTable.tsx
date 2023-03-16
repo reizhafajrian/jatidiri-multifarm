@@ -1,16 +1,18 @@
 'use client'
 import { Button, Table } from '@/components/shared'
-import { IShed } from '@/store/shed'
+import useDataList from '@/hooks/useDataList'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC } from 'react'
 
 interface ShedTableProps {
-  data: IShed[]
+  animal?: 'goat' | 'sheep' | 'cow'
 }
 
-const ShedTable: FC<ShedTableProps> = ({ data }) => {
+const ShedTable: FC<ShedTableProps> = ({ animal }) => {
   const router = useRouter()
   const pathname = usePathname()
+
+  const { data, loading } = useDataList('/api/shed/get')
 
   const columns = [
     { header: 'No Kandang', accessorKey: 'shed_code' },
@@ -18,7 +20,7 @@ const ShedTable: FC<ShedTableProps> = ({ data }) => {
     { header: 'Keterangan', accessorKey: 'description' },
     {
       header: 'Aksi',
-      accessorKey: 'shed_code',
+      accessorKey: '_id',
       cell: (data: any) => (
         <Button
           size="sm"
@@ -31,7 +33,9 @@ const ShedTable: FC<ShedTableProps> = ({ data }) => {
     },
   ]
 
-  return <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+  return (
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+  )
 }
 
 export default ShedTable

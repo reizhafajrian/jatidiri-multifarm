@@ -9,7 +9,7 @@ import { Button, Table } from '../shared'
 import { toast } from '../shared/Toast'
 
 interface AnimalTableProps {
-  animal?: 'goat' | 'sheep' | 'cow'
+  animal?: string
   type: string
 }
 
@@ -17,6 +17,7 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
   const isCempek = type === 'cempek'
   const [isOpen, closeModal] = useState(false)
+
   const { origin_female, origin_male, ...a } = useAnimalStore()
 
   const queries = []
@@ -24,7 +25,7 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   origin_male !== 'all' && queries.push('origin_male=' + origin_male)
   origin_female !== 'all' && queries.push('origin_female=' + origin_female)
 
-  const { data, loading } = useDataList(
+  const { data, loading, mutate } = useDataList(
     isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
     queries
   )
@@ -36,14 +37,17 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
         eartag_code: a.eartag_code,
       })
 
-      toast({
-        type: 'success',
-        message: res.message,
-      })
-
-      router.refresh()
+      if (res.status === 201) {
+        toast({
+          type: 'success',
+          message: res.message,
+        })
+        mutate()
+      }
     } catch (e) {
       console.log(e)
+    } finally {
+      closeModal(false)
     }
   }
 

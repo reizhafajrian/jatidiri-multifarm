@@ -1,5 +1,9 @@
 import { create } from 'zustand'
-import { addCategoryHandler, editCategoryHandler } from './handler'
+import {
+  addCategoryHandler,
+  deleteCategoryHandler,
+  editCategoryHandler,
+} from './handlers'
 
 export const useCategoryStore = create<IState>((set) => ({
   formValues: {} as ICategory,
@@ -14,10 +18,12 @@ export const useCategoryStore = create<IState>((set) => ({
   anthelminticList: [],
   addCategory: addCategoryHandler,
   editCategory: editCategoryHandler,
+  deleteCategory: deleteCategoryHandler,
 }))
 
 interface IState {
   formValues: ICategory
+
   feed: IFeed
   feedInfo: IFeedInfo
   feedList: IFeed[]
@@ -27,18 +33,19 @@ interface IState {
   anthelmintic: IAnthelmintic
   anthelminticInfo: IAnthelminticInfo
   anthelminticList: IAnthelmintic[]
-  addCategory: (
-    payload: (IFeed | IVitamin | IAnthelmintic) & { uid: string }
-  ) => Promise<void>
-  editCategory: (
-    payload: (IFeed | IVitamin | IAnthelmintic) & { uid: string }
-  ) => Promise<void>
+
+  addCategory: (payload: ICategory) => Promise<any>
+  editCategory: (payload: ICategory) => Promise<any>
+  deleteCategory: (payload: ICategory) => Promise<any>
 }
 
 interface ICategory {
-  type: string
-  stock: number
-  price: number
+  _id?: string
+  category?: string
+  created_by?: string
+  type?: string
+  stock?: number
+  price?: number
 }
 
 interface IFeed {

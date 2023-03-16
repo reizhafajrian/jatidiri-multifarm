@@ -1,21 +1,28 @@
 'use client'
-import { signinSchema } from '@/data/validations'
+import { Button, Form, InputText, toast } from '@/components/shared'
+import { signinSchema } from '@/lib/schemas'
 import { IUser } from '@/store/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Field } from '../shared'
-import Form from '../shared/Form'
-import { toast } from '../shared/Toast'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function SignInForm() {
   const router = useRouter()
 
-  const onSubmit = async (values: IUser) => {
+  const methods = useForm<IUser>({
+    resolver: zodResolver(signinSchema),
+  })
+
+  const onSubmit: SubmitHandler<IUser> = async (data) => {
     const res = await fetch('/api/signin', {
-      method: 'post',
-      body: JSON.stringify(values),
+      method: 'POST',
+      body: JSON.stringify(data),
     })
 
-    if (res.status === 200) return router.push('/dashboard')
+    if (res.status === 200) {
+      methods.reset()
+      return router.push('/dashboard')
+    }
 
     toast({
       type: 'error',
@@ -24,17 +31,24 @@ export default function SignInForm() {
   }
 
   return (
-    <Form schema={signinSchema} onSubmit={onSubmit} className="space-y-4">
-      <Field type="input" name="email" label="Email" />
-      <Field type="input" name="password" label="Password" isSecured />
+    <Form onSubmit={onSubmit} methods={methods} className="space-y-4">
+      <InputText name="email" label="Email" />
+      <InputText name="password" label="Password" isSecured />
       <div className="grid gap-8">
         <button
+          type="button"
           className="ml-auto text-base font-medium"
           onClick={() => router.replace('/signin')}
         >
           Forgot Password?
         </button>
-        <Field type="submit" label="signin" className="min-w-full" />
+        <Button
+          type="submit"
+          className="w-full"
+          isLoading={methods.formState.isSubmitting}
+        >
+          SIGNIN
+        </Button>
       </div>
     </Form>
   )

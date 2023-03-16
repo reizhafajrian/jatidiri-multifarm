@@ -1,10 +1,12 @@
 'use client'
+import useDataList from '@/hooks/useDataList'
+import { Delete } from '@/lib/api'
 import { formatRupiah } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC, useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import EditCategoryForm from '../form/EditCategoryForm'
-import { Button, Table } from '../shared'
+import { Button, Table, toast } from '../shared'
 
 const categoryTitle = (category: string) =>
   category === 'feed'
@@ -20,13 +22,30 @@ interface CategoryTableProps {
   data: any
 }
 
-const CategoryTable: FC<CategoryTableProps> = ({ category, data }) => {
+const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
   const [isOpenEdit, closeModalEdit] = useState(false)
   const [isOpenDelete, closeModalDelete] = useState(false)
   const [id, setId] = useState('')
 
-  const deleteHandler = () => {
-    console.log(id)
+  const { data, loading, mutate } = useDataList(`/api/${category}/get`)
+
+  const deleteHandler = async () => {
+    try {
+      const url = `/api/${category}/delete/${id}`
+      const res = await Delete(url)
+
+      if (res.status === 201) {
+        toast({
+          type: 'success',
+          message: res.message,
+        })
+        mutate()
+      }
+    } catch (e) {
+      console.log(e)
+    } finally {
+      closeModalDelete(false)
+    }
   }
 
   const columns: ColumnDef<any, any>[] = [
@@ -35,12 +54,12 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data }) => {
     { header: 'Stock', accessorKey: `${category}_stock` },
     {
       header: `Harga ${categoryTitle(category)}`,
-      accessorKey: `${category}_price`,
+      accessorKey: `${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`,
       cell: (data) => formatRupiah(data.getValue()),
     },
     {
       header: 'Aksi',
-      accessorKey: `${category}_type`,
+      accessorKey: `_id`,
       cell: (data: any) => (
         <div className="flex gap-2">
           <Button
@@ -78,7 +97,7 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data }) => {
         desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
         deleteHandler={deleteHandler}
       />
-      <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+      <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
     </>
   )
 }

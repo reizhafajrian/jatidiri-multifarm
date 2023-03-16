@@ -2,25 +2,22 @@ import MilkFilter from '@/components/filter/MilkFilter'
 import MilkHeader from '@/components/layout/MilkHeader'
 import MilkCardList from '@/components/list/MilkCardList'
 import MilkTable from '@/components/table/MilkTable'
-import { milkData } from '@/data/dummy'
 import { use } from 'react'
 
 export default function MilkPage() {
-  const { milkInfo, milkData } = use(getData())
+  const { milkInfo } = use(getData())
 
   return (
     <main>
       <MilkHeader />
       <MilkFilter />
       <MilkCardList info={milkInfo} />
-      <MilkTable data={milkData} />
+      <MilkTable />
     </main>
   )
 }
 
 const getData = async () => {
-  // return await Get(`endpoint`)
-
   const milkInfo = {
     income_total: 1250000,
     income_date: new Date(),
@@ -32,6 +29,5 @@ const getData = async () => {
 
   return {
     milkInfo,
-    milkData,
   }
 }

@@ -1,43 +1,45 @@
 'use client'
-import { Table } from '@/components/shared'
+import useDataList from '@/hooks/useDataList'
 import { longDateFormatter } from '@/lib/utils'
-import { IShedDetail } from '@/store/shed'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
+import { Table } from '../shared'
 
 interface ShedInfoTableProps {
-  data: IShedDetail[]
+  shed_code: string
 }
 
-const ShedInfoTable: FC<ShedInfoTableProps> = ({ data }) => {
+const ShedInfoTable: FC<ShedInfoTableProps> = ({ shed_code }) => {
+  const { data, loading } = useDataList(`shed/data/get?shed_code=${shed_code}`)
+
   const columns: ColumnDef<any, any>[] = [
     {
       header: 'Tgl Update Data',
-      accessorKey: 'updatedAt',
+      accessorKey: 'updated_at',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Pakan', accessorKey: 'feed_type' },
+    { header: 'Pakan', accessorKey: 'data_feed_type' },
     {
       header: 'Tgl Pakan',
-      accessorKey: 'feed_date',
+      accessorKey: 'data_feed_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Vitamin', accessorKey: 'vitamin_type' },
+    { header: 'Vitamin', accessorKey: 'data_vitamin_type' },
     {
       header: 'Tgl Vitamin',
-      accessorKey: 'vitamin_date',
+      accessorKey: 'data_vitamin_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Vaksin', accessorKey: 'vaccine_type' },
+    { header: 'Vaksin', accessorKey: 'data_vaccine_type' },
     {
       header: 'Tgl Vaksin',
-      accessorKey: 'vaccine_date',
+      accessorKey: 'data_vaccine_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Obat Cacing', accessorKey: 'anthelmintic_type' },
+    { header: 'Obat Cacing', accessorKey: 'data_anthelmintic_type' },
     {
       header: 'Tgl Obat Cacing',
-      accessorKey: 'anthelmintic_date',
+      accessorKey: 'data_anthelmintic_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
     //   {
@@ -46,7 +48,9 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ data }) => {
     //   },
   ]
 
-  return <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+  return (
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+  )
 }
 
 export default ShedInfoTable

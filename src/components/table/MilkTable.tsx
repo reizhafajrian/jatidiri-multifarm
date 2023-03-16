@@ -1,5 +1,5 @@
 'use client'
-import { IMilk } from '@/store/milk'
+import useDataList from '@/hooks/useDataList'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC, useState } from 'react'
 import MilkForm from '../form/MilkForm'
@@ -11,11 +11,9 @@ const statusOptions = [
   { name: 'Non-Aktif', value: 'non-active', bgColor: 'bg-[#FFE2DC]' },
 ]
 
-interface MilkTableProps {
-  data: IMilk[]
-}
+interface MilkTableProps {}
 
-const MilkTable: FC<MilkTableProps> = ({ data }) => {
+const MilkTable: FC<MilkTableProps> = ({}) => {
   const [isOpen, closeModal] = useState(false)
   const [eartagCode, setEartagCode] = useState('')
   // const [status, setStatus] = useState(statusOptions[0])
@@ -29,20 +27,22 @@ const MilkTable: FC<MilkTableProps> = ({ data }) => {
     closeModal(true)
   }
 
+  const { data, loading, mutate } = useDataList('/api/milk/get')
+
   const columns: ColumnDef<any, any>[] = [
-    { header: 'No Eartag', accessorKey: 'eartag_code' },
-    { header: 'Jenis', accessorKey: 'type' },
-    { header: 'Asal', accessorKey: 'origin' },
-    { header: 'Berat', accessorKey: 'weight' },
-    { header: 'Usia', accessorKey: 'age' },
+    { header: 'No Eartag', accessorKey: 'animal_id.eartag_code' },
+    { header: 'Jenis', accessorKey: 'animal_id.type' },
+    { header: 'Asal', accessorKey: 'animal_id.origin' },
+    { header: 'Berat', accessorKey: 'animal_id.weight' },
+    { header: 'Usia', accessorKey: 'animal_id.age' },
     {
       header: 'Susu',
-      accessorKey: 'milk',
+      accessorKey: 'amount',
       cell: (data) => `${data.getValue() !== 0 ? data.getValue() + ' L' : '0'}`,
     },
     {
       header: 'Status',
-      accessorKey: 'status.value',
+      accessorKey: 'animal_id.status',
       cell: (data) => (
         <SelectTable
           value={data.getValue()}
@@ -74,7 +74,7 @@ const MilkTable: FC<MilkTableProps> = ({ data }) => {
         closeModal={closeModal}
         eartag_code={eartagCode}
       />
-      <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+      <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
     </>
   )
 }

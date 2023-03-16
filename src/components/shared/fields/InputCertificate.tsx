@@ -1,30 +1,27 @@
-'use client'
-import clsx from 'clsx'
-import { Field, useField, useFormikContext } from 'formik'
+import { cn } from '@/lib/utils'
+import { File } from 'lucide-react'
+import { FC } from 'react'
 import { useDropzone } from 'react-dropzone'
-import { Close, File, FileSmall } from './Icons'
+import { useController, useFormContext } from 'react-hook-form'
+import { Close, FileSmall } from '../Icons'
 
-interface IProps {
+interface InputCertificateProps {
   name: string
   label: string
 }
 
-export default function Dropzone(props: IProps) {
-  const { label, name, ...rest } = props
-  const [field] = useField({ name })
+const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
+  const {
+    control,
+    formState: { errors, isSubmitting },
+  } = useFormContext()
 
-  return <Field label={label} as={DropzoneBox} {...field} {...rest} />
-}
-
-const DropzoneBox = (props: IProps) => {
-  const { label, name } = props
-  const [field, meta] = useField({ name })
-  const { isSubmitting } = useFormikContext()
+  const { field } = useController({ name, control })
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
     onDrop: (acceptedFiles) => {
-      field.onChange({ target: { value: acceptedFiles, name } })
+      field.onChange(acceptedFiles)
     },
   })
 
@@ -32,9 +29,9 @@ const DropzoneBox = (props: IProps) => {
     <div className="space-y-3">
       <div>
         <input
-          className={clsx(
+          className={cn(
             'w-full appearance-none rounded-lg border px-2.5 py-2.5 text-sm',
-            meta.error
+            errors[name]
               ? 'border-error text-error disabled:border-error'
               : 'border-neutral-4 text-neutral-4 disabled:border-neutral-3',
             isSubmitting
@@ -44,14 +41,15 @@ const DropzoneBox = (props: IProps) => {
           value={label}
           disabled
         />
-        {(meta.touched || meta.error) && (
-          <span className="text-[10px] text-error">{meta.error}</span>
-        )}
+        <span className="text-[10px] text-error">
+          {errors[name]?.message?.toString()}
+        </span>
 
         {field.value && (
           <div className="mt-2 flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
             <div className="flex gap-3">
               <FileSmall />
+              <File />
               <div>
                 <p className="mb-1 font-semibold">{field.value[0].path}</p>
                 <p className="text-xs text-neutral-4">
@@ -59,11 +57,7 @@ const DropzoneBox = (props: IProps) => {
                 </p>
               </div>
             </div>
-            <button
-              onClick={() =>
-                field.onChange({ target: { value: undefined, name } })
-              }
-            >
+            <button onClick={() => field.onChange(undefined)}>
               <Close />
             </button>
           </div>
@@ -91,3 +85,5 @@ const DropzoneBox = (props: IProps) => {
     </div>
   )
 }
+
+export default InputCertificate

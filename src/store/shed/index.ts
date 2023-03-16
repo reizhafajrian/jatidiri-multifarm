@@ -16,36 +16,42 @@ interface IState {
   shed: IShed
   shedDetail: IShedDetail
 
-  addShed: (payload: IShed & { uid: string }) => Promise<void>
-  addShedDetail: (payload: IShedDetail & { uid: string }) => Promise<void>
+  addShed: (payload: IShed) => Promise<any>
+  addShedDetail: (payload: IShedDetail) => Promise<any>
   addShedAnimal: (payload: IShedAnimal & { uid: string }) => Promise<void>
 }
 
 interface IShed {
-  shed_code: string
-  animal_type: string
-  animal_weight: string
-  feed: string
-  feed_weight: number
-  age_range: string
-  description: string
+  _id?: string
+  shed_code?: string
+  animal_type?: string
+  animal_weight?: string
+  feed?: string
+  feed_weight?: number
+  age_range?: string
+  description?: string
+  created_by?: string
 }
 
 interface IShedDetail {
-  updatedAt?: Date
-  feed_date?: Date
-  feed_type?: string
-  feed_price?: number
-  feed_stock?: number
-  vitamin_date?: Date
-  vitamin_type?: string
-  vitamin_price?: number
-  vaccine_date?: Date
-  vaccine_type?: string
-  vaccine_price?: number
-  anthelmintic_date?: Date
-  anthelmintic_type?: string
-  anthelmintic_price?: number
+  _id?: string
+  updated_at?: Date
+  shed_code?: string
+  created_by?: string
+
+  data_feed_date?: Date
+  data_feed_type?: string
+  data_feed_price?: number
+  data_feed_stock?: number
+  data_vitamin_date?: Date
+  data_vitamin_type?: string
+  data_vitamin_price?: number
+  data_vaccine_date?: Date
+  data_vaccine_type?: string
+  data_vaccine_price?: number
+  data_anthelmintic_date?: Date
+  data_anthelmintic_type?: string
+  data_anthelmintic_price?: number
 }
 
 interface IShedAnimal {

@@ -1,45 +1,59 @@
 'use client'
-import { Field, Form, InputRadio } from '@/components/shared'
-import { shedSchema as schema } from '@/data/validations'
+import {
+  Button,
+  Form,
+  InputRadio,
+  InputSelect,
+  InputText,
+  toast
+} from '@/components/shared'
+import { shedSchema } from '@/lib/schemas'
 import { useAuthStore } from '@/store/auth'
 import { IShed, useShedStore } from '@/store/shed'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-
-const animal_types = [
-  { value: 'goat', label: 'Kambing' },
-  { value: 'sheep', label: 'Domba' },
-  { value: 'cow', label: 'Sapi' },
-]
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 export default function ShedForm() {
   const router = useRouter()
   const { user } = useAuthStore()
-  const { shed, addShed } = useShedStore()
+  const { addShed } = useShedStore()
 
-  const onSubmit = async (values: IShed) => {
-    console.log(values)
+  const methods = useForm<IShed>({
+    resolver: zodResolver(shedSchema),
+  })
 
-    // try {
-    //   const res = await addShed({
-    //     ...values,
-    //     uid: user.id!,
-    //   })
-    //   if (res.status === 201) {
-    //     toast.success(res.message)
-    //     router.replace(`/${animal_type}`)
-    //   } else {
-    //     toast.error(res.errors[0].msg)
-    //   }
-    // } catch (e: any) {
-    //   toast.error(e.message)
-    // }
+  const onSubmit: SubmitHandler<IShed> = async (values) => {
+    const res = await addShed(values)
+
+    if (res.errors) {
+      return toast({
+        type: 'error',
+        message: res.errors[0].msg,
+      })
+    }
+
+    toast({
+      type: 'success',
+      message: res.message,
+    })
+
+    router.replace(`/shed/goat`)
   }
 
   return (
-    <Form schema={schema} onSubmit={onSubmit}>
+    <Form
+      onSubmit={(values) => onSubmit({ ...values, created_by: user.id })}
+      methods={methods}
+      className="space-y-4"
+    >
       <h1 className="mb-5 text-base font-semibold">Tambah Data Kandang</h1>
       <div className="mb-6 flex items-center gap-4">
-        {animal_types.map((item, idx) => (
+        {[
+          { value: 'goat', label: 'Kambing' },
+          { value: 'sheep', label: 'Domba' },
+          { value: 'cow', label: 'Sapi' },
+        ].map((item, idx) => (
           <InputRadio
             key={idx}
             label={item.label}
@@ -50,9 +64,8 @@ export default function ShedForm() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
-          <Field type="input" name="shed_code" label="No Kandang" />
-          <Field
-            type="select"
+          <InputText name="shed_code" label="No Kandang" />
+          <InputSelect
             name="feed"
             label="Pakan"
             options={[
@@ -61,16 +74,31 @@ export default function ShedForm() {
               { name: 'opt-3', value: 'opt-3' },
             ]}
           />
-          <Field type="input" name="age_range" label="Range Usia" />
+          <InputText name="age_range" label="Range Usia" />
         </div>
         <div className="space-y-6">
-          <Field type="input" name="animal_weight" label="Berat Hewan" />
-          <Field type="input" name="feed_weight" label="Berat Pakan" />
-          <Field type="input" name="description" label="Keterangan" />
+          <InputText name="animal_weight" label="Berat Hewan" />
+          <InputText name="feed_weight" label="Berat Pakan" />
+          <InputText name="description" label="Keterangan" />
         </div>
       </div>
       <div className="mt-28 flex justify-end gap-3">
-        <Field type="submit" cancelHandler={() => router.back()} />
+        <Button
+          type="button"
+          variant="outline"
+          className="w-36"
+          onClick={() => router.back()}
+          disabled={methods.formState.isSubmitting}
+        >
+          CANCEL
+        </Button>
+        <Button
+          type="submit"
+          className="w-36"
+          isLoading={methods.formState.isSubmitting}
+        >
+          SAVE
+        </Button>
       </div>
     </Form>
   )

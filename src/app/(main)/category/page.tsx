@@ -2,6 +2,10 @@ import CategoryContent from '@/components/layout/CategoryContent'
 import CategoryHeader from '@/components/layout/CategoryHeader'
 import { StoreInitializer } from '@/components/shared'
 
+export const metadata = {
+  title: 'Jatidiri Multifarm | Category',
+}
+
 export default function CategoryPage() {
   return (
     <>

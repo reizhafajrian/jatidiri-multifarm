@@ -17,14 +17,14 @@ export const useAnimalStore = create<IState>((set, get) => ({
 
 // INTERFACES
 interface IState {
-  addAnimal: (payload: IPayload) => Promise<any>
-  editAnimal: (payload: IPayload) => Promise<any>
-  deleteAnimal: (payload: IPayload) => Promise<any>
+  addAnimal: (payload: IAnimal) => Promise<any>
+  editAnimal: (payload: IAnimal) => Promise<any>
+  deleteAnimal: (payload: IAnimal) => Promise<any>
   animalTColumns: any
   cempekTColumns: any
 
-  animal?: 'goat' | 'sheep' | 'cow'
-  type?: 'cempek' | 'male' | 'female'
+  // animal?: 'goat' | 'sheep' | 'cow'
+  // type?: 'cempek' | 'male' | 'female'
   eartag_code: string
   origin_male: string
   origin_female: string
@@ -32,19 +32,14 @@ interface IState {
   genderTitle: (payload: string) => string
 }
 
-interface IPayload extends IAnimal, IAnimalProps {
-  uid?: string
-}
-
-interface IAnimalProps {
-  animal?: 'goat' | 'sheep' | 'cow'
-  type?: 'cempek' | 'male' | 'female'
-}
-
 interface IAnimal {
+  animal?: string
+
   _id?: string
+  type?: string
   eartag_code?: string
-  cempek?: 'true' | 'false'
+  // cempek?: 'true' | 'false'
+  cempek?: string
   arrival_date?: Date
   birth_date?: Date
   origin_female?: string
@@ -55,8 +50,10 @@ interface IAnimal {
   files?: any
   birth_weight?: number
   birth_condition?: string
-  gender?: 'true' | 'false'
+  // gender?: 'true' | 'false'
+  gender?: string
   description?: string
+  created_by?: string
 }
 
-export type { IState, IAnimalProps, IAnimal, IPayload }
+export type { IState, IAnimal }
