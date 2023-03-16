@@ -1,7 +1,7 @@
-import { DownloadCloud } from 'lucide-react'
+import DashboardFilter from '@/components/filter/DashboardFilter'
+import { Button } from '@/components/shared'
+import { DownloadCloud } from '@/components/shared/Icons'
 import { FC } from 'react'
-import DashboardFilter from '../filter/DashboardFilter'
-import { Button } from '../shared'
 
 interface DashboardHeaderProps {}
 

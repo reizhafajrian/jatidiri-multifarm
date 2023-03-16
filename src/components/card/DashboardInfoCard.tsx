@@ -1,7 +1,7 @@
+import { ArrowUp } from '@/components/shared/Icons'
 import { formatRupiah } from '@/lib/utils'
 import { FC } from 'react'
 import { Card } from '../shared'
-import { ArrowSmallUp } from '../shared/Icons'
 
 interface DashboardInfoCardProps {
   data: {
@@ -21,7 +21,7 @@ const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
         <p className="text-[32px] font-semibold">{formatRupiah(data.value)}</p>
       </div>
       <p className="mt-auto ml-auto flex items-center gap-1 rounded-xl bg-success-3 py-[2px] px-[10px]">
-        <ArrowSmallUp className="fill-success-1" />
+        <ArrowUp className="w-3 stroke-success-1" />
         <span className="text-xs font-medium text-success-2">
           {data.percentage} %
         </span>

@@ -1,20 +1,34 @@
 'use client'
-import { Field, Form, Modal } from '@/components/shared'
-import { IModal } from '@/data/interfaces'
-import { shedAnimalSchema as schema } from '@/data/validations'
+import {
+  Button,
+  Form,
+  InputSelect,
+  InputText,
+  Modal,
+} from '@/components/shared'
+import { shedSchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { useAnimalStore } from '@/store/animal'
 import { IShedAnimal, useShedStore } from '@/store/shed'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-export default function ShedAnimalForm(
-  props: IModal & { animal_type: string }
-) {
-  const { isOpen, closeModal, animal_type } = props
+interface IProps extends IModal {
+  animal: string
+}
+
+const ShedAnimalForm: FC<IProps> = ({ animal, closeModal, isOpen }) => {
   const { animalTitle } = useAnimalStore()
   const { addShedAnimal } = useShedStore()
-  const title = animalTitle(animal_type)
+  const title = animalTitle(animal)
 
-  const onSubmit = async (values: IShedAnimal) => {
-    // await addShedAnimal({...values})
+  const methods = useForm<IShedAnimal>({
+    resolver: zodResolver(shedSchema),
+  })
+
+  const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
+    await addShedAnimal(values)
   }
 
   const codeOptions = [
@@ -27,20 +41,36 @@ export default function ShedAnimalForm(
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
       <h1 className="mb-6 text-xl font-semibold">Tambah Data {title}</h1>
-      <Form schema={schema} onSubmit={onSubmit}>
+      <Form methods={methods} onSubmit={onSubmit}>
         <div className="mb-8 space-y-6">
-          <Field
-            type="select"
+          <InputSelect
             name="eartag_code"
             label="No Eartag"
             options={codeOptions}
           />
-          <Field type="input" name="description" label="Keterangan" />
+          <InputText name="description" label="Keterangan" />
         </div>
         <div className="flex justify-end gap-3">
-          <Field type="submit" cancelHandler={() => closeModal(false)} />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-36"
+            onClick={() => closeModal(false)}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            className="w-36"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </Form>
     </Modal>
   )
 }
+
+export default ShedAnimalForm

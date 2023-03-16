@@ -10,7 +10,7 @@ export default function BackLink({ href }: { href?: string }) {
       onClick={() => (href ? router.replace(href) : router.back())}
       className="mb-4 flex items-center gap-2 text-xs font-semibold uppercase text-primary-7"
     >
-      <ArrowLeft />
+      <ArrowLeft className="w-4" />
       <span>kembali</span>
     </button>
   )

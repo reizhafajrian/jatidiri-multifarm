@@ -1,20 +1,16 @@
 'use client'
-import { IAnimal, IAnimalProps, useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
 import * as cat from '@/store/category'
-import { IHpp, useHppStore } from '@/store/hpp'
-import { IMilk, IMilkInfo, useMilkStore } from '@/store/milk'
-import { IShed, useShedStore } from '@/store/shed'
 import { useEffect } from 'react'
 
 interface IData {
   data: {
-    animal?: IAnimalState & IAnimalProps
-    shed?: IShedState
-    category?: ICategoryState
-    milk?: IMilkState
-    hpp?: IHppState
     token?: string
+    category?: ICategoryState
+    // animal?: IAnimalState
+    // shed?: IShedState
+    // milk?: IMilkState
+    // hpp?: IHppState
   }
 }
 
@@ -24,15 +20,15 @@ export default function StoreInitializer({ data }: IData) {
       useAuthStore.setState({ token: data.token })
     }
 
-    if (data.animal) {
-      const a = data.animal
-      useAnimalStore.setState({ animal: a.animal, type: a.type })
-    }
+    // if (data.animal) {
+    //   const a = data.animal
+    //   useAnimalStore.setState({ animal: a.animal, type: a.type })
+    // }
 
-    if (data.shed) {
-      const { shed_code, shed } = data.shed
-      useShedStore.setState({ shed_code, shed })
-    }
+    // if (data.shed) {
+    //   const { shed_code, shed } = data.shed
+    //   useShedStore.setState({ shed_code, shed })
+    // }
 
     if (data.category) {
       const { category: c } = data
@@ -50,29 +46,29 @@ export default function StoreInitializer({ data }: IData) {
       })
     }
 
-    if (data.milk) {
-      const { milk, milkList, milkInfo } = data.milk
-      useMilkStore.setState({ milk, milkList, milkInfo })
-    }
+    // if (data.milk) {
+    //   const { milk, milkList, milkInfo } = data.milk
+    //   useMilkStore.setState({ milk, milkList, milkInfo })
+    // }
 
-    if (data.hpp) {
-      const { hpp, hppList } = data.hpp
-      useHppStore.setState({ hpp, hppList })
-    }
-  }, [JSON.stringify(data)])
+    // if (data.hpp) {
+    //   const { hpp, hppList } = data.hpp
+    //   useHppStore.setState({ hpp, hppList })
+    // }
+  }, [data])
 
   return null
 }
 
-interface IAnimalState {
-  type?: string
-  animal?: IAnimal
-}
+// interface IAnimalState {
+//   type?: string
+//   animal?: IAnimal
+// }
 
-interface IShedState {
-  shed_code?: string
-  shed?: IShed
-}
+// interface IShedState {
+//   shed_code?: string
+//   shed?: IShed
+// }
 
 interface ICategoryState {
   feed?: cat.IFeed
@@ -86,13 +82,13 @@ interface ICategoryState {
   anthelminticInfo?: cat.IAnthelminticInfo
 }
 
-interface IMilkState {
-  milk?: IMilk
-  milkInfo?: IMilkInfo
-  milkList?: IMilk[]
-}
+// interface IMilkState {
+//   milk?: IMilk
+//   milkInfo?: IMilkInfo
+//   milkList?: IMilk[]
+// }
 
-interface IHppState {
-  hpp?: IHpp
-  hppList?: IHpp[]
-}
+// interface IHppState {
+//   hpp?: IHpp
+//   hppList?: IHpp[]
+// }

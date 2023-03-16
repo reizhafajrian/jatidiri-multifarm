@@ -24,7 +24,7 @@ const ShedTable: FC<ShedTableProps> = ({ animal }) => {
       cell: (data: any) => (
         <Button
           size="sm"
-          className="w-fit rounded-[10px] px-3 py-1 capitalize"
+          className="text-xs capitalize"
           onClick={() => router.replace(`${pathname}/${data.getValue()}`)}
         >
           Detail

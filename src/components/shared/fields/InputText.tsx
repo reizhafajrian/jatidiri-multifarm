@@ -1,5 +1,5 @@
+import { Eye, EyeOff } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
-import { Eye, EyeOff } from 'lucide-react'
 import React, { FC } from 'react'
 import { useFormContext } from 'react-hook-form'
 
@@ -7,9 +7,15 @@ interface InputTextProps {
   name: string
   label: string
   isSecured?: boolean
+  disabled?: boolean
 }
 
-const InputText: FC<InputTextProps> = ({ name, label, isSecured }) => {
+const InputText: FC<InputTextProps> = ({
+  name,
+  label,
+  isSecured,
+  disabled,
+}) => {
   const [showPassword, setShowPassword] = React.useState(false)
   const {
     register,
@@ -29,7 +35,7 @@ const InputText: FC<InputTextProps> = ({ name, label, isSecured }) => {
               : 'border-neutral-4 focus:border-black'
           )}
           placeholder=" "
-          disabled={isSubmitting}
+          disabled={isSubmitting || disabled}
           {...register(name)}
         />
         <label
@@ -46,16 +52,26 @@ const InputText: FC<InputTextProps> = ({ name, label, isSecured }) => {
         {isSecured && (
           <button
             type="button"
-            className={cn('absolute inset-y-0 right-0 mr-4')}
+            className={
+              'group absolute inset-y-0 right-0 mr-4 focus:outline-none'
+            }
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? (
               <Eye
-                className={errors[name] ? 'stroke-error' : 'stroke-neutral-4'}
+                className={
+                  errors[name]
+                    ? 'stroke-error'
+                    : 'stroke-neutral-4 group-focus:stroke-primary-4'
+                }
               />
             ) : (
               <EyeOff
-                className={errors[name] ? 'stroke-error' : 'stroke-neutral-4'}
+                className={
+                  errors[name]
+                    ? 'stroke-error'
+                    : 'stroke-neutral-4 group-focus:stroke-primary-4'
+                }
               />
             )}
           </button>

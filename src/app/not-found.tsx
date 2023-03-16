@@ -15,7 +15,7 @@ export default function PageNotFound() {
         </p>
         <Link
           href="/dashboard"
-          // className={buttonVariants()}
+          className="flex w-fit items-center gap-3 border-2 px-3 py-2 "
         >
           <ArrowLeft />
           <p className="capitalize">Back to Dashboard</p>

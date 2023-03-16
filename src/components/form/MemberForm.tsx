@@ -1,41 +1,28 @@
-import { IModal } from '@/data/interfaces'
-import { memberSchema as schema } from '@/data/validations'
+import { X } from '@/components/shared/Icons'
+import { memberSchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { IUser, useAuthStore } from '@/store/auth'
-import { useRouter } from 'next/navigation'
-import { Field, Form, Modal } from '../shared'
-import { Close } from '../shared/Icons'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Form, InputSelect, InputText, Modal } from '../shared'
 
-interface IProps {
+interface IProps extends IModal {
   formType: 'add' | 'edit'
+  values?: IUser
 }
 
-export default function MemberForm(props: IProps & IModal) {
-  const router = useRouter()
-  const { formType, isOpen, closeModal } = props
+const MemberForm: FC<IProps> = ({ formType, closeModal, isOpen, values }) => {
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Member`
-
-  const roleOptions = [
-    { name: 'Admin', value: 'admin' },
-    { name: 'Super Admin', value: 'super-admin' },
-  ]
   const { user, addMember, editMember } = useAuthStore()
 
-  const onSubmit = async (values: IUser) => {
-    // if (formType == 'add') {
-    //   try {
-    //     await addMember(values)
-    //     router.refresh()
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // } else {
-    //   try {
-    //     await editMember(values)
-    //     router.refresh()
-    //   } catch (e) {
-    //     console.log(e)
-    //   }
-    // }
+  const methods = useForm<IUser>({
+    resolver: zodResolver(memberSchema),
+    defaultValues: formType == 'edit' ? values : {},
+  })
+
+  const onSubmit: SubmitHandler<IUser> = async (values) => {
+    console.log(values)
   }
 
   return (
@@ -43,29 +30,45 @@ export default function MemberForm(props: IProps & IModal) {
       <div className="mb-6 flex items-center justify-between">
         <h1 className="text-xl font-semibold">{title}</h1>
         <button onClick={() => closeModal(false)}>
-          <Close />
+          <X />
         </button>
       </div>
-      <Form
-        values={formType == 'edit' ? user : undefined}
-        schema={schema}
-        onSubmit={onSubmit}
-        className="mt-5 space-y-4"
-      >
-        <Field type="input" name="first_name" label="First Name" />
-        <Field type="input" name="last_name" label="Last Name" />
-        <Field type="input" name="email" label="Email" />
-        <Field type="input" name="phone_number" label="No Whatsapp" />
-        <Field type="select" name="role" label="Role" options={roleOptions} />
-        <Field type="input" isSecured name="password" label="Password" />
+
+      <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
+        <InputText name="first_name" label="First Name" />
+        <InputText name="last_name" label="Last Name" />
+        <InputText name="email" label="Email" />
+        <InputText name="phone_number" label="No Whatsapp" />
+        <InputSelect
+          name="role"
+          label="Role"
+          options={[
+            { name: 'Admin', value: 'admin' },
+            { name: 'Super Admin', value: 'super-admin' },
+          ]}
+        />
+        <InputText name="password" label="Password" isSecured />
         <div className="flex gap-3">
-          <Field
+          <Button
+            type="button"
+            variant="outline"
+            className="w-full"
+            onClick={() => closeModal(false)}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
             type="submit"
-            cancelHandler={() => closeModal(false)}
-            className="flex-1"
-          />
+            className="w-full"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </Form>
     </Modal>
   )
 }
+
+export default MemberForm

@@ -17,8 +17,6 @@ const addAnimalHandler = async (payload: IAnimal) => {
 
   if (!isCempek) formData.set('files', payload.files[0])
 
-  // formData.append('created_by', payload.uid!)
-
   const url = isCempek
     ? `/api/${payload.animal}/cempek/create`
     : `/api/${payload.animal}/create`

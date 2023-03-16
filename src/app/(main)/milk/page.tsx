@@ -4,6 +4,10 @@ import MilkCardList from '@/components/list/MilkCardList'
 import MilkTable from '@/components/table/MilkTable'
 import { use } from 'react'
 
+export const metadata = {
+  title: 'Jatidiri Multifarm | Milk',
+}
+
 export default function MilkPage() {
   const { milkInfo } = use(getData())
 

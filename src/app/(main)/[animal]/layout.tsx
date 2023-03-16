@@ -1,5 +1,5 @@
 import AnimalHeader from '@/components/layout/AnimalHeader'
-import { ILayoutProps } from '@/data/interfaces'
+import { ILayoutProps } from '@/lib/types'
 
 export default function AnimalLayout(props: ILayoutProps) {
   const { animal } = props.params

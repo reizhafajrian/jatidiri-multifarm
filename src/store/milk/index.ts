@@ -13,16 +13,18 @@ interface IState {
   milk: IMilk
   milkInfo: IMilkInfo
   milkList: IMilk[]
-  addMilk: (payload: IMilk & { uid: string }) => Promise<void>
-  editMilk: (payload: IMilk & { uid: string }) => Promise<void>
+  addMilk: (payload: IMilk) => Promise<any>
+  editMilk: (payload: IMilk) => Promise<any>
 }
 
 interface IMilk {
-  eartag_code: string
-  milk: number
-  milk_date: Date
+  _id?: string
+  eartag_code?: string
+  milk?: number
+  milk_date?: Date
   history_milk_date?: Date
   history_milk?: number
+  created_by?: string
 }
 
 interface IMilkInfo {

@@ -1,9 +1,4 @@
 'use client'
-import { getAnimalListOptions } from '@/data/data'
-import { shortDateFormatter } from '@/lib/utils'
-import { useAnimalStore } from '@/store/animal'
-import { FC, useState } from 'react'
-import ReactDatePicker from 'react-datepicker'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,9 +7,14 @@ import {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
-} from '../shared/DropdownMenu'
-import { ChevronDown } from '../shared/Icons'
-import SelectFilter from '../shared/SelectFilter'
+} from '@/components/shared/DropdownMenu'
+import { ChevronDown } from '@/components/shared/Icons'
+import SelectFilter from '@/components/shared/SelectFilter'
+import { getAnimalListOptions } from '@/lib/data'
+import { shortDateFormatter } from '@/lib/utils'
+import { useAnimalStore } from '@/store/animal'
+import { FC, useState } from 'react'
+import ReactDatePicker from 'react-datepicker'
 
 interface AnimalFilterProps {
   animal: string
@@ -61,9 +61,9 @@ const FilterDate = ({ dateOptions }: any) => {
       <p className="text-sm text-neutral-4">Date:</p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <button className="flex gap-3 text-sm outline-none">
+          <button className="flex items-center gap-3 text-sm outline-none">
             {selectedDate.name}
-            <ChevronDown />
+            <ChevronDown className="w-4" />
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>

@@ -24,7 +24,7 @@ interface TableProps {
 const Table: FC<TableProps> = (props) => {
   const tData = useMemo<any[]>(
     () => (props.isLoading ? [] : props.data),
-    [props.data]
+    [props.data, props.isLoading]
   )
   const tColumns = useMemo<any[]>(() => props.columns, [props.columns])
   const [sorting, setSorting] = useState<SortingState>([])

@@ -44,7 +44,7 @@ const SelectFilter: FC<SelectFilterProps> = ({
         <SelectTrigger className="flex items-center gap-3 text-sm text-neutral-5 outline-none">
           <SelectValue placeholder={placeholder} />
           <SelectIcon>
-            <ChevronDown />
+            <ChevronDown className="w-4" />
           </SelectIcon>
         </SelectTrigger>
         <SelectContent>
@@ -53,7 +53,7 @@ const SelectFilter: FC<SelectFilterProps> = ({
               <SelectItem key={value} value={value}>
                 <SelectItemText>{name}</SelectItemText>
                 <SelectItemIndicator>
-                  <Check />
+                  <Check className="w-4" />
                 </SelectItemIndicator>
               </SelectItem>
             ))}

@@ -1,5 +1,5 @@
+import { Calendar } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
-import { Calendar } from 'lucide-react'
 import { FC, forwardRef, LegacyRef } from 'react'
 import DatePicker from 'react-datepicker'
 import { useController, useFormContext } from 'react-hook-form'

@@ -1,4 +1,4 @@
-import { ICategoryProps } from '@/data/interfaces'
+import { ICategoryProps } from '@/lib/types'
 import { Card } from '../shared'
 
 export default function CategoryCardList(props: ICategoryProps) {

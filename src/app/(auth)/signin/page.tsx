@@ -3,6 +3,10 @@ import { cookies } from 'next/headers'
 import Image from 'next/image'
 import { redirect } from 'next/navigation'
 
+export const metadata = {
+  title: 'Jatidiri Multifarm | SignIn',
+}
+
 export default function SigninPage() {
   const isAuthenticated = cookies().get('token')?.value
 

@@ -1,11 +1,10 @@
 import { Toaster } from '@/components/shared/Toast'
-import { ILayoutProps } from '@/data/interfaces'
+import { ILayoutProps } from '@/lib/types'
 import { cn } from '@/lib/utils'
-import { Poppins } from "next/font/google"
-
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
 import '@/styles/ReactToastify.css'
+import { Poppins } from 'next/font/google'
 
 const poppins = Poppins({
   subsets: ['latin'],

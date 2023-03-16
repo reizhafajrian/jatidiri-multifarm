@@ -1,47 +1,66 @@
 'use client'
-import { IModal } from '@/data/interfaces'
-import { hppSchema as schema } from '@/data/validations'
+import { hppSchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { IEditHpp, useHppStore } from '@/store/hpp'
-import formatRupiah from '@/utils/formatRupiah'
-import { Field, Form, Modal } from '../shared'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Form, InputText, Modal } from '../shared'
 
-export default function EditHppForm(props: IModal & { eartag_code: string }) {
-  const { eartag_code, isOpen, closeModal } = props
+interface IProps extends IModal {
+  eartag_code: string
+}
+
+const EditHppForm: FC<IProps> = ({ closeModal, eartag_code, isOpen }) => {
   const { hpp, editHpp } = useHppStore()
 
-  const onSubmit = async (values: IEditHpp) => {
-    // editHpp({...values})
+  const methods = useForm<IEditHpp>({
+    resolver: zodResolver(hppSchema),
+    defaultValues: {
+      ...hpp,
+      eartag_code,
+      // hpp: formatRupiah('1000000', ' '),
+    },
+  })
+
+  const onSubmit: SubmitHandler<IEditHpp> = async (values) => {
+    console.log(values)
   }
 
   return (
     <Modal isOpen={isOpen} closeModal={closeModal}>
       <h1 className="mb-5 text-base font-semibold">Edit Data HPP</h1>
-      <Form
-        values={{
-          ...hpp,
-          eartag_code: '111',
-          hpp: formatRupiah('1000000', ' '),
-        }}
-        schema={schema}
-        onSubmit={onSubmit}
-      >
+
+      <Form methods={methods} onSubmit={onSubmit}>
         <div className="mb-8 space-y-5">
-          <Field type="input" name="eartag_code" label="" disabled />
+          <InputText name="eartag_code" label="" disabled />
           <div className="grid grid-cols-2 gap-5">
-            <Field type="input" name="hpp" label="" disabled rupiah />
-            <Field
-              type="input"
-              name="selling_price"
-              label="Harga Jual"
-              rupiah
-            />
+            <InputText name="hpp" label="" disabled />
+            <InputText name="selling_price" label="Harga Jual" />
           </div>
-          <Field type="input" name="description" label="Keterangan" />
+          <InputText name="description" label="Keterangan" />
         </div>
         <div className="flex justify-end gap-3">
-          <Field type="submit" cancelHandler={() => closeModal(false)} />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-36"
+            onClick={() => closeModal(false)}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            className="w-36"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </Form>
     </Modal>
   )
 }
+
+export default EditHppForm

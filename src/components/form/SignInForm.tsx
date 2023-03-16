@@ -37,7 +37,7 @@ export default function SignInForm() {
       <div className="grid gap-8">
         <button
           type="button"
-          className="ml-auto text-base font-medium"
+          className="ml-auto text-base font-medium outline-none focus:text-primary-4"
           onClick={() => router.replace('/signin')}
         >
           Forgot Password?

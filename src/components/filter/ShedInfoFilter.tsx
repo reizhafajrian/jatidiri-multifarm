@@ -1,5 +1,5 @@
 'use client'
-import { shedInfoTypesOptions } from '@/data/data'
+import { shedInfoTypesOptions } from '@/lib/data'
 import { FC } from 'react'
 import { SelectFilter } from '../shared'
 

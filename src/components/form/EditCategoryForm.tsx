@@ -1,43 +1,63 @@
 'use client'
-import { Field, Form, Modal } from '@/components/shared'
-import { IModal } from '@/data/interfaces'
-import { categorySchema as schema } from '@/data/validations'
+import { Button, Form, InputText, Modal } from '@/components/shared'
+import { categorySchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { ICategory, useCategoryStore } from '@/store/category'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-export default function EditCategoryForm(props: IModal & { category: string }) {
-  const { category, isOpen, closeModal } = props
-  const title = setTitle(category)
-  const satuan = setSatuan(category)
+interface IProps extends IModal {
+  category: string
+}
+
+const EditCategoryForm: FC<IProps> = ({ category, closeModal, isOpen }) => {
   const { formValues, editCategory } = useCategoryStore()
 
-  const onSubmit = async (values: ICategory) => {
-    // await editCategory({ ...values })
+  const methods = useForm<ICategory>({
+    resolver: zodResolver(categorySchema),
+  })
+
+  const onSubmit: SubmitHandler<ICategory> = async (values) => {
+    console.log(values)
   }
 
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>
-      <h1 className="mb-6 text-xl font-semibold">Edit {title}</h1>
-      <Form
-        values={formValues}
-        schema={schema}
-        onSubmit={onSubmit}
-        className="mt-5 space-y-4"
-      >
+      <h1 className="mb-6 text-xl font-semibold">Edit {setTitle(category)}</h1>
+      <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
         <div className="mb-8 space-y-6">
-          <Field type="input" name="type" label={`Jenis ${title}`} />
-          <Field type="input" name="stock" label="Stock" />
-          <Field type="input" name="price" label={`Harga ${satuan}`} />
+          <InputText name="type" label={`Jenis ${setTitle(category)}`} />
+          <InputText name="stock" label="Stock" />
+          <InputText
+            name="price"
+            label={`Harga ${category === 'feed' ? '(per kg)' : '(per pcs)'}`}
+          />
         </div>
         <div className="flex justify-end gap-3">
-          <Field type="submit" cancelHandler={() => closeModal(false)} />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-36"
+            onClick={() => closeModal(false)}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            className="w-36"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </Form>
     </Modal>
   )
 }
 
-const setSatuan = (category: string) =>
-  category === 'feed' ? '(per kg)' : '(per pcs)'
+export default EditCategoryForm
 
 const setTitle = (category: string) =>
   category === 'feed'

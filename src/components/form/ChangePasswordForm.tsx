@@ -1,41 +1,57 @@
 'use client'
-import { changePassSchema as schema } from '@/data/validations'
+import { Button, Form, InputText } from '@/components/shared'
+import { changePassSchema } from '@/lib/schemas'
 import { IChangePass, useAuthStore } from '@/store/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Field, Form } from '../shared'
+import { FC } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
-export default function ChangePasswordForm() {
+interface IProps {}
+
+const ChangePasswordForm: FC<IProps> = ({}) => {
   const router = useRouter()
   const { user, changePassword } = useAuthStore()
 
-  const onSubmit = async (values: IChangePass) => {
-    // try {
-    //   await changePassword(values)
-    //   router.replace('/home')
-    // } catch (e) {
-    //   console.log(e)
-    // }
+  const methods = useForm<IChangePass>({
+    resolver: zodResolver(changePassSchema),
+  })
+
+  const onSubmit: SubmitHandler<IChangePass> = async (values) => {
+    console.log(values)
   }
 
   return (
     <Form
-      schema={schema}
+      methods={methods}
       onSubmit={onSubmit}
       className="grid grid-cols-2 gap-6"
     >
-      <Field type="input" name="old_pass" label="Old Password" isSecured />
+      <InputText name="old_pass" label="Old Password" isSecured />
       <div className="grid gap-6">
-        <Field type="input" name="new_pass" label="New Password" isSecured />
-        <Field
-          type="input"
-          name="confirm_pass"
-          label="Confirm Password"
-          isSecured
-        />
+        <InputText name="new_pass" label="New Password" isSecured />
+        <InputText name="confirm_pass" label="Confirm Password" isSecured />
         <div className="flex justify-end gap-3">
-          <Field type="submit" cancelHandler={() => router.replace('/home')} />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-36"
+            onClick={() => router.replace('/home')}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            className="w-36"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </div>
     </Form>
   )
 }
+
+export default ChangePasswordForm

@@ -1,6 +1,6 @@
 import AnimalForm from '@/components/form/AnimalForm'
 import Tab from '@/components/shared/Tab'
-import { IPageProps } from '@/data/interfaces'
+import { IPageProps } from '@/lib/types'
 
 export const metadata = {
   title: 'Jatidiri Multifarm | Add Animal',

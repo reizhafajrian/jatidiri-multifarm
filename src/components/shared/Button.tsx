@@ -1,7 +1,7 @@
 'use client'
+import { Loader2, Pen, Trash2 } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
 import { cva, VariantProps } from 'class-variance-authority'
-import { Loader2, Pencil, Trash2 } from 'lucide-react'
 import * as React from 'react'
 
 const buttonVariants = cva(
@@ -45,9 +45,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {...props}
       >
         {variant === 'delete' ? (
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="w-3" />
         ) : variant === 'edit' ? (
-          <Pencil className="h-4 w-4" />
+          <Pen className="w-3" />
         ) : (
           <>
             {isLoading ? (

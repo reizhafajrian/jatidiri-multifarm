@@ -8,6 +8,7 @@ export const addShedHandler = async (payload: IShed) => {
 
 export const addShedDetailHandler = async (payload: IShedDetail) => {
   const body = {}
+
   for (let value in payload) {
     if (value.includes('_date')) {
       body[value] = payload[value].toISOString()
@@ -15,16 +16,13 @@ export const addShedDetailHandler = async (payload: IShedDetail) => {
       body[value] = payload[value]
     }
   }
-  console.log(body)
 
-  const res = await Post({ url: '/api/shed/data/create', body: payload })
-  console.log(res)
+  const res = await Post({ url: '/api/shed/data/create', body })
 
   return res
 }
 
-export const addShedAnimalHandler = async (
-  payload: IShedAnimal & { uid: string }
-) => {
+export const addShedAnimalHandler = async (payload: IShedAnimal) => {
+  console.log(payload)
   return
 }

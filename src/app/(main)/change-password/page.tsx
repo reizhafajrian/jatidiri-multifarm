@@ -1,6 +1,10 @@
 import ChangePasswordForm from '@/components/form/ChangePasswordForm'
 import { Card } from '@/components/shared'
 
+export const metadata = {
+  title: 'Jatidiri Multifarm | Change Password',
+}
+
 export default function ChangePassPage() {
   return (
     <Card>

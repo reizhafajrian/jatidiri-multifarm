@@ -1,9 +1,8 @@
+import { FileText, X } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
-import { File } from 'lucide-react'
 import { FC } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useController, useFormContext } from 'react-hook-form'
-import { Close, FileSmall } from '../Icons'
 
 interface InputCertificateProps {
   name: string
@@ -48,8 +47,7 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
         {field.value && (
           <div className="mt-2 flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
             <div className="flex gap-3">
-              <FileSmall />
-              <File />
+              <FileText className="w-5 stroke-primary-3" />
               <div>
                 <p className="mb-1 font-semibold">{field.value[0].path}</p>
                 <p className="text-xs text-neutral-4">
@@ -58,7 +56,7 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
               </div>
             </div>
             <button onClick={() => field.onChange(undefined)}>
-              <Close />
+              <X className="w-4" />
             </button>
           </div>
         )}
@@ -66,7 +64,7 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
       <div {...getRootProps({ className: 'dropzone' })}>
         <input {...getInputProps()} name={name} disabled={isSubmitting} />
         <div className="grid cursor-default place-items-center gap-2 border border-dashed border-neutral-4 py-6">
-          <File />
+          <FileText className="w-6 stroke-neutral-4" />
           <p className="font-semibold">
             Upload file atau
             <span className="text-primary-5"> klik disini</span> untuk upload

@@ -7,9 +7,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/shared/DropdownMenu'
+import { ChevronDown } from '@/components/shared/Icons'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import { useRouter } from 'next/navigation'
-import { ChevronDown } from '../../shared/Icons'
 
 const HeaderMenu = () => {
   const router = useRouter()
@@ -30,7 +30,7 @@ const HeaderMenu = () => {
               Super Admin
             </p>
           </div>
-          <ChevronDown />
+          <ChevronDown className="w-5" />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" forceMount className="w-56">

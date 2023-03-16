@@ -1,5 +1,5 @@
 import AnimalForm from '@/components/form/AnimalForm'
-import { IPageProps } from '@/data/interfaces'
+import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 

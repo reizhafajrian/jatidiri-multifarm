@@ -21,7 +21,7 @@ const PaginationHandler: FC<PaginationHandlerProps> = ({ table }) => {
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
       >
-        <ChevronLeft />
+        <ChevronLeft className="w-4" />
       </button>
       {[...Array(table.getPageCount())].map((_, i) => (
         <button
@@ -38,7 +38,7 @@ const PaginationHandler: FC<PaginationHandlerProps> = ({ table }) => {
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
       >
-        <ChevronRight />
+        <ChevronRight className="w-4" />
       </button>
       <button
         className="px-3 py-2 text-xs disabled:text-black/30"

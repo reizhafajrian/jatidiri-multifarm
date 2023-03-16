@@ -1,7 +1,7 @@
 'use client'
 import { Button, Form, InputText, Modal, toast } from '@/components/shared'
-import { IModal } from '@/data/interfaces'
 import { categorySchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { useAuthStore } from '@/store/auth'
 import { ICategory, useCategoryStore } from '@/store/category'
 import { zodResolver } from '@hookform/resolvers/zod'

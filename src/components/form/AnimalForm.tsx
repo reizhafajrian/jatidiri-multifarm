@@ -8,7 +8,7 @@ import {
   InputText,
   toast,
 } from '@/components/shared'
-import { getAnimalFormContent, getAnimalFormOptions } from '@/data/data'
+import { getAnimalFormContent, getAnimalFormOptions } from '@/lib/data'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { IAnimal, useAnimalStore } from '@/store/animal'

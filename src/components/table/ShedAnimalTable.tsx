@@ -13,14 +13,15 @@ const options = [
 ]
 
 interface ShedAnimalTableProps {
-  data: any
+  // data: any
 }
 
-const ShedAnimalTable: FC<ShedAnimalTableProps> = ({ data }) => {
+const ShedAnimalTable: FC<ShedAnimalTableProps> = ({}) => {
   const [shedCode, setShedCode] = useState(options[0])
   const changeShedHandler = (value: any) => {
     setShedCode(value)
   }
+  const data: any = []
 
   const columns: ColumnDef<any, any>[] = [
     {

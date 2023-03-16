@@ -1,11 +1,10 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
+import { BackLink, Button } from '@/components/shared'
+import { Download, ExclamationTriangle } from '@/components/shared/Icons'
 import { animalTitle } from '@/store/animal/handlers'
-import { Download } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
-import { BackLink, Button } from '../shared'
-import { ExclamationTriangle } from '../shared/Icons'
 
 interface AnimalHeaderProps {
   animal: string
@@ -14,11 +13,10 @@ interface AnimalHeaderProps {
 const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
   const router = useRouter()
   const path = usePathname()
-
   const [alertCluster] = useState(false)
-  const isListData =
-    !path.startsWith(`/${animal}/add`) && !path.startsWith(`/${animal}/edit`)
   const headerMenu = getHeaderMenu(animal)
+  const isListData = !path.includes('add' || 'edit')
+  // !path.startsWith(`/${animal}/add`) && !path.startsWith(`/${animal}/edit`)
 
   return (
     <>
@@ -39,7 +37,6 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
               <Button
                 variant="outline"
                 className="px-3"
-                // router.push(`/api/${animal}/download`)
                 onClick={() => window.open(`/api/${animal}/download`, '_blank')}
               >
                 <Download className="h-4 w-4" />

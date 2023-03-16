@@ -1,198 +1,60 @@
-import clsx from 'clsx'
-import { Eye, EyeOff } from 'lucide-react'
+import {
+  AlertCircle,
+  ArrowLeft,
+  ArrowUp,
+  Bell,
+  Calendar,
+  Check,
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsUpDown,
+  ChevronUp,
+  Download,
+  DownloadCloud,
+  Eye,
+  EyeOff,
+  FileText,
+  Loader2,
+  Pencil as Pen,
+  Search as SearchIcon,
+  Trash2,
+  X,
+} from 'lucide-react'
 
-interface IProps {
-  className?: string
+export {
+  Eye,
+  EyeOff,
+  DownloadCloud,
+  Check,
+  Bell,
+  AlertCircle,
+  ChevronDown,
+  ChevronUp,
+  ChevronLeft,
+  ChevronRight,
+  ChevronsUpDown,
+  ArrowUp,
+  ArrowLeft,
+  Download,
+  Calendar,
+  FileText,
+  X,
+  Pen,
+  Trash2,
+  Loader2,
+  SearchIcon,
+}
+export {
+  DashboardWallet,
+  DashboardCart,
+  DashboardCow,
+  DashboardGoat,
+  DashboardSheep,
+  DashboardInfo,
 }
 
-export const Check = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M16.704 4.153a.75.75 0 01.143 1.052l-8 10.5a.75.75 0 01-1.127.075l-4.5-4.5a.75.75 0 011.06-1.06l3.894 3.893 7.48-9.817a.75.75 0 011.05-.143z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const Bell = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={clsx('h-6 w-6', className)}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-      />
-    </svg>
-  )
-}
-
-export const ExclamationCircle = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={clsx('h-6 w-6', className)}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 9v3.75m9-.75a9 9 0 11-18 0 9 9 0 0118 0zm-9 3.75h.008v.008H12v-.008z"
-      />
-    </svg>
-  )
-}
-
-export const ChevronDown = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const ChevronUp = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M14.77 12.79a.75.75 0 01-1.06-.02L10 8.832 6.29 12.77a.75.75 0 11-1.08-1.04l4.25-4.5a.75.75 0 011.08 0l4.25 4.5a.75.75 0 01-.02 1.06z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const ChevronLeft = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M12.79 5.23a.75.75 0 01-.02 1.06L8.832 10l3.938 3.71a.75.75 0 11-1.04 1.08l-4.5-4.25a.75.75 0 010-1.08l4.5-4.25a.75.75 0 011.06.02z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const ChevronRight = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const ChevronUpDown = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-4 w-4 fill-neutral-3', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 3a.75.75 0 01.55.24l3.25 3.5a.75.75 0 11-1.1 1.02L10 4.852 7.3 7.76a.75.75 0 01-1.1-1.02l3.25-3.5A.75.75 0 0110 3zm-3.76 9.2a.75.75 0 011.06.04l2.7 2.908 2.7-2.908a.75.75 0 111.1 1.02l-3.25 3.5a.75.75 0 01-1.1 0l-3.25-3.5a.75.75 0 01.04-1.06z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const CloudArrowDown = ({ className }: IProps) => {
-  return (
-    <svg
-      viewBox="0 0 20 20"
-      xmlns="http://www.w3.org/2000/svg"
-      className={clsx('h-4 w-4', className)}
-    >
-      <path d="M12.1875 13.7949H10.7402V9.0625C10.7402 8.97656 10.6699 8.90625 10.584 8.90625H9.41211C9.32617 8.90625 9.25586 8.97656 9.25586 9.0625V13.7949H7.8125C7.68164 13.7949 7.60937 13.9453 7.68945 14.0469L9.87695 16.8145C9.89157 16.8331 9.91024 16.8482 9.93156 16.8586C9.95288 16.869 9.97628 16.8744 10 16.8744C10.0237 16.8744 10.0471 16.869 10.0684 16.8586C10.0898 16.8482 10.1084 16.8331 10.123 16.8145L12.3105 14.0469C12.3906 13.9453 12.3184 13.7949 12.1875 13.7949Z" />
-      <path d="M15.8477 7.16211C14.9531 4.80273 12.6738 3.125 10.0039 3.125C7.33398 3.125 5.05469 4.80078 4.16016 7.16016C2.48633 7.59961 1.25 9.125 1.25 10.9375C1.25 13.0957 2.99805 14.8438 5.1543 14.8438H5.9375C6.02344 14.8438 6.09375 14.7734 6.09375 14.6875V13.5156C6.09375 13.4297 6.02344 13.3594 5.9375 13.3594H5.1543C4.49609 13.3594 3.87695 13.0977 3.41602 12.623C2.95703 12.1504 2.71289 11.5137 2.73438 10.8535C2.75195 10.3379 2.92773 9.85352 3.24609 9.44531C3.57227 9.0293 4.0293 8.72656 4.53711 8.5918L5.27734 8.39844L5.54883 7.68359C5.7168 7.23828 5.95117 6.82227 6.24609 6.44531C6.53725 6.07169 6.88214 5.74326 7.26953 5.4707C8.07227 4.90625 9.01758 4.60742 10.0039 4.60742C10.9902 4.60742 11.9355 4.90625 12.7383 5.4707C13.127 5.74414 13.4707 6.07227 13.7617 6.44531C14.0566 6.82227 14.291 7.24023 14.459 7.68359L14.7285 8.39648L15.4668 8.5918C16.5254 8.87695 17.2656 9.83984 17.2656 10.9375C17.2656 11.584 17.0137 12.1934 16.5566 12.6504C16.3325 12.8758 16.0659 13.0546 15.7722 13.1763C15.4785 13.298 15.1636 13.3602 14.8457 13.3594H14.0625C13.9766 13.3594 13.9062 13.4297 13.9062 13.5156V14.6875C13.9062 14.7734 13.9766 14.8438 14.0625 14.8438H14.8457C17.002 14.8438 18.75 13.0957 18.75 10.9375C18.75 9.12695 17.5176 7.60352 15.8477 7.16211Z" />
-    </svg>
-  )
-}
-
-export const ArrowSmallUp = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-4 w-4', className)}
-    >
-      <path
-        fillRule="evenodd"
-        d="M10 15a.75.75 0 01-.75-.75V7.612L7.29 9.77a.75.75 0 01-1.08-1.04l3.25-3.5a.75.75 0 011.08 0l3.25 3.5a.75.75 0 11-1.08 1.04l-1.96-2.158v6.638A.75.75 0 0110 15z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const ArrowLeft = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="h-5 w-5"
-    >
-      <path
-        fillRule="evenodd"
-        d="M17 10a.75.75 0 01-.75.75H5.612l4.158 3.96a.75.75 0 11-1.04 1.08l-5.5-5.25a.75.75 0 010-1.08l5.5-5.25a.75.75 0 111.04 1.08L5.612 9.25H16.25A.75.75 0 0117 10z"
-        clipRule="evenodd"
-      />
-    </svg>
-  )
-}
-
-export const DashboardWallet = () => {
+const DashboardWallet = () => {
   return (
     <svg viewBox="0 0 58 59" xmlns="http://www.w3.org/2000/svg">
       <circle cx="29" cy="29.5" r="29" fill="#40916C" />
@@ -214,7 +76,7 @@ export const DashboardWallet = () => {
   )
 }
 
-export const DashboardCart = () => {
+const DashboardCart = () => {
   return (
     <svg viewBox="0 0 58 59" xmlns="http://www.w3.org/2000/svg">
       <circle cx="29" cy="29.5" r="29" fill="#68C9DA" />
@@ -238,7 +100,7 @@ export const DashboardCart = () => {
   )
 }
 
-export const DashboardCow = () => {
+const DashboardCow = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48">
       <circle cx="24" cy="24" r="24" fill="#FF6392"></circle>
@@ -265,7 +127,7 @@ export const DashboardCow = () => {
   )
 }
 
-export const DashboardGoat = () => {
+const DashboardGoat = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48">
       <circle cx="24" cy="24" r="24" fill="#FFE45E"></circle>
@@ -298,7 +160,7 @@ export const DashboardGoat = () => {
   )
 }
 
-export const DashboardSheep = () => {
+const DashboardSheep = () => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 48 48">
       <circle cx="24" cy="24" r="24" fill="#00ADD6"></circle>
@@ -321,7 +183,7 @@ export const DashboardSheep = () => {
   )
 }
 
-export const DashboardInfo = () => {
+const DashboardInfo = () => {
   return (
     <svg
       width="18"
@@ -341,151 +203,6 @@ export const DashboardInfo = () => {
           <rect width="18" height="18" fill="white" />
         </clipPath>
       </defs>
-    </svg>
-  )
-}
-
-export const ArrowDownTray = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className={clsx('h-5 w-5', className)}
-    >
-      <path d="M10.75 2.75a.75.75 0 00-1.5 0v8.614L6.295 8.235a.75.75 0 10-1.09 1.03l4.25 4.5a.75.75 0 001.09 0l4.25-4.5a.75.75 0 00-1.09-1.03l-2.955 3.129V2.75z" />
-      <path d="M3.5 12.75a.75.75 0 00-1.5 0v2.5A2.75 2.75 0 004.75 18h10.5A2.75 2.75 0 0018 15.25v-2.5a.75.75 0 00-1.5 0v2.5c0 .69-.56 1.25-1.25 1.25H4.75c-.69 0-1.25-.56-1.25-1.25v-2.5z" />
-    </svg>
-  )
-}
-
-export const MagnifyingGlass = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="h-6 w-6 stroke-neutral-4 hover:stroke-black"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z"
-      />
-    </svg>
-  )
-}
-
-export const Pencil = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="h-3 w-3 fill-transparent stroke-white stroke-2"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125"
-      />
-    </svg>
-  )
-}
-
-export const Trash = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className="h-3 w-3 fill-transparent stroke-white stroke-2"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-      />
-    </svg>
-  )
-}
-
-export const Calendar = ({ className }: IProps) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth={1.5}
-      stroke="currentColor"
-      className={clsx('h-6 w-6', className)}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5"
-      />
-    </svg>
-  )
-}
-
-export const File = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 25 31"
-      className="h-7 w-7 fill-neutral-4"
-    >
-      <path
-        fillRule="evenodd"
-        d="M3.104 27.287h18.62V3.657H3.104v23.63zM0 30.242h24.828V.704H0v29.538z"
-        clipRule="evenodd"
-      ></path>
-      <path
-        fillRule="evenodd"
-        d="M6.205 11.044H9.31V8.091H6.205v2.953zM6.205 16.949H9.31v-2.954H6.205v2.954zM10.86 11.044h7.759V8.091H10.86v2.953zM10.86 16.949h7.759v-2.954H10.86v2.954zM10.86 22.859h7.759v-2.954H10.86v2.954zM6.205 22.859H9.31v-2.954H6.205v2.954z"
-        clipRule="evenodd"
-      ></path>
-    </svg>
-  )
-}
-
-export const FileSmall = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 25 31"
-      className="h-5 w-5 fill-primary-4"
-    >
-      <path
-        fillRule="evenodd"
-        d="M3.104 27.287h18.62V3.657H3.104v23.63zM0 30.242h24.828V.704H0v29.538z"
-        clipRule="evenodd"
-      ></path>
-      <path
-        fillRule="evenodd"
-        d="M6.205 11.044H9.31V8.091H6.205v2.953zM6.205 16.949H9.31v-2.954H6.205v2.954zM10.86 11.044h7.759V8.091H10.86v2.953zM10.86 16.949h7.759v-2.954H10.86v2.954zM10.86 22.859h7.759v-2.954H10.86v2.954zM6.205 22.859H9.31v-2.954H6.205v2.954z"
-        clipRule="evenodd"
-      ></path>
-    </svg>
-  )
-}
-
-export const PencilSolid = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="h-4 w-4 fill-white"
-    >
-      <path d="M2.695 14.763l-1.262 3.154a.5.5 0 00.65.65l3.155-1.262a4 4 0 001.343-.885L17.5 5.5a2.121 2.121 0 00-3-3L3.58 13.42a4 4 0 00-.885 1.343z" />
     </svg>
   )
 }
@@ -1566,19 +1283,6 @@ export const HPP = () => {
   )
 }
 
-export const Close = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 20 20"
-      fill="currentColor"
-      className="h-5 w-5"
-    >
-      <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
-    </svg>
-  )
-}
-
 export const ExclamationTriangle = () => {
   return (
     <svg
@@ -1595,4 +1299,3 @@ export const ExclamationTriangle = () => {
     </svg>
   )
 }
-export { Eye, EyeOff }

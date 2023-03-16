@@ -9,15 +9,18 @@ import {
   Modal,
   toast,
 } from '@/components/shared'
-import { IModal } from '@/data/interfaces'
 import { shedDetailSchema } from '@/lib/schemas'
+import { IModal } from '@/lib/types'
 import { useAuthStore } from '@/store/auth'
 import { IShedDetail, useShedStore } from '@/store/shed'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { mutate } from 'swr'
 
-export default function ShedDetailForm(props: IModal & { shed_code: string }) {
+export default function ShedDetailForm(
+  props: IModal & { shed_code: string; options: any }
+) {
   const { isOpen, closeModal, shed_code } = props
   const { user } = useAuthStore()
   const { addShedDetail } = useShedStore()
@@ -30,11 +33,12 @@ export default function ShedDetailForm(props: IModal & { shed_code: string }) {
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
     const res = await addShedDetail(values)
 
-    if (res.errors) {
+    if (res.errors || res.error) {
       closeModal(false)
+
       return toast({
         type: 'error',
-        message: res.errors[0].msg,
+        message: res.errors ? res.errors[0].msg : res.error,
       })
     }
 
@@ -44,6 +48,8 @@ export default function ShedDetailForm(props: IModal & { shed_code: string }) {
     })
 
     closeModal(false)
+    methods.reset()
+    mutate(`/api/shed/data/get?shed_code=${shed_code}`)
   }
 
   return (
@@ -74,18 +80,21 @@ export default function ShedDetailForm(props: IModal & { shed_code: string }) {
             <div key={idx} className={categories[name] ? 'block' : 'hidden'}>
               <h3 className="mb-4 text-base font-medium">{title}</h3>
               <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                {fields.map(({ name, label, type }, idx) => (
+                {fields.map((field, idx) => (
                   <div key={idx}>
-                    {type === 'date' ? (
-                      <InputDate name={`data_${name}`} label={label} />
-                    ) : type === 'select' ? (
+                    {field.type === 'date' ? (
+                      <InputDate name={field.name} label={field.label} />
+                    ) : field.type === 'select' ? (
                       <InputSelect
-                        name={`data_${name}`}
-                        label={label}
-                        options={[{ name: 'opt-1', value: 'opt-1' }]}
+                        name={field.name}
+                        label={field.label}
+                        options={props.options[name].map((option: any) => ({
+                          name: option[field.name.slice(5)],
+                          value: option['_id'],
+                        }))}
                       />
                     ) : (
-                      <InputText name={`data_${name}`} label={label} />
+                      <InputText name={field.name} label={field.label} />
                     )}
                   </div>
                 ))}
@@ -128,49 +137,40 @@ const shedDataFormContent = {
       name: 'feed',
       title: 'Pakan',
       fields: [
-        { type: 'date', label: 'Tanggal', name: 'feed_date' },
-        { type: 'select', label: 'Jenis Pakan', name: 'feed_type' },
-        // { type: 'input', label: 'Harga', name: 'feed_price', rupiah: true },
-        { type: 'input', label: 'Stok', name: 'feed_stock' },
+        { type: 'date', label: 'Tanggal', name: 'data_feed_date' },
+        { type: 'select', label: 'Jenis Pakan', name: 'data_feed_type' },
+        { type: 'input', label: 'Stok', name: 'data_feed_stock' },
       ],
     },
     {
       name: 'vitamin',
       title: 'Vitamin',
       fields: [
-        { type: 'date', label: 'Tanggal', name: 'vitamin_date' },
-        { type: 'select', label: 'Jenis vitamin', name: 'vitamin_type' },
-        // { type: 'input', label: 'Harga', name: 'vitamin_price', rupiah: true },
-        { type: 'input', label: 'Stok', name: 'vitamin_stock' },
+        { type: 'date', label: 'Tanggal', name: 'data_vitamin_date' },
+        { type: 'select', label: 'Jenis vitamin', name: 'data_vitamin_type' },
+        { type: 'input', label: 'Stok', name: 'data_vitamin_stock' },
       ],
     },
     {
       name: 'vaccine',
       title: 'Vaksin',
       fields: [
-        { type: 'date', label: 'Tanggal', name: 'vaccine_date' },
-        { type: 'select', label: 'Jenis Vaksin', name: 'vaccine_type' },
-        // { type: 'input', label: 'Harga', name: 'vaccine_price', rupiah: true },
-        { type: 'input', label: 'Stok', name: 'vaccine_stock' },
+        { type: 'date', label: 'Tanggal', name: 'data_vaccine_date' },
+        { type: 'select', label: 'Jenis Vaksin', name: 'data_vaccine_type' },
+        { type: 'input', label: 'Stok', name: 'data_vaccine_stock' },
       ],
     },
     {
       name: 'anthelmintic',
       title: 'Obat Cacing',
       fields: [
-        { type: 'date', label: 'Tanggal', name: 'anthelmintic_date' },
+        { type: 'date', label: 'Tanggal', name: 'data_anthelmintic_date' },
         {
           type: 'select',
           label: 'Jenis Obat Cacing',
-          name: 'anthelmintic_type',
+          name: 'data_anthelmintic_type',
         },
-        // {
-        //   type: 'input',
-        //   label: 'Harga',
-        //   name: 'anthelmintic_price',
-        //   rupiah: true,
-        // },
-        { type: 'input', label: 'Stok', name: 'anthelmintic_stock' },
+        { type: 'input', label: 'Stok', name: 'data_anthelmintic_stock' },
       ],
     },
   ],

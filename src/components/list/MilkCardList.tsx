@@ -1,6 +1,6 @@
 import { formatRupiah, shortDateFormatter } from '@/lib/utils'
 import { Card } from '../shared'
-import { ArrowSmallUp, MilkCircle, WalletCircle } from '../shared/Icons'
+import { ArrowUp, MilkCircle, WalletCircle } from '../shared/Icons'
 
 export default function MilkCardList({ info }: any) {
   const cardData = [
@@ -34,7 +34,7 @@ export default function MilkCardList({ info }: any) {
           <div className="grid">
             <p className="text-base font-semibold text-primary-4">{date}</p>
             <p className="ml-auto mt-auto flex h-fit w-fit items-center gap-1 rounded-xl bg-success-3 py-[2px] px-[10px]">
-              <ArrowSmallUp className="fill-success-1" />
+              <ArrowUp className="w-3 stroke-success-1" />
               <span className="text-xs font-medium text-success-2">
                 {percentage} %
               </span>

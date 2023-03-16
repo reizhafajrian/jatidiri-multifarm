@@ -1,9 +1,10 @@
 'use client'
+import { BackLink, Button } from '@/components/shared'
+import { Pen } from '@/components/shared/Icons'
 import { useAnimalStore } from '@/store/animal'
-import { Pen } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 import { FC, useState } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
-import { BackLink, Button } from '../shared'
 import Navbar from './Navbar'
 
 interface ShedDetailHeaderProps {
@@ -17,7 +18,10 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
   const [isOpen, closeModal] = useState(false)
   const { animalTitle } = useAnimalStore()
   const title = animalTitle(animal)
-  const baseUrl = `/shed/${animal}/${shed_code}`
+  const pathname = usePathname()
+  const id = pathname.split('/')[3]
+
+  const baseUrl = `/shed/${animal}/${id}`
 
   const menu = [
     { name: 'Informasi', link: baseUrl },
@@ -28,11 +32,7 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
 
   return (
     <>
-      <ShedAnimalForm
-        isOpen={isOpen}
-        closeModal={closeModal}
-        animal_type={animal}
-      />
+      <ShedAnimalForm isOpen={isOpen} closeModal={closeModal} animal={animal} />
 
       <BackLink href="/shed/goat" />
       <div className="mb-8">

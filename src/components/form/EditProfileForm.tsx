@@ -1,21 +1,22 @@
 'use client'
-import { editProfileSchema as schema } from '@/data/validations'
+import { editProfileSchema } from '@/lib/schemas'
 import { IUser, useAuthStore } from '@/store/auth'
-
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { Field, Form } from '../shared'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { Button, Form, InputSelect, InputText } from '../shared'
 
 export default function EditProfileForm() {
   const router = useRouter()
   const { user, editProfile } = useAuthStore()
 
-  const onSubmit = async (values: IUser) => {
-    // try {
-    //   await editProfile(values)
-    //   router.replace('/home')
-    // } catch (e) {
-    //   console.log(e)
-    // }
+  const methods = useForm<IUser>({
+    resolver: zodResolver(editProfileSchema),
+    defaultValues: user,
+  })
+
+  const onSubmit: SubmitHandler<IUser> = async (values) => {
+    console.log(values)
   }
 
   return (
@@ -30,18 +31,12 @@ export default function EditProfileForm() {
           </p>
         </div>
       </div>
-      <Form
-        values={user}
-        schema={schema}
-        onSubmit={onSubmit}
-        className="space-y-4"
-      >
+      <Form methods={methods} onSubmit={onSubmit} className="space-y-4">
         <p className="font-semibold">Profile</p>
         <div className="grid grid-cols-2 gap-4">
-          <Field type="input" name="first_name" label="First Name" />
-          <Field type="input" name="last_name" label="Last Name" />
-          <Field
-            type="select"
+          <InputText name="first_name" label="First Name" />
+          <InputText name="last_name" label="Last Name" />
+          <InputSelect
             name="gender"
             label="Jenis Kelamin"
             options={[
@@ -49,12 +44,27 @@ export default function EditProfileForm() {
               { name: 'laki-laki', value: 'male' },
             ]}
           />
-          <Field type="input" name="phone_number" label="Phone Number" />
+          <InputText name="phone_number" label="Phone Number" />
         </div>
-        <Field type="input" name="email" label="Email" />
-        <Field type="input" name="job_title" label="Job Title" />
+        <InputText name="email" label="Email" />
+        <InputText name="job_title" label="Job Title" />
         <div className="flex justify-end gap-3 pt-10">
-          <Field type="submit" cancelHandler={() => router.replace('/home')} />
+          <Button
+            type="button"
+            variant="outline"
+            className="w-36"
+            onClick={() => router.replace('/home')}
+            disabled={methods.formState.isSubmitting}
+          >
+            CANCEL
+          </Button>
+          <Button
+            type="submit"
+            className="w-36"
+            isLoading={methods.formState.isSubmitting}
+          >
+            SAVE
+          </Button>
         </div>
       </Form>
     </div>

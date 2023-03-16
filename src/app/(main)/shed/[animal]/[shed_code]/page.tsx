@@ -1,34 +1,58 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import ShedInfo from '@/components/layout/ShedInfo'
-import { IPageProps } from '@/data/interfaces'
+import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Shed',
+  title: 'Jatidiri Multifarm | Detail Shed',
 }
 
 export default function ShedDetailPage(props: IPageProps) {
-  const { animal, shed_code } = props.params
-  const data = use(getData(shed_code, cookies().get('token')?.value!))
+  const { shed_code } = props.params
+  const { shedDetail: data, options } = use(
+    getData(shed_code, cookies().get('token')?.value!)
+  )
 
   return (
     <>
       <ShedDetailHeader animal={data.animal_type} shed_code={data.shed_code} />
-      <ShedInfo data={data} />
+      <ShedInfo data={data} options={options} />
     </>
   )
 }
 
 const getData = async (shed_code: string, token: string) => {
-  const res = await fetch(
-    process.env.API_BASE_URL + '/shed/get/detail/' + shed_code,
-    {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    }
-  ).then((res) => res.json())
+  const baseUrl = process.env.API_BASE_URL
+  const Authorization = `bearer ${token}`
 
-  return res.data
+  const resDetail = await fetch(baseUrl + '/shed/get/detail/' + shed_code, {
+    headers: { Authorization },
+  }).then((res) => res.json())
+
+  const feed = await fetch(baseUrl + '/feed/get', {
+    headers: { Authorization },
+  }).then((res) => res.json())
+
+  const vitamin = await fetch(baseUrl + '/vitamin/get', {
+    headers: { Authorization },
+  }).then((res) => res.json())
+
+  const vaccine = await fetch(baseUrl + '/vaccine/get', {
+    headers: { Authorization },
+  }).then((res) => res.json())
+
+  const anthelmintic = await fetch(baseUrl + '/anthelmintic/get', {
+    headers: { Authorization },
+  }).then((res) => res.json())
+
+  return {
+    shedDetail: resDetail.data,
+    options: {
+      feed: feed.data,
+      vitamin: vitamin.data,
+      vaccine: vaccine.data,
+      anthelmintic: anthelmintic.data,
+    },
+  }
 }

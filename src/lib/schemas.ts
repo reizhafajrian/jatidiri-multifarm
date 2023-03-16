@@ -8,9 +8,35 @@ const validations = {
   invalid_type_error: INVALID_ERROR,
 }
 
+// AUTH
 export const signinSchema = z.object({
   email: z.string(validations).email(),
   password: z.string(validations),
+})
+
+export const memberSchema = z.object({
+  first_name: z.string(validations),
+  last_name: z.string(validations),
+  email: z.string(validations).email(),
+  phone_number: z.string(validations),
+  role: z.string(validations),
+  password: z.string(validations),
+})
+
+export const editProfileSchema = z.object({
+  avatar: z.array(z.any(), validations),
+  first_name: z.string(validations),
+  last_name: z.string(validations),
+  email: z.string(validations).email(),
+  phone_number: z.string(validations),
+  gender: z.string(validations),
+  job_title: z.string(validations),
+})
+
+export const changePassSchema = z.object({
+  old_pass: z.string(validations),
+  new_pass: z.string(validations),
+  confirm_pass: z.string(validations),
 })
 
 // ANIMALS
@@ -111,8 +137,31 @@ export const shedDetailSchema = (categories: any) => {
   return z.object(shape)
 }
 
+export const shedAnimalSchema = z.object({
+  shed_code: z.string(validations),
+  description: z.string(),
+})
+
+// CATEGORY
 export const categorySchema = z.object({
   type: z.string(validations),
   stock: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
   price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+})
+
+// MILK
+export const milkSchema = z.object({
+  eartag_code: z.string(validations),
+  milk: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+  milk_date: z.coerce.date(validations),
+})
+
+// HPP
+export const hppSchema = z.object({
+  shed_code: z.string(validations),
+  hpp: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+  selling_price: z.coerce
+    .number(validations)
+    .min(1, { message: REQUIRED_ERROR }),
+  description: z.string(),
 })

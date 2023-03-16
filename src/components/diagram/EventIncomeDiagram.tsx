@@ -1,5 +1,5 @@
 'use client'
-import formatRupiah from '@/utils/formatRupiah'
+import { formatRupiah } from '@/lib/utils'
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js'
 import { FC } from 'react'
 import { Doughnut } from 'react-chartjs-2'

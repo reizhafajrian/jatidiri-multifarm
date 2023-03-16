@@ -3,11 +3,16 @@ import { useAuthStore } from '@/store/auth'
 import { useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import MemberForm from '../form/MemberForm'
-import { Button, Listbox } from '../shared'
+import { Button } from '../shared'
+import SelectTable from '../shared/SelectTable'
 
 const options = [
-  { name: 'Super Admin', bgColor: 'bg-[#75C29F] bg-opacity-30' },
-  { name: 'Admin', bgColor: 'bg-[#FFF3B7] bg-opacity-50' },
+  {
+    name: 'Super Admin',
+    value: 'super_admin',
+    bgColor: 'bg-[#75C29F] bg-opacity-30',
+  },
+  { name: 'Admin', value: 'admin', bgColor: 'bg-[#FFF3B7] bg-opacity-50' },
 ]
 
 export default function MemberCard({ data }: any) {
@@ -47,12 +52,10 @@ export default function MemberCard({ data }: any) {
           </div>
         </div>
         <div className="mx-auto">
-          <Listbox
+          <SelectTable
+            value={role.value}
             options={options}
-            value={role}
-            onChange={setRole}
-            className={role.bgColor + ' w-36'}
-            optionsClassname="w-36 bg-white"
+            triggerBackground={role.bgColor}
           />
         </div>
         <div className="ml-auto text-neutral-4">

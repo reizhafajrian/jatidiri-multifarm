@@ -18,7 +18,7 @@ interface IState {
 
   addShed: (payload: IShed) => Promise<any>
   addShedDetail: (payload: IShedDetail) => Promise<any>
-  addShedAnimal: (payload: IShedAnimal & { uid: string }) => Promise<void>
+  addShedAnimal: (payload: IShedAnimal) => Promise<any>
 }
 
 interface IShed {
@@ -55,8 +55,9 @@ interface IShedDetail {
 }
 
 interface IShedAnimal {
-  eartag_code: string
-  description: string
+  created_by?: string
+  eartag_code?: string
+  description?: string
 }
 
 export type { IState, IShed, IShedDetail, IShedAnimal }

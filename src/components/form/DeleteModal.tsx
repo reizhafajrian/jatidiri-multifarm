@@ -1,4 +1,4 @@
-import { IModal } from '@/data/interfaces'
+import { IModal } from '@/lib/types'
 import { Button, Modal } from '../shared'
 
 export default function DeleteModal(

@@ -1,7 +1,4 @@
-import { cn } from '@/lib/utils'
-import { Check, ChevronDown } from 'lucide-react'
-import { FC } from 'react'
-import { useController, useFormContext } from 'react-hook-form'
+import { Check, ChevronDown } from '@/components/shared/Icons'
 import {
   SelectContent,
   SelectIcon,
@@ -12,7 +9,10 @@ import {
   SelectTrigger,
   SelectValue,
   SelectViewport,
-} from '../Select'
+} from '@/components/shared/Select'
+import { cn } from '@/lib/utils'
+import { FC } from 'react'
+import { useController, useFormContext } from 'react-hook-form'
 
 interface InputSelectProps {
   name: string
@@ -33,7 +33,7 @@ const InputSelect: FC<InputSelectProps> = ({ name, label, options }) => {
       <SelectRoot
         name={name}
         defaultValue={field.value}
-        onValueChange={(value) => field.onChange(value)}
+        onValueChange={(value: string) => field.onChange(value)}
         disabled={isSubmitting}
       >
         <div className="relative w-full">

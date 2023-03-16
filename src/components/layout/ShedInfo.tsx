@@ -1,19 +1,18 @@
 'use client'
-import { useState } from 'react'
+import { Pen } from '@/components/shared/Icons'
+import { IShed } from '@/store/shed'
+import { FC, useState } from 'react'
 import ShedInfoFilter from '../filter/ShedInfoFilter'
 import ShedDetailForm from '../form/ShedDetailForm'
 import { Button, Card } from '../shared'
 import ShedInfoTable from '../table/ShedInfoTable'
 
-import { IShed } from '@/store/shed'
-import { Pen } from 'lucide-react'
-import { FC } from 'react'
-
 interface ShedInfoProps {
   data: IShed
+  options: any
 }
 
-const ShedInfo: FC<ShedInfoProps> = ({ data }) => {
+const ShedInfo: FC<ShedInfoProps> = ({ data, options }) => {
   const [isOpen, closeModal] = useState(false)
 
   const cardList = [
@@ -25,6 +24,7 @@ const ShedInfo: FC<ShedInfoProps> = ({ data }) => {
   return (
     <>
       <ShedDetailForm
+        options={options}
         shed_code={data._id!}
         isOpen={isOpen}
         closeModal={closeModal}

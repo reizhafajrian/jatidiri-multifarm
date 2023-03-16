@@ -8,6 +8,7 @@ export const useAuthStore = create<IState>((set) => ({
     last_name: 'doe',
     email: 'johndoe@gmail.com',
   } as IUser,
+
   token: '',
   signIn: h.signInHandler,
   addMember: h.addMemberHandler,
@@ -30,11 +31,11 @@ interface IState {
 
 interface IUser {
   id?: string
-  email: string
-  password: string
   first_name?: string
   last_name?: string
   gender?: string
+  email: string
+  password: string
   phone_number?: string
   job_title?: string
   role?: string

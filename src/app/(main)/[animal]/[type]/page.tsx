@@ -1,6 +1,6 @@
 import AnimalFilter from '@/components/filter/AnimalFilter'
 import AnimalTable from '@/components/table/AnimalTable'
-import { IPageProps } from '@/data/interfaces'
+import { IPageProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
 
 export const metadata = {
