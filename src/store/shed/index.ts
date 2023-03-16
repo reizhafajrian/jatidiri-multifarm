@@ -22,7 +22,7 @@ interface IState {
 
 interface IShed {
   shed_code: string
-  // animal_type: string
+  animal_type: string
   // animal_weight: string
   // feed: string
   // feed_weight: number
