@@ -3,7 +3,7 @@ import useDataList from '@/hooks/useDataList'
 import { useAnimalStore } from '@/store/animal'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import { Button, Table } from '../shared'
 import { toast } from '../shared/Toast'
@@ -16,8 +16,6 @@ interface AnimalTableProps {
 const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
   const isCempek = type === 'cempek'
-  const [isOpen, closeModal] = useState(false)
-
   const { origin_female, origin_male, ...a } = useAnimalStore()
 
   const queries = []
@@ -30,11 +28,11 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
     queries
   )
 
-  const deleteHandler = async () => {
+  const deleteHandler = async (id: string) => {
     try {
       const res = await a.deleteAnimal({
         animal,
-        eartag_code: a.eartag_code,
+        eartag_code: id,
       })
 
       if (res.status === 201) {
@@ -46,8 +44,6 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
       }
     } catch (e) {
       console.log(e)
-    } finally {
-      closeModal(false)
     }
   }
 
@@ -63,13 +59,10 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
             variant="edit"
             onClick={() => router.replace(`/${animal}/edit/${data.getValue()}`)}
           />
-          <Button
-            size="xs"
-            variant="delete"
-            onClick={() => {
-              closeModal(true)
-              useAnimalStore.setState({ eartag_code: data.getValue() })
-            }}
+          <DeleteModal
+            title={`Hapus Data Ini?`}
+            desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
+            deleteHandler={() => deleteHandler(data.getValue())}
           />
         </div>
       ),
@@ -78,21 +71,12 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   ]
 
   return (
-    <>
-      <DeleteModal
-        isOpen={isOpen}
-        closeModal={closeModal}
-        title={`Hapus Data Ini?`}
-        desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
-        deleteHandler={deleteHandler}
-      />
-      <Table
-        isLoading={loading}
-        fixedCol={3}
-        data={data?.filter((i: any) => i._id !== null)}
-        columns={columns}
-      />
-    </>
+    <Table
+      isLoading={loading}
+      fixedCol={3}
+      data={data?.filter((i: any) => i._id !== null)}
+      columns={columns}
+    />
   )
 }
 

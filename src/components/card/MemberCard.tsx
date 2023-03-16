@@ -16,7 +16,6 @@ const options = [
 ]
 
 export default function MemberCard({ data }: any) {
-  const [isOpen, closeModal] = useState(false)
   const [isEditOpen, closeEditModal] = useState(false)
   const { deleteMember } = useAuthStore()
   const [role, setRole] = useState(options[0])
@@ -31,13 +30,6 @@ export default function MemberCard({ data }: any) {
 
   return (
     <>
-      <DeleteModal
-        isOpen={isOpen}
-        closeModal={closeModal}
-        title={`Hapus Member Ini?`}
-        desc={`Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa dibatalkan`}
-        deleteHandler={deleteHandler}
-      />
       <MemberForm
         formType="edit"
         isOpen={isEditOpen}
@@ -67,8 +59,12 @@ export default function MemberCard({ data }: any) {
             size="xs"
             onClick={() => closeEditModal(true)}
           />
-          <Button variant="delete" size="xs" onClick={() => closeModal(true)} />
         </div>
+        <DeleteModal
+          title={`Hapus Member Ini?`}
+          desc={`Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa dibatalkan`}
+          deleteHandler={deleteHandler}
+        />
       </div>
     </>
   )

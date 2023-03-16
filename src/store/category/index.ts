@@ -7,15 +7,20 @@ import {
 
 export const useCategoryStore = create<IState>((set) => ({
   formValues: {} as ICategory,
+
   feed: {} as IFeed,
   feedInfo: {} as IFeedInfo,
   feedList: [],
   vitamin: {} as IVitamin,
   vitaminInfo: {} as IVitaminInfo,
   vitaminList: [],
+  vaccine: {} as IVaccine,
+  vaccineInfo: {} as IVaccineInfo,
+  vaccineList: [],
   anthelmintic: {} as IAnthelmintic,
   anthelminticInfo: {} as IAnthelminticInfo,
   anthelminticList: [],
+
   addCategory: addCategoryHandler,
   editCategory: editCategoryHandler,
   deleteCategory: deleteCategoryHandler,
@@ -30,6 +35,9 @@ interface IState {
   vitamin: IVitamin
   vitaminInfo: IVitaminInfo
   vitaminList: IVitamin[]
+  vaccine: IVaccine
+  vaccineInfo: IVaccineInfo
+  vaccineList: IVaccine[]
   anthelmintic: IAnthelmintic
   anthelminticInfo: IAnthelminticInfo
   anthelminticList: IAnthelmintic[]
@@ -67,6 +75,18 @@ interface IVitamin {
 }
 
 interface IVitaminInfo {
+  cow_value: string
+  sheep_value: string
+  goat_value: string
+}
+
+interface IVaccine {
+  vaccine_type: string
+  vaccine_stock: number
+  vaccine_price: number
+}
+
+interface IVaccineInfo {
   cow_value: string
   sheep_value: string
   goat_value: string

@@ -1,5 +1,5 @@
 import { Card } from '../shared'
-import { Anthelmintic, Feed, Vitamin } from '../shared/Icons'
+import { Anthelmintic, Feed, Syringe, Vitamin } from '../shared/Icons'
 
 export default function CategoryHeader() {
   return (
@@ -21,7 +21,11 @@ export default function CategoryHeader() {
 }
 
 const categoryList = [
-  { title: 'Obat Cacing', icon: <Anthelmintic /> },
-  { title: 'Vitamin', icon: <Vitamin /> },
   { title: 'Pakan', icon: <Feed /> },
+  { title: 'Vitamin', icon: <Vitamin /> },
+  {
+    title: 'Vaksin',
+    icon: <Syringe className="stroke-primary-4 stroke-[0.9px]" size={32} />,
+  },
+  { title: 'Obat Cacing', icon: <Anthelmintic /> },
 ]

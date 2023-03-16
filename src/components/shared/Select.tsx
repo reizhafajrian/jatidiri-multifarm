@@ -33,7 +33,7 @@ const SelectViewport: FC<SelectPrimitive.SelectViewportProps> = ({
 }) => {
   return (
     <SelectPrimitive.Viewport
-      className={cn('rounded-lg bg-white p-2 shadow-lg', className)}
+      className={cn('max-h-56 rounded-lg bg-white p-2 shadow-lg', className)}
       {...props}
     />
   )

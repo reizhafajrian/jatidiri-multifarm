@@ -21,7 +21,7 @@ export default async function RootLayout(props: ILayoutProps) {
         poppins.variable
       )}
     >
-      <body className="min-h-screen bg-neutral-1 antialiased">
+      <body className="relative min-h-screen bg-neutral-1 antialiased">
         <Toaster position="top-center" />
         {props.children}
       </body>

@@ -16,9 +16,15 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface IProps extends IModal {
   animal: string
+  eartagOptions: any
 }
 
-const ShedAnimalForm: FC<IProps> = ({ animal, closeModal, isOpen }) => {
+const ShedAnimalForm: FC<IProps> = ({
+  animal,
+  closeModal,
+  isOpen,
+  eartagOptions,
+}) => {
   const { animalTitle } = useAnimalStore()
   const { addShedAnimal } = useShedStore()
   const title = animalTitle(animal)
@@ -31,12 +37,11 @@ const ShedAnimalForm: FC<IProps> = ({ animal, closeModal, isOpen }) => {
     await addShedAnimal(values)
   }
 
-  const codeOptions = [
-    { name: '111', value: '111' },
-    { name: '222', value: '222' },
-    { name: '333', value: '333' },
-    { name: '444', value: '444' },
-  ]
+  const codeOptions =
+    eartagOptions?.map((item: any) => ({
+      name: item._id,
+      value: item._id,
+    })) ?? []
 
   return (
     <Modal isOpen={isOpen!} closeModal={closeModal}>

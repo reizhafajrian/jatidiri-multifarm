@@ -11,10 +11,11 @@ interface ShedDetailHeaderProps {
   animal: string
   shed_code: string
   type?: string
+  eartagOptions?: any
 }
 
 const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
-  const { animal, shed_code, type } = props
+  const { animal, shed_code, type, eartagOptions } = props
   const [isOpen, closeModal] = useState(false)
   const { animalTitle } = useAnimalStore()
   const title = animalTitle(animal)
@@ -27,12 +28,20 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
     { name: 'Informasi', link: baseUrl },
     { name: 'Pejantan', link: baseUrl + '/male' },
     { name: 'Betina', link: baseUrl + '/female' },
-    { name: 'Cempek', link: baseUrl + '/cempek' },
   ]
+
+  if (animal !== 'cow') {
+    menu.push({ name: 'Cempek', link: baseUrl + '/cempek' })
+  }
 
   return (
     <>
-      <ShedAnimalForm isOpen={isOpen} closeModal={closeModal} animal={animal} />
+      <ShedAnimalForm
+        isOpen={isOpen}
+        eartagOptions={eartagOptions}
+        closeModal={closeModal}
+        animal={animal}
+      />
 
       <BackLink href="/shed/goat" />
       <div className="mb-8">

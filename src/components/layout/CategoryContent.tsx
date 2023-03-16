@@ -105,6 +105,27 @@ const setCategories = (c: any) => [
     data: c.vitaminList,
   },
   {
+    category: 'vaccine',
+    cardList: [
+      {
+        title: 'Sapi',
+        value: c.vitaminInfo.cow_value,
+        icon: <CowCircle />,
+      },
+      {
+        title: 'Domba',
+        value: c.vitaminInfo.sheep_value,
+        icon: <SheepCircle />,
+      },
+      {
+        title: 'Kambing',
+        value: c.vitaminInfo.goat_value,
+        icon: <GoatCircle />,
+      },
+    ],
+    data: c.vitaminList,
+  },
+  {
     category: 'anthelmintic',
     cardList: [
       {

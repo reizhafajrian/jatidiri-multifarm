@@ -38,7 +38,7 @@ const SelectFilter: FC<SelectFilterProps> = ({
         <p className="text-sm capitalize text-neutral-4">{title ?? 'show'}:</p>
       )}
       <SelectRoot
-        defaultValue={defaultValue ?? options[0].value}
+        defaultValue={defaultValue ?? options[0]?.value ?? undefined}
         onValueChange={onChange}
       >
         <SelectTrigger className="flex items-center gap-3 text-sm text-neutral-5 outline-none">

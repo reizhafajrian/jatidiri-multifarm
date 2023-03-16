@@ -18,6 +18,7 @@ import {
   Loader2,
   Pencil as Pen,
   Search as SearchIcon,
+  Syringe,
   Trash2,
   X,
 } from 'lucide-react'
@@ -44,6 +45,7 @@ export {
   Trash2,
   Loader2,
   SearchIcon,
+  Syringe,
 }
 export {
   DashboardWallet,

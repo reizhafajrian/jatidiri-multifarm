@@ -20,25 +20,41 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ shed_code }) => {
       accessorKey: 'updated_at',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Pakan', accessorKey: 'data_feed_type' },
+    {
+      header: 'Pakan',
+      accessorKey: 'data_feed_type.feed_type',
+      cell: (data) => data.getValue() ?? '-',
+    },
     {
       header: 'Tgl Pakan',
       accessorKey: 'data_feed_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Vitamin', accessorKey: 'data_vitamin_type' },
+    {
+      header: 'Vitamin',
+      accessorKey: 'data_vitamin_type.vitamin_type',
+      cell: (data) => data.getValue() ?? '-',
+    },
     {
       header: 'Tgl Vitamin',
       accessorKey: 'data_vitamin_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Vaksin', accessorKey: 'data_vaccine_type' },
+    {
+      header: 'Vaksin',
+      accessorKey: 'data_vaccine_type.vaccine_type',
+      cell: (data) => data.getValue() ?? '-',
+    },
     {
       header: 'Tgl Vaksin',
       accessorKey: 'data_vaccine_date',
       cell: (data) => longDateFormatter(new Date(data.getValue())),
     },
-    { header: 'Obat Cacing', accessorKey: 'data_anthelmintic_type' },
+    {
+      header: 'Obat Cacing',
+      accessorKey: 'data_anthelmintic_type.anthelmintic_type',
+      cell: (data) => data.getValue() ?? '-',
+    },
     {
       header: 'Tgl Obat Cacing',
       accessorKey: 'data_anthelmintic_date',

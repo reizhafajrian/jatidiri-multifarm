@@ -45,7 +45,7 @@ const ShedInfo: FC<ShedInfoProps> = ({ data, options }) => {
           <span className="text-primary-5"> #{data.shed_code}</span>
         </h1>
         <div className="flex items-center justify-between">
-          <ShedInfoFilter />
+          <ShedInfoFilter options={options} />
           <Button onClick={() => closeModal(true)}>
             Tambah Data
             <Pen className="ml-3 h-4 w-4 fill-white" />

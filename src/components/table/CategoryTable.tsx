@@ -24,12 +24,11 @@ interface CategoryTableProps {
 
 const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
   const [isOpenEdit, closeModalEdit] = useState(false)
-  const [isOpenDelete, closeModalDelete] = useState(false)
   const [id, setId] = useState('')
 
   const { data, loading, mutate } = useDataList(`/api/${category}/get`)
 
-  const deleteHandler = async () => {
+  const deleteHandler = async (id: string) => {
     try {
       const url = `/api/${category}/delete/${id}`
       const res = await Delete(url)
@@ -43,8 +42,6 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
       }
     } catch (e) {
       console.log(e)
-    } finally {
-      closeModalDelete(false)
     }
   }
 
@@ -70,13 +67,10 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
               setId(data.getValue())
             }}
           />
-          <Button
-            variant="delete"
-            size="xs"
-            onClick={() => {
-              closeModalDelete(true)
-              setId(data.getValue())
-            }}
+          <DeleteModal
+            title={`Hapus Data Ini?`}
+            desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
+            deleteHandler={() => deleteHandler(data.getValue())}
           />
         </div>
       ),
@@ -89,13 +83,6 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
         category={category}
         isOpen={isOpenEdit}
         closeModal={closeModalEdit}
-      />
-      <DeleteModal
-        isOpen={isOpenDelete}
-        closeModal={closeModalDelete}
-        title={`Hapus Data Ini?`}
-        desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
-        deleteHandler={deleteHandler}
       />
       <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
     </>
