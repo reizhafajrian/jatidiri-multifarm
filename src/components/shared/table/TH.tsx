@@ -1,6 +1,6 @@
 import { flexRender } from '@tanstack/react-table'
 import clsx from 'clsx'
-import { ChevronUpDown } from './Icons'
+import { ChevronsUpDown } from 'lucide-react'
 
 interface IProps {
   header: any
@@ -30,8 +30,8 @@ export default function TH(props: IProps) {
         >
           {flexRender(header.column.columnDef.header, header.getContext())}
           {{
-            asc: <ChevronUpDown />,
-            desc: <ChevronUpDown />,
+            asc: <ChevronsUpDown />,
+            desc: <ChevronsUpDown />,
           }[header.column.getIsSorted() as string] ?? null}
         </div>
       )}

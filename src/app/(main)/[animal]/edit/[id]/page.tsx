@@ -1,6 +1,6 @@
 import AnimalForm from '@/components/form/AnimalForm'
 import { IPageProps } from '@/data/interfaces'
-import { Get } from '@/lib/api'
+import { cookies } from 'next/headers'
 import { use } from 'react'
 
 export const metadata = {
@@ -9,23 +9,29 @@ export const metadata = {
 
 export default function EditAnimalPage({ params }: IPageProps) {
   const { animal, id } = params
-  const { data } = use(getData(animal, id))
-  console.log({ data })
+  const data = use(getData(animal, id, cookies().get('token')?.value!))
 
   return (
-    <>
-      <AnimalForm
-        formType="edit"
-        animal={params.animal}
-        gender={data.gender}
-        cempekForm={data.cempek}
-        values={data}
-        id={id}
-      />
-    </>
+    <AnimalForm
+      formType="edit"
+      animal={params.animal}
+      gender={data.gender}
+      cempekForm={data.cempek}
+      values={data}
+      id={id}
+    />
   )
 }
 
-const getData = async (animal: string, id: string) => {
-  return await Get(`/${animal}/get/detail/${id}`)
+const getData = async (animal: string, id: string, token: string) => {
+  const res = await fetch(
+    process.env.API_BASE_URL + `/${animal}/get/detail/${id}`,
+    {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }
+  ).then((res) => res.json())
+
+  return await res.data
 }

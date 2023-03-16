@@ -7,7 +7,6 @@ import {
   SortingState,
   useReactTable
 } from '@tanstack/react-table'
-import clsx from 'clsx'
 import { FC, useMemo, useState } from 'react'
 import SimpleBar from 'simplebar-react'
 import 'simplebar-react/dist/simplebar.min.css'
@@ -97,7 +96,7 @@ const Table: FC<TableProps> = (props) => {
                     </td>
                     <TD
                       cell={row.getVisibleCells()[0]}
-                      className={clsx(
+                      className={cn(
                         'sticky left-[50px] z-10',
                         props.fixedCol === 3 ? 'min-w-[150px]' : 'pr-3'
                       )}

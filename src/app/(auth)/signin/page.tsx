@@ -15,17 +15,17 @@ export default function SigninPage() {
       </div>
       <div className="grid h-screen place-items-center">
         <div className="w-full px-24">
-          <div className="mb-32 space-y-9 text-[40px] font-medium">
-            <h1>Welcome</h1>
+          <div className="mb-32 space-y-5 text-5xl font-medium">
+            <h1>Selamat datang</h1>
             <h1>
-              to{' '}
-              <span className="font-semibold text-primary-4">
+              di{' '}
+              <span className="font-bold text-primary-4">
                 Jatidiri Multifarm
               </span>
             </h1>
           </div>
           <div className="w-full">
-            <h2 className="mb-8 text-[32px] font-medium">Sign In Here</h2>
+            <h2 className="mb-8 text-[32px] font-medium">Sign In Disini</h2>
             <SignInForm />
           </div>
         </div>

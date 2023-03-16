@@ -36,7 +36,12 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ animal }) => {
               >
                 tambah data {animalTitle(animal)}
               </Button>
-              <Button variant="outline" className="px-3">
+              <Button
+                variant="outline"
+                className="px-3"
+                // router.push(`/api/${animal}/download`)
+                onClick={() => window.open(`/api/${animal}/download`, '_blank')}
+              >
                 <Download className="h-4 w-4" />
               </Button>
             </div>

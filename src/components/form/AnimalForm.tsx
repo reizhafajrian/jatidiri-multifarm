@@ -1,13 +1,22 @@
 'use client'
+import {
+  Button,
+  Form,
+  InputCertificate,
+  InputDate,
+  InputSelect,
+  InputText,
+  toast,
+} from '@/components/shared'
 import { getAnimalFormContent, getAnimalFormOptions } from '@/data/data'
-import { animalSchema, cempekSchema } from '@/data/validations'
+import { adultSchema, cempekSchema } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
-import { useAnimalStore } from '@/store/animal'
+import { IAnimal, useAnimalStore } from '@/store/animal'
 import { useAuthStore } from '@/store/auth'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
-import { Field, Form } from '../shared'
-import { toast } from '../shared/Toast'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 interface AnimalFormProps {
   formType: 'add' | 'edit'
@@ -18,14 +27,8 @@ interface AnimalFormProps {
   id?: string
 }
 
-const AnimalForm: FC<AnimalFormProps> = ({
-  formType,
-  cempekForm,
-  gender,
-  animal,
-  values,
-  id,
-}) => {
+const AnimalForm: FC<AnimalFormProps> = (props) => {
+  const { formType, cempekForm, gender, animal, values, id } = props
   const router = useRouter()
   const opt = getAnimalFormOptions(animal)
   const { user } = useAuthStore()
@@ -37,21 +40,25 @@ const AnimalForm: FC<AnimalFormProps> = ({
     cempekForm,
   })
 
-  const onSubmit = async (values: any) => {
-    const data = {
-      cempek: cempekForm ? 'true' : 'false',
-      uid: user.id!,
-      id: id,
-      animal,
-      gender,
-      ...values,
-    }
+  const data = {
+    cempek: cempekForm ? 'true' : 'false',
+    created_by: user.id!,
+    _id: id,
+    animal,
+    gender,
+  }
 
+  const methods = useForm<IAnimal>({
+    resolver: zodResolver(cempekForm ? cempekSchema : adultSchema),
+    defaultValues: formType == 'edit' ? values : {},
+  })
+
+  const onSubmit: SubmitHandler<IAnimal> = async (values) => {
     let res
     if (formType === 'add') {
-      res = await a.addAnimal(data)
+      res = await a.addAnimal(values)
     } else {
-      res = await a.editAnimal(data)
+      res = await a.editAnimal(values)
     }
 
     if (res.errors) {
@@ -73,48 +80,44 @@ const AnimalForm: FC<AnimalFormProps> = ({
     <>
       <h1 className="mb-6 text-base font-semibold">{content.title}</h1>
       <Form
-        values={formType == 'edit' ? values : undefined}
-        schema={cempekForm ? cempekSchema : animalSchema}
-        onSubmit={onSubmit}
+        methods={methods}
+        onSubmit={(values) => onSubmit({ ...values, ...data })}
         className="grid grid-cols-2 gap-4"
       >
         <div className="space-y-6">
-          <Field
-            type="select"
+          <InputSelect
             name="type"
             label={`Jenis ${cempekForm ? 'Cempek' : content.animal_title}`}
             options={opt.typeOptions}
           />
 
           {cempekForm ? (
-            <Field type="input" name="birth_weight" label="Berat Lahir" />
+            <InputText name="birth_weight" label="Berat Lahir" />
           ) : (
             <>
-              <Field type="date" name="arrival_date" label="Tgl Tiba" />
-              <Field type="date" name="birth_date" label="Tgl Lahir" />
+              <InputDate name="arrival_date" label="Tgl Tiba" />
+              <InputDate name="birth_date" label="Tgl Lahir" />
             </>
           )}
 
-          <Field
-            type="select"
+          <InputSelect
             name="origin_female"
             label="Asal Induk"
             options={opt.femaleOriginOptions}
           />
 
           {cempekForm ? (
-            <Field type="input" name="birth_condition" label="Kondisi Lahir" />
+            <InputText name="birth_condition" label="Kondisi Lahir" />
           ) : (
-            <Field type="file" name="files" label="Upload Sertifikat" />
+            <InputCertificate name="files" label="Upload Sertifikat" />
           )}
         </div>
         <div className="flex flex-col">
           <div className="space-y-6">
             {cempekForm ? (
               <>
-                <Field type="date" name="birth_date" label="Tgl Lahir" />
-                <Field
-                  type="select"
+                <InputDate name="birth_date" label="Tgl Lahir" />
+                <InputSelect
                   name="gender"
                   label="Jenis Kelamin"
                   options={[
@@ -125,32 +128,24 @@ const AnimalForm: FC<AnimalFormProps> = ({
               </>
             ) : (
               <>
-                <Field
-                  type="select"
+                <InputSelect
                   name="origin"
                   label={`Asal ${content.animal_title}`}
                   options={opt.originOptions}
                 />
-                <Field
-                  type="input"
+                <InputText
                   name="weight"
                   label={`Berat ${content.animal_title}`}
                 />
-                <Field
-                  type="input"
-                  name="purchase_price"
-                  label="Harga Beli"
-                  // rupiah
-                />
+                <InputText name="purchase_price" label="Harga Beli" />
               </>
             )}
-            <Field
-              type="select"
+            <InputSelect
               name="origin_male"
               label="Asal Pejantan"
               options={opt.maleOriginOptions}
             />
-            <Field type="input" name="description" label="Keterangan" />
+            <InputText name="description" label="Keterangan" />
           </div>
           <div
             className={cn(
@@ -158,10 +153,22 @@ const AnimalForm: FC<AnimalFormProps> = ({
               cempekForm ? 'mt-10' : 'mt-auto'
             )}
           >
-            <Field
+            <Button
+              type="button"
+              variant="outline"
+              className="w-36"
+              onClick={() => router.replace(`/${animal}/male`)}
+              disabled={methods.formState.isSubmitting}
+            >
+              CANCEL
+            </Button>
+            <Button
               type="submit"
-              cancelHandler={() => router.replace(`/${animal}/male`)}
-            />
+              className="w-36"
+              isLoading={methods.formState.isSubmitting}
+            >
+              SAVE
+            </Button>
           </div>
         </div>
       </Form>

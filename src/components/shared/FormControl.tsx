@@ -1,10 +1,10 @@
 'use client'
 import { useFormikContext } from 'formik'
 import { Button } from './Button'
-import Dropzone from './Dropzone'
-import InputDate from './InputDate'
-import InputSelect from './InputSelect'
-import InputText from './InputText'
+import InputCertificate from './fields/InputCertificate'
+import InputDate from './fields/InputDate'
+import InputSelect from './fields/InputSelect'
+import InputText from './fields/InputText'
 
 interface IProps {
   name?: string
@@ -34,21 +34,13 @@ export default function Field(props: IProps) {
 
   switch (type) {
     case 'input':
-      return (
-        <InputText
-          name={name!}
-          label={label!}
-          isSecured={isSecured}
-          disabled={disabled}
-          rupiah={rupiah}
-        />
-      )
+      return <InputText name={name!} label={label!} isSecured={isSecured} />
     case 'select':
       return <InputSelect options={options!} name={name!} label={label!} />
     case 'date':
       return <InputDate name={name!} label={label!} />
     case 'file':
-      return <Dropzone name={name!} label={label!} />
+      return <InputCertificate name={name!} label={label!} />
     case 'submit':
       return (
         <>

@@ -1,19 +1,23 @@
 import { Delete, Post } from '@/lib/api'
 import { formatRupiah, longDateFormatter } from '@/lib/utils'
-import { IPayload } from '@/store/animal'
+import { IAnimal } from '@/store/animal'
 import { ColumnDef } from '@tanstack/react-table'
 
-const addAnimalHandler = async (payload: IPayload) => {
+const addAnimalHandler = async (payload: IAnimal) => {
   const isCempek = payload.cempek === 'true'
   const formData = new FormData()
 
   for (let value in payload) {
-    formData.append(value, payload[value])
+    if (value.includes('_date')) {
+      formData.append(value, payload[value].toISOString())
+    } else {
+      formData.append(value, payload[value])
+    }
   }
 
   if (!isCempek) formData.set('files', payload.files[0])
 
-  formData.append('created_by', payload.uid!)
+  // formData.append('created_by', payload.uid!)
 
   const url = isCempek
     ? `/api/${payload.animal}/cempek/create`
@@ -24,32 +28,36 @@ const addAnimalHandler = async (payload: IPayload) => {
   return res
 }
 
-const editAnimalHandler = async (payload: IPayload) => {
+const editAnimalHandler = async (payload: IAnimal) => {
+  const isCempek = payload.cempek === 'true'
   const formData = new FormData()
 
   for (let value in payload) {
-    formData.append(value, payload[value])
+    if (value.includes('_date')) {
+      formData.append(value, payload[value].toISOString())
+    } else {
+      formData.append(value, payload[value])
+    }
   }
 
-  formData.set('files', payload.files[0])
-  formData.append('created_by', payload.uid!)
-  formData.append('formType', 'edit')
+  if (!isCempek) formData.set('files', payload.files[0])
 
-  const res = await fetch('/api/animal', {
-    method: 'post',
-    body: formData,
+  const url = isCempek
+    ? `/api/${payload.animal}/cempek/update`
+    : `/api/${payload.animal}/update`
+
+  const res = await Post({
+    url,
+    body: { data: [Object.fromEntries(formData)] },
   })
 
-  const data = await res.json()
-
-  return data
+  return res
 }
 
-const deleteAnimalHandler = async (payload: IPayload) => {
+const deleteAnimalHandler = async (payload: IAnimal) => {
   const res = await Delete(
     `/api/${payload.animal}/delete/${payload.eartag_code}`
   )
-  console.log(res)
 
   return res
 }

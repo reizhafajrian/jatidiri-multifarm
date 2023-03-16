@@ -1,6 +1,6 @@
 import { Table } from '@tanstack/react-table'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { FC } from 'react'
-import { ChevronLeft, ChevronRight } from './Icons'
 
 interface PaginationHandlerProps {
   table: Table<any>
