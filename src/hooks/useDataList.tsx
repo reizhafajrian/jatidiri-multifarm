@@ -4,6 +4,7 @@ import useSWR from 'swr'
 const useDataList = (url: string, queriesArray?: Array<string>) => {
   const queries = queriesArray?.join('&')
   const endpoint = queriesArray ? url + `?${queries}` : url
+  console.log(endpoint)
 
   const { data, isLoading, error, isValidating, mutate } = useSWR(endpoint, Get)
 
