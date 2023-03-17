@@ -14,9 +14,11 @@ export default function ShedDetailPage(props: IPageProps) {
     getData(shed_code, cookies().get('token')?.value!)
   )
 
+
+
   return (
     <>
-      <ShedDetailHeader animal={animal} shed_code={data.shed_code} />
+      <ShedDetailHeader animal={animal} shed_code={data?.code} />
       <ShedInfo data={data} options={options} />
     </>
   )
@@ -45,6 +47,8 @@ const getData = async (shed_code: string, token: string) => {
   const anthelmintic = await fetch(baseUrl + '/anthelmintic/get', {
     headers: { Authorization },
   }).then((res) => res.json())
+
+  // const
 
   return {
     shedDetail: resDetail.data,

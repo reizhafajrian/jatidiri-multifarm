@@ -14,7 +14,7 @@ export default function AnimalShedPage(props: IPageProps) {
     getData(animal, type, shed_code, cookies().get('token')?.value!)
   )
 
-  return <ShedAnimalTable id={shed_code} shedCodeOptions={shedCodeOptions} />
+  return <ShedAnimalTable id={shed_code} shedCodeOptions={shedCodeOptions} type={type} />
 }
 
 const getData = async (
@@ -39,8 +39,8 @@ const getData = async (
 
   // const shedCodeOptions = res.data.filter((item: any) => item._id !== shed_code)
   const shedCodeOptions = res.data.map((item: any) => ({
-    name: item.shed_code,
-    value: item._id,
+    name: item.code,
+    value: item.code,
   }))
 
   return {

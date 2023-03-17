@@ -9,7 +9,7 @@ import {
   SelectRoot,
   SelectTrigger,
   SelectValue,
-  SelectViewport,
+  SelectViewport
 } from './Select'
 
 interface SelectTableProps {
@@ -20,9 +20,10 @@ interface SelectTableProps {
     value: string
     bgColor?: string
   }[]
-  onChange?: (value: string) => void
+  onChange?: (value: string, eartag_code?: string) => void
   triggerBackground: string
   small?: boolean
+  animalEarTag?: string
 }
 
 const SelectTable: FC<SelectTableProps> = ({
@@ -31,10 +32,12 @@ const SelectTable: FC<SelectTableProps> = ({
   options,
   onChange,
   triggerBackground,
+  animalEarTag,
   small,
 }) => {
+
   return (
-    <SelectRoot name={name} defaultValue={value} onValueChange={onChange}>
+    <SelectRoot name={name} defaultValue={String(value)} onValueChange={(e) => onChange && onChange(e, animalEarTag)}>
       <SelectTrigger asChild>
         <button
           className={cn(
@@ -49,8 +52,8 @@ const SelectTable: FC<SelectTableProps> = ({
       <SelectContent>
         <SelectViewport>
           {options.map(({ name, value }) => (
-            <SelectItem key={value} value={value}>
-              <SelectItemText className="text-white">{name}</SelectItemText>
+            <SelectItem key={(String(value))} value={(String(value))}>
+              <SelectItemText className="text-white">{String(value)}</SelectItemText>
               <SelectItemIndicator>
                 <Check className="h-5 w-5" />
               </SelectItemIndicator>

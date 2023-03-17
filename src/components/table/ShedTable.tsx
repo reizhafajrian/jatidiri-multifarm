@@ -12,12 +12,13 @@ const ShedTable: FC<ShedTableProps> = ({ animal }) => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const { data, loading } = useDataList('/api/shed/get')
+  const { data, loading } = useDataList('/api/shed/get?animal_type=' + animal)
 
   const columns = [
-    { header: 'No Kandang', accessorKey: 'shed_code' },
-    { header: 'Berat', accessorKey: 'animal_weight' },
-    { header: 'Keterangan', accessorKey: 'description' },
+    { header: 'No Kandang', accessorKey: 'code' },
+    //react table if average_weight is null, it will return 0
+    { header: 'Berat', accessorKey: 'average_weight', cell: (data: any) => `${data.getValue() ? data.getValue() + ' Kg' : '0 Kg'}` },
+    { header: 'Keterangan', accessorKey: 'description', },
     {
       header: 'Aksi',
       accessorKey: '_id',

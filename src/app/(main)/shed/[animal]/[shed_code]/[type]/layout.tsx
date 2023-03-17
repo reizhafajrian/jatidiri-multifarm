@@ -14,7 +14,7 @@ export default function ShedAnimalLayout(props: ILayoutProps) {
     <>
       <ShedDetailHeader
         animal={animal}
-        shed_code={data.shed_code}
+        shed_code={data?.code}
         type={type}
         eartagOptions={eartagOptions}
       />

@@ -4,7 +4,7 @@ import {
   Form,
   InputSelect,
   InputText,
-  toast,
+  toast
 } from '@/components/shared'
 import { shedAnimalSchema } from '@/lib/schemas'
 import { useAnimalStore } from '@/store/animal'
@@ -18,7 +18,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '../shared/Dialog'
 import { Pen } from '../shared/Icons'
 

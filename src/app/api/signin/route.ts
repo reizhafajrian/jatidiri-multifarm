@@ -2,7 +2,6 @@ import { serialize } from 'cookie'
 
 export async function POST(request: Request) {
   const body = await request.json()
-  console.log(body)
 
   const res = await fetch(process.env.API_BASE_URL + '/auth/login', {
     body: JSON.stringify(body),

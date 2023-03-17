@@ -26,6 +26,8 @@ interface IShed {
   shed_code?: string
   animal_type?: string
   animal_weight?: string
+  average_weight?: number
+  average_age?: number
   feed?: string
   feed_weight?: number
   age_range?: string

@@ -11,7 +11,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '../shared/Dialog'
 
 interface MemberFormProps {
@@ -30,7 +30,6 @@ const MemberForm: FC<MemberFormProps> = ({ formType, values }) => {
   })
 
   const onSubmit: SubmitHandler<IUser> = async (values) => {
-    console.log(values)
     setOpen(false)
   }
 
