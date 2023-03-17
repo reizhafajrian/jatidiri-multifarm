@@ -11,7 +11,7 @@ const validations = {
 // AUTH
 export const signinSchema = z.object({
   email: z.string(validations).email(),
-  password: z.string(validations),
+  password: z.string(validations).min(1, REQUIRED_ERROR),
 })
 
 export const memberSchema = z.object({
@@ -154,6 +154,13 @@ export const milkSchema = z.object({
   eartag_code: z.string(validations),
   milk: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
   milk_date: z.coerce.date(validations),
+})
+
+export const incomeSchema = z.object({
+  income_total: z.coerce
+    .number(validations)
+    .min(1, { message: REQUIRED_ERROR }),
+  income_date: z.coerce.date(validations),
 })
 
 // HPP

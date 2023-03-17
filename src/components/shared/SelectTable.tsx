@@ -21,8 +21,7 @@ interface SelectTableProps {
     bgColor?: string
   }[]
   onChange?: (value: string) => void
-  triggerBackground: string
-  small?: boolean
+  triggerClassName: string
 }
 
 const SelectTable: FC<SelectTableProps> = ({
@@ -30,19 +29,18 @@ const SelectTable: FC<SelectTableProps> = ({
   value,
   options,
   onChange,
-  triggerBackground,
-  small,
+  triggerClassName,
 }) => {
   return (
     <SelectRoot name={name} defaultValue={value} onValueChange={onChange}>
       <SelectTrigger asChild>
         <button
           className={cn(
-            'min-w-36 flex items-center justify-between gap-3 rounded-md px-2 py-2 text-white outline-none',
-            triggerBackground
+            'flex min-w-[100px] items-center justify-between gap-3 rounded-md px-2 py-2 outline-none',
+            triggerClassName
           )}
         >
-          <SelectValue className="text-white" />
+          <SelectValue />
           <ChevronDown className="h-4 w-4" />
         </button>
       </SelectTrigger>

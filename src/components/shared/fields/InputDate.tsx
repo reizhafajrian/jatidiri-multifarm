@@ -7,9 +7,20 @@ import { useController, useFormContext } from 'react-hook-form'
 interface InputDateProps {
   name: string
   label: string
+  selectRange?: boolean
+  startDate?: Date
+  endDate?: Date
+  onChange?: any
 }
 
-const InputDate: FC<InputDateProps> = ({ name, label }) => {
+const InputDate: FC<InputDateProps> = ({
+  name,
+  label,
+  selectRange,
+  startDate,
+  endDate,
+  onChange,
+}) => {
   const {
     control,
     formState: { errors, isSubmitting },
@@ -68,9 +79,12 @@ const InputDate: FC<InputDateProps> = ({ name, label }) => {
         name={name}
         showPopperArrow={false}
         selected={field.value && new Date(field.value)}
-        onChange={(value) => field.onChange(value?.toISOString())}
+        onChange={selectRange ? onChange : (value) => field.onChange(value)}
         customInput={<CustomInput />}
         calendarClassName="z-50"
+        startDate={startDate}
+        endDate={endDate}
+        selectsRange={selectRange}
       />
     </div>
   )

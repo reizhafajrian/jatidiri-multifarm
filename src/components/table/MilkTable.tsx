@@ -7,11 +7,6 @@ import MilkForm from '../form/MilkForm'
 import { Table, toast } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
-const statusOptions = [
-  { name: 'Aktif', value: 'active', bgColor: 'bg-[#E1F7E8]' },
-  { name: 'Non-Aktif', value: 'inactive', bgColor: 'bg-[#FFE2DC]' },
-]
-
 interface MilkTableProps {}
 
 const MilkTable: FC<MilkTableProps> = ({}) => {
@@ -19,29 +14,28 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
 
   const changeStatusHandler = async (status: string, _id: string) => {
     try {
+      const data = [{ _id, status }]
+
       const res = await Post({
         url: '/api/milk/status/update',
-        body: {
-          data: [
-            {
-              _id,
-              status,
-            },
-          ],
-        },
+        body: { data },
       })
 
-      if (res.status === 200) {
-        toast({
-          type: 'success',
-          message: res.message,
-        })
-        mutate()
-      }
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+
+      mutate()
     } catch (e) {
       console.log(e)
     }
   }
+
+  const statusOptions = [
+    { name: 'Aktif', value: 'active', bgColor: 'bg-[#E1F7E8]' },
+    { name: 'Non-Aktif', value: 'inactive', bgColor: 'bg-[#FFE2DC]' },
+  ]
 
   const columns: ColumnDef<any, any>[] = [
     { header: 'No Eartag', accessorKey: 'animal_id.eartag_code' },
@@ -61,26 +55,26 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
         <SelectTable
           value={data.getValue()}
           options={statusOptions}
-          triggerBackground={
-            statusOptions.find((i) => i.value === data.getValue())?.bgColor!
-          }
+          triggerClassName={`${statusOptions.find(
+            (i) => i.value === data.getValue()
+          )?.bgColor!} font-semibold text-neutral-4`}
           onChange={(value) =>
-            changeStatusHandler(value, data.row.original._id)
+            changeStatusHandler(value, data.row.original.animal_id._id)
           }
         />
       ),
     },
     {
       header: 'Aksi',
-      accessorKey: '_id',
-      cell: (data) => <MilkForm formType="edit" values={data.row.original} />,
+      accessorKey: 'animal_id._id',
+      cell: (data) => (
+        <MilkForm formType="edit" currentValues={data.row.original} />
+      ),
     },
   ]
 
   return (
-    <>
-      <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
-    </>
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
 
