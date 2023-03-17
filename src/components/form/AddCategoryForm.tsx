@@ -1,15 +1,26 @@
 'use client'
-import { Button, Form, InputText, Modal, toast } from '@/components/shared'
+import { Button, Form, InputText, toast } from '@/components/shared'
+import {
+  DialogClose,
+  DialogContent,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
-import { IModal } from '@/lib/types'
 import { useAuthStore } from '@/store/auth'
 import { ICategory, useCategoryStore } from '@/store/category'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
 
-export default function AddCategoryForm(props: IModal & { category: string }) {
-  const { category, isOpen, closeModal } = props
+interface AddCategoryFormProps {
+  category: string
+}
+
+const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
+  const [open, setOpen] = useState(false)
   const title = setTitle(category)
   const satuan = setSatuan(category)
   const { user } = useAuthStore()
@@ -23,14 +34,11 @@ export default function AddCategoryForm(props: IModal & { category: string }) {
     const res = await addCategory(values)
 
     if (res.errors) {
-      closeModal(false)
       return toast({
         type: 'error',
         message: res.errors[0].msg,
       })
     }
-
-    closeModal(false)
 
     toast({
       type: 'success',
@@ -39,44 +47,56 @@ export default function AddCategoryForm(props: IModal & { category: string }) {
 
     mutate(`/api/${category}/get`)
     methods.reset()
+    setOpen(false)
   }
 
   return (
-    <Modal isOpen={isOpen!} closeModal={closeModal}>
-      <h1 className="mb-6 text-xl font-semibold">Tambah {title}</h1>
-      <Form
-        methods={methods}
-        onSubmit={(values) =>
-          onSubmit({ ...values, created_by: user.id, category })
-        }
-      >
-        <div className="mb-8 space-y-6">
-          <InputText name="type" label={`Jenis ${title}`} />
-          <InputText name="stock" label="Stock" />
-          <InputText name="price" label={`Harga ${satuan}`} />
-        </div>
-        <div className="flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-36"
-            onClick={() => closeModal(false)}
-            disabled={methods.formState.isSubmitting}
-          >
-            CANCEL
-          </Button>
-          <Button
-            type="submit"
-            className="w-36"
-            isLoading={methods.formState.isSubmitting}
-          >
-            SAVE
-          </Button>
-        </div>
-      </Form>
-    </Modal>
+    <DialogRoot open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>Tambah {title}</Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogTitle>Tambah {title}</DialogTitle>
+
+        <Form
+          methods={methods}
+          onSubmit={(values) =>
+            onSubmit({ ...values, created_by: user.id, category })
+          }
+        >
+          <div className="mb-8 space-y-6">
+            <InputText name="type" label={`Jenis ${title}`} />
+            <InputText name="stock" label="Stock" />
+            <InputText name="price" label={`Harga ${satuan}`} />
+          </div>
+          <div className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-36"
+                disabled={methods.formState.isSubmitting}
+              >
+                CANCEL
+              </Button>
+            </DialogClose>
+
+            <Button
+              type="submit"
+              className="w-36"
+              isLoading={methods.formState.isSubmitting}
+            >
+              SAVE
+            </Button>
+          </div>
+        </Form>
+      </DialogContent>
+    </DialogRoot>
   )
 }
+
+export default AddCategoryForm
 
 const setSatuan = (category: string) =>
   category === 'feed' ? '(per kg)' : '(per pcs)'

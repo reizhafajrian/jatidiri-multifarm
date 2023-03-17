@@ -3,7 +3,6 @@ import { useAuthStore } from '@/store/auth'
 import { useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import MemberForm from '../form/MemberForm'
-import { Button } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
 const options = [
@@ -30,11 +29,6 @@ export default function MemberCard({ data }: any) {
 
   return (
     <>
-      <MemberForm
-        formType="edit"
-        isOpen={isEditOpen}
-        closeModal={closeEditModal}
-      />
       <div className="grid grid-cols-4 items-center rounded-lg border bg-white py-4 px-5">
         <div className="flex items-center gap-4">
           <div className="h-12 w-12 rounded-full bg-neutral-3" />
@@ -54,17 +48,13 @@ export default function MemberCard({ data }: any) {
           <p>{data.whatsapp_number}</p>
         </div>
         <div className="flex justify-end gap-2">
-          <Button
-            variant="edit"
-            size="xs"
-            onClick={() => closeEditModal(true)}
+          <MemberForm formType="edit" />
+          <DeleteModal
+            title={`Hapus Member Ini?`}
+            desc={`Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa dibatalkan`}
+            deleteHandler={deleteHandler}
           />
         </div>
-        <DeleteModal
-          title={`Hapus Member Ini?`}
-          desc={`Apakah kamu yakin ingin menghapus member ini? Tindakan ini tidak bisa dibatalkan`}
-          deleteHandler={deleteHandler}
-        />
       </div>
     </>
   )

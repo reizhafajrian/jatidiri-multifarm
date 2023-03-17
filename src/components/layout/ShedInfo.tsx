@@ -1,10 +1,9 @@
 'use client'
-import { Pen } from '@/components/shared/Icons'
 import { IShed } from '@/store/shed'
 import { FC, useState } from 'react'
 import ShedInfoFilter from '../filter/ShedInfoFilter'
 import ShedDetailForm from '../form/ShedDetailForm'
-import { Button, Card } from '../shared'
+import { Card } from '../shared'
 import ShedInfoTable from '../table/ShedInfoTable'
 
 interface ShedInfoProps {
@@ -23,12 +22,6 @@ const ShedInfo: FC<ShedInfoProps> = ({ data, options }) => {
 
   return (
     <>
-      <ShedDetailForm
-        options={options}
-        shed_code={data._id!}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      />
       <div className="mb-8 flex gap-8 py-5">
         {cardList.map((item, idx) => (
           <Card key={idx} className="w-44">
@@ -46,10 +39,7 @@ const ShedInfo: FC<ShedInfoProps> = ({ data, options }) => {
         </h1>
         <div className="flex items-center justify-between">
           <ShedInfoFilter options={options} />
-          <Button onClick={() => closeModal(true)}>
-            Tambah Data
-            <Pen className="ml-3 h-4 w-4 fill-white" />
-          </Button>
+          <ShedDetailForm options={options} shed_code={data._id!} />
         </div>
         <ShedInfoTable shed_code={data._id!} />
       </div>

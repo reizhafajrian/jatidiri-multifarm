@@ -1,9 +1,10 @@
+import { Check, ChevronDown } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
-import { ChevronDown } from 'lucide-react'
 import { FC } from 'react'
 import {
   SelectContent,
   SelectItem,
+  SelectItemIndicator,
   SelectItemText,
   SelectRoot,
   SelectTrigger,
@@ -37,12 +38,11 @@ const SelectTable: FC<SelectTableProps> = ({
       <SelectTrigger asChild>
         <button
           className={cn(
-            'flex items-center justify-between rounded-md px-2 py-2 outline-none',
-            triggerBackground,
-            small ? 'w-20' : 'w-36'
+            'min-w-36 flex items-center justify-between gap-3 rounded-md px-2 py-2 text-white outline-none',
+            triggerBackground
           )}
         >
-          <SelectValue />
+          <SelectValue className="text-white" />
           <ChevronDown className="h-4 w-4" />
         </button>
       </SelectTrigger>
@@ -50,7 +50,10 @@ const SelectTable: FC<SelectTableProps> = ({
         <SelectViewport>
           {options.map(({ name, value }) => (
             <SelectItem key={value} value={value}>
-              <SelectItemText>{name}</SelectItemText>
+              <SelectItemText className="text-white">{name}</SelectItemText>
+              <SelectItemIndicator>
+                <Check className="h-5 w-5" />
+              </SelectItemIndicator>
             </SelectItem>
           ))}
         </SelectViewport>

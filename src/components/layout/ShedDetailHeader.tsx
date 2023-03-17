@@ -1,9 +1,8 @@
 'use client'
-import { BackLink, Button } from '@/components/shared'
-import { Pen } from '@/components/shared/Icons'
+import { BackLink } from '@/components/shared'
 import { useAnimalStore } from '@/store/animal'
 import { usePathname } from 'next/navigation'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
 import Navbar from './Navbar'
 
@@ -16,7 +15,6 @@ interface ShedDetailHeaderProps {
 
 const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
   const { animal, shed_code, type, eartagOptions } = props
-  const [isOpen, closeModal] = useState(false)
   const { animalTitle } = useAnimalStore()
   const title = animalTitle(animal)
   const pathname = usePathname()
@@ -36,13 +34,6 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
 
   return (
     <>
-      <ShedAnimalForm
-        isOpen={isOpen}
-        eartagOptions={eartagOptions}
-        closeModal={closeModal}
-        animal={animal}
-      />
-
       <BackLink href="/shed/goat" />
       <div className="mb-8">
         <h1 className="my-6 text-2xl font-semibold text-neutral-5">
@@ -56,10 +47,11 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         {type && (
-          <Button onClick={() => closeModal(true)}>
-            Tambah {title}
-            <Pen className="ml-3 h-4 w-4 fill-white" />
-          </Button>
+          <ShedAnimalForm
+            eartagOptions={eartagOptions}
+            animal={animal}
+            id={id}
+          />
         )}
       </Navbar>
     </>

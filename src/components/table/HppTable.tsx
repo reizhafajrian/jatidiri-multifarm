@@ -2,9 +2,9 @@
 import { formatRupiah } from '@/lib/utils'
 import { IHpp } from '@/store/hpp'
 import { ColumnDef } from '@tanstack/react-table'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import EditHppForm from '../form/EditHppForm'
-import { Button, Table } from '../shared'
+import { Table } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
 const statusOptions = [
@@ -18,18 +18,11 @@ interface HppTableProps {
 }
 
 const HppTable: FC<HppTableProps> = ({ data }) => {
-  const [isOpen, closeModal] = useState(false)
-  const [eartagCode, setEartagCode] = useState('')
   // const [status, setStatus] = useState(statusOptions[0])
 
   // const changeStatusHandler = (value: any) => {
   //   setStatus(value)
   // }
-
-  const editHandler = (value: string) => {
-    setEartagCode(value)
-    closeModal(true)
-  }
 
   const columns: ColumnDef<any, any>[] = [
     { header: 'No Eartag', accessorKey: 'eartag_code' },
@@ -78,26 +71,11 @@ const HppTable: FC<HppTableProps> = ({ data }) => {
     {
       header: 'Aksi',
       accessorKey: 'eartag_code',
-      cell: (data) => (
-        <Button
-          variant="edit"
-          size="xs"
-          onClick={() => editHandler(data.getValue())}
-        />
-      ),
+      cell: (data) => <EditHppForm eartag_code={data.getValue()} />,
     },
   ]
 
-  return (
-    <>
-      <EditHppForm
-        eartag_code={eartagCode}
-        isOpen={isOpen}
-        closeModal={closeModal}
-      />
-      <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
-    </>
-  )
+  return <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
 }
 
 export default HppTable

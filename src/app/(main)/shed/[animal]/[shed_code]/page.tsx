@@ -9,14 +9,14 @@ export const metadata = {
 }
 
 export default function ShedDetailPage(props: IPageProps) {
-  const { shed_code } = props.params
+  const { shed_code, animal } = props.params
   const { shedDetail: data, options } = use(
     getData(shed_code, cookies().get('token')?.value!)
   )
 
   return (
     <>
-      <ShedDetailHeader animal={data.animal_type} shed_code={data.shed_code} />
+      <ShedDetailHeader animal={animal} shed_code={data.shed_code} />
       <ShedInfo data={data} options={options} />
     </>
   )

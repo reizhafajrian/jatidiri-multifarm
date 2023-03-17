@@ -1,27 +1,22 @@
 'use client'
 import { Table } from '@/components/shared'
+import useDataList from '@/hooks/useDataList'
 import { longDateFormatter } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import SelectTable from '../shared/SelectTable'
 
-const options = [
-  { name: '111', value: '111' },
-  { name: '222', value: '222' },
-  { name: '333', value: '333' },
-  { name: '444', value: '444' },
-]
-
 interface ShedAnimalTableProps {
-  // data: any
+  id: string
+  shedCodeOptions: any
 }
 
-const ShedAnimalTable: FC<ShedAnimalTableProps> = ({}) => {
-  const [shedCode, setShedCode] = useState(options[0])
-  const changeShedHandler = (value: any) => {
-    setShedCode(value)
+const ShedAnimalTable: FC<ShedAnimalTableProps> = ({ id, shedCodeOptions }) => {
+  const { data, loading, mutate } = useDataList(`/api/shed/get/detail/${id}`)
+
+  const changeShedHandler = (value: string) => {
+    console.log(value)
   }
-  const data: any = []
 
   const columns: ColumnDef<any, any>[] = [
     {
@@ -36,26 +31,23 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({}) => {
       accessorKey: 'shed_code',
       cell: (data) => (
         <SelectTable
-          value={data.getValue() ?? '111'}
-          options={options}
+          value={data.getValue()}
+          onChange={changeShedHandler}
+          options={shedCodeOptions}
           triggerBackground="bg-primary-4"
-          small
         />
       ),
     },
   ]
 
-  return <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+  return (
+    <Table
+      isLoading={loading}
+      data={data?.animal_data ?? []}
+      columns={columns}
+      fixedCol={2}
+    />
+  )
 }
 
 export default ShedAnimalTable
-
-{
-  /* <Listbox
-          options={options}
-          value={shedCode}
-          onChange={changeShedHandler}
-          className="bg-primary-4 fill-white text-white"
-          optionsClassname="w-14 bg-primary-4 text-white"
-        /> */
-}

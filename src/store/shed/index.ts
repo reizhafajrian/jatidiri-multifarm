@@ -55,6 +55,7 @@ interface IShedDetail {
 }
 
 interface IShedAnimal {
+  id?: string
   created_by?: string
   eartag_code?: string
   description?: string

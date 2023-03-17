@@ -1,18 +1,25 @@
 'use client'
-import { Button, Form, InputText, Modal } from '@/components/shared'
+import { Button, Form, InputText } from '@/components/shared'
+import {
+  DialogClose,
+  DialogContent,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
-import { IModal } from '@/lib/types'
 import { ICategory, useCategoryStore } from '@/store/category'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FC } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface IProps extends IModal {
+interface EditCategoryFormProps {
   category: string
 }
 
-const EditCategoryForm: FC<IProps> = ({ category, closeModal, isOpen }) => {
-  const { formValues, editCategory } = useCategoryStore()
+const EditCategoryForm: FC<EditCategoryFormProps> = ({ category }) => {
+  const [open, setOpen] = useState(false)
+  const { editCategory } = useCategoryStore()
 
   const methods = useForm<ICategory>({
     resolver: zodResolver(categorySchema),
@@ -20,40 +27,50 @@ const EditCategoryForm: FC<IProps> = ({ category, closeModal, isOpen }) => {
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
     console.log(values)
+    setOpen(false)
   }
 
   return (
-    <Modal isOpen={isOpen!} closeModal={closeModal}>
-      <h1 className="mb-6 text-xl font-semibold">Edit {setTitle(category)}</h1>
-      <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
-        <div className="mb-8 space-y-6">
-          <InputText name="type" label={`Jenis ${setTitle(category)}`} />
-          <InputText name="stock" label="Stock" />
-          <InputText
-            name="price"
-            label={`Harga ${category === 'feed' ? '(per kg)' : '(per pcs)'}`}
-          />
-        </div>
-        <div className="flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-36"
-            onClick={() => closeModal(false)}
-            disabled={methods.formState.isSubmitting}
-          >
-            CANCEL
-          </Button>
-          <Button
-            type="submit"
-            className="w-36"
-            isLoading={methods.formState.isSubmitting}
-          >
-            SAVE
-          </Button>
-        </div>
-      </Form>
-    </Modal>
+    <DialogRoot open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button variant="edit" size="xs" />
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogTitle>Edit {setTitle(category)}</DialogTitle>
+
+        <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
+          <div className="mb-8 space-y-6">
+            <InputText name="type" label={`Jenis ${setTitle(category)}`} />
+            <InputText name="stock" label="Stock" />
+            <InputText
+              name="price"
+              label={`Harga ${category === 'feed' ? '(per kg)' : '(per pcs)'}`}
+            />
+          </div>
+          <div className="flex justify-end gap-3">
+            <DialogClose>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-36"
+                disabled={methods.formState.isSubmitting}
+              >
+                CANCEL
+              </Button>
+            </DialogClose>
+
+            <Button
+              type="submit"
+              className="w-36"
+              isLoading={methods.formState.isSubmitting}
+            >
+              SAVE
+            </Button>
+          </div>
+        </Form>
+      </DialogContent>
+    </DialogRoot>
   )
 }
 

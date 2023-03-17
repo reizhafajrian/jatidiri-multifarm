@@ -6,22 +6,31 @@ import {
   InputDate,
   InputSelect,
   InputText,
-  Modal,
   toast,
 } from '@/components/shared'
 import { shedDetailSchema } from '@/lib/schemas'
-import { IModal } from '@/lib/types'
 import { useAuthStore } from '@/store/auth'
 import { IShedDetail, useShedStore } from '@/store/shed'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
+import {
+  DialogClose,
+  DialogContent,
+  DialogRoot,
+  DialogTitle,
+  DialogTrigger,
+} from '../shared/Dialog'
+import { Pen } from '../shared/Icons'
 
-export default function ShedDetailForm(
-  props: IModal & { shed_code: string; options: any }
-) {
-  const { isOpen, closeModal, shed_code } = props
+interface ShedDetailFormProps {
+  shed_code: string
+  options: any
+}
+
+const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
+  const [open, setOpen] = useState(false)
   const { user } = useAuthStore()
   const { addShedDetail } = useShedStore()
   const [categories, setCategories] = useState<any>({ feed: true })
@@ -34,7 +43,7 @@ export default function ShedDetailForm(
     const res = await addShedDetail(values)
 
     if (res.errors || res.error) {
-      closeModal(false)
+      setOpen(false)
 
       return toast({
         type: 'error',
@@ -47,83 +56,95 @@ export default function ShedDetailForm(
       message: res.message,
     })
 
-    closeModal(false)
+    setOpen(false)
     methods.reset()
     mutate(`/api/shed/data/get?shed_code=${shed_code}`)
   }
-
   return (
-    <Modal isOpen={isOpen!} closeModal={closeModal}>
-      <h1 className="mb-6 text-xl font-semibold">Tambah Data</h1>
-      <Form
-        onSubmit={(values) =>
-          onSubmit({ ...values, created_by: user.id, shed_code })
-        }
-        methods={methods}
-      >
-        <div className="mb-8 space-y-5">
-          {/* category radio options */}
-          <div className="flex justify-between">
-            {shedDataFormContent.options.map(({ name, label }, idx) => (
-              <InputCheckbox
-                key={idx}
-                label={label}
-                defaultChecked={categories[name]}
-                onChange={({ target: { checked } }: any) =>
-                  setCategories((s: any) => ({ ...s, [name]: checked }))
-                }
-              />
+    <DialogRoot open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button>
+          Tambah Data
+          <Pen className="ml-3 h-4 w-4 fill-white" />
+        </Button>
+      </DialogTrigger>
+
+      <DialogContent>
+        <DialogTitle>Tambah Data</DialogTitle>
+
+        <Form
+          onSubmit={(values) =>
+            onSubmit({ ...values, created_by: user.id, shed_code })
+          }
+          methods={methods}
+        >
+          <div className="mb-8 space-y-5">
+            {/* category radio options */}
+            <div className="flex justify-between">
+              {shedDataFormContent.options.map(({ name, label }, idx) => (
+                <InputCheckbox
+                  key={idx}
+                  label={label}
+                  defaultChecked={categories[name]}
+                  onChange={({ target: { checked } }: any) =>
+                    setCategories((s: any) => ({ ...s, [name]: checked }))
+                  }
+                />
+              ))}
+            </div>
+            {/* form fields */}
+            {shedDataFormContent.content.map(({ fields, name, title }, idx) => (
+              <div key={idx} className={categories[name] ? 'block' : 'hidden'}>
+                <h3 className="mb-4 text-base font-medium">{title}</h3>
+                <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+                  {fields.map((field, idx) => (
+                    <div key={idx}>
+                      {field.type === 'date' ? (
+                        <InputDate name={field.name} label={field.label} />
+                      ) : field.type === 'select' ? (
+                        <InputSelect
+                          name={field.name}
+                          label={field.label}
+                          options={options[name].map((option: any) => ({
+                            name: option[field.name.slice(5)],
+                            value: option['_id'],
+                          }))}
+                        />
+                      ) : (
+                        <InputText name={field.name} label={field.label} />
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
             ))}
           </div>
-          {/* form fields */}
-          {shedDataFormContent.content.map(({ fields, name, title }, idx) => (
-            <div key={idx} className={categories[name] ? 'block' : 'hidden'}>
-              <h3 className="mb-4 text-base font-medium">{title}</h3>
-              <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                {fields.map((field, idx) => (
-                  <div key={idx}>
-                    {field.type === 'date' ? (
-                      <InputDate name={field.name} label={field.label} />
-                    ) : field.type === 'select' ? (
-                      <InputSelect
-                        name={field.name}
-                        label={field.label}
-                        options={props.options[name].map((option: any) => ({
-                          name: option[field.name.slice(5)],
-                          value: option['_id'],
-                        }))}
-                      />
-                    ) : (
-                      <InputText name={field.name} label={field.label} />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-36"
-            onClick={() => closeModal(false)}
-            disabled={methods.formState.isSubmitting}
-          >
-            CANCEL
-          </Button>
-          <Button
-            type="submit"
-            className="w-36"
-            isLoading={methods.formState.isSubmitting}
-          >
-            SAVE
-          </Button>
-        </div>
-      </Form>
-    </Modal>
+          <div className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-36"
+                disabled={methods.formState.isSubmitting}
+              >
+                CANCEL
+              </Button>
+            </DialogClose>
+            <Button
+              type="submit"
+              className="w-36"
+              isLoading={methods.formState.isSubmitting}
+            >
+              SAVE
+            </Button>
+          </div>
+        </Form>
+      </DialogContent>
+    </DialogRoot>
   )
 }
+
+export default ShedDetailForm
 
 const shedDataFormContent = {
   options: [

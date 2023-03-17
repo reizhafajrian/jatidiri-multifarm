@@ -41,3 +41,18 @@ export const Delete = async (url: string) => {
 
   return res
 }
+
+export const Put = async ({ url, body, formData }: postType) => {
+  const res = await fetch(url, {
+    method: 'PUT',
+    credentials: 'include',
+    ...(body && { body: JSON.stringify(body) }),
+    ...(formData && { body: formData }),
+    headers: {
+      Authorization: `bearer ${useAuthStore.getState().token ?? undefined}`,
+      ...(!formData && { 'Content-Type': 'application/json' }),
+    },
+  }).then((res) => res.json())
+
+  return res
+}

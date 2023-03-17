@@ -7,21 +7,16 @@ import {
   SheepCircle,
 } from '@/components/shared/Icons'
 import { useCategoryStore } from '@/store/category'
-import { useState } from 'react'
 import AddCategoryForm from '../form/AddCategoryForm'
 import CategoryCardList from '../list/CategoryCardList'
-import { Button } from '../shared'
 import CategoryTable from '../table/CategoryTable'
 
 export default function CategoryContent() {
-  const [cat, setCat] = useState('')
-  const [isOpen, closeModal] = useState(false)
   const c = useCategoryStore()
   const categories = setCategories(c)
 
   return (
     <>
-      <AddCategoryForm category={cat} isOpen={isOpen} closeModal={closeModal} />
       <div className="space-y-10">
         {categories.map(({ cardList, category, data }, idx) => (
           <div key={idx}>
@@ -31,17 +26,10 @@ export default function CategoryContent() {
               </h1>
               <div className="mb-6 flex items-end justify-between">
                 <CategoryCardList cardList={cardList} />
-                <Button
-                  onClick={() => {
-                    setCat(category)
-                    closeModal(true)
-                  }}
-                >
-                  Tambah {title(category)}
-                </Button>
+                <AddCategoryForm category={category} />
               </div>
             </div>
-            <CategoryTable category={category} data={data} />
+            <CategoryTable category={category} />
           </div>
         ))}
       </div>

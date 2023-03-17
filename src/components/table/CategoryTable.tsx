@@ -3,10 +3,10 @@ import useDataList from '@/hooks/useDataList'
 import { Delete } from '@/lib/api'
 import { formatRupiah } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import EditCategoryForm from '../form/EditCategoryForm'
-import { Button, Table, toast } from '../shared'
+import { Table, toast } from '../shared'
 
 const categoryTitle = (category: string) =>
   category === 'feed'
@@ -19,13 +19,9 @@ const categoryTitle = (category: string) =>
 
 interface CategoryTableProps {
   category: string
-  data: any
 }
 
-const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
-  const [isOpenEdit, closeModalEdit] = useState(false)
-  const [id, setId] = useState('')
-
+const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
   const { data, loading, mutate } = useDataList(`/api/${category}/get`)
 
   const deleteHandler = async (id: string) => {
@@ -59,14 +55,7 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
       accessorKey: `_id`,
       cell: (data: any) => (
         <div className="flex gap-2">
-          <Button
-            variant="edit"
-            size="xs"
-            onClick={() => {
-              closeModalEdit(true)
-              setId(data.getValue())
-            }}
-          />
+          <EditCategoryForm category={category} />
           <DeleteModal
             title={`Hapus Data Ini?`}
             desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
@@ -79,11 +68,6 @@ const CategoryTable: FC<CategoryTableProps> = ({ category, data: test }) => {
 
   return (
     <>
-      <EditCategoryForm
-        category={category}
-        isOpen={isOpenEdit}
-        closeModal={closeModalEdit}
-      />
       <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
     </>
   )

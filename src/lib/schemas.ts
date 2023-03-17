@@ -138,7 +138,7 @@ export const shedDetailSchema = (categories: any) => {
 }
 
 export const shedAnimalSchema = z.object({
-  shed_code: z.string(validations),
+  eartag_code: z.string(validations),
   description: z.string(),
 })
 

@@ -23,7 +23,7 @@ const InputText: FC<InputTextProps> = ({
   } = useFormContext()
 
   return (
-    <>
+    <div>
       <div className="relative">
         <input
           id={label}
@@ -80,7 +80,7 @@ const InputText: FC<InputTextProps> = ({
       <span className="text-[10px] text-error">
         {errors[name]?.message?.toString()}
       </span>
-    </>
+    </div>
   )
 }
 

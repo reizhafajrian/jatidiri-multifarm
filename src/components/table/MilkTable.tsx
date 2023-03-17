@@ -2,9 +2,9 @@
 import useDataList from '@/hooks/useDataList'
 import { Post } from '@/lib/api'
 import { ColumnDef } from '@tanstack/react-table'
-import { FC, useState } from 'react'
+import { FC } from 'react'
 import MilkForm from '../form/MilkForm'
-import { Button, Table, toast } from '../shared'
+import { Table, toast } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
 const statusOptions = [
@@ -15,8 +15,6 @@ const statusOptions = [
 interface MilkTableProps {}
 
 const MilkTable: FC<MilkTableProps> = ({}) => {
-  const [isOpen, closeModal] = useState(false)
-  const [values, setValues] = useState({})
   const { data, loading, mutate } = useDataList('/api/milk/get')
 
   const changeStatusHandler = async (status: string, _id: string) => {
@@ -42,14 +40,7 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
       }
     } catch (e) {
       console.log(e)
-    } finally {
-      closeModal(false)
     }
-  }
-
-  const editHandler = (values: any) => {
-    setValues(values)
-    closeModal(true)
   }
 
   const columns: ColumnDef<any, any>[] = [
@@ -82,24 +73,12 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
     {
       header: 'Aksi',
       accessorKey: '_id',
-      cell: (data) => (
-        <Button
-          size="xs"
-          variant="edit"
-          onClick={() => editHandler(data.row.original)}
-        />
-      ),
+      cell: (data) => <MilkForm formType="edit" values={data.row.original} />,
     },
   ]
 
   return (
     <>
-      <MilkForm
-        formType="edit"
-        isOpen={isOpen}
-        closeModal={closeModal}
-        values={values}
-      />
       <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
     </>
   )

@@ -1,4 +1,4 @@
-import { Post } from '@/lib/api'
+import { Post, Put } from '@/lib/api'
 import { IShed, IShedAnimal, IShedDetail } from '@/store/shed'
 
 export const addShedHandler = async (payload: IShed) => {
@@ -23,6 +23,15 @@ export const addShedDetailHandler = async (payload: IShedDetail) => {
 }
 
 export const addShedAnimalHandler = async (payload: IShedAnimal) => {
-  console.log(payload)
-  return
+  try {
+    const { id, eartag_code: ear_tag, description } = payload
+    const url = `/api/shed/add-animal/${id}`
+    const res = await Put({
+      url,
+      body: { ear_tag, description },
+    })
+    return res
+  } catch (err) {
+    return err
+  }
 }
