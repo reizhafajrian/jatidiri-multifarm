@@ -8,8 +8,8 @@ import {
   DialogTrigger,
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
-import { useAuthStore } from '@/store/auth'
 import { ICategory, useCategoryStore } from '@/store/category'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -23,7 +23,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   const [open, setOpen] = useState(false)
   const title = setTitle(category)
   const satuan = setSatuan(category)
-  const { user } = useAuthStore()
+  const { user } = useStore()
   const { addCategory } = useCategoryStore()
 
   const methods = useForm<ICategory>({
@@ -62,7 +62,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
         <Form
           methods={methods}
           onSubmit={(values) =>
-            onSubmit({ ...values, created_by: user.id, category })
+            onSubmit({ ...values, created_by: user?.id, category })
           }
         >
           <div className="mb-8 space-y-6">

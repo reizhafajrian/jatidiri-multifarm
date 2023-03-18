@@ -1,6 +1,7 @@
 'use client'
 import { editProfileSchema } from '@/lib/schemas'
-import { IUser, useAuthStore } from '@/store/auth'
+import { IUser } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -8,11 +9,11 @@ import { Button, Form, InputSelect, InputText } from '../shared'
 
 export default function EditProfileForm() {
   const router = useRouter()
-  const { user, editProfile } = useAuthStore()
+  const { user } = useStore()
 
   const methods = useForm<IUser>({
     resolver: zodResolver(editProfileSchema),
-    defaultValues: user,
+    defaultValues: user!,
   })
 
   const onSubmit: SubmitHandler<IUser> = async (values) => {
@@ -24,8 +25,11 @@ export default function EditProfileForm() {
       <div className="flex gap-6">
         <div className="h-20 w-20 rounded-full bg-black"></div>
         <div className="space-y-2">
-          <p className="text-base font-semibold capitalize">{`${user.first_name} ${user.last_name}`}</p>
-          <p className="text-sm text-neutral-4">{user.email}</p>
+          <p className="text-base font-semibold capitalize">
+            {/* {`${user?.first_name} ${user?.last_name}`}  */}
+            {user?.name}
+          </p>
+          <p className="text-sm text-neutral-4">{user?.email}</p>
           <p className="w-fit rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light">
             Super Admin
           </p>

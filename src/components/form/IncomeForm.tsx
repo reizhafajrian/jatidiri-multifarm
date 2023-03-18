@@ -3,8 +3,8 @@ import { Button, Form, InputDate, InputText, toast } from '@/components/shared'
 import { Get } from '@/lib/api'
 import { incomeSchema } from '@/lib/schemas'
 import { formatRupiah } from '@/lib/utils'
-import { useAuthStore } from '@/store/auth'
 import { IMilkInfo, useMilkStore } from '@/store/milk'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -22,7 +22,7 @@ interface IncomeFormProps {}
 
 const IncomeForm: FC<IncomeFormProps> = ({}) => {
   const [open, setOpen] = useState(false)
-  const { user } = useAuthStore()
+  const { user } = useStore()
   const { addIncome } = useMilkStore()
 
   // INCOME HISTORY
@@ -94,7 +94,7 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
 
         <Form
           methods={methods}
-          onSubmit={(values) => onSubmit({ ...values, created_by: user.id })}
+          onSubmit={(values) => onSubmit({ ...values, created_by: user?.id })}
         >
           <div className="mb-8 space-y-5">
             <div>

@@ -12,7 +12,7 @@ import { ChevronDown } from '@/components/shared/Icons'
 import SelectFilter from '@/components/shared/SelectFilter'
 import { getAnimalListOptions } from '@/lib/data'
 import { shortDateFormatter } from '@/lib/utils'
-import { useAnimalStore } from '@/store/animal'
+import useStore from '@/store/useStore'
 import { FC, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
@@ -21,22 +21,23 @@ interface AnimalFilterProps {
 }
 
 const AnimalFilter: FC<AnimalFilterProps> = ({ animal }) => {
+  const { setFilter, originFemale, originMale } = useStore()
   const opts = getAnimalListOptions(animal)
 
   return (
     <div className="mb-6 flex items-center gap-6">
-      <FilterDate dateOptions={opts.dateOptions} />
+      <FilterDate dateOptions={opts?.dateOptions} />
       <SelectFilter
         title="asal induk"
-        defaultValue={useAnimalStore.getState().origin_female}
-        options={opts.femaleOriginOptions}
-        onChange={(value) => useAnimalStore.setState({ origin_female: value })}
+        defaultValue={originFemale}
+        options={opts?.femaleOriginOptions}
+        onChange={(value) => setFilter({ originFemale: value })}
       />
       <SelectFilter
         title="asal pejantan"
-        defaultValue={useAnimalStore.getState().origin_male}
-        options={opts.maleOriginOptions}
-        onChange={(value) => useAnimalStore.setState({ origin_male: value })}
+        defaultValue={originMale}
+        options={opts?.maleOriginOptions}
+        onChange={(value) => setFilter({ originMale: value })}
       />
     </div>
   )
@@ -48,7 +49,7 @@ const FilterDate = ({ dateOptions }: any) => {
   const [startDate, setStartDate] = useState(new Date())
   const [endDate, setEndDate] = useState(null)
 
-  const [selectedDate, setSelectedDate] = useState(dateOptions[0])
+  const [selectedDate, setSelectedDate] = useState(dateOptions[0] ?? undefined)
 
   const onChange = (dates: any) => {
     const [start, end] = dates

@@ -18,7 +18,7 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
 
       const res = await Post({
         url: '/api/milk/status/update',
-        body: { data },
+        data: { data },
       })
 
       toast({

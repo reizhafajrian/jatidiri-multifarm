@@ -1,14 +1,8 @@
 'use client'
-import {
-  Button,
-  Form,
-  InputSelect,
-  InputText,
-  toast,
-} from '@/components/shared'
+import { Button, Form, InputSelect, InputText } from '@/components/shared'
 import { shedAnimalSchema } from '@/lib/schemas'
-import { useAnimalStore } from '@/store/animal'
-import { IShedAnimal, useShedStore } from '@/store/shed'
+import { IShedAnimal } from '@/store/shed'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -29,35 +23,21 @@ interface ShedAnimalFormProps {
 }
 
 const ShedAnimalForm: FC<ShedAnimalFormProps> = ({
-  animal,
+  animal: test,
   eartagOptions,
   id,
 }) => {
   const [open, setOpen] = useState(false)
-  const { animalTitle } = useAnimalStore()
-  const { addShedAnimal } = useShedStore()
-  const title = animalTitle(animal)
+  const { animal, addShedAnimal } = useStore()
 
   const methods = useForm<IShedAnimal>({
     resolver: zodResolver(shedAnimalSchema),
   })
 
-  const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
-    try {
-      const res = await addShedAnimal(values)
-
-      if (res.status === 200) {
-        toast({
-          type: 'success',
-          message: res.message,
-        })
-        mutate(`/api/shed/get/detail/${id}`)
-      }
-    } catch (e) {
-      console.log(e)
-    }
-
-    // setOpen(false)
+  const onSubmit: SubmitHandler<IShedAnimal> = (values) => {
+    addShedAnimal(values)
+    mutate(`/api/shed/get/detail/${id}`)
+    setOpen(false)
   }
 
   const codeOptions =
@@ -70,12 +50,12 @@ const ShedAnimalForm: FC<ShedAnimalFormProps> = ({
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          Tambah {title}
+          Tambah {animal.title}
           <Pen className="ml-3 h-4 w-4 fill-white" />
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>Tambah Data {title}</DialogTitle>
+        <DialogTitle>Tambah Data {animal.title}</DialogTitle>
 
         <Form
           methods={methods}

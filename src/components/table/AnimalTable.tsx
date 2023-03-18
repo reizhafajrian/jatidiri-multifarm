@@ -1,12 +1,12 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
-import { useAnimalStore } from '@/store/animal'
+import { formatRupiah, longDateFormatter } from '@/lib/utils'
+import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import { Button, Table } from '../shared'
-import { toast } from '../shared/Toast'
 
 interface AnimalTableProps {
   animal?: string
@@ -16,39 +16,25 @@ interface AnimalTableProps {
 const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
   const isCempek = type === 'cempek'
-  const { origin_female, origin_male, ...a } = useAnimalStore()
+  const { deleteAnimal, originMale, originFemale } = useStore()
 
   const queries = []
   !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
-  origin_male !== 'all' && queries.push('origin_male=' + origin_male)
-  origin_female !== 'all' && queries.push('origin_female=' + origin_female)
+  originMale !== 'all' && queries.push('origin_male=' + originMale)
+  originFemale !== 'all' && queries.push('origin_female=' + originFemale)
 
   const { data, loading, mutate } = useDataList(
     isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
     queries
   )
 
-  const deleteHandler = async (id: string) => {
-    try {
-      const res = await a.deleteAnimal({
-        animal,
-        eartag_code: id,
-      })
-
-      if (res.status === 201) {
-        toast({
-          type: 'success',
-          message: res.message,
-        })
-        mutate()
-      }
-    } catch (e) {
-      console.log(e)
-    }
+  const deleteHandler = (id: string) => {
+    deleteAnimal(id)
+    mutate()
   }
 
   const columns: ColumnDef<any, any>[] = [
-    ...(type === 'cempek' ? a.cempekTColumns : a.animalTColumns),
+    ...(type === 'cempek' ? cempekTColumns : animalTColumns),
     {
       header: 'Aksi',
       accessorKey: '_id',
@@ -81,3 +67,85 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
 }
 
 export default AnimalTable
+
+const cempekTColumns: ColumnDef<any, any>[] = [
+  {
+    header: 'Tgl Lahir',
+    accessorKey: 'birth_date',
+    cell: (data) => longDateFormatter(new Date(data.getValue())),
+  },
+  {
+    header: 'No Eartag',
+    accessorKey: 'eartag_code',
+  },
+  {
+    header: 'Jenis Cempek',
+    accessorKey: 'type',
+  },
+  {
+    header: 'Jenis Kelamin',
+    accessorKey: 'gender',
+    cell: (data) => (data.getValue() ? 'jantan' : 'betina'),
+  },
+  {
+    header: 'Berat',
+    accessorKey: 'weight',
+  },
+  {
+    header: 'Usia',
+    accessorKey: 'age',
+  },
+  {
+    header: 'Kondisi Lahir',
+    accessorKey: 'birth_condition',
+  },
+  {
+    header: 'Asal Induk',
+    accessorKey: 'female_parent_origin',
+  },
+  {
+    header: 'Asal Pejantan',
+    accessorKey: 'male_parent_origin',
+  },
+]
+
+const animalTColumns: ColumnDef<any, any>[] = [
+  {
+    header: 'Tgl Tiba',
+    accessorKey: 'arrival_date',
+    cell: (data) => longDateFormatter(new Date(data.getValue())),
+  },
+  {
+    header: 'No Eartag',
+    accessorKey: 'eartag_code',
+  },
+  {
+    header: 'Jenis',
+    accessorKey: 'type',
+  },
+  {
+    header: 'Asal',
+    accessorKey: 'origin',
+  },
+  {
+    header: 'Berat',
+    accessorKey: 'weight',
+  },
+  {
+    header: 'Usia',
+    accessorKey: 'age',
+  },
+  {
+    header: 'Asal Induk',
+    accessorKey: 'origin_female',
+  },
+  {
+    header: 'Asal Pejantan',
+    accessorKey: 'origin_male',
+  },
+  {
+    header: 'Harga Beli',
+    accessorKey: 'purchase_price',
+    cell: (data) => formatRupiah(data.getValue()),
+  },
+]

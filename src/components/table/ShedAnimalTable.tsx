@@ -9,14 +9,28 @@ import SelectTable from '../shared/SelectTable'
 interface ShedAnimalTableProps {
   id: string
   shedCodeOptions: any
+  type: string
 }
 
-const ShedAnimalTable: FC<ShedAnimalTableProps> = ({ id, shedCodeOptions }) => {
-  const { data, loading, mutate } = useDataList(`/api/shed/get/detail/${id}`)
+const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
+  id,
+  shedCodeOptions,
+  type,
+}) => {
+  const queries = []
+  const isCempek = type === 'cempek'
+  !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
+
+  const { data, loading, mutate } = useDataList(
+    `/api/shed/get/detail/${id}`,
+    queries
+  )
 
   const changeShedHandler = (value: string) => {
     console.log(value)
   }
+
+  console.log(data)
 
   const columns: ColumnDef<any, any>[] = [
     {
@@ -31,10 +45,10 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({ id, shedCodeOptions }) => {
       accessorKey: 'shed_code',
       cell: (data) => (
         <SelectTable
-          value={data.getValue()}
+          value={id}
           onChange={changeShedHandler}
           options={shedCodeOptions}
-          triggerBackground="bg-primary-4"
+          triggerClassName="bg-primary-4 text-white font-semibold"
         />
       ),
     },

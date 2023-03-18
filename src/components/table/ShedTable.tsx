@@ -12,7 +12,9 @@ const ShedTable: FC<ShedTableProps> = ({ animal }) => {
   const router = useRouter()
   const pathname = usePathname()
 
-  const { data, loading } = useDataList('/api/shed/get')
+  const { data, loading } = useDataList('/api/shed/get', [
+    `animal_type=${animal}`,
+  ])
 
   const columns = [
     { header: 'No Kandang', accessorKey: 'shed_code' },

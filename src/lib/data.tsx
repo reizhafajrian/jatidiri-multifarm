@@ -1,4 +1,10 @@
-import { animalTitle, genderTitle } from '@/store/animal/handlers'
+const animalTitle = (payload: string) => {
+  return payload === 'goat' ? 'Kambing' : payload === 'sheep' ? 'Domba' : 'Sapi'
+}
+
+const genderTitle = (payload: string) => {
+  return payload === 'true' ? 'Pejantan' : 'Betina'
+}
 
 // ANIMAL LIST DATA
 export const getAnimalListOptions = (animal: string) => {

@@ -2,7 +2,7 @@ import { Post, Put } from '@/lib/api'
 import { IShed, IShedAnimal, IShedDetail } from '@/store/shed'
 
 export const addShedHandler = async (payload: IShed) => {
-  const res = await Post({ url: '/api/shed/create', body: payload })
+  const res = await Post({ url: '/api/shed/create', data: payload })
   return res
 }
 
@@ -17,7 +17,7 @@ export const addShedDetailHandler = async (payload: IShedDetail) => {
     }
   }
 
-  const res = await Post({ url: '/api/shed/data/create', body })
+  const res = await Post({ url: '/api/shed/data/create', data: body })
 
   return res
 }
@@ -28,7 +28,7 @@ export const addShedAnimalHandler = async (payload: IShedAnimal) => {
     const url = `/api/shed/add-animal/${id}`
     const res = await Put({
       url,
-      body: { ear_tag, description },
+      data: { ear_tag, description },
     })
     return res
   } catch (err) {

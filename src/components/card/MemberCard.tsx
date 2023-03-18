@@ -1,5 +1,4 @@
 'use client'
-import { useAuthStore } from '@/store/auth'
 import { useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import MemberForm from '../form/MemberForm'
@@ -16,16 +15,9 @@ const options = [
 
 export default function MemberCard({ data }: any) {
   const [isEditOpen, closeEditModal] = useState(false)
-  const { deleteMember } = useAuthStore()
   const [role, setRole] = useState(options[0])
 
-  const deleteHandler = async () => {
-    try {
-      await deleteMember(data._id)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  const deleteHandler = async () => {}
 
   return (
     <>
@@ -41,7 +33,7 @@ export default function MemberCard({ data }: any) {
           <SelectTable
             value={role.value}
             options={options}
-            triggerBackground={role.bgColor}
+            triggerClassName={`${role.bgColor} font-semibold text-neutral-4 text-xs`}
           />
         </div>
         <div className="ml-auto text-neutral-4">

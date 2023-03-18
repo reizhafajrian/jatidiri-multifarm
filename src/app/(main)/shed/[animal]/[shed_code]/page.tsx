@@ -1,5 +1,6 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import ShedInfo from '@/components/layout/ShedInfo'
+import { StoreInitializer } from '@/components/shared'
 import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
@@ -16,6 +17,7 @@ export default function ShedDetailPage(props: IPageProps) {
 
   return (
     <>
+      <StoreInitializer data={{ animal }} />
       <ShedDetailHeader animal={animal} shed_code={data.shed_code} />
       <ShedInfo data={data} options={options} />
     </>

@@ -1,7 +1,7 @@
 'use client'
 import { Button, Form, InputText } from '@/components/shared'
 import { changePassSchema } from '@/lib/schemas'
-import { IChangePass, useAuthStore } from '@/store/auth'
+import { IChangePass } from '@/store/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
@@ -11,7 +11,6 @@ interface IProps {}
 
 const ChangePasswordForm: FC<IProps> = ({}) => {
   const router = useRouter()
-  const { user, changePassword } = useAuthStore()
 
   const methods = useForm<IChangePass>({
     resolver: zodResolver(changePassSchema),

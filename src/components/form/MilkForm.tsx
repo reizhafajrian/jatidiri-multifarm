@@ -9,8 +9,8 @@ import {
 import useDataList from '@/hooks/useDataList'
 import { Get } from '@/lib/api'
 import { milkSchema } from '@/lib/schemas'
-import { useAuthStore } from '@/store/auth'
 import { IMilk, useMilkStore } from '@/store/milk'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -38,7 +38,7 @@ const MilkForm: FC<MilkFormProps> = ({
   const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Data Susu`
   const { addMilk, editMilk } = useMilkStore()
-  const { user } = useAuthStore()
+  const { user } = useStore()
 
   const { data } = useDataList('/api/cow/get', ['gender=false'])
 
@@ -131,7 +131,7 @@ const MilkForm: FC<MilkFormProps> = ({
           onSubmit={(values) =>
             onSubmit({
               ...values,
-              created_by: user.id,
+              created_by: user?.id,
               _id: currentValues._id,
               animal_id: currentValues?.animal_id?._id,
             })

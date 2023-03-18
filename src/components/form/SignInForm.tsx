@@ -1,37 +1,26 @@
 'use client'
-import { Button, Form, InputText, toast } from '@/components/shared'
+import { Button, Form, InputText } from '@/components/shared'
 import { signinSchema } from '@/lib/schemas'
-import { IUser } from '@/store/auth'
+import { IUser } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 export default function SignInForm() {
   const router = useRouter()
+  const login = useStore((state) => state.login)
 
   const methods = useForm<IUser>({
     resolver: zodResolver(signinSchema),
   })
 
-  const onSubmit: SubmitHandler<IUser> = async (data) => {
-    const res = await fetch('/api/signin', {
-      method: 'POST',
-      body: JSON.stringify(data),
-    })
-
-    if (res.status === 200) {
-      methods.reset()
-      return router.push('/dashboard')
-    }
-
-    toast({
-      type: 'error',
-      message: 'wrong credentials!',
-    })
-  }
-
   return (
-    <Form onSubmit={onSubmit} methods={methods} className="space-y-4">
+    <Form
+      onSubmit={(data) => login(data, router)}
+      methods={methods}
+      className="space-y-4"
+    >
       <InputText name="email" label="Email" />
       <InputText name="password" label="Password" isSecured />
       <div className="grid gap-8">

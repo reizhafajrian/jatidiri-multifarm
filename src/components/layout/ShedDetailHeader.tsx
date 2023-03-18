@@ -1,6 +1,7 @@
 'use client'
 import { BackLink } from '@/components/shared'
-import { useAnimalStore } from '@/store/animal'
+import useStore from '@/store/useStore'
+// import { useAnimalStore } from '@/store/animal'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
@@ -14,13 +15,14 @@ interface ShedDetailHeaderProps {
 }
 
 const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
-  const { animal, shed_code, type, eartagOptions } = props
-  const { animalTitle } = useAnimalStore()
-  const title = animalTitle(animal)
+  const { animal: test, shed_code, type, eartagOptions } = props
+  // const { animalTitle } = useAnimalStore()
+  // const title = animalTitle(animal)
+  const { animal } = useStore()
   const pathname = usePathname()
   const id = pathname.split('/')[3]
 
-  const baseUrl = `/shed/${animal}/${id}`
+  const baseUrl = `/shed/${animal.name}/${id}`
 
   const menu = [
     { name: 'Informasi', link: baseUrl },
@@ -28,7 +30,7 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
     { name: 'Betina', link: baseUrl + '/female' },
   ]
 
-  if (animal !== 'cow') {
+  if (animal.name !== 'cow') {
     menu.push({ name: 'Cempek', link: baseUrl + '/cempek' })
   }
 
@@ -42,14 +44,14 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
         <p className="font-light">
           Informasi Detail terkait Kandang Nomor
           <span className="font-semibold"> {shed_code}</span> yang berisi hewan
-          <span className="font-semibold"> {title}</span>.
+          <span className="font-semibold"> {animal.title}</span>.
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
         {type && (
           <ShedAnimalForm
             eartagOptions={eartagOptions}
-            animal={animal}
+            animal={animal.name}
             id={id}
           />
         )}

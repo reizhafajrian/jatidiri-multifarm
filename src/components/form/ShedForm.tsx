@@ -5,45 +5,24 @@ import {
   InputRadio,
   InputSelect,
   InputText,
-  toast
 } from '@/components/shared'
 import { shedSchema } from '@/lib/schemas'
-import { useAuthStore } from '@/store/auth'
-import { IShed, useShedStore } from '@/store/shed'
+import { IShed } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 
 export default function ShedForm() {
   const router = useRouter()
-  const { user } = useAuthStore()
-  const { addShed } = useShedStore()
-
-  const methods = useForm<IShed>({
-    resolver: zodResolver(shedSchema),
-  })
-
-  const onSubmit: SubmitHandler<IShed> = async (values) => {
-    const res = await addShed(values)
-
-    if (res.errors) {
-      return toast({
-        type: 'error',
-        message: res.errors[0].msg,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
-    router.replace(`/shed/goat`)
-  }
+  const { user, addShed } = useStore()
+  const methods = useForm<IShed>({ resolver: zodResolver(shedSchema) })
 
   return (
     <Form
-      onSubmit={(values) => onSubmit({ ...values, created_by: user.id })}
+      onSubmit={(values) =>
+        addShed({ ...values, created_by: user?.id }, router)
+      }
       methods={methods}
       className="space-y-4"
     >
@@ -64,7 +43,7 @@ export default function ShedForm() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
-          <InputText name="shed_code" label="No Kandang" />
+          <InputText name="shed_code" label="No Kandang" disabled />
           <InputSelect
             name="feed"
             label="Pakan"

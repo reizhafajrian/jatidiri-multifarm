@@ -1,12 +1,13 @@
 'use client'
-import { useAuthStore } from '@/store/auth'
 import * as cat from '@/store/category'
+import useStore from '@/store/useStore'
 import { useEffect } from 'react'
 
 interface IData {
   data: {
     token?: string
     category?: ICategoryState
+    animal?: string
     // animal?: IAnimalState
     // shed?: IShedState
     // milk?: IMilkState
@@ -15,9 +16,15 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
+  const { setAnimal, loadUser } = useStore()
   useEffect(() => {
     if (data.token) {
-      useAuthStore.setState({ token: data.token })
+      loadUser()
+      useStore.setState({ token: data.token })
+    }
+
+    if (data.animal) {
+      setAnimal(data.animal)
     }
 
     // if (data.animal) {

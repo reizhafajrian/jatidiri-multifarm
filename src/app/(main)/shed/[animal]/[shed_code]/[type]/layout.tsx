@@ -1,4 +1,5 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
+import { StoreInitializer } from '@/components/shared'
 import { ILayoutProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
@@ -12,6 +13,7 @@ export default function ShedAnimalLayout(props: ILayoutProps) {
 
   return (
     <>
+      <StoreInitializer data={{ animal }} />
       <ShedDetailHeader
         animal={animal}
         shed_code={data.shed_code}

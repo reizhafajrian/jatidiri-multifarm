@@ -6,11 +6,10 @@ import {
   InputDate,
   InputSelect,
   InputText,
-  toast,
 } from '@/components/shared'
 import { shedDetailSchema } from '@/lib/schemas'
-import { useAuthStore } from '@/store/auth'
-import { IShedDetail, useShedStore } from '@/store/shed'
+import { IShedDetail } from '@/store/shed'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -31,8 +30,7 @@ interface ShedDetailFormProps {
 
 const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   const [open, setOpen] = useState(false)
-  const { user } = useAuthStore()
-  const { addShedDetail } = useShedStore()
+  const { user, addShedData } = useStore()
   const [categories, setCategories] = useState<any>({ feed: true })
 
   const methods = useForm<IShedDetail>({
@@ -40,22 +38,7 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   })
 
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
-    const res = await addShedDetail(values)
-
-    if (res.errors || res.error) {
-      setOpen(false)
-
-      return toast({
-        type: 'error',
-        message: res.errors ? res.errors[0].msg : res.error,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
+    await addShedData(values)
     setOpen(false)
     methods.reset()
     mutate(`/api/shed/data/get?shed_code=${shed_code}`)
@@ -74,7 +57,7 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
 
         <Form
           onSubmit={(values) =>
-            onSubmit({ ...values, created_by: user.id, shed_code })
+            onSubmit({ ...values, created_by: user?.id, shed_code })
           }
           methods={methods}
         >

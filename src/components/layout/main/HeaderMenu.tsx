@@ -8,16 +8,13 @@ import {
   DropdownMenuTrigger,
 } from '@/components/shared/DropdownMenu'
 import { ChevronDown } from '@/components/shared/Icons'
+import useStore from '@/store/useStore'
 import { DropdownMenuLabel } from '@radix-ui/react-dropdown-menu'
 import { useRouter } from 'next/navigation'
 
 const HeaderMenu = () => {
   const router = useRouter()
-
-  const signoutHandler = async () => {
-    await fetch('/api/signout')
-    router.replace('/signin')
-  }
+  const { user, logout } = useStore()
 
   return (
     <DropdownMenu>
@@ -25,9 +22,9 @@ const HeaderMenu = () => {
         <button className="flex items-center gap-3 outline-none">
           <div className="h-8 w-8 rounded-full bg-gray-200" />
           <div>
-            <p className="mb-1 text-sm">John Doe</p>
+            <p className="mb-1 text-sm capitalize">{user?.name}</p>
             <p className="rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light">
-              Super Admin
+              {user?.role}
             </p>
           </div>
           <ChevronDown className="w-5" />
@@ -59,7 +56,7 @@ const HeaderMenu = () => {
 
         <DropdownMenuSeparator />
 
-        <DropdownMenuItem className="p-5" onClick={signoutHandler}>
+        <DropdownMenuItem className="p-5" onClick={() => logout(router)}>
           Sign Out
         </DropdownMenuItem>
       </DropdownMenuContent>

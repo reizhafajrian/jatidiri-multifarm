@@ -1,6 +1,7 @@
 import { X } from '@/components/shared/Icons'
 import { memberSchema } from '@/lib/schemas'
-import { IUser, useAuthStore } from '@/store/auth'
+import { IUser } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -22,7 +23,7 @@ interface MemberFormProps {
 const MemberForm: FC<MemberFormProps> = ({ formType, values }) => {
   const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Member`
-  const { user, addMember, editMember } = useAuthStore()
+  const { user } = useStore()
 
   const methods = useForm<IUser>({
     resolver: zodResolver(memberSchema),

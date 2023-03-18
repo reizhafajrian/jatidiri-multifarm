@@ -1,58 +1,67 @@
-import { useAuthStore } from '@/store/auth'
+import useStore from '@/store/useStore'
+import axios from 'axios'
 
 export const Get = async (url: string) => {
-  const res = await fetch(url, {
-    headers: {
-      Authorization: `bearer ${useAuthStore.getState().token}`,
-    },
-  }).then((res) => res.json())
+  try {
+    const res = await axios.get(url, {
+      withCredentials: true,
+      headers: {
+        Authorization: `bearer ${useStore.getState().token}`,
+      },
+    })
 
-  return res
+    return res.data
+  } catch (err: any) {
+    return Promise.reject(err.response)
+  }
 }
 
-type postType = {
+type params = {
   url: string
-  body?: any
-  formData?: any
+  data?: any
 }
 
-export const Post = async ({ url, body, formData }: postType) => {
-  const res = await fetch(url, {
-    method: 'POST',
-    credentials: 'include',
-    ...(body && { body: JSON.stringify(body) }),
-    ...(formData && { body: formData }),
-    headers: {
-      Authorization: `bearer ${useAuthStore.getState().token ?? undefined}`,
-      ...(!formData && { 'Content-Type': 'application/json' }),
-    },
-  }).then((res) => res.json())
+export const Post = async ({ url, data }: params) => {
+  try {
+    const res = await axios.post(url, data, {
+      withCredentials: true,
+      headers: {
+        Authorization: `bearer ${useStore.getState().token}`,
+      },
+    })
 
-  return res
+    return res.data
+  } catch (err: any) {
+    return Promise.reject(err.response)
+  }
+}
+
+export const Put = async ({ url, data }: params) => {
+  try {
+    const res = await axios.put(url, data, {
+      withCredentials: true,
+      headers: {
+        Authorization: `bearer ${useStore.getState().token}`,
+      },
+    })
+
+    return res.data
+  } catch (err: any) {
+    return Promise.reject(err.response)
+  }
 }
 
 export const Delete = async (url: string) => {
-  const res = await fetch(url, {
-    method: 'DELETE',
-    headers: {
-      Authorization: `bearer ${useAuthStore.getState().token}`,
-    },
-  }).then((res) => res.json())
+  try {
+    const res = await axios.delete(url, {
+      withCredentials: true,
+      headers: {
+        Authorization: `bearer ${useStore.getState().token}`,
+      },
+    })
 
-  return res
-}
-
-export const Put = async ({ url, body, formData }: postType) => {
-  const res = await fetch(url, {
-    method: 'PUT',
-    credentials: 'include',
-    ...(body && { body: JSON.stringify(body) }),
-    ...(formData && { body: formData }),
-    headers: {
-      Authorization: `bearer ${useAuthStore.getState().token ?? undefined}`,
-      ...(!formData && { 'Content-Type': 'application/json' }),
-    },
-  }).then((res) => res.json())
-
-  return res
+    return res.data
+  } catch (err: any) {
+    return Promise.reject(err.response)
+  }
 }

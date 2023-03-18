@@ -6,13 +6,12 @@ import {
   InputDate,
   InputSelect,
   InputText,
-  toast,
 } from '@/components/shared'
 import { getAnimalFormContent, getAnimalFormOptions } from '@/lib/data'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
-import { IAnimal, useAnimalStore } from '@/store/animal'
-import { useAuthStore } from '@/store/auth'
+import { IAnimal } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
@@ -28,13 +27,13 @@ interface AnimalFormProps {
 }
 
 const AnimalForm: FC<AnimalFormProps> = (props) => {
-  const { formType, cempekForm, gender, animal, values, id } = props
+  const { formType, cempekForm, gender, animal: test, values, id } = props
   const router = useRouter()
-  const opt = getAnimalFormOptions(animal)
-  const { user } = useAuthStore()
-  const a = useAnimalStore()
+  const { user, animal, addAnimal, editAnimal } = useStore()
+
+  const opt = getAnimalFormOptions(test)
   const content = getAnimalFormContent({
-    animal,
+    animal: animal.name,
     gender,
     formType,
     cempekForm,
@@ -42,7 +41,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
 
   const data = {
     cempek: cempekForm ? 'true' : 'false',
-    created_by: user.id!,
+    created_by: user?.id,
     _id: id,
     animal,
     gender,
@@ -53,27 +52,12 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
     defaultValues: formType == 'edit' ? values : {},
   })
 
-  const onSubmit: SubmitHandler<IAnimal> = async (values) => {
-    let res
+  const onSubmit: SubmitHandler<IAnimal> = (values) => {
     if (formType === 'add') {
-      res = await a.addAnimal(values)
+      addAnimal(values, router)
     } else {
-      res = await a.editAnimal(values)
+      editAnimal(values, router)
     }
-
-    if (res.errors) {
-      return toast({
-        type: 'error',
-        message: res.errors[0].msg,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
-    router.replace(`/${animal}/male`)
   }
 
   return (
@@ -87,8 +71,8 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
         <div className="space-y-6">
           <InputSelect
             name="type"
-            label={`Jenis ${cempekForm ? 'Cempek' : content.animal_title}`}
-            options={opt.typeOptions}
+            label={`Jenis ${cempekForm ? 'Cempek' : animal.title}`}
+            options={opt?.typeOptions}
           />
 
           {cempekForm ? (
@@ -103,7 +87,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
           <InputSelect
             name="origin_female"
             label="Asal Induk"
-            options={opt.femaleOriginOptions}
+            options={opt?.femaleOriginOptions}
           />
 
           {cempekForm ? (
@@ -130,20 +114,17 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
               <>
                 <InputSelect
                   name="origin"
-                  label={`Asal ${content.animal_title}`}
-                  options={opt.originOptions}
+                  label={`Asal ${animal.title}`}
+                  options={opt?.originOptions}
                 />
-                <InputText
-                  name="weight"
-                  label={`Berat ${content.animal_title}`}
-                />
+                <InputText name="weight" label={`Berat ${animal.title}`} />
                 <InputText name="purchase_price" label="Harga Beli" />
               </>
             )}
             <InputSelect
               name="origin_male"
               label="Asal Pejantan"
-              options={opt.maleOriginOptions}
+              options={opt?.maleOriginOptions}
             />
             <InputText name="description" label="Keterangan" />
           </div>

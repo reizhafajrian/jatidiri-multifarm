@@ -17,7 +17,7 @@ interface SelectFilterProps {
   title?: string
   defaultValue?: string
   placeholder?: string
-  options: {
+  options?: {
     name: string
     value: string
   }[]
@@ -38,7 +38,7 @@ const SelectFilter: FC<SelectFilterProps> = ({
         <p className="text-sm capitalize text-neutral-4">{title ?? 'show'}:</p>
       )}
       <SelectRoot
-        defaultValue={defaultValue ?? options[0]?.value ?? undefined}
+        defaultValue={defaultValue ?? undefined}
         onValueChange={onChange}
       >
         <SelectTrigger className="flex items-center gap-3 text-sm text-neutral-5 outline-none">
@@ -49,7 +49,7 @@ const SelectFilter: FC<SelectFilterProps> = ({
         </SelectTrigger>
         <SelectContent>
           <SelectViewport>
-            {options.map(({ name, value }) => (
+            {options?.map(({ name, value }) => (
               <SelectItem key={value} value={value}>
                 <SelectItemText>{name}</SelectItemText>
                 <SelectItemIndicator>

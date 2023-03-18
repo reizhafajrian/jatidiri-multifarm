@@ -1,4 +1,5 @@
 import AnimalHeader from '@/components/layout/AnimalHeader'
+import { StoreInitializer } from '@/components/shared'
 import { ILayoutProps } from '@/lib/types'
 
 export default function AnimalLayout(props: ILayoutProps) {
@@ -6,6 +7,7 @@ export default function AnimalLayout(props: ILayoutProps) {
 
   return (
     <>
+      <StoreInitializer data={{ animal }} />
       <AnimalHeader animal={animal} />
       {props.children}
     </>
