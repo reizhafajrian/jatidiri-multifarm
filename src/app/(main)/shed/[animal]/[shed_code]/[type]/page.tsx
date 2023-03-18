@@ -39,7 +39,7 @@ const getData = async (
   //   ? `/shed/get/${animal}/cempek`
   //   : `/shed/get/${animal}?gender=${gender}`
 
-  const res = await fetch(baseUrl + '/shed/get', {
+  const res = await fetch(baseUrl + `/shed/get?animal_type=${animal}`, {
     headers: { Authorization },
   }).then((res) => res.json())
 

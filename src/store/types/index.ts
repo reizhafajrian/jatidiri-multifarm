@@ -83,6 +83,8 @@ export interface IShed {
   shed_code?: string
   animal_type?: string
   animal_weight?: string
+  average_weight?: number
+  average_age?: number
   feed?: string
   feed_weight?: number
   age_range?: string
@@ -126,4 +128,103 @@ export interface IShedState {
   addShed: (data: IShed, router: any) => void
   addShedData: (data: IShedDetail) => void
   addShedAnimal: (data: IShedAnimal) => void
+  changeShedAnimal: (shed_code: string, eartag_code?: string) => void
+}
+
+// CATEGORY
+export interface ICategory {
+  _id?: string
+  category?: string
+  created_by?: string
+  type?: string
+  stock?: number
+  price?: number
+}
+
+export interface ICategoryState {
+  // formValues: ICategory
+  // feed: IFeed
+  // feedInfo: IFeedInfo
+  // feedList: IFeed[]
+  // vitamin: IVitamin
+  // vitaminInfo: IVitaminInfo
+  // vitaminList: IVitamin[]
+  // vaccine: IVaccine
+  // vaccineInfo: IVaccineInfo
+  // vaccineList: IVaccine[]
+  // anthelmintic: IAnthelmintic
+  // anthelminticInfo: IAnthelminticInfo
+  // anthelminticList: IAnthelmintic[]
+
+  addCategory: (data: ICategory) => void
+  editCategory: (data: ICategory) => void
+  deleteCategory: (data: ICategory) => void
+}
+
+// MILK
+export interface IMilk {
+  _id?: string
+  eartag_code?: string
+  milk?: number
+  milk_date?: Date
+  history_milk_date?: Date
+  history_milk?: number
+  animal_id?: string
+  created_by?: string
+}
+
+export interface IMilkInfo {
+  income_total?: number
+  income_date?: Date
+  history_income_total?: string
+  history_income_date?: Date
+  income_percentage?: number
+
+  milk_total?: number
+  milk_date?: Date
+  milk_percentage?: number
+  created_by?: string
+}
+
+export interface IMilkState {
+  // milk: IMilk
+  // milkInfo: IMilkInfo
+  // milkList: IMilk[]
+  milkHistory: number
+  incomeHistory: number
+  addMilk: (data: IMilk) => void
+  editMilk: (data: IMilk) => void
+  setMilkHistory: (start: Date, end: Date) => void
+  changeMilkStatus: (id: string, status: string) => void
+  addIncome: (data: IMilkInfo) => void
+  setIncomeHistory: (start: Date, end: Date) => void
+}
+
+// HPP
+export interface IHppState {
+  // hpp: IHpp
+  // hppList: IHpp[]
+  editHpp: (data: IEditHpp) => void
+}
+
+export interface IHpp {
+  eartag_code?: string
+  type?: string
+  origin?: string
+  weight?: number
+  age?: number
+  purchase_price?: number
+  feed_price?: number
+  other_price?: number
+  hpp?: number
+  selling_price?: number
+  status?: { name: string; value: string }
+}
+
+export interface IEditHpp {
+  eartag_code?: string
+  hpp?: number
+  selling_price?: number
+  description?: string
+  created_by?: string
 }

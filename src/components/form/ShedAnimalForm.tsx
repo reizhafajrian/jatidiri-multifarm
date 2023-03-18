@@ -1,7 +1,7 @@
 'use client'
 import { Button, Form, InputSelect, InputText } from '@/components/shared'
 import { shedAnimalSchema } from '@/lib/schemas'
-import { IShedAnimal } from '@/store/shed'
+import { IShedAnimal } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'

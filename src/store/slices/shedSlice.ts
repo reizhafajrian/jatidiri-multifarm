@@ -62,7 +62,25 @@ const createShedSlice: StateCreator<IShedState> = (set, get) => ({
     } catch (err: any) {
       toast({
         type: 'error',
-        message: err.data.errors[0].msg,
+        message: err.data.error,
+      })
+    }
+  },
+  changeShedAnimal: async (shed_code, eartag_code) => {
+    try {
+      const res = await Put({
+        url: `/api/shed/add-animal/${shed_code}`,
+        data: { ear_tag: eartag_code },
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.error,
       })
     }
   },

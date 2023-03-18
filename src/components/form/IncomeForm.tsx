@@ -1,84 +1,51 @@
 'use client'
-import { Button, Form, InputDate, InputText, toast } from '@/components/shared'
-import { Get } from '@/lib/api'
-import { incomeSchema } from '@/lib/schemas'
-import { formatRupiah } from '@/lib/utils'
-import { IMilkInfo, useMilkStore } from '@/store/milk'
-import useStore from '@/store/useStore'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { FC, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { mutate } from 'swr'
-import MilkIncomeCard from '../card/MilkIncomeCard'
+import { Button, Form, InputDate, InputText } from '@/components/shared'
 import {
   DialogClose,
   DialogContent,
   DialogRoot,
   DialogTitle,
   DialogTrigger,
-} from '../shared/Dialog'
+} from '@/components/shared/Dialog'
+import { incomeSchema } from '@/lib/schemas'
+import { formatRupiah } from '@/lib/utils'
+import { IMilkInfo } from '@/store/types'
+import useStore from '@/store/useStore'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { mutate } from 'swr'
+import MilkIncomeCard from '../card/MilkIncomeCard'
 
 interface IncomeFormProps {}
 
 const IncomeForm: FC<IncomeFormProps> = ({}) => {
   const [open, setOpen] = useState(false)
-  const { user } = useStore()
-  const { addIncome } = useMilkStore()
+  const { user, incomeHistory, addIncome, setIncomeHistory } = useStore()
+
+  const methods = useForm<IMilkInfo>({
+    resolver: zodResolver(incomeSchema),
+    values: {
+      history_income_total: formatRupiah(incomeHistory),
+    },
+  })
+
+  const onSubmit: SubmitHandler<IMilkInfo> = (values) => {
+    addIncome(values)
+    methods.reset()
+    mutate('/api/milk/income/get')
+    setOpen(false)
+  }
 
   // INCOME HISTORY
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
-
-  const [history, setHistory] = useState(0)
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
 
   const historyHandler = async (dates: any) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-
-    if (start !== null && end !== null) {
-      const res = await Get(
-        `/api/milk/income/get/history?start=` +
-          start.toISOString() +
-          '&end=' +
-          end.toISOString()
-      )
-      console.log(res)
-
-      if (res.status === 200) {
-        console.log('hit')
-
-        setHistory(res.data)
-        console.log(history)
-      }
-    }
-  }
-
-  const methods = useForm<IMilkInfo>({
-    resolver: zodResolver(incomeSchema),
-    values: {
-      history_income_total: formatRupiah(history),
-    },
-  })
-
-  const onSubmit: SubmitHandler<IMilkInfo> = async (values) => {
-    const res = await addIncome(values)
-
-    if (res.errors) {
-      return toast({
-        type: 'error',
-        message: res.errors[0].msg,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
-    methods.reset()
-    mutate('/api/milk/income/get')
-    setOpen(false)
+    setIncomeHistory(start, end)
   }
 
   return (

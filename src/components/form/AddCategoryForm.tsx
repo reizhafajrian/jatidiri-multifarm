@@ -1,5 +1,5 @@
 'use client'
-import { Button, Form, InputText, toast } from '@/components/shared'
+import { Button, Form, InputText } from '@/components/shared'
 import {
   DialogClose,
   DialogContent,
@@ -8,7 +8,7 @@ import {
   DialogTrigger,
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
-import { ICategory, useCategoryStore } from '@/store/category'
+import { ICategory } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
@@ -23,28 +23,14 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   const [open, setOpen] = useState(false)
   const title = setTitle(category)
   const satuan = setSatuan(category)
-  const { user } = useStore()
-  const { addCategory } = useCategoryStore()
+  const { user, addCategory } = useStore()
 
   const methods = useForm<ICategory>({
     resolver: zodResolver(categorySchema),
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
-    const res = await addCategory(values)
-
-    if (res.errors) {
-      return toast({
-        type: 'error',
-        message: res.errors[0].msg,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
+    addCategory(values)
     mutate(`/api/${category}/get`)
     methods.reset()
     setOpen(false)

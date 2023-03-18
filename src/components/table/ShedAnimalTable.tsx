@@ -2,6 +2,7 @@
 import { Table } from '@/components/shared'
 import useDataList from '@/hooks/useDataList'
 import { longDateFormatter } from '@/lib/utils'
+import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import SelectTable from '../shared/SelectTable'
@@ -11,26 +12,25 @@ interface ShedAnimalTableProps {
   shedCodeOptions: any
   type: string
 }
-
 const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
   id,
   shedCodeOptions,
   type,
 }) => {
-  const queries = []
+  const changeShedAnimal = useStore((state) => state.changeShedAnimal)
   const isCempek = type === 'cempek'
-  !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
+  const gender = type === 'male' ? 'true' : 'false'
 
-  const { data, loading, mutate } = useDataList(
-    `/api/shed/get/detail/${id}`,
-    queries
-  )
+  const url = isCempek
+    ? `/shed/get/detail/${id}?cempek=true`
+    : `/shed/get/detail/${id}?gender=${gender}`
 
-  const changeShedHandler = (value: string) => {
-    console.log(value)
+  const { data, loading, mutate } = useDataList(`/api/${url}`)
+
+  const changeShedHandler = (shed_code: string, eartag_code?: string) => {
+    changeShedAnimal(shed_code, eartag_code)
+    mutate()
   }
-
-  console.log(data)
 
   const columns: ColumnDef<any, any>[] = [
     {
@@ -47,8 +47,9 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
         <SelectTable
           value={id}
           onChange={changeShedHandler}
+          animalEarTag={data.row.original.eartag_code}
           options={shedCodeOptions}
-          triggerClassName="bg-primary-4 text-white font-semibold"
+          triggerClassName="bg-primary-4 text-white"
         />
       ),
     },

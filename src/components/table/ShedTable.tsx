@@ -18,7 +18,13 @@ const ShedTable: FC<ShedTableProps> = ({ animal }) => {
 
   const columns = [
     { header: 'No Kandang', accessorKey: 'shed_code' },
-    { header: 'Berat', accessorKey: 'animal_weight' },
+    //react table if average_weight is null, it will return 0
+    {
+      header: 'Berat',
+      accessorKey: 'average_weight',
+      cell: (data: any) =>
+        `${data.getValue() ? data.getValue() + ' Kg' : '0 Kg'}`,
+    },
     { header: 'Keterangan', accessorKey: 'description' },
     {
       header: 'Aksi',

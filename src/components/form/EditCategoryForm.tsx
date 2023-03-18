@@ -8,7 +8,8 @@ import {
   DialogTrigger,
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
-import { ICategory, useCategoryStore } from '@/store/category'
+import { ICategory } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -19,7 +20,7 @@ interface EditCategoryFormProps {
 
 const EditCategoryForm: FC<EditCategoryFormProps> = ({ category }) => {
   const [open, setOpen] = useState(false)
-  const { editCategory } = useCategoryStore()
+  const { editCategory } = useStore()
 
   const methods = useForm<ICategory>({
     resolver: zodResolver(categorySchema),

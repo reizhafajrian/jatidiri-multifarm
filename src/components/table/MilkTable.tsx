@@ -1,35 +1,21 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
-import { Post } from '@/lib/api'
+import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import MilkForm from '../form/MilkForm'
-import { Table, toast } from '../shared'
+import { Table } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
 interface MilkTableProps {}
 
 const MilkTable: FC<MilkTableProps> = ({}) => {
+  const { changeMilkStatus } = useStore()
   const { data, loading, mutate } = useDataList('/api/milk/get')
 
-  const changeStatusHandler = async (status: string, _id: string) => {
-    try {
-      const data = [{ _id, status }]
-
-      const res = await Post({
-        url: '/api/milk/status/update',
-        data: { data },
-      })
-
-      toast({
-        type: 'success',
-        message: res.message,
-      })
-
-      mutate()
-    } catch (e) {
-      console.log(e)
-    }
+  const changeStatusHandler = async (id: string, status: string) => {
+    changeMilkStatus(id, status)
+    mutate()
   }
 
   const statusOptions = [
@@ -59,7 +45,7 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
             (i) => i.value === data.getValue()
           )?.bgColor!} font-semibold text-neutral-4`}
           onChange={(value) =>
-            changeStatusHandler(value, data.row.original.animal_id._id)
+            changeStatusHandler(data.row.original.animal_id._id, value)
           }
         />
       ),
@@ -74,7 +60,18 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
   ]
 
   return (
-    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+    <Table
+      isLoading={loading}
+      data={data?.filter((item: any) => {
+        if (item.animal_id) {
+          if (item.animal_id.eartag_code) {
+            return item
+          }
+        }
+      })}
+      columns={columns}
+      fixedCol={2}
+    />
   )
 }
 

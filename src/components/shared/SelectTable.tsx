@@ -20,8 +20,9 @@ interface SelectTableProps {
     value: string
     bgColor?: string
   }[]
-  onChange?: (value: string) => void
+  onChange?: (value: string, eartag_code?: string) => void
   triggerClassName: string
+  animalEarTag?: string
 }
 
 const SelectTable: FC<SelectTableProps> = ({
@@ -30,9 +31,14 @@ const SelectTable: FC<SelectTableProps> = ({
   options,
   onChange,
   triggerClassName,
+  animalEarTag,
 }) => {
   return (
-    <SelectRoot name={name} defaultValue={value} onValueChange={onChange}>
+    <SelectRoot
+      name={name}
+      defaultValue={value}
+      onValueChange={(e) => onChange && onChange(e, animalEarTag)}
+    >
       <SelectTrigger asChild>
         <button
           className={cn(

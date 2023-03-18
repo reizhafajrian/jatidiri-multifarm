@@ -6,7 +6,7 @@ export const addCategoryHandler = async (payload: ICategory) => {
 
   const res = await Post({
     url: `/api/${category}/create`,
-    body: {
+    data: {
       [`${category}_type`]: type,
       [`${category}_stock`]: stock,
       [`${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`]: price,
@@ -23,7 +23,6 @@ export const editCategoryHandler = async (payload: ICategory) => {
 
 export const deleteCategoryHandler = async (payload: ICategory) => {
   const url = `/api/${payload.category}/delete/${payload._id}`
-  // const res = await Delete(url)
   let res = {}
 
   console.log({ url, res })

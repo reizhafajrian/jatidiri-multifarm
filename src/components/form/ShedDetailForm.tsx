@@ -8,7 +8,7 @@ import {
   InputText,
 } from '@/components/shared'
 import { shedDetailSchema } from '@/lib/schemas'
-import { IShedDetail } from '@/store/shed'
+import { IShedDetail } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'

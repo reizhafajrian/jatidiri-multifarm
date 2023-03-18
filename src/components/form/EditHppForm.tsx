@@ -7,7 +7,7 @@ import {
   DialogTrigger,
 } from '@/components/shared/Dialog'
 import { hppSchema } from '@/lib/schemas'
-import { IEditHpp, useHppStore } from '@/store/hpp'
+import { IEditHpp } from '@/store/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
@@ -19,14 +19,12 @@ interface EditHppFormProps {
 
 const EditHppForm: FC<EditHppFormProps> = ({ eartag_code }) => {
   const [open, setOpen] = useState(false)
-  const { hpp, editHpp } = useHppStore()
 
   const methods = useForm<IEditHpp>({
     resolver: zodResolver(hppSchema),
-    defaultValues: {
-      ...hpp,
+    values: {
       eartag_code,
-      // hpp: formatRupiah('1000000', ' '),
+      hpp: 1000000,
     },
   })
 

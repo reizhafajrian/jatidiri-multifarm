@@ -1,12 +1,12 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
-import { Delete } from '@/lib/api'
 import { formatRupiah } from '@/lib/utils'
+import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import EditCategoryForm from '../form/EditCategoryForm'
-import { Table, toast } from '../shared'
+import { Table } from '../shared'
 
 const categoryTitle = (category: string) =>
   category === 'feed'
@@ -22,23 +22,12 @@ interface CategoryTableProps {
 }
 
 const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
+  const { deleteCategory } = useStore()
   const { data, loading, mutate } = useDataList(`/api/${category}/get`)
 
-  const deleteHandler = async (id: string) => {
-    try {
-      const url = `/api/${category}/delete/${id}`
-      const res = await Delete(url)
-
-      if (res.status === 201) {
-        toast({
-          type: 'success',
-          message: res.message,
-        })
-        mutate()
-      }
-    } catch (e) {
-      console.log(e)
-    }
+  const deleteHandler = async (_id: string) => {
+    deleteCategory({ category, _id })
+    mutate()
   }
 
   const columns: ColumnDef<any, any>[] = [

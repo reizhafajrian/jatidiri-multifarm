@@ -10,7 +10,11 @@ const statusOptions = [
 export default function HppFilter() {
   return (
     <div className="mb-5">
-      <SelectFilter title="status" options={statusOptions} />
+      <SelectFilter
+        title="status"
+        options={statusOptions}
+        defaultValue={statusOptions[0].value}
+      />
     </div>
   )
 }

@@ -4,113 +4,64 @@ import {
   InputDate,
   InputSelect,
   InputText,
-  toast,
 } from '@/components/shared'
-import useDataList from '@/hooks/useDataList'
-import { Get } from '@/lib/api'
-import { milkSchema } from '@/lib/schemas'
-import { IMilk, useMilkStore } from '@/store/milk'
-import useStore from '@/store/useStore'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { FC, useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
-import { mutate } from 'swr'
-
 import {
   DialogClose,
   DialogContent,
   DialogRoot,
   DialogTitle,
   DialogTrigger,
-} from '../shared/Dialog'
+} from '@/components/shared/Dialog'
+import useDataList from '@/hooks/useDataList'
+import { milkSchema } from '@/lib/schemas'
+import { IMilk } from '@/store/types'
+import useStore from '@/store/useStore'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { FC, useState } from 'react'
+import { SubmitHandler, useForm } from 'react-hook-form'
+import { mutate } from 'swr'
 
 interface MilkFormProps {
-  eartag_code?: string
   formType: 'add' | 'edit'
   currentValues?: any
 }
 
-const MilkForm: FC<MilkFormProps> = ({
-  eartag_code,
-  formType,
-  currentValues,
-}) => {
+const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
   const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Data Susu`
-  const { addMilk, editMilk } = useMilkStore()
-  const { user } = useStore()
-
+  const { user, milkHistory, setMilkHistory, addMilk, editMilk } = useStore()
   const { data } = useDataList('/api/cow/get', ['gender=false'])
 
   const eartagOptions =
-    data?.map((item: any) => ({
-      name: item._id,
-      value: item._id,
-    })) ?? []
+    data?.map((item: any) => ({ name: item._id, value: item._id })) ?? []
+
+  const methods = useForm<IMilk>({
+    resolver: zodResolver(milkSchema),
+    values:
+      formType === 'edit'
+        ? {
+            eartag_code: curr?.animal_id?.eartag_code,
+            history_milk: milkHistory,
+          }
+        : undefined,
+  })
+
+  const onSubmit: SubmitHandler<IMilk> = (values) => {
+    formType === 'add' ? addMilk(values) : editMilk(values)
+    methods.reset()
+    setOpen(false)
+    mutate('/api/milk/get')
+  }
 
   // MILK HISTORY
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(new Date())
-
-  const [historyMilk, setHistoryMilk] = useState(0)
+  const [startDate, setStartDate] = useState()
+  const [endDate, setEndDate] = useState()
 
   const milkHistoryHandler = async (dates: any) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-
-    if (start !== null && end !== null) {
-      const res = await Get(
-        `/api/milk/get/history?start=` +
-          start.toISOString() +
-          '&end=' +
-          end.toISOString()
-      )
-
-      if (res.status === '200') {
-        setHistoryMilk(res.data)
-      }
-    }
-  }
-
-  const methods = useForm<IMilk>({
-    resolver: zodResolver(milkSchema),
-    defaultValues:
-      formType == 'edit'
-        ? {
-            eartag_code: currentValues?.animal_id?.eartag_code,
-            milk: currentValues.amount,
-            milk_date: currentValues.milk_created_at,
-          }
-        : {},
-    values: {
-      history_milk: historyMilk,
-    },
-  })
-
-  const onSubmit: SubmitHandler<IMilk> = async (values) => {
-    let res
-    if (formType === 'add') {
-      res = await addMilk(values)
-    } else {
-      res = await editMilk(values)
-    }
-
-    if (res.errors) {
-      return toast({
-        type: 'error',
-        message: res.errors[0].msg,
-      })
-    }
-
-    toast({
-      type: 'success',
-      message: res.message,
-    })
-
-    methods.reset()
-    mutate('/api/milk/get')
-    setOpen(false)
+    setMilkHistory(start, end)
   }
 
   return (
@@ -132,8 +83,8 @@ const MilkForm: FC<MilkFormProps> = ({
             onSubmit({
               ...values,
               created_by: user?.id,
-              _id: currentValues._id,
-              animal_id: currentValues?.animal_id?._id,
+              _id: curr?._id,
+              animal_id: curr?.animal_id?._id,
             })
           }
         >

@@ -68,8 +68,8 @@ const InputSelect: FC<InputSelectProps> = ({ name, label, options }) => {
         </div>
         <SelectContent>
           <SelectViewport>
-            {options.map(({ name, value }) => (
-              <SelectItem key={value} value={value}>
+            {options.map(({ name, value }, idx) => (
+              <SelectItem key={idx} value={value}>
                 <SelectItemText>{name}</SelectItemText>
                 <SelectItemIndicator>
                   <Check className="h-5 w-5" />

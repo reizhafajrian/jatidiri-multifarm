@@ -1,6 +1,6 @@
 'use client'
 import { formatRupiah } from '@/lib/utils'
-import { IHpp } from '@/store/hpp'
+import { IHpp } from '@/store/types'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import EditHppForm from '../form/EditHppForm'
@@ -62,7 +62,7 @@ const HppTable: FC<HppTableProps> = ({ data }) => {
         <SelectTable
           value={data.getValue()}
           options={statusOptions}
-          triggerBackground={
+          triggerClassName={
             statusOptions.find((i) => i.value === data.getValue())?.bgColor!
           }
         />

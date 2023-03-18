@@ -1,5 +1,5 @@
 'use client'
-import { IShed } from '@/store/shed'
+import { IShed } from '@/store/types'
 import { FC, useState } from 'react'
 import ShedInfoFilter from '../filter/ShedInfoFilter'
 import ShedDetailForm from '../form/ShedDetailForm'
@@ -15,8 +15,8 @@ const ShedInfo: FC<ShedInfoProps> = ({ data, options }) => {
   const [isOpen, closeModal] = useState(false)
 
   const cardList = [
-    { title: 'Berat', content: `${data.animal_weight ?? 0} kg` },
-    { title: 'Range Usia', content: `${data.age_range ?? 0} bulan` },
+    { title: 'Berat', content: `${data.average_weight ?? 0} kg` },
+    { title: 'Range Usia', content: `${data.average_age ?? 0} bulan` },
     { title: 'Berat Pakan', content: `${data.feed_weight ?? 0} kg` },
   ]
 
