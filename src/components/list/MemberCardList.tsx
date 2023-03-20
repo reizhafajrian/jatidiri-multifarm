@@ -14,19 +14,19 @@ const memberList = [
   {
     name: 'Alfansuri',
     email: 'alfansuri@jatidiri.com',
-    role: '1',
+    role: 'admin',
     whatsapp_number: '087872345678',
   },
   {
     name: 'Will Smith',
     email: 'willsmith@jatidiri.com',
-    role: '2',
+    role: 'super_admin',
     whatsapp_number: '087872345678',
   },
   {
     name: 'Lisa',
     email: 'lisa@jatidiri.com',
-    role: '2',
+    role: 'admin',
     whatsapp_number: '087872345678',
   },
 ]

@@ -1,5 +1,4 @@
 import AnimalForm from '@/components/form/AnimalForm'
-import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
@@ -7,7 +6,7 @@ export const metadata = {
   title: 'Jatidiri Multifarm | Edit Animal',
 }
 
-export default function EditAnimalPage({ params }: IPageProps) {
+export default function EditAnimalPage({ params }: { params: any }) {
   const { animal, id } = params
   const data = use(getData(animal, id, cookies().get('token')?.value!))
 

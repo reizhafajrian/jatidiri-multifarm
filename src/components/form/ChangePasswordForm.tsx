@@ -35,7 +35,7 @@ const ChangePasswordForm: FC<IProps> = ({}) => {
             type="button"
             variant="outline"
             className="w-36"
-            onClick={() => router.replace('/home')}
+            onClick={() => router.replace('/dashboard')}
             disabled={methods.formState.isSubmitting}
           >
             CANCEL

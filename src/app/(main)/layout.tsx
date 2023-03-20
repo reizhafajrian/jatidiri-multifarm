@@ -1,11 +1,11 @@
 import Header from '@/components/layout/main/Header'
 import Sidebar from '@/components/layout/main/Sidebar'
 import { StoreInitializer } from '@/components/shared'
-import { ILayoutProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
+import { ReactNode } from 'react'
 
-export default function MainLayout(props: ILayoutProps) {
+export default function MainLayout(props: { children: ReactNode }) {
   const isAuthenticated = cookies().get('token')?.value
 
   if (!isAuthenticated) redirect('/signin')

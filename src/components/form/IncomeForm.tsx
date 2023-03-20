@@ -30,8 +30,8 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
     },
   })
 
-  const onSubmit: SubmitHandler<IMilkInfo> = (values) => {
-    addIncome(values)
+  const onSubmit: SubmitHandler<IMilkInfo> = async (values) => {
+    await addIncome(values)
     methods.reset()
     mutate('/api/milk/income/get')
     setOpen(false)

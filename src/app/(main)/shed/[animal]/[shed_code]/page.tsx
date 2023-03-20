@@ -1,7 +1,6 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import ShedInfo from '@/components/layout/ShedInfo'
 import { StoreInitializer } from '@/components/shared'
-import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
@@ -9,7 +8,7 @@ export const metadata = {
   title: 'Jatidiri Multifarm | Detail Shed',
 }
 
-export default function ShedDetailPage(props: IPageProps) {
+export default function ShedDetailPage(props: { params: any }) {
   const { shed_code, animal } = props.params
   const { shedDetail: data, options } = use(
     getData(shed_code, cookies().get('token')?.value!)

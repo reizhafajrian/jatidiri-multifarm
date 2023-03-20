@@ -1,10 +1,10 @@
 import { Toaster } from '@/components/shared/Toast'
-import { ILayoutProps } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import '@/styles/globals.css'
 import '@/styles/react-datepicker.css'
 import '@/styles/ReactToastify.css'
 import { Poppins } from 'next/font/google'
+import { ReactNode } from 'react'
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -12,7 +12,7 @@ const poppins = Poppins({
   variable: '--font-poppins',
 })
 
-export default async function RootLayout(props: ILayoutProps) {
+export default async function RootLayout(props: { children: ReactNode }) {
   return (
     <html
       lang="en"

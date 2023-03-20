@@ -1,13 +1,12 @@
 import AnimalFilter from '@/components/filter/AnimalFilter'
 import AnimalTable from '@/components/table/AnimalTable'
-import { IPageProps } from '@/lib/types'
 import { notFound } from 'next/navigation'
 
 export const metadata = {
   title: 'Jatidiri Multifarm | Animal',
 }
 
-export default function AnimalPage({ params }: IPageProps) {
+export default function AnimalPage({ params }: { params: any }) {
   const { animal, type } = params
   const typeNotFound = !['male', 'female', 'cempek'].includes(type)
 

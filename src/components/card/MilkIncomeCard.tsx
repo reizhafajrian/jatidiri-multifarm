@@ -6,7 +6,7 @@ import { ArrowUp, WalletCircle } from '../shared/Icons'
 
 const IncomeCard = () => {
   const info = {
-    income_total: 1250000,
+    // income_total: 1250000,
     income_date: new Date(),
     income_percentage: 5.2,
   }

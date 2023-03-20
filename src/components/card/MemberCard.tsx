@@ -1,5 +1,4 @@
 'use client'
-import { useState } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import MemberForm from '../form/MemberForm'
 import SelectTable from '../shared/SelectTable'
@@ -14,9 +13,6 @@ const options = [
 ]
 
 export default function MemberCard({ data }: any) {
-  const [isEditOpen, closeEditModal] = useState(false)
-  const [role, setRole] = useState(options[0])
-
   const deleteHandler = async () => {}
 
   return (
@@ -31,9 +27,11 @@ export default function MemberCard({ data }: any) {
         </div>
         <div className="mx-auto">
           <SelectTable
-            value={role.value}
+            value={data.role}
             options={options}
-            triggerClassName={`${role.bgColor} font-semibold text-neutral-4 text-xs`}
+            triggerClassName={`${
+              options.find((opt) => opt.value === data.role)?.bgColor
+            } font-semibold text-neutral-4 text-xs`}
           />
         </div>
         <div className="ml-auto text-neutral-4">

@@ -1,5 +1,4 @@
 import ShedAnimalTable from '@/components/table/ShedAnimalTable'
-import { IPageProps } from '@/lib/types'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
@@ -7,7 +6,7 @@ export const metadata = {
   title: 'Jatidiri Multifarm | Shed Animals',
 }
 
-export default function AnimalShedPage(props: IPageProps) {
+export default function AnimalShedPage(props: { params: any }) {
   const { animal, shed_code, type } = props.params
 
   const { shedCodeOptions } = use(

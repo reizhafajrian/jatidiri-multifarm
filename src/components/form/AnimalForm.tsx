@@ -52,11 +52,11 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
     defaultValues: formType == 'edit' ? values : {},
   })
 
-  const onSubmit: SubmitHandler<IAnimal> = (values) => {
+  const onSubmit: SubmitHandler<IAnimal> = async (values) => {
     if (formType === 'add') {
-      addAnimal(values, router)
+      await addAnimal(values, router)
     } else {
-      editAnimal(values, router)
+      await editAnimal(values, router)
     }
   }
 

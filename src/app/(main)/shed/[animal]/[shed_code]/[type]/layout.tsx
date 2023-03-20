@@ -1,10 +1,12 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import { StoreInitializer } from '@/components/shared'
-import { ILayoutProps } from '@/lib/types'
 import { cookies } from 'next/headers'
-import { use } from 'react'
+import { ReactNode, use } from 'react'
 
-export default function ShedAnimalLayout(props: ILayoutProps) {
+export default function ShedAnimalLayout(props: {
+  children: ReactNode
+  params: any
+}) {
   const { animal, shed_code, type } = props.params
 
   const { eartagOptions, shedDetail: data } = use(
