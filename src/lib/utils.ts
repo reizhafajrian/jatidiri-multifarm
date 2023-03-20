@@ -42,3 +42,16 @@ export const formatRupiah = (angka: string | number, prefix?: string) => {
   rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah
   return prefix ? rupiah : rupiah ? 'Rp ' + rupiah : ''
 }
+
+export const categoryTitle = (category: string) => {
+  const title =
+    category === 'feed'
+      ? 'Pakan'
+      : category === 'vitamin'
+      ? 'Vitamin'
+      : category === 'vaccine'
+      ? 'Vaksin'
+      : 'Obat Cacing'
+
+  return title
+}

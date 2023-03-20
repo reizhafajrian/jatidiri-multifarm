@@ -1,10 +1,19 @@
-import { ICategoryProps } from '@/lib/types'
+import { FC } from 'react'
 import { Card } from '../shared'
 
-export default function CategoryCardList(props: ICategoryProps) {
+interface IProps {
+  cardList?: {
+    icon: any
+    title: string
+    value: number | string
+    label?: string
+  }[]
+}
+
+const CategoryCardList:FC<IProps>=({cardList})=> {
   return (
     <div className="flex gap-6">
-      {props.cardList?.map((item, idx) => (
+      {cardList?.map((item, idx) => (
         <Card key={idx}>
           <div className="mb-6 flex items-center justify-between gap-6 text-xl font-medium">
             {item.icon} <h3>{item.title}</h3>
@@ -24,3 +33,5 @@ export default function CategoryCardList(props: ICategoryProps) {
     </div>
   )
 }
+
+export default CategoryCardList

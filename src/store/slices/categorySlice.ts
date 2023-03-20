@@ -4,6 +4,15 @@ import { StateCreator } from 'zustand'
 import { ICategoryState } from '../types'
 
 const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
+  setCategoryInfo: (data) => {
+    set((state) => ({
+      ...state,
+      feedInfo: data.feedInfo,
+      vitaminInfo: data.vitaminInfo,
+      vaccineInfo: data.vaccineInfo,
+      anthelminticInfo: data.anthelminticInfo,
+    }))
+  },
   addCategory: async (data) => {
     try {
       const { category, created_by, type, stock, price } = data

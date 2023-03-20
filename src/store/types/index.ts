@@ -141,21 +141,32 @@ export interface ICategory {
   price?: number
 }
 
-export interface ICategoryState {
-  // formValues: ICategory
-  // feed: IFeed
-  // feedInfo: IFeedInfo
-  // feedList: IFeed[]
-  // vitamin: IVitamin
-  // vitaminInfo: IVitaminInfo
-  // vitaminList: IVitamin[]
-  // vaccine: IVaccine
-  // vaccineInfo: IVaccineInfo
-  // vaccineList: IVaccine[]
-  // anthelmintic: IAnthelmintic
-  // anthelminticInfo: IAnthelminticInfo
-  // anthelminticList: IAnthelmintic[]
+interface IFeedInfo {
+  total_type: number
+  total_usage: number
+  total_stock: number
+}
 
+interface IOtherInfo {
+  cow_value: string
+  sheep_value: string
+  goat_value: string
+}
+
+export interface ICategoryInfo {
+  feedInfo?: IFeedInfo
+  vitaminInfo?: IOtherInfo
+  vaccineInfo?: IOtherInfo
+  anthelminticInfo?: IOtherInfo
+}
+
+export interface ICategoryState {
+  feedInfo?: IFeedInfo
+  vitaminInfo?: IOtherInfo
+  vaccineInfo?: IOtherInfo
+  anthelminticInfo?: IOtherInfo
+
+  setCategoryInfo: (data: ICategoryInfo) => void
   addCategory: (data: ICategory) => void
   editCategory: (data: ICategory) => void
   deleteCategory: (data: ICategory) => void
