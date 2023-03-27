@@ -30,14 +30,11 @@ export default function StoreInitializer({ data }: IData) {
       setCategoryInfo({
         feedInfo: c.feedInfo,
         vitaminInfo: c.vitaminInfo,
-        vaccine: c.vaccine,
-        vaccineList: c.vaccineList,
         vaccineInfo: c.vaccineInfo,
-        anthelmintic: c.anthelmintic,
-        anthelminticList: c.anthelminticList,
         anthelminticInfo: c.anthelminticInfo,
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   return null
@@ -53,20 +50,20 @@ export default function StoreInitializer({ data }: IData) {
 //   shed?: IShed
 // }
 
-interface ICategoryState {
-  feed?: cat.IFeed
-  feedList?: cat.IFeed[]
-  feedInfo?: cat.IFeedInfo
-  vitamin?: cat.IVitamin
-  vitaminList?: []
-  vitaminInfo?: []
-  vaccine?: cat.IVaccine
-  vaccineList?: []
-  vaccineInfo?: []
-  anthelmintic?: cat.IAnthelmintic
-  anthelminticList?: cat.IAnthelmintic[]
-  anthelminticInfo?: []
-}
+// interface ICategoryState {
+//   feed?: cat.IFeed
+//   feedList?: cat.IFeed[]
+//   feedInfo?: cat.IFeedInfo
+//   vitamin?: cat.IVitamin
+//   vitaminList?: []
+//   vitaminInfo?: []
+//   vaccine?: cat.IVaccine
+//   vaccineList?: []
+//   vaccineInfo?: []
+//   anthelmintic?: cat.IAnthelmintic
+//   anthelminticList?: cat.IAnthelmintic[]
+//   anthelminticInfo?: []
+// }
 
 // interface IMilkState {
 //   milk?: IMilk

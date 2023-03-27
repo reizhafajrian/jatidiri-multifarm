@@ -1,12 +1,13 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
+import { Delete } from '@/lib/api'
 import { formatRupiah } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import DeleteModal from '../form/DeleteModal'
 import EditCategoryForm from '../form/EditCategoryForm'
-import { Table } from '../shared'
+import { Table, toast } from '../shared'
 
 const categoryTitle = (category: string) =>
   category === 'feed'
