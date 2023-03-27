@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
 import { useAuthStore } from '@/store/auth'
@@ -31,6 +31,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
+    console.log(values)
     const res = await addCategory(values)
 
     if (res.errors) {
@@ -105,7 +106,7 @@ const setTitle = (category: string) =>
   category === 'feed'
     ? 'Pakan'
     : category === 'vitamin'
-    ? 'Vitamin'
-    : category === 'vaccine'
-    ? 'Vaksin'
-    : 'Obat Cacing'
+      ? 'Vitamin'
+      : category === 'vaccine'
+        ? 'Vaksin'
+        : 'Obat Cacing'

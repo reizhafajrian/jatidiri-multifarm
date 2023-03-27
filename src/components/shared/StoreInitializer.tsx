@@ -3,6 +3,7 @@ import { useAuthStore } from '@/store/auth'
 import * as cat from '@/store/category'
 import { useEffect } from 'react'
 
+
 interface IData {
   data: {
     token?: string
@@ -40,6 +41,9 @@ export default function StoreInitializer({ data }: IData) {
         vitamin: c.vitamin,
         vitaminList: c.vitaminList,
         vitaminInfo: c.vitaminInfo,
+        vaccine: c.vaccine,
+        vaccineList: c.vaccineList,
+        vaccineInfo: c.vaccineInfo,
         anthelmintic: c.anthelmintic,
         anthelminticList: c.anthelminticList,
         anthelminticInfo: c.anthelminticInfo,
@@ -75,11 +79,14 @@ interface ICategoryState {
   feedList?: cat.IFeed[]
   feedInfo?: cat.IFeedInfo
   vitamin?: cat.IVitamin
-  vitaminList?: cat.IVitamin[]
-  vitaminInfo?: cat.IVitaminInfo
+  vitaminList?: []
+  vitaminInfo?: []
+  vaccine?: cat.IVaccine
+  vaccineList?: []
+  vaccineInfo?: []
   anthelmintic?: cat.IAnthelmintic
   anthelminticList?: cat.IAnthelmintic[]
-  anthelminticInfo?: cat.IAnthelminticInfo
+  anthelminticInfo?: []
 }
 
 // interface IMilkState {

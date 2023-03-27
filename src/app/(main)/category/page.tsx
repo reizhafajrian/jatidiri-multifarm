@@ -1,23 +1,31 @@
 import CategoryContent from '@/components/layout/CategoryContent'
 import CategoryHeader from '@/components/layout/CategoryHeader'
 import { StoreInitializer } from '@/components/shared'
+import { cookies } from 'next/headers'
+import { use } from 'react'
 
 export const metadata = {
   title: 'Jatidiri Multifarm | Category',
 }
 
 export default function CategoryPage() {
+  const data = use(
+    getData(cookies().get('token')?.value!)
+  )
+
   return (
     <>
       <StoreInitializer
         data={{
           category: {
-            feedList: feed.data,
-            feedInfo: feed.info,
-            vitaminList: vitamin.data,
-            vitaminInfo: vitamin.info,
-            anthelminticList: anthelmintic.data,
-            anthelminticInfo: anthelmintic.info,
+            // feedList: feed.data,
+            feedInfo: data.find((d: any) => d.title === 'Feed')?.result,
+            // vitaminList: vitamin.data,
+            vitaminInfo: data.find((d: any) => d.title === 'Vitamin')?.result,
+            // anthelminticList: anthelmintic.data,
+            anthelminticInfo: data.find((d: any) => d.title === 'Anthelmintic')?.result,
+
+            vaccineInfo: data.find((d: any) => d.title === 'Vaccine')?.result,
           },
         }}
       />
@@ -26,6 +34,19 @@ export default function CategoryPage() {
     </>
   )
 }
+const getData = async (token: string) => {
+  const res = await fetch(
+    process.env.API_BASE_URL + `/category/detail`,
+    {
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }
+  ).then((res) => res.json())
+
+  return await res.data
+}
+
 
 const feed = {
   info: {
@@ -33,13 +54,6 @@ const feed = {
     total_usage: 250,
     total_stock: 150,
   },
-  data: [
-    {
-      feed_type: 'example',
-      feed_stock: 50,
-      feed_price: 10000,
-    },
-  ],
 }
 
 const vitamin = {
@@ -48,13 +62,6 @@ const vitamin = {
     sheep_value: '4/8',
     goat_value: '4/6',
   },
-  data: [
-    {
-      vitamin_type: 'example',
-      vitamin_stock: 50,
-      vitamin_price: 5000,
-    },
-  ],
 }
 
 const anthelmintic = {
@@ -63,11 +70,4 @@ const anthelmintic = {
     sheep_value: '4/8',
     goat_value: '4/6',
   },
-  data: [
-    {
-      anthelmintic_type: 'example',
-      anthelmintic_stock: 50,
-      anthelmintic_price: 5000,
-    },
-  ],
 }

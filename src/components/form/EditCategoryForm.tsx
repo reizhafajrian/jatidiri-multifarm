@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
 import { ICategory, useCategoryStore } from '@/store/category'
@@ -26,7 +26,6 @@ const EditCategoryForm: FC<EditCategoryFormProps> = ({ category }) => {
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
-    console.log(values)
     setOpen(false)
   }
 
@@ -80,7 +79,7 @@ const setTitle = (category: string) =>
   category === 'feed'
     ? 'Pakan'
     : category === 'vitamin'
-    ? 'Vitamin'
-    : category === 'vaccine'
-    ? 'Vaksin'
-    : 'Obat Cacing'
+      ? 'Vitamin'
+      : category === 'vaccine'
+        ? 'Vaksin'
+        : 'Obat Cacing'

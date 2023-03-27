@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import {
   addCategoryHandler,
   deleteCategoryHandler,
-  editCategoryHandler,
+  editCategoryHandler
 } from './handlers'
 
 export const useCategoryStore = create<IState>((set) => ({
@@ -12,13 +12,13 @@ export const useCategoryStore = create<IState>((set) => ({
   feedInfo: {} as IFeedInfo,
   feedList: [],
   vitamin: {} as IVitamin,
-  vitaminInfo: {} as IVitaminInfo,
+  vitaminInfo: [],
   vitaminList: [],
   vaccine: {} as IVaccine,
-  vaccineInfo: {} as IVaccineInfo,
+  vaccineInfo: [],
   vaccineList: [],
   anthelmintic: {} as IAnthelmintic,
-  anthelminticInfo: {} as IAnthelminticInfo,
+  anthelminticInfo: [],
   anthelminticList: [],
 
   addCategory: addCategoryHandler,
@@ -33,13 +33,13 @@ interface IState {
   feedInfo: IFeedInfo
   feedList: IFeed[]
   vitamin: IVitamin
-  vitaminInfo: IVitaminInfo
+  vitaminInfo: []
   vitaminList: IVitamin[]
   vaccine: IVaccine
-  vaccineInfo: IVaccineInfo
+  vaccineInfo: []
   vaccineList: IVaccine[]
   anthelmintic: IAnthelmintic
-  anthelminticInfo: IAnthelminticInfo
+  anthelminticInfo: []
   anthelminticList: IAnthelmintic[]
 
   addCategory: (payload: ICategory) => Promise<any>
@@ -63,9 +63,9 @@ interface IFeed {
 }
 
 interface IFeedInfo {
-  total_type: number
-  total_usage: number
-  total_stock: number
+  feed_type: number
+  used: number
+  total_stocks: number
 }
 
 interface IVitamin {
@@ -75,15 +75,11 @@ interface IVitamin {
 }
 
 interface IVitaminInfo {
-  cow_value: string
-  sheep_value: string
-  goat_value: string
+  result: []
 }
 
 interface IVaccine {
-  vaccine_type: string
-  vaccine_stock: number
-  vaccine_price: number
+  result: []
 }
 
 interface IVaccineInfo {
@@ -110,6 +106,8 @@ export type {
   IFeed,
   IFeedInfo,
   IVitamin,
+  IVaccine,
+  IVaccineInfo,
   IVitaminInfo,
   IAnthelmintic,
   IAnthelminticInfo,

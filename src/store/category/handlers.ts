@@ -26,7 +26,6 @@ export const deleteCategoryHandler = async (payload: ICategory) => {
   // const res = await Delete(url)
   let res = {}
 
-  console.log({ url, res })
 
   return res
 }
