@@ -4,13 +4,12 @@ import { StoreInitializer } from '@/components/shared'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
+
 export const metadata = {
   title: 'Jatidiri Multifarm | Category',
 }
 
-export default function CategoryPage() {
-  const category = use(getData(cookies().get('token')?.value!))
-
+export default function Page() {
   const data = use(
     getData(cookies().get('token')?.value!)
   )
@@ -40,11 +39,15 @@ const getData = async (token: string) => {
   const res = await fetch(
     process.env.API_BASE_URL + `/category/detail`,
     {
+      next: {
+        revalidate: 0
+      },
       headers: {
         Authorization: `bearer ${token}`,
       },
     }
   ).then((res) => res.json())
+
 
   return await res.data
 }

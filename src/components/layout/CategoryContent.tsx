@@ -16,7 +16,7 @@ export default function CategoryContent() {
   const { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo } = useStore()
   const c = { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo }
   const categories = setCategories(c)
-  console.log(categories[0].cardList, 'categories')
+
 
   return (
     <>

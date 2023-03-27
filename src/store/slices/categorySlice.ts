@@ -40,7 +40,7 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
   },
   editCategory: async (data) => {
     try {
-    } catch (err) {}
+    } catch (err) { }
   },
   deleteCategory: async (data) => {
     try {

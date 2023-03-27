@@ -149,9 +149,8 @@ interface IFeedInfo {
 }
 
 interface IOtherInfo {
-  cow_value: string
-  sheep_value: string
-  goat_value: string
+  total: string
+  animal: string
 }
 
 export interface ICategoryInfo {
