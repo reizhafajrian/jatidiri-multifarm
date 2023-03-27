@@ -26,7 +26,9 @@ export const shortDateFormatter = (date: Date) => {
 }
 
 export const formatRupiah = (angka: string | number, prefix?: string) => {
+  if (angka === null || angka === undefined) return 'Rp 0'
   let angka_string = typeof angka == 'number' ? angka.toString() : angka
+
 
   let number_string = angka_string.replace(/[^,\d]/g, '').toString(),
     split = number_string.split(','),
@@ -48,10 +50,10 @@ export const categoryTitle = (category: string) => {
     category === 'feed'
       ? 'Pakan'
       : category === 'vitamin'
-      ? 'Vitamin'
-      : category === 'vaccine'
-      ? 'Vaksin'
-      : 'Obat Cacing'
+        ? 'Vitamin'
+        : category === 'vaccine'
+          ? 'Vaksin'
+          : 'Obat Cacing'
 
   return title
 }

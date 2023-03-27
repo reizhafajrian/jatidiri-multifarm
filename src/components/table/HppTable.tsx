@@ -42,7 +42,7 @@ const HppTable: FC<HppTableProps> = ({ data }) => {
     },
     {
       header: 'Harga Lainnya',
-      accessorKey: 'other_price',
+      accessorKey: 'another_price',
       cell: (data) => formatRupiah(data.getValue()),
     },
     {

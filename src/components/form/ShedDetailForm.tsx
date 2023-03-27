@@ -39,8 +39,7 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   })
 
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
-    console.log(values, 'values')
-    await addShedData(values)
+    addShedData(values)
     setOpen(false)
     methods.reset()
     mutate(`/api/shed/data/get?shed_code=${shed_code}`)

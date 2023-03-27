@@ -22,7 +22,6 @@ export default function EditProfileForm() {
   })
 
   const onSubmit: SubmitHandler<IUser> = async (values) => {
-    console.log(values)
   }
 
   const { field } = useController({ name: 'avatar', control: methods.control })
