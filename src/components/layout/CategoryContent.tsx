@@ -4,7 +4,7 @@ import {
   CowCircle,
   FeedCircle,
   GoatCircle,
-  SheepCircle,
+  SheepCircle
 } from '@/components/shared/Icons'
 import { categoryTitle } from '@/lib/utils'
 import useStore from '@/store/useStore'
@@ -16,6 +16,7 @@ export default function CategoryContent() {
   const { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo } = useStore()
   const c = { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo }
   const categories = setCategories(c)
+  console.log(categories[0].cardList, 'categories')
 
   return (
     <>
@@ -39,25 +40,34 @@ export default function CategoryContent() {
   )
 }
 
+const title = (category: string) =>
+  category === 'feed'
+    ? 'Pakan'
+    : category === 'vitamin'
+      ? 'Vitamin'
+      : category === 'vaccine'
+        ? 'Vaksin'
+        : 'Obat Cacing'
+
 const setCategories = (c: any) => [
   {
     category: 'feed',
     cardList: [
       {
         title: 'Jenis Pakan',
-        value: c?.feedInfo?.total_type,
+        value: c.feedInfo?.feed_type,
         label: 'Jenis',
         icon: <FeedCircle />,
       },
       {
         title: 'Total Penggunaan',
-        value: c?.feedInfo?.total_usage,
+        value: c.feedInfo?.used,
         label: 'Kilogram',
         icon: <CalcCircle />,
       },
       {
         title: 'Total Stock',
-        value: c?.feedInfo?.total_stock,
+        value: c.feedInfo?.total_stocks,
         label: 'Kilogram',
         icon: <CalcCircle />,
       },
@@ -68,17 +78,17 @@ const setCategories = (c: any) => [
     cardList: [
       {
         title: 'Sapi',
-        value: c?.vitaminInfo?.cow_value,
+        value: c.vitaminInfo?.find((v: any) => v.animal === 'cow')?.total,
         icon: <CowCircle />,
       },
       {
         title: 'Domba',
-        value: c?.vitaminInfo?.sheep_value,
+        value: c.vitaminInfo?.find((v: any) => v.animal === 'sheep')?.total,
         icon: <SheepCircle />,
       },
       {
         title: 'Kambing',
-        value: c?.vitaminInfo?.goat_value,
+        value: c.vitaminInfo?.find((v: any) => v.animal === 'goat')?.total,
         icon: <GoatCircle />,
       },
     ],
@@ -88,37 +98,38 @@ const setCategories = (c: any) => [
     cardList: [
       {
         title: 'Sapi',
-        value: c?.vaccineInfo?.cow_value,
+        value: c.vaccineInfo?.find((v: any) => v.animal === 'cow')?.total,
         icon: <CowCircle />,
       },
       {
         title: 'Domba',
-        value: c?.vaccineInfo?.sheep_value,
+        value: c.vaccineInfo?.find((v: any) => v.animal === 'sheep')?.total,
         icon: <SheepCircle />,
       },
       {
         title: 'Kambing',
-        value: c?.vaccineInfo?.goat_value,
+        value: c.vaccineInfo?.find((v: any) => v.animal === 'goat')?.total,
         icon: <GoatCircle />,
       },
     ],
+    data: c.vaccineList,
   },
   {
     category: 'anthelmintic',
     cardList: [
       {
         title: 'Sapi',
-        value: c?.anthelminticInfo?.cow_value,
+        value: c.anthelminticInfo?.find((v: any) => v.animal === 'cow')?.total,
         icon: <CowCircle />,
       },
       {
         title: 'Domba',
-        value: c?.anthelminticInfo?.sheep_value,
+        value: c.anthelminticInfo?.find((v: any) => v.animal === 'sheep')?.total,
         icon: <SheepCircle />,
       },
       {
         title: 'Kambing',
-        value: c?.anthelminticInfo?.goat_value,
+        value: c.anthelminticInfo?.find((v: any) => v.animal === 'goat')?.total,
         icon: <GoatCircle />,
       },
     ],
