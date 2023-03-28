@@ -51,7 +51,7 @@ const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
     {
       header: `Harga ${categoryTitle(category)}`,
       accessorKey: `price`,
-      cell: (data) => data.getValue() ? formatRupiah(data.getValue()) : '-',
+      cell: (data) => data?.getValue() ? formatRupiah(data.getValue()) : '-',
     },
     {
       header: 'Aksi',
