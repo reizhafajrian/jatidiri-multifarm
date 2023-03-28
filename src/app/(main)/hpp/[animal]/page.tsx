@@ -11,9 +11,10 @@ export const metadata = {
 export default function Page(props: { params: any }) {
   const data = use(getData(props.params.animal, cookies().get('token')?.value!))
 
+
   return (
     <>
-      <HppHeader />
+      <HppHeader animal_type={props.params.animal} />
       <HppFilter />
       <HppTable data={data} />
     </>
