@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import { hppSchema } from '@/lib/schemas'
 import { IEditHpp } from '@/store/types'
@@ -29,7 +29,6 @@ const EditHppForm: FC<EditHppFormProps> = ({ eartag_code }) => {
   })
 
   const onSubmit: SubmitHandler<IEditHpp> = async (values) => {
-    console.log(values)
     setOpen(false)
   }
 

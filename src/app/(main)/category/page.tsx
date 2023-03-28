@@ -1,71 +1,53 @@
 import CategoryContent from '@/components/layout/CategoryContent'
 import CategoryHeader from '@/components/layout/CategoryHeader'
 import { StoreInitializer } from '@/components/shared'
-import axios from 'axios'
 import { cookies } from 'next/headers'
 import { use } from 'react'
+
 
 export const metadata = {
   title: 'Jatidiri Multifarm | Category',
 }
 
-export default function CategoryPage() {
-  const category = use(getData(cookies().get('token')?.value!))
+export default function Page() {
+  const data = use(
+    getData(cookies().get('token')?.value!)
+  )
 
   return (
     <>
-      <StoreInitializer data={{ category }} />
+      <StoreInitializer
+        data={{
+          category: {
+            // feedList: feed.data,
+            feedInfo: data.find((d: any) => d.title === 'Feed')?.result,
+            // vitaminList: vitamin.data,
+            vitaminInfo: data.find((d: any) => d.title === 'Vitamin')?.result,
+            // anthelminticList: anthelmintic.data,
+            anthelminticInfo: data.find((d: any) => d.title === 'Anthelmintic')?.result,
+
+            vaccineInfo: data.find((d: any) => d.title === 'Vaccine')?.result,
+          },
+        }}
+      />
       <CategoryHeader />
       <CategoryContent />
     </>
   )
 }
-
 const getData = async (token: string) => {
-  const baseUrl = process.env.API_BASE_URL
-  const Authorization = `bearer ${token}`
-  const headers = { headers: { Authorization } }
+  const res = await fetch(
+    process.env.API_BASE_URL + `/category/detail`,
+    {
+      next: {
+        revalidate: 0
+      },
+      headers: {
+        Authorization: `bearer ${token}`,
+      },
+    }
+  ).then((res) => res.json())
 
-  const get = async (cat: string) => {
-    const res = await axios.get(baseUrl + `/${cat}/get`, headers)
-    return res.data.data
-  }
 
-  let feed = await get('feed')
-  // const vitamin = await get('vitamin')
-  // const vaccine = await get('vaccine')
-  // const anthelmintic = await get('anthelmintic')
-
-  feed = feed.filter((item: any) => item.stocks !== undefined)
-
-  const feedInfo = {
-    total_type: feed.length,
-    total_usage: feed.reduce((acc: number, cur: any) => acc + cur.used, 0),
-    total_stock: feed.reduce((acc: number, cur: any) => acc + cur.stocks, 0),
-  }
-
-  const vitaminInfo = {
-    cow_value: '4/10',
-    sheep_value: '4/8',
-    goat_value: '4/6',
-  }
-
-  const vaccineInfo = {
-    cow_value: '4/10',
-    sheep_value: '4/8',
-    goat_value: '4/6',
-  }
-
-  const anthelminticInfo = {
-    cow_value: '4/10',
-    sheep_value: '4/8',
-    goat_value: '4/6',
-  }
-
-  return {
-    feedInfo,
-    vitaminInfo,
-    vaccineInfo,
-    anthelminticInfo,
-  }
+  return await res.data
 }

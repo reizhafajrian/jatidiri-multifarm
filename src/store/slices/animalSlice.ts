@@ -58,6 +58,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   editAnimal: async (data, router) => {
     try {
       const isCempek = data.cempek === 'true'
+      console.log(data)
       const formData = new FormData()
 
       for (let value in data) {
@@ -68,7 +69,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         }
       }
 
-      if (!isCempek) formData.set('files', data.files[0])
+      if (!isCempek && data?.files) formData.set('files', data?.files[0])
 
       const url = isCempek
         ? `/api/${data.animal}/cempek/update`
@@ -83,9 +84,11 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         type: 'success',
         message: res.message,
       })
-
-      router.replace(`/${get().animal.name}/male`)
+      if (router) {
+        router.replace(`/${get().animal.name}/male`)
+      }
     } catch (err: any) {
+      console.log(err)
       return toast({
         type: 'error',
         message: err.data.errors[0].msg,

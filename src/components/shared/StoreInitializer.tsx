@@ -3,6 +3,7 @@ import { ICategoryInfo } from '@/store/types'
 import useStore from '@/store/useStore'
 import { useEffect } from 'react'
 
+
 interface IData {
   data: {
     token?: string
@@ -44,3 +45,39 @@ export default function StoreInitializer({ data }: IData) {
 
   return null
 }
+
+// interface IAnimalState {
+//   type?: string
+//   animal?: IAnimal
+// }
+
+// interface IShedState {
+//   shed_code?: string
+//   shed?: IShed
+// }
+
+// interface ICategoryState {
+//   feed?: cat.IFeed
+//   feedList?: cat.IFeed[]
+//   feedInfo?: cat.IFeedInfo
+//   vitamin?: cat.IVitamin
+//   vitaminList?: []
+//   vitaminInfo?: []
+//   vaccine?: cat.IVaccine
+//   vaccineList?: []
+//   vaccineInfo?: []
+//   anthelmintic?: cat.IAnthelmintic
+//   anthelminticList?: cat.IAnthelmintic[]
+//   anthelminticInfo?: []
+// }
+
+// interface IMilkState {
+//   milk?: IMilk
+//   milkInfo?: IMilkInfo
+//   milkList?: IMilk[]
+// }
+
+// interface IHppState {
+//   hpp?: IHpp
+//   hppList?: IHpp[]
+// }

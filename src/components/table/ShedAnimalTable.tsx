@@ -27,9 +27,14 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
 
   const { data, loading, mutate } = useDataList(`/api/${url}`)
 
-  const changeShedHandler = (shed_code: string, eartag_code?: string) => {
-    changeShedAnimal(shed_code, eartag_code)
-    mutate()
+  const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
+    try {
+      await changeShedAnimal(shed_code, eartag_code)
+      mutate()
+    } catch (error) {
+
+
+    }
   }
 
   const columns: ColumnDef<any, any>[] = [

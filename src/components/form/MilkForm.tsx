@@ -3,14 +3,14 @@ import {
   Form,
   InputDate,
   InputSelect,
-  InputText,
+  InputText
 } from '@/components/shared'
 import {
   DialogClose,
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import useDataList from '@/hooks/useDataList'
 import { milkSchema } from '@/lib/schemas'
@@ -33,16 +33,16 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
   const { data } = useDataList('/api/cow/get', ['gender=false'])
 
   const eartagOptions =
-    data?.map((item: any) => ({ name: item._id, value: item._id })) ?? []
+    data?.map((item: any) => ({ name: item.eartag_code, value: item._id })) ?? []
 
   const methods = useForm<IMilk>({
     resolver: zodResolver(milkSchema),
     values:
       formType === 'edit'
         ? {
-            eartag_code: curr?.animal_id?.eartag_code,
-            history_milk: milkHistory,
-          }
+          eartag_code: curr?.animal_id?.eartag_code,
+          history_milk: milkHistory,
+        }
         : undefined,
   })
 

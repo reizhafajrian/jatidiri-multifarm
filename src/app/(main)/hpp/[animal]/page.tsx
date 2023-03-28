@@ -1,42 +1,48 @@
 import HppFilter from '@/components/filter/HppFilter'
 import HppHeader from '@/components/layout/HppHeader'
 import HppTable from '@/components/table/HppTable'
+import { cookies } from 'next/headers'
 import { use } from 'react'
 
 export const metadata = {
   title: 'Jatidiri Multifarm | HPP',
 }
 
-export default function HppPage(props: { params: any }) {
-  const data = use(getData(props.params.animal))
+export default function Page(props: { params: any }) {
+  const data = use(getData(props.params.animal, cookies().get('token')?.value!))
+
 
   return (
     <>
-      <HppHeader />
+      <HppHeader animal_type={props.params.animal} />
       <HppFilter />
       <HppTable data={data} />
     </>
   )
 }
 
-const getData = async (animal: string) => {
-  // return await Get(`endpoint`)
+const getData = async (animal: string, token: string) => {
+  try {
 
-  const data = [
-    {
-      eartag_code: '111',
-      type: 'Sapera',
-      origin: 'Garut',
-      weight: 20,
-      age: 3,
-      purchase_price: 1000000,
-      feed_price: 1000000,
-      other_price: 0,
-      hpp: 1000000,
-      selling_price: 1000000,
-      status: { name: 'Terjual', value: 'sold' },
-    },
-  ]
+    const res = await fetch(
+      process.env.API_BASE_URL + `/hpp/get?animal_type=${animal}`,
 
-  return data
+      {
+        next: {
+          revalidate: 0
+        },
+        headers: {
+          Authorization: `bearer ${token}`
+        }
+      }
+    )
+    const data = await res.json()
+    return data.data
+
+  } catch (error) {
+    console.log(error)
+
+  }
+
+
 }

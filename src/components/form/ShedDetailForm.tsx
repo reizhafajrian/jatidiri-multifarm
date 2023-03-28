@@ -5,7 +5,7 @@ import {
   InputCheckbox,
   InputDate,
   InputSelect,
-  InputText,
+  InputText
 } from '@/components/shared'
 import { shedDetailSchema } from '@/lib/schemas'
 import { IShedDetail } from '@/store/types'
@@ -19,7 +19,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '../shared/Dialog'
 import { Pen } from '../shared/Icons'
 
@@ -33,12 +33,13 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   const { user, addShedData } = useStore()
   const [categories, setCategories] = useState<any>({ feed: true })
 
+
   const methods = useForm<IShedDetail>({
     resolver: zodResolver(shedDetailSchema(categories)),
   })
 
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
-    await addShedData(values)
+    addShedData(values)
     setOpen(false)
     methods.reset()
     mutate(`/api/shed/data/get?shed_code=${shed_code}`)
@@ -89,7 +90,7 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
                           name={field.name}
                           label={field.label}
                           options={options[name].map((option: any) => ({
-                            name: option[field.name.slice(5)],
+                            name: option['name'],
                             value: option['_id'],
                           }))}
                         />
