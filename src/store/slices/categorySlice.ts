@@ -58,8 +58,6 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
         },
       })
 
-      console.log({ url, data, res })
-
       toast({
         type: 'success',
         message: res.message,

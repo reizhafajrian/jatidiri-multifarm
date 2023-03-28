@@ -22,7 +22,9 @@ const HeaderMenu = () => {
         <button className="flex items-center gap-3 outline-none">
           <div className="h-8 w-8 rounded-full bg-gray-200" />
           <div>
-            <p className="mb-1 text-sm capitalize">{user?.name}</p>
+            <p className="mb-1 text-sm capitalize">
+              {user?.firstName} {user?.lastName}
+            </p>
             <p className="rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light">
               {user?.role}
             </p>

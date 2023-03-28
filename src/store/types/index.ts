@@ -1,13 +1,14 @@
 export interface IUser {
   avatar?: any
   id?: string
-  first_name?: string
-  last_name?: string
+  _id?: string
+  firstName?: string
+  lastName?: string
   gender?: string
   email: string
   password: string
-  phone_number?: string
-  job_title?: string
+  phone?: string
+  jobTitle?: string
   role?: string
 
   name?: string
@@ -26,11 +27,10 @@ export interface IAuth {
   loadUser: () => void
   login: (data: IUser, router: any) => void
   register: (data: IUser, router: any) => void
-  // addMember: (data: IUser, router: any) => void
-  // editMember: (payload: IUser) => Promise<void>
-  // deleteMember: (payload: string) => Promise<void>
-  // editProfile: (payload: IUser) => Promise<void>
-  // changePassword: (payload: IChangePass) => Promise<void>
+  updateUser: (data: IUser, router: any) => void
+  updateProfile: (data: IUser, router: any) => void
+  changeRole: (data: { _id: string; role: string }, router: any) => void
+  deleteUser: (id: string, router: any) => void
 }
 
 export interface IAnimal {

@@ -15,22 +15,23 @@ export const signinSchema = z.object({
 })
 
 export const memberSchema = z.object({
-  first_name: z.string(validations),
-  last_name: z.string(validations),
-  email: z.string(validations).email(),
-  phone_number: z.string(validations),
-  role: z.string(validations),
-  password: z.string(validations),
+  firstName: z.string(validations).nonempty(REQUIRED_ERROR),
+  lastName: z.string(validations).nonempty(REQUIRED_ERROR),
+  email: z.string(validations).email().nonempty(REQUIRED_ERROR),
+  phone: z.string(validations).nonempty(REQUIRED_ERROR),
+  role: z.string(validations).nonempty(REQUIRED_ERROR),
+  password: z.string(validations).nonempty(REQUIRED_ERROR),
 })
 
-export const editProfileSchema = z.object({
-  avatar: z.array(z.any(), validations),
-  first_name: z.string(validations),
-  last_name: z.string(validations),
-  email: z.string(validations).email(),
-  phone_number: z.string(validations),
-  gender: z.string(validations),
-  job_title: z.string(validations),
+export const editMemberSchema = z.object({
+  firstName: z.string(validations).nonempty(REQUIRED_ERROR),
+  lastName: z.string(validations).nonempty(REQUIRED_ERROR),
+  email: z.string(validations).email().nonempty(REQUIRED_ERROR),
+  phone: z.string(validations).nonempty(REQUIRED_ERROR),
+  role: z.string(validations).nonempty(REQUIRED_ERROR),
+  jobTitle: z.string(validations).nullish(),
+  avatar: z.array(z.any(), validations).nullish(),
+  // password: z.string(validations),
 })
 
 export const changePassSchema = z.object({

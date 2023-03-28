@@ -44,8 +44,6 @@ const getData = async (token: string) => {
     total_stock: feed.reduce((acc: number, cur: any) => acc + cur.stocks, 0),
   }
 
-  console.log({ feedInfo })
-
   const vitaminInfo = {
     cow_value: '4/10',
     sheep_value: '4/8',

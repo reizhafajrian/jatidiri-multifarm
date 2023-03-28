@@ -1,5 +1,5 @@
 'use client'
-import { editProfileSchema } from '@/lib/schemas'
+import { editMemberSchema } from '@/lib/schemas'
 import { IUser } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -13,16 +13,16 @@ import { Button, Form, InputSelect, InputText } from '../shared'
 
 export default function EditProfileForm() {
   const router = useRouter()
-  const { user } = useStore()
+  const { user, updateProfile } = useStore()
   const [preview, setPreview] = useState<string>()
 
   const methods = useForm<IUser>({
-    resolver: zodResolver(editProfileSchema),
+    resolver: zodResolver(editMemberSchema),
     defaultValues: user ?? {},
   })
 
   const onSubmit: SubmitHandler<IUser> = async (values) => {
-    console.log(values)
+    await updateProfile({ ...values, _id: user?.id }, router)
   }
 
   const { field } = useController({ name: 'avatar', control: methods.control })
@@ -67,8 +67,7 @@ export default function EditProfileForm() {
           {user && (
             <>
               <p className="text-base font-semibold capitalize">
-                {/* {`${user?.first_name} ${user?.last_name}`}  */}
-                {user.name}
+                {`${user.firstName} ${user.lastName}`}
               </p>
               <p className="text-sm text-neutral-4">{user.email}</p>
               <p className="w-fit rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light capitalize">
@@ -81,8 +80,8 @@ export default function EditProfileForm() {
       <Form methods={methods} onSubmit={onSubmit} className="space-y-4">
         <p className="font-semibold">Profile</p>
         <div className="grid grid-cols-2 gap-4">
-          <InputText name="first_name" label="First Name" />
-          <InputText name="last_name" label="Last Name" />
+          <InputText name="firstName" label="First Name" />
+          <InputText name="lastName" label="Last Name" />
           <InputSelect
             name="gender"
             label="Jenis Kelamin"
@@ -91,10 +90,10 @@ export default function EditProfileForm() {
               { name: 'laki-laki', value: 'male' },
             ]}
           />
-          <InputText name="phone_number" label="Phone Number" />
+          <InputText name="phone" label="Phone Number" />
         </div>
         <InputText name="email" label="Email" />
-        <InputText name="job_title" label="Job Title" />
+        <InputText name="jobTitle" label="Job Title" />
         <div className="flex justify-end gap-3 pt-10">
           <Button
             type="button"

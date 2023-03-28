@@ -1,8 +1,9 @@
 import { X } from '@/components/shared/Icons'
-import { memberSchema } from '@/lib/schemas'
+import { editMemberSchema, memberSchema } from '@/lib/schemas'
 import { IUser } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Form, InputSelect, InputText } from '../shared'
@@ -17,21 +18,28 @@ import {
 
 interface MemberFormProps {
   formType: 'add' | 'edit'
-  values?: IUser
+  values?: any
 }
 
-const MemberForm: FC<MemberFormProps> = ({ formType, values }) => {
+const MemberForm: FC<MemberFormProps> = ({ formType, values: data }) => {
+  const router = useRouter()
+  const { register, updateUser } = useStore()
+  const schema = formType === 'add' ? memberSchema : editMemberSchema
   const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Member`
-  const { user } = useStore()
 
   const methods = useForm<IUser>({
-    resolver: zodResolver(memberSchema),
-    defaultValues: formType == 'edit' ? values : {},
+    resolver: zodResolver(schema),
+    defaultValues: formType == 'edit' ? data : {},
   })
 
   const onSubmit: SubmitHandler<IUser> = async (values) => {
-    console.log(values)
+    if (formType === 'add') {
+      await register(values, router)
+    } else {
+      await updateUser({ ...values, _id: data.id }, router)
+    }
+    methods.reset()
     setOpen(false)
   }
 
@@ -56,10 +64,10 @@ const MemberForm: FC<MemberFormProps> = ({ formType, values }) => {
           </DialogClose>
         </div>
         <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
-          <InputText name="first_name" label="First Name" />
-          <InputText name="last_name" label="Last Name" />
+          <InputText name="firstName" label="First Name" />
+          <InputText name="lastName" label="Last Name" />
           <InputText name="email" label="Email" />
-          <InputText name="phone_number" label="No Whatsapp" />
+          <InputText name="phone" label="No Whatsapp" />
           <InputSelect
             name="role"
             label="Role"
@@ -68,7 +76,9 @@ const MemberForm: FC<MemberFormProps> = ({ formType, values }) => {
               { name: 'Super Admin', value: 'super-admin' },
             ]}
           />
-          <InputText name="password" label="Password" isSecured />
+          {formType === 'add' && (
+            <InputText name="password" label="Password" isSecured />
+          )}
           <div className="grid grid-cols-2 gap-3">
             <DialogClose>
               <Button
