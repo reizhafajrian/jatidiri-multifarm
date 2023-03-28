@@ -1,4 +1,5 @@
 import { toast } from '@/components/shared'
+import { Delete, Get, Post } from '@/lib/api'
 import { StateCreator } from 'zustand'
 import { IAuth } from '../types'
 
@@ -35,12 +36,106 @@ const createAuthSlice: StateCreator<IAuth> = (set, get) => ({
       localStorage.removeItem('user')
       router.replace('/signin')
     } catch (err) {
-      console.log(err)
+      toast({
+        type: 'error',
+        message: 'Something went wrong!',
+      })
     }
   },
   register: async (data, router) => {
     try {
-    } catch (err) {}
+      const res = await Post({ url: '/api/auth/register', data })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+      router.refresh()
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.error,
+      })
+    }
+  },
+  updateUser: async (data, router) => {
+    try {
+      const res = await Post({
+        url: '/api/user/update',
+        data: { data: [data] },
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+      router.refresh()
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.error,
+      })
+    }
+  },
+  updateProfile: async (data, router) => {
+    try {
+      console.log({ data })
+
+      const res = await Post({
+        url: '/api/user/update',
+        data: { data: [data] },
+      })
+
+      const resNewData = await Get('/api/user/get/detail/' + data._id)
+
+      localStorage.setItem('user', JSON.stringify(resNewData.data))
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+      router.refresh()
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.error,
+      })
+    }
+  },
+  changeRole: async (data, router) => {
+    try {
+      const res = await Post({
+        url: '/api/user/role/update',
+        data: { data: [data] },
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+      router.refresh()
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.errors[0].msg,
+      })
+    }
+  },
+  deleteUser: async (id, router) => {
+    try {
+      const res = await Delete('/api/user/delete/' + id)
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+      router.refresh()
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.errors[0].msg,
+      })
+    }
   },
 })
 
