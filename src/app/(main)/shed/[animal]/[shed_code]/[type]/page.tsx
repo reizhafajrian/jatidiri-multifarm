@@ -43,7 +43,7 @@ const getData = async (
   }).then((res) => res.json())
 
   const shedCodeOptions = res.data.map((item: any) => ({
-    name: item.shed_code,
+    name: item.code,
     value: item._id,
   }))
 
