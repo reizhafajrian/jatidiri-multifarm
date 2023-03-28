@@ -1,4 +1,5 @@
 'use client'
+import useStore from '@/store/useStore'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname, useSearchParams } from 'next/navigation'
@@ -20,6 +21,13 @@ export default function NavbarLink(props: IProps) {
     <Link
       replace
       href={href}
+      onClick={() =>
+        useStore.setState({
+          searchKeyword: '',
+          originFemale: 'all',
+          originMale: 'all',
+        })
+      }
       className={clsx(
         'border-b py-3 px-4 text-xs focus:outline-none',
         isActive

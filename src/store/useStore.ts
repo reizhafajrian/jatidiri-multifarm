@@ -4,6 +4,7 @@ import createAuthSlice from './slices/authSlice'
 import createCategorySlice from './slices/categorySlice'
 import createHppSlice from './slices/hppSlice'
 import createMilkSlice from './slices/milkSlice'
+import createSearchSlice, { ISearchState } from './slices/searchSlice'
 import createShedSlice from './slices/shedSlice'
 import {
   IAnimalState,
@@ -20,7 +21,8 @@ interface IState
     IShedState,
     ICategoryState,
     IMilkState,
-    IHppState {}
+    IHppState,
+    ISearchState {}
 
 const useStore = create<IState>()((...a) => ({
   ...createAuthSlice(...a),
@@ -29,6 +31,7 @@ const useStore = create<IState>()((...a) => ({
   ...createCategorySlice(...a),
   ...createMilkSlice(...a),
   ...createHppSlice(...a),
+  ...createSearchSlice(...a),
 }))
 
 export default useStore
