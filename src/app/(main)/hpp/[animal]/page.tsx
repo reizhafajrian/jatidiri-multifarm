@@ -26,7 +26,11 @@ const getData = async (animal: string, token: string) => {
 
     const res = await fetch(
       process.env.API_BASE_URL + `/hpp/get?animal_type=${animal}`,
+
       {
+        next: {
+          revalidate: 0
+        },
         headers: {
           Authorization: `bearer ${token}`
         }
