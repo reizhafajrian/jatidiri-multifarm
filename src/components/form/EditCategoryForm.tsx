@@ -13,20 +13,30 @@ import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { mutate } from 'swr'
 
 interface EditCategoryFormProps {
   category: string
+  data: any
 }
 
-const EditCategoryForm: FC<EditCategoryFormProps> = ({ category }) => {
+const EditCategoryForm: FC<EditCategoryFormProps> = ({ category, data }) => {
   const [open, setOpen] = useState(false)
   const { editCategory } = useStore()
 
   const methods = useForm<ICategory>({
     resolver: zodResolver(categorySchema),
+    defaultValues: {
+      type: data.name,
+      stock: data.stocks,
+      price: data.price,
+    },
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
+    await editCategory(values)
+    mutate(`/api/${category}/get`)
+    methods.reset()
     setOpen(false)
   }
 
@@ -39,7 +49,13 @@ const EditCategoryForm: FC<EditCategoryFormProps> = ({ category }) => {
       <DialogContent>
         <DialogTitle>Edit {setTitle(category)}</DialogTitle>
 
-        <Form methods={methods} onSubmit={onSubmit} className="mt-5 space-y-4">
+        <Form
+          methods={methods}
+          onSubmit={(values) =>
+            onSubmit({ ...values, category, _id: data._id })
+          }
+          className="mt-5 space-y-4"
+        >
           <div className="mb-8 space-y-6">
             <InputText name="type" label={`Jenis ${setTitle(category)}`} />
             <InputText name="stock" label="Stock" />

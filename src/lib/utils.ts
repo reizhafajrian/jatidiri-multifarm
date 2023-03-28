@@ -25,7 +25,7 @@ export const shortDateFormatter = (date: Date) => {
   return formatter.format(date)
 }
 
-export const formatRupiah = (angka: string | number, prefix?: string) => {
+export const formatRupiah = (angka: string | number = 0, prefix?: string) => {
   if (angka === null || angka === undefined) return 'Rp 0'
   let angka_string = typeof angka == 'number' ? angka.toString() : angka
 

@@ -56,9 +56,9 @@ const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
     {
       header: 'Aksi',
       accessorKey: `_id`,
-      cell: (data: any) => (
+      cell: (data) => (
         <div className="flex gap-2">
-          <EditCategoryForm category={category} />
+          <EditCategoryForm data={data.row.original} category={category} />
           <DeleteModal
             title={`Hapus Data Ini?`}
             desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
