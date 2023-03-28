@@ -12,7 +12,7 @@ export default function MilkHeader() {
         </h1>
         <div className="flex items-center gap-2">
           <MilkForm formType="add" />
-          <Button variant="outline" className="px-3">
+          <Button variant="outline" className="px-3" onClick={() => window.open(`/api/milk/download`, '_blank')}>
             <Download className="h-4 w-4" />
           </Button>
         </div>
