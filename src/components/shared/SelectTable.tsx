@@ -36,7 +36,7 @@ const SelectTable: FC<SelectTableProps> = ({
   return (
     <SelectRoot
       name={name}
-      defaultValue={value}
+      value={value}
       onValueChange={(e) => onChange && onChange(e, animalEarTag)}
     >
       <SelectTrigger asChild>

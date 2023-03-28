@@ -137,7 +137,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
               type="button"
               variant="outline"
               className="w-36"
-              onClick={() => router.replace(`/${animal}/male`)}
+              onClick={() => router.replace(`/${animal.name}/male`)}
               disabled={methods.formState.isSubmitting}
             >
               CANCEL

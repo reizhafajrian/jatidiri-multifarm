@@ -44,22 +44,3 @@ const DeleteModal: FC<DeleteModalProps> = ({ title, desc, deleteHandler }) => {
 }
 
 export default DeleteModal
-
-{
-  /*
-
-<div className="space-y-6 p-3 text-center">
-        <h1 className="text-2xl font-semibold">{title}</h1>
-        <p className="text-base text-neutral-4">{desc}</p>
-        <div className="flex gap-4">
-          <Button className="w-full" onClick={() => closeModal(false)}>
-            Cancel
-          </Button>
-          <Button className="w-full" variant="outline" onClick={deleteHandler}>
-            Delete
-          </Button>
-        </div>
-      </div> 
-    
-    */
-}

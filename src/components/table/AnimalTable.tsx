@@ -1,5 +1,5 @@
 'use client'
-import useDataList from '@/hooks/useDataList'
+import useAnimalList from '@/hooks/useAnimalList'
 import { formatRupiah, longDateFormatter } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
@@ -15,23 +15,8 @@ interface AnimalTableProps {
 
 const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   const router = useRouter()
-  const isCempek = type === 'cempek'
-  const { deleteAnimal, originMale, originFemale } = useStore()
-
-  const queries = []
-  !isCempek && queries.push(type === 'male' ? 'gender=true' : 'gender=false')
-  originMale !== 'all' && queries.push('origin_male=' + originMale)
-  originFemale !== 'all' && queries.push('origin_female=' + originFemale)
-
-  const { data, loading, mutate } = useDataList(
-    isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
-    queries
-  )
-
-  const deleteHandler = (id: string) => {
-    deleteAnimal(id)
-    mutate()
-  }
+  const { deleteAnimal } = useStore()
+  const { data, loading, mutate } = useAnimalList({ type })
 
   const columns: ColumnDef<any, any>[] = [
     ...(type === 'cempek' ? cempekTColumns : animalTColumns),
@@ -48,7 +33,10 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
           <DeleteModal
             title={`Hapus Data Ini?`}
             desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}
-            deleteHandler={() => deleteHandler(data.getValue())}
+            deleteHandler={() => {
+              deleteAnimal(data.getValue())
+              mutate()
+            }}
           />
         </div>
       ),
@@ -57,12 +45,7 @@ const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
   ]
 
   return (
-    <Table
-      isLoading={loading}
-      fixedCol={3}
-      data={data?.filter((i: any) => i._id !== null)}
-      columns={columns}
-    />
+    <Table isLoading={loading} fixedCol={3} data={data} columns={columns} />
   )
 }
 
