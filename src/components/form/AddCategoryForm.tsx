@@ -30,7 +30,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
-    addCategory(values)
+    await addCategory(values)
     mutate(`/api/${category}/get`)
     methods.reset()
     setOpen(false)

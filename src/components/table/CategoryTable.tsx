@@ -31,20 +31,20 @@ const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
   }
 
   const columns: ColumnDef<any, any>[] = [
-    { header: categoryTitle(category), accessorKey: `${category}_type` },
-    { header: 'Total Penggunaan', accessorKey: `${category}_weight` },
-    { header: 'Stock', accessorKey: `${category}_stock` },
+    { header: categoryTitle(category), accessorKey: 'name' },
+    { header: 'Total Penggunaan', accessorKey: 'used' },
+    { header: 'Stock', accessorKey: 'stocks' },
     {
       header: `Harga ${categoryTitle(category)}`,
-      accessorKey: `${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`,
+      accessorKey: 'price',
       cell: (data) => formatRupiah(data.getValue()),
     },
     {
       header: 'Aksi',
       accessorKey: `_id`,
-      cell: (data: any) => (
+      cell: (data) => (
         <div className="flex gap-2">
-          <EditCategoryForm category={category} />
+          <EditCategoryForm data={data.row.original} category={category} />
           <DeleteModal
             title={`Hapus Data Ini?`}
             desc={`Apakah kamu yakin ingin menghapus data? Tindakan ini tidak bisa dibatalkan`}

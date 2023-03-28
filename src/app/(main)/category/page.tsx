@@ -31,19 +31,20 @@ const getData = async (token: string) => {
     return res.data.data
   }
 
-  const feed = await get('feed')
+  let feed = await get('feed')
   // const vitamin = await get('vitamin')
   // const vaccine = await get('vaccine')
   // const anthelmintic = await get('anthelmintic')
 
+  feed = feed.filter((item: any) => item.stocks !== undefined)
+
   const feedInfo = {
     total_type: feed.length,
-    total_usage: 0,
-    total_stock: feed.reduce(
-      (acc: number, cur: any) => acc + cur.feed_stock,
-      0
-    ),
+    total_usage: feed.reduce((acc: number, cur: any) => acc + cur.used, 0),
+    total_stock: feed.reduce((acc: number, cur: any) => acc + cur.stocks, 0),
   }
+
+  console.log({ feedInfo })
 
   const vitaminInfo = {
     cow_value: '4/10',

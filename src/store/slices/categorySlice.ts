@@ -40,7 +40,36 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
   },
   editCategory: async (data) => {
     try {
-    } catch (err) {}
+      const { _id, category, type, stock, price } = data
+      const url = `/api/${category}/update`
+
+      const res = await Post({
+        url,
+        data: {
+          data: [
+            {
+              _id,
+              [`${category}_type`]: type,
+              [`${category}_stock`]: stock,
+              [`${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`]:
+                price,
+            },
+          ],
+        },
+      })
+
+      console.log({ url, data, res })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.error,
+      })
+    }
   },
   deleteCategory: async (data) => {
     try {
