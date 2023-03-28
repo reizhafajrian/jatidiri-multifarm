@@ -1,7 +1,9 @@
 'use client'
 import { formatRupiah } from '@/lib/utils'
 import { IHpp } from '@/store/types'
+import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
+import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import EditHppForm from '../form/EditHppForm'
 import { Table } from '../shared'
@@ -19,10 +21,15 @@ interface HppTableProps {
 
 const HppTable: FC<HppTableProps> = ({ data }) => {
   // const [status, setStatus] = useState(statusOptions[0])
+  const { editAnimal, } = useStore()
+  const r = useRouter()
 
-  // const changeStatusHandler = (value: any) => {
-  //   setStatus(value)
-  // }
+  const changeStatusHandler = async (value: any, _id?: string) => {
+    const pathname = window?.location?.pathname
+    const secondPath = pathname.split('/')[2]
+    editAnimal({ status: value, _id, animal: secondPath })
+    r.refresh()
+  }
 
   const columns: ColumnDef<any, any>[] = [
     { header: 'No Eartag', accessorKey: 'eartag_code' },
@@ -57,9 +64,11 @@ const HppTable: FC<HppTableProps> = ({ data }) => {
     },
     {
       header: 'Status',
-      accessorKey: 'status.value',
+      accessorKey: 'status',
       cell: (data) => (
         <SelectTable
+          onChange={changeStatusHandler}
+          animalEarTag={data.row.original._id}
           value={data.getValue()}
           options={statusOptions}
           triggerClassName={

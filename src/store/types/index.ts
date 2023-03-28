@@ -47,6 +47,7 @@ export interface IAnimal {
   origin?: string
   weight?: number
   purchase_price?: number
+  status?: string
   files?: any
   birth_weight?: number
   birth_condition?: string
@@ -74,9 +75,10 @@ export interface IAnimalState {
   setAnimal: (value: string) => void
   setFilter: (data: IAnimalFilter) => void
   addAnimal: (data: IAnimal, router: any) => void
-  editAnimal: (data: IAnimal, router: any) => void
+  editAnimal: (data: IAnimal, router?: any) => void
   deleteAnimal: (id: string) => void
 }
+
 
 // SHED
 export interface IShed {
