@@ -5,7 +5,7 @@ import {
   InputCertificate,
   InputDate,
   InputSelect,
-  InputText,
+  InputText
 } from '@/components/shared'
 import { getAnimalFormContent, getAnimalFormOptions } from '@/lib/data'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
@@ -21,17 +21,16 @@ interface AnimalFormProps {
   formType: 'add' | 'edit'
   cempekForm?: boolean
   gender?: string
-  animal: string
   values?: any
   id?: string
 }
 
 const AnimalForm: FC<AnimalFormProps> = (props) => {
-  const { formType, cempekForm, gender, animal: test, values, id } = props
+  const { formType, cempekForm, gender, values, id } = props
   const router = useRouter()
   const { user, animal, addAnimal, editAnimal } = useStore()
 
-  const opt = getAnimalFormOptions(test)
+  const opt = getAnimalFormOptions(animal.name)
   const content = getAnimalFormContent({
     animal: animal.name,
     gender,

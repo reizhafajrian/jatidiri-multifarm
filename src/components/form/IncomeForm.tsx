@@ -15,7 +15,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
-import MilkIncomeCard from '../card/MilkIncomeCard'
 
 interface IncomeFormProps {}
 
@@ -51,9 +50,7 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button>
-          <MilkIncomeCard />
-        </button>
+        <Button variant="edit" size="xs" />
       </DialogTrigger>
 
       <DialogContent>

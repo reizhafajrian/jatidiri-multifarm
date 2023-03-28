@@ -23,7 +23,7 @@ const HeaderMenu = () => {
           <div className="h-8 w-8 rounded-full bg-gray-200" />
           <div>
             <p className="mb-1 text-sm capitalize">{user?.name}</p>
-            <p className="rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light">
+            <p className="rounded-md bg-primary-1 px-1 py-[2px] text-[10px] font-light capitalize">
               {user?.role}
             </p>
           </div>

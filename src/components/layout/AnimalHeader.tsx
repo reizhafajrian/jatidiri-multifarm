@@ -14,7 +14,7 @@ const AnimalHeader = () => {
   const headerMenu = getHeaderMenu(animal.name)
 
   const [alertCluster] = useState(false)
-  const isListData = !path.includes('add' || 'edit')
+  const isListData = !path.includes('add') && !path.includes('edit')
 
   return (
     <>

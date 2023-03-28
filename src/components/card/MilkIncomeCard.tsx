@@ -1,10 +1,11 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
 import { formatRupiah, shortDateFormatter } from '@/lib/utils'
+import IncomeForm from '../form/IncomeForm'
 import { Card } from '../shared'
 import { ArrowUp, WalletCircle } from '../shared/Icons'
 
-const IncomeCard = () => {
+const MilkIncomeCard = () => {
   const info = {
     // income_total: 1250000,
     income_date: new Date(),
@@ -18,7 +19,11 @@ const IncomeCard = () => {
       <div className="flex gap-6">
         <WalletCircle />
         <div className="grid">
-          <p className="text-base font-medium">Total Pendapatan</p>
+          <div className="flex gap-3">
+            <p className="text-base font-medium">Total Pendapatan</p>
+            <IncomeForm />
+          </div>
+
           <p className="mt-auto text-2xl font-semibold">
             {loading
               ? '...'
@@ -43,4 +48,4 @@ const IncomeCard = () => {
   )
 }
 
-export default IncomeCard
+export default MilkIncomeCard
