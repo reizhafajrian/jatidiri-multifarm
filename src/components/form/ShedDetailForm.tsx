@@ -5,7 +5,7 @@ import {
   InputCheckbox,
   InputDate,
   InputSelect,
-  InputText
+  InputText,
 } from '@/components/shared'
 import { shedDetailSchema } from '@/lib/schemas'
 import { IShedDetail } from '@/store/types'
@@ -19,7 +19,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from '../shared/Dialog'
 import { Pen } from '../shared/Icons'
 
@@ -32,7 +32,6 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   const [open, setOpen] = useState(false)
   const { user, addShedData } = useStore()
   const [categories, setCategories] = useState<any>({ feed: true })
-
 
   const methods = useForm<IShedDetail>({
     resolver: zodResolver(shedDetailSchema(categories)),

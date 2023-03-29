@@ -1,9 +1,8 @@
 'use client'
+import useHppList from '@/hooks/useHppList'
 import { formatRupiah } from '@/lib/utils'
-import { IHpp } from '@/store/types'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
-import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import EditHppForm from '../form/EditHppForm'
 import { Table } from '../shared'
@@ -15,20 +14,15 @@ const statusOptions = [
   { name: 'Mati', value: 'died', bgColor: 'bg-[#BFC4C6] bg-opacity-20' },
 ]
 
-interface HppTableProps {
-  data: IHpp[]
-}
-
-const HppTable: FC<HppTableProps> = ({ data }) => {
-  // const [status, setStatus] = useState(statusOptions[0])
-  const { editAnimal, } = useStore()
-  const r = useRouter()
+const HppTable: FC = () => {
+  const { editAnimal } = useStore()
+  const { data, loading, mutate } = useHppList()
 
   const changeStatusHandler = async (value: any, _id?: string) => {
     const pathname = window?.location?.pathname
     const secondPath = pathname.split('/')[2]
     editAnimal({ status: value, _id, animal: secondPath })
-    r.refresh()
+    mutate()
   }
 
   const columns: ColumnDef<any, any>[] = [
@@ -84,7 +78,9 @@ const HppTable: FC<HppTableProps> = ({ data }) => {
     },
   ]
 
-  return <Table isLoading={false} data={data} columns={columns} fixedCol={2} />
+  return (
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+  )
 }
 
 export default HppTable

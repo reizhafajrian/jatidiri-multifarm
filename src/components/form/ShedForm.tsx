@@ -4,7 +4,7 @@ import {
   Form,
   InputRadio,
   InputSelect,
-  InputText
+  InputText,
 } from '@/components/shared'
 import { Get } from '@/lib/api'
 import { shedSchema } from '@/lib/schemas'
@@ -50,7 +50,10 @@ export default function ShedForm() {
           <InputSelect
             name="default_feed"
             label="Pakan"
-            options={data?.map((res: any) => ({ value: res.id, name: res.name }))}
+            options={data?.map((res: any) => ({
+              value: res.id,
+              name: res.name,
+            }))}
             isLoading={isLoading}
           />
           {/* <InputText name="age_range" label="Range Usia" /> */}

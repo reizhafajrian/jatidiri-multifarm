@@ -48,6 +48,8 @@ const getHeaderTitle = (pathname: string) => {
     title = <h1 className="mb-2 text-2xl font-semibold">Edit Profile</h1>
   } else if (pathname === '/change-password') {
     title = <h1 className="mb-2 text-2xl font-semibold">Change Password</h1>
+  } else if (pathname === '/category') {
+    title = <h1 className="mb-2 text-2xl font-semibold">Kategori</h1>
   }
   return title
 }

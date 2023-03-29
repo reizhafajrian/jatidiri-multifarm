@@ -5,7 +5,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable
+  useReactTable,
 } from '@tanstack/react-table'
 import { FC, useMemo, useState } from 'react'
 import SimpleBar from 'simplebar-react'

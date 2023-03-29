@@ -10,7 +10,7 @@ export default function AnimalLayout(props: {
 
   return (
     <>
-      <StoreInitializer data={{ animal }} />
+      <StoreInitializer data={{ animal, searchType: animal }} />
       <AnimalHeader />
       {props.children}
     </>

@@ -3,9 +3,7 @@ import Navbar from '@/components/layout/Navbar'
 import { Button } from '@/components/shared'
 import { DownloadCloud } from 'lucide-react'
 
-export default function HppHeader(props: {
-  animal_type: string
-}) {
+export default function HppHeader(props: { animal_type: string }) {
   const downloadHpp = () => {
     window.open(`/api/hpp/download?animal_type=${props.animal_type}`, '_blank')
   }

@@ -10,8 +10,6 @@ export const Get = async (url: string) => {
       },
     })
 
-
-
     return res.data
   } catch (err: any) {
     console.log(err)

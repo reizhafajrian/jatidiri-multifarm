@@ -58,7 +58,6 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   editAnimal: async (data, router) => {
     try {
       const isCempek = data.cempek === 'true'
-      console.log(data)
       const formData = new FormData()
 
       for (let value in data) {
@@ -84,11 +83,11 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         type: 'success',
         message: res.message,
       })
+
       if (router) {
         router.replace(`/${get().animal.name}/male`)
       }
     } catch (err: any) {
-      console.log(err)
       return toast({
         type: 'error',
         message: err.data.errors[0].msg,

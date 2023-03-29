@@ -79,7 +79,6 @@ export interface IAnimalState {
   deleteAnimal: (id: string) => void
 }
 
-
 // SHED
 export interface IShed {
   _id?: string
@@ -151,8 +150,9 @@ interface IFeedInfo {
 }
 
 interface IOtherInfo {
-  total: string
-  animal: string
+  cow_value: string
+  sheep_value: string
+  goat_value: string
 }
 
 export interface ICategoryInfo {
@@ -218,6 +218,7 @@ export interface IMilkState {
 export interface IHppState {
   // hpp: IHpp
   // hppList: IHpp[]
+  hppStatus: string
   editHpp: (data: IEditHpp) => void
 }
 

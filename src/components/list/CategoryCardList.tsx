@@ -10,7 +10,7 @@ interface IProps {
   }[]
 }
 
-const CategoryCardList:FC<IProps>=({cardList})=> {
+const CategoryCardList: FC<IProps> = ({ cardList }) => {
   return (
     <div className="flex gap-6">
       {cardList?.map((item, idx) => (

@@ -26,6 +26,7 @@ export default function NavbarLink(props: IProps) {
           searchKeyword: '',
           originFemale: 'all',
           originMale: 'all',
+          hppStatus: 'all',
         })
       }
       className={clsx(

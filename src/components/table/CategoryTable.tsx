@@ -13,10 +13,10 @@ const categoryTitle = (category: string) =>
   category === 'feed'
     ? 'Pakan'
     : category === 'vitamin'
-      ? 'Vitamin'
-      : category === 'vaccine'
-        ? 'Vaksin'
-        : 'Obat Cacing'
+    ? 'Vitamin'
+    : category === 'vaccine'
+    ? 'Vaksin'
+    : 'Obat Cacing'
 
 interface CategoryTableProps {
   category: string
@@ -25,7 +25,6 @@ interface CategoryTableProps {
 const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
   const { deleteCategory } = useStore()
   const { data, loading, mutate } = useDataList(`/api/${category}/get`)
-
 
   const deleteHandler = async (id: string) => {
     try {
@@ -51,7 +50,7 @@ const CategoryTable: FC<CategoryTableProps> = ({ category }) => {
     {
       header: `Harga ${categoryTitle(category)}`,
       accessorKey: `price`,
-      cell: (data) => data?.getValue() ? formatRupiah(data.getValue()) : '-',
+      cell: (data) => (data?.getValue() ? formatRupiah(data.getValue()) : '-'),
     },
     {
       header: 'Aksi',

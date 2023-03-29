@@ -31,10 +31,7 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
     try {
       await changeShedAnimal(shed_code, eartag_code)
       mutate()
-    } catch (error) {
-
-
-    }
+    } catch (error) {}
   }
 
   const columns: ColumnDef<any, any>[] = [

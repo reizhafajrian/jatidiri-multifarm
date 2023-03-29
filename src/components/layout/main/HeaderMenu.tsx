@@ -5,7 +5,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuSeparator,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/shared/DropdownMenu'
 import { ChevronDown } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'

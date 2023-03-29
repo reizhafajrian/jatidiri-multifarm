@@ -5,7 +5,7 @@ import {
   InputCertificate,
   InputDate,
   InputSelect,
-  InputText
+  InputText,
 } from '@/components/shared'
 import { getAnimalFormContent, getAnimalFormOptions } from '@/lib/data'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
