@@ -1,12 +1,12 @@
 import { StateCreator } from 'zustand';
 export interface IExpandState {
-  setExpanded(data?: Boolean): void;
-  isExpanded?: Boolean;
+  setExpanded(data?: boolean): void;
+  isExpanded?: boolean;
 }
 
 const createExpandSlice: StateCreator<IExpandState> = (set, get) => ({
   isExpanded: true,
-  setExpanded: (data: Boolean) => {
+  setExpanded: (data: boolean) => {
     set((state) => ({
       ...state,
       isExpanded: data,
