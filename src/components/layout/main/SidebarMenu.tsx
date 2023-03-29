@@ -14,7 +14,7 @@ const menu = [
 ]
 
 interface IProps {
-  isExpanded: boolean
+  isExpanded?: boolean
 }
 const SidebarMenu = ({ isExpanded }: IProps) => {
   return (

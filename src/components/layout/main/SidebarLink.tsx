@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation'
 
 interface IProps {
   item: { name: string; link: string; icon: any, }
-  isExpanded: boolean
+  isExpanded?: boolean
 }
 
 export default function SidebarLink(props: IProps) {
