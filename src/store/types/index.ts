@@ -202,6 +202,7 @@ export interface IMilkState {
   // milk: IMilk
   // milkInfo: IMilkInfo
   // milkList: IMilk[]
+  milkStatus: string
   milkHistory: number
   incomeHistory: number
   addMilk: (data: IMilk) => void

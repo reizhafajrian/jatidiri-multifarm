@@ -4,6 +4,7 @@ import { StateCreator } from 'zustand'
 import { IMilkState } from '../types'
 
 const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
+  milkStatus: 'all',
   milkHistory: 0,
   incomeHistory: 0,
   addMilk: async (data) => {

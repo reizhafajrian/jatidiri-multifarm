@@ -33,7 +33,8 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
   const { data } = useDataList('/api/cow/get', ['gender=false'])
 
   const eartagOptions =
-    data?.map((item: any) => ({ name: item._id, value: item._id })) ?? []
+    data?.map((item: any) => ({ name: item.eartag_code, value: item._id })) ??
+    []
 
   const methods = useForm<IMilk>({
     resolver: zodResolver(milkSchema),

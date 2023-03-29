@@ -22,6 +22,8 @@ const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
         `/api/search?type=${get().searchType}&search=${keyword}`
       )
 
+      console.log({ type: get().searchType, res })
+
       set({
         searchLoading: false,
         searchResults: res.data,
