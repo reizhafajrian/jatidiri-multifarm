@@ -74,12 +74,12 @@ export const cempekSchema = z.object({
 export const shedSchema = z.object({
   // shed_code: z.string(validations),
   animal_type: z.string(validations),
-  animal_weight: z.coerce
-    .number(validations)
-    .min(1, { message: REQUIRED_ERROR }),
-  feed: z.string(validations),
-  feed_weight: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
-  age_range: z.string(validations),
+  // animal_weight: z.coerce
+  //   .number(validations)
+  //   .min(1, { message: REQUIRED_ERROR }),
+  default_feed: z.string(validations),
+  // feed_weight: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+  // age_range: z.string(validations),
   description: z.string(),
   // created_by: z.string(validations),
 })

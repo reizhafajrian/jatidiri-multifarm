@@ -28,22 +28,27 @@ const getData = async (shed_code: string, token: string) => {
   const Authorization = `bearer ${token}`
 
   const resDetail = await fetch(baseUrl + '/shed/get/detail/' + shed_code, {
+    next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())
 
   const feed = await fetch(baseUrl + '/feed/get', {
+    next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())
 
   const vitamin = await fetch(baseUrl + '/vitamin/get', {
+    next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())
 
   const vaccine = await fetch(baseUrl + '/vaccine/get', {
+    next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())
 
   const anthelmintic = await fetch(baseUrl + '/anthelmintic/get', {
+    next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())
 

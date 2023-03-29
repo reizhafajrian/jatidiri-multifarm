@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
 import { ICategory } from '@/store/types'
@@ -19,6 +19,11 @@ interface AddCategoryFormProps {
   category: string
 }
 
+interface ResponseCategory {
+  message: string
+  errors?: { msg: string }[]
+}
+
 const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   const [open, setOpen] = useState(false)
   const title = setTitle(category)
@@ -30,7 +35,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
-    await addCategory(values)
+    addCategory(values) as unknown as ResponseCategory
     mutate(`/api/${category}/get`)
     methods.reset()
     setOpen(false)
@@ -91,7 +96,7 @@ const setTitle = (category: string) =>
   category === 'feed'
     ? 'Pakan'
     : category === 'vitamin'
-    ? 'Vitamin'
-    : category === 'vaccine'
-    ? 'Vaksin'
-    : 'Obat Cacing'
+      ? 'Vitamin'
+      : category === 'vaccine'
+        ? 'Vaksin'
+        : 'Obat Cacing'
