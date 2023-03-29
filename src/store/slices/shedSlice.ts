@@ -4,6 +4,7 @@ import { StateCreator } from 'zustand'
 import { IShedState } from '../types'
 
 const createShedSlice: StateCreator<IShedState> = (set, get) => ({
+  shed_code: '',
   addShed: async (data, router) => {
     try {
       const res = await Post({ url: '/api/shed/create', data })

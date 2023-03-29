@@ -1,27 +1,20 @@
 'use client'
 import { BackLink } from '@/components/shared'
 import useStore from '@/store/useStore'
-// import { useAnimalStore } from '@/store/animal'
 import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
 import Navbar from './Navbar'
 
 interface ShedDetailHeaderProps {
-  animal: string
-  shed_code: string
   type?: string
   eartagOptions?: any
 }
 
-const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
-  const { animal: test, shed_code, type, eartagOptions } = props
-  // const { animalTitle } = useAnimalStore()
-  // const title = animalTitle(animal)
-  const { animal } = useStore()
+const ShedDetailHeader: FC<ShedDetailHeaderProps> = ({ type, eartagOptions }) => {
+  const { animal, shed_code } = useStore()
   const pathname = usePathname()
   const id = pathname.split('/')[3]
-
   const baseUrl = `/shed/${animal.name}/${id}`
 
   const menu = [

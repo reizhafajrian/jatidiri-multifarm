@@ -74,7 +74,7 @@ const HppTable: FC = () => {
     {
       header: 'Aksi',
       accessorKey: 'eartag_code',
-      cell: (data) => <EditHppForm eartag_code={data.getValue()} />,
+      cell: (data) => <EditHppForm data={data.row.original} />,
     },
   ]
 

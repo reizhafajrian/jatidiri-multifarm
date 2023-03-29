@@ -6,12 +6,12 @@ import { FC } from 'react'
 import { Table } from '../shared'
 
 interface ShedInfoTableProps {
-  shed_code: string
+  id: string
 }
 
-const ShedInfoTable: FC<ShedInfoTableProps> = ({ shed_code }) => {
+const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
   const { data, loading } = useDataList(
-    `/api/shed/data/get?shed_code=${shed_code}`
+    `/api/shed/data/get?shed_code=${id}`
   )
 
   const columns: ColumnDef<any, any>[] = [
@@ -66,10 +66,6 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ shed_code }) => {
       cell: (data) =>
         data.getValue() ? longDateFormatter(new Date(data.getValue())) : '-',
     },
-    //   {
-    //     header: 'Range Usia',
-    //     accessorKey: 'age_range',
-    //   },
   ]
 
   return (

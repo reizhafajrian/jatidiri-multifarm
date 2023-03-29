@@ -15,9 +15,9 @@ export interface IUser {
 }
 
 export interface IChangePass {
-  old_pass: string
-  new_pass: string
-  confirm_pass: string
+  passwordOld: string
+  password: string
+  passwordConfirmation: string
 }
 
 export interface IAuth {
@@ -29,6 +29,7 @@ export interface IAuth {
   register: (data: IUser, router: any) => void
   updateUser: (data: IUser, router: any) => void
   updateProfile: (data: IUser, router: any) => void
+  changePass: (data: { password: string, passwordConfirmation: string }) => void
   changeRole: (data: { _id: string; role: string }, router: any) => void
   deleteUser: (id: string, router: any) => void
 }
@@ -123,7 +124,7 @@ export interface IShedAnimal {
 }
 
 export interface IShedState {
-  // shed_code: string
+  shed_code: string
   // shed: IShed
   // shedDetail: IShedDetail
 
@@ -214,32 +215,33 @@ export interface IMilkState {
   setIncomeHistory: (start: Date, end: Date) => void
 }
 
+// export interface IHpp {
+//   type?: string
+//   origin?: string
+//   weight?: number
+//   age?: number
+//   purchase_price?: number
+//   feed_price?: number
+//   other_price?: number
+//   hpp?: number
+//   selling_price?: number
+//   status?: { name: string; value: string }
+// }
+
 // HPP
 export interface IHppState {
   // hpp: IHpp
   // hppList: IHpp[]
   hppStatus: string
-  editHpp: (data: IEditHpp) => void
+  editHpp: (data: IEditHpp, animal: string) => void
 }
 
-export interface IHpp {
-  eartag_code?: string
-  type?: string
-  origin?: string
-  weight?: number
-  age?: number
-  purchase_price?: number
-  feed_price?: number
-  other_price?: number
-  hpp?: number
-  selling_price?: number
-  status?: { name: string; value: string }
-}
+
 
 export interface IEditHpp {
+  _id?: string
   eartag_code?: string
   hpp?: number
   selling_price?: number
   description?: string
-  created_by?: string
 }

@@ -4,7 +4,7 @@ import {
   CowCircle,
   FeedCircle,
   GoatCircle,
-  SheepCircle,
+  SheepCircle
 } from '@/components/shared/Icons'
 import { categoryTitle } from '@/lib/utils'
 import useStore from '@/store/useStore'
@@ -38,15 +38,6 @@ export default function CategoryContent() {
     </>
   )
 }
-
-const title = (category: string) =>
-  category === 'feed'
-    ? 'Pakan'
-    : category === 'vitamin'
-    ? 'Vitamin'
-    : category === 'vaccine'
-    ? 'Vaksin'
-    : 'Obat Cacing'
 
 const setCategories = (c: any) => [
   {
@@ -135,3 +126,12 @@ const setCategories = (c: any) => [
     ],
   },
 ]
+
+// const title = (category: string) =>
+//   category === 'feed'
+//     ? 'Pakan'
+//     : category === 'vitamin'
+//     ? 'Vitamin'
+//     : category === 'vaccine'
+//     ? 'Vaksin'
+//     : 'Obat Cacing'

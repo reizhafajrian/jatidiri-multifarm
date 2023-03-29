@@ -16,9 +16,9 @@ const ShedInfoFilter: FC<ShedInfoFilterProps> = ({ options }) => {
             <SelectFilter
               key={name}
               options={[
-                { name: name, value: 'all' },
+                { name: `all (${name})`, value: 'all' },
                 ...options[name].map((option: any) => ({
-                  name: option[`${name}_type`],
+                  name: option['name'],
                   value: option['_id'],
                 })),
               ]}

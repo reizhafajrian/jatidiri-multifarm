@@ -35,9 +35,9 @@ export const editMemberSchema = z.object({
 })
 
 export const changePassSchema = z.object({
-  old_pass: z.string(validations),
-  new_pass: z.string(validations),
-  confirm_pass: z.string(validations),
+  passwordOld: z.string(validations).nonempty(REQUIRED_ERROR),
+  password: z.string(validations).nonempty(REQUIRED_ERROR),
+  passwordConfirmation: z.string(validations).nonempty(REQUIRED_ERROR),
 })
 
 // ANIMALS
@@ -166,10 +166,10 @@ export const incomeSchema = z.object({
 
 // HPP
 export const hppSchema = z.object({
-  shed_code: z.string(validations),
-  hpp: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+  eartag_code: z.string(validations).nonempty(REQUIRED_ERROR),
+  hpp: z.coerce.number(validations).min(0, { message: REQUIRED_ERROR }),
   selling_price: z.coerce
     .number(validations)
     .min(1, { message: REQUIRED_ERROR }),
-  description: z.string(),
+  description: z.string().nullish(),
 })
