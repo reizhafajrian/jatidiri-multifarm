@@ -1,10 +1,11 @@
 'use client'
 import useStore from '@/store/useStore'
 import { AnimatePresence, motion } from 'framer-motion'
-import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import SidebarMenu from './SidebarMenu'
+
 
 export default function Sidebar() {
   const { isExpanded, setExpanded } = useStore()
@@ -70,9 +71,9 @@ export default function Sidebar() {
             transition={{ duration: 0.3 }}
           >
             {isExpanded ? (
-              <ChevronLeftIcon className="h-6 w-6" />
+              <ChevronLeft className="h-6 w-6" />
             ) : (
-              <ChevronRightIcon className="h-6 w-6" />
+              <ChevronRight className="h-6 w-6" />
             )}
           </motion.button>
         </motion.div>

@@ -9,7 +9,7 @@ interface ContainerProps {
 const Container = (props: ContainerProps) => {
   const { isExpanded } = useStore()
   return <motion.div
-    className="flex min-h-screen max-w-7xl flex-col p-6"
+    className="ml-64 flex min-h-screen max-w-7xl flex-col p-6"
     animate={isExpanded ? {
       marginLeft: '240px',
     } : {
