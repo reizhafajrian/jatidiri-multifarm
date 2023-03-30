@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface IProps { }
+interface IProps {}
 
-const ChangePasswordForm: FC<IProps> = ({ }) => {
+const ChangePasswordForm: FC<IProps> = ({}) => {
   const router = useRouter()
   const { changePass } = useStore()
 
@@ -27,12 +27,16 @@ const ChangePasswordForm: FC<IProps> = ({ }) => {
     <Form
       methods={methods}
       onSubmit={onSubmit}
-      className="grid grid-cols-2 gap-6"
+      className="grid gap-6 md:grid-cols-2"
     >
       <InputText name="passwordOld" label="Old Password" isSecured />
       <div className="grid gap-6">
         <InputText name="password" label="New Password" isSecured />
-        <InputText name="passwordConfirmation" label="Confirm Password" isSecured />
+        <InputText
+          name="passwordConfirmation"
+          label="Confirm Password"
+          isSecured
+        />
         <div className="flex justify-end gap-3">
           <Button
             type="button"

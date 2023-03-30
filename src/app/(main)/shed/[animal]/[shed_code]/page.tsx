@@ -2,17 +2,15 @@ import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import ShedInfo from '@/components/layout/ShedInfo'
 import { StoreInitializer } from '@/components/shared'
 import { cookies } from 'next/headers'
-import { use } from 'react'
 
 export const metadata = {
   title: 'Jatidiri Multifarm | Detail Shed',
 }
 
-export default function ShedDetailPage(props: { params: any }) {
-  const { shed_code, animal } = props.params
-  const { shedDetail: data, options } = use(
-    getData(shed_code, cookies().get('token')?.value!)
-  )
+export default async function ShedDetailPage(props: { params: any }) {
+  const { shed_code, animal } = await props.params
+  const token = cookies().get('token')?.value!
+  const { shedDetail: data, options } = await getData(shed_code, token)
 
   return (
     <>
@@ -27,7 +25,8 @@ const getData = async (shed_code: string, token: string) => {
   const baseUrl = process.env.API_BASE_URL
   const Authorization = `bearer ${token}`
 
-  const resDetail = await fetch(baseUrl + '/shed/get/detail/' + shed_code, {
+  const detailUrl = baseUrl + '/shed/get/detail/' + shed_code
+  const resDetail = await fetch(detailUrl, {
     next: { revalidate: 0 },
     headers: { Authorization },
   }).then((res) => res.json())

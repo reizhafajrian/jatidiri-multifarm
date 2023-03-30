@@ -8,9 +8,9 @@ interface ShedInfoFilterProps {
 
 const ShedInfoFilter: FC<ShedInfoFilterProps> = ({ options }) => {
   return (
-    <div className="flex items-center gap-3">
-      <span className="font-semibold">FILTER:</span>
-      <div className="flex items-center gap-3">
+    <div className="flex gap-5 md:items-center md:gap-3">
+      <span className="hidden font-semibold md:block">FILTER:</span>
+      <div className="flex flex-1 items-center justify-between gap-3 md:flex-none">
         {['feed', 'vitamin', 'vaccine', 'anthelmintic'].map((name) => {
           return (
             <SelectFilter

@@ -20,13 +20,15 @@ const ShedInfo: FC<ShedInfoProps> = ({ options }) => {
 
   return (
     <>
-      <div className="mb-8 flex gap-8 py-5">
+      <div className="mb-4 flex gap-3 py-5 md:mb-8 md:gap-8">
         {cardList?.map((item, idx) => (
-          <Card key={idx} className="w-44">
-            <h3 className="mb-7 text-base font-semibold text-primary-4">
+          <Card key={idx} className="w-44 p-3 md:p-6">
+            <h3 className="mb-4 text-xs font-semibold text-primary-4 md:mb-7 md:text-base">
               {item.title}
             </h3>
-            <p className="font-medium text-neutral-5">{!loading && item.content}</p>
+            <p className="font-medium text-neutral-5">
+              {!loading && item.content}
+            </p>
           </Card>
         ))}
       </div>
@@ -37,7 +39,7 @@ const ShedInfo: FC<ShedInfoProps> = ({ options }) => {
             History Kandang
             <span className="text-primary-5"> #{data?.code}</span>
           </h1>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col-reverse justify-between gap-3 md:flex-row md:items-center">
             <ShedInfoFilter options={options} />
             <ShedDetailForm options={options} shed_code={data._id!} />
           </div>

@@ -1,7 +1,7 @@
-import { toast } from '@/components/shared';
-import { Post } from '@/lib/api';
-import { StateCreator } from 'zustand';
-import { IHppState } from '../types';
+import { toast } from '@/components/shared'
+import { Post } from '@/lib/api'
+import { StateCreator } from 'zustand'
+import { IHppState } from '../types'
 
 const createHppSlice: StateCreator<IHppState> = (set, get) => ({
   hppStatus: 'all',

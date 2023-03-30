@@ -50,8 +50,8 @@ const ShedAnimalForm: FC<ShedAnimalFormProps> = ({
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          Tambah {animal.title}
-          <Pen className="ml-3 h-4 w-4 fill-white" />
+          <span className="hidden md:block">Tambah {animal.title}</span>
+          <Pen className="h-4 w-4 fill-white md:ml-3" />
         </Button>
       </DialogTrigger>
       <DialogContent>

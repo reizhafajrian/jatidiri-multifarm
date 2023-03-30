@@ -42,7 +42,7 @@ const getData = async (
     headers: { Authorization },
   }).then((res) => res.json())
 
-  const shedCodeOptions = res.data.map((item: any) => ({
+  const shedCodeOptions = res?.data?.map((item: any) => ({
     name: item.code,
     value: item._id,
   }))

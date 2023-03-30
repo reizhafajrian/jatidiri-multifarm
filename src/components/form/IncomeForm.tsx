@@ -70,7 +70,7 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
             </div>
             <div>
               <h2 className="mb-3 text-base font-medium">History Pendapatan</h2>
-              <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+              <div className="grid gap-x-5 gap-y-4 md:grid-cols-2">
                 <InputDate
                   name="history_income_date"
                   label="Tanggal"

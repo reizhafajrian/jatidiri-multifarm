@@ -17,7 +17,7 @@ export default function HppFilter() {
         title="status"
         options={statusOptions}
         defaultValue={hppStatus}
-        onChange={value => useStore.setState({ hppStatus: value })}
+        onChange={(value) => useStore.setState({ hppStatus: value })}
       />
     </div>
   )

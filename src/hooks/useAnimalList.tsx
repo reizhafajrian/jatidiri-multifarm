@@ -7,6 +7,7 @@ const useAnimalList = ({ type }: { type: string }) => {
     animal: { name: animal },
     originMale,
     originFemale,
+    filterByDateAnimals,
     searchResults,
     searchKeyword,
     searchLoading,
@@ -21,6 +22,7 @@ const useAnimalList = ({ type }: { type: string }) => {
   !isCempek &&
     queriesArray.push(type === 'male' ? 'gender=true' : 'gender=false')
 
+  queriesArray.push(filterByDateAnimals)
   const queries = queriesArray?.join('&')
   const url = isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`
   const endpoint = queriesArray ? url + `?${queries}` : url

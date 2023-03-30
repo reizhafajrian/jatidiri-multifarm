@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from '@/components/shared/Dialog'
 import { hppSchema } from '@/lib/schemas'
 import { IEditHpp } from '@/store/types'
@@ -20,9 +20,11 @@ interface EditHppFormProps {
 
 const EditHppForm: FC<EditHppFormProps> = ({ data }) => {
   const [open, setOpen] = useState(false)
-  const { editHpp, animal: { name: animal } } = useStore()
+  const {
+    editHpp,
+    animal: { name: animal },
+  } = useStore()
   const { _id, eartag_code, hpp } = data
-
 
   const methods = useForm<IEditHpp>({
     resolver: zodResolver(hppSchema),
@@ -33,7 +35,10 @@ const EditHppForm: FC<EditHppFormProps> = ({ data }) => {
     },
   })
 
-  const onSubmit: SubmitHandler<IEditHpp> = async ({ selling_price, description }) => {
+  const onSubmit: SubmitHandler<IEditHpp> = async ({
+    selling_price,
+    description,
+  }) => {
     await editHpp({ _id, selling_price, description }, animal)
     setOpen(false)
   }

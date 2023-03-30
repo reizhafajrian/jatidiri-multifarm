@@ -11,20 +11,20 @@ function Header() {
   const headerTitle = getHeaderTitle(pathname)
 
   return (
-    <header className="flex items-center justify-between pt-4 pb-6">
+    <header className="flex flex-wrap items-center justify-between gap-4 pt-4 pb-6">
       {headerTitle}
       <div
         className={cn(
-          'flex items-center justify-between rounded-[20px] bg-white py-3 px-6 shadow-header',
+          'flex items-center justify-between gap-4 rounded-[20px] bg-white py-3 px-6 shadow-header',
           !headerTitle && 'flex-1'
         )}
       >
         {!headerTitle && <Search />}
-        <div className="flex items-center gap-4">
-          <Bell className="w-6 stroke-primary-6" />
-          <AlertCircle className="w-6 stroke-primary-6" />
+        <div className="flex items-center justify-between gap-4">
+          <Bell className="hidden w-6 stroke-primary-6 md:block" />
+          <AlertCircle className="hidden w-6 stroke-primary-6 md:block" />
           <HeaderMenu />
-          <div className="relative h-8 w-16">
+          <div className="relative hidden h-8 w-16 md:block">
             <Image src="/lang.png" alt="lang" fill className="object-contain" />
           </div>
         </div>
@@ -50,6 +50,8 @@ const getHeaderTitle = (pathname: string) => {
     title = <h1 className="mb-2 text-2xl font-semibold">Change Password</h1>
   } else if (pathname === '/category') {
     title = <h1 className="mb-2 text-2xl font-semibold">Kategori</h1>
+  } else if (pathname === '/role-management') {
+    title = <h1 className="mb-2 text-lg font-semibold">Member Management</h1>
   }
   return title
 }

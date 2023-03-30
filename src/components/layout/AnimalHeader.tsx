@@ -1,7 +1,7 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import { BackLink, Button } from '@/components/shared'
-import { Download, ExclamationTriangle } from '@/components/shared/Icons'
+import { Download, ExclamationTriangle, Pen } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'
 import { usePathname, useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -23,14 +23,17 @@ const AnimalHeader = () => {
           {alertCluster && <AlertCluster />}
           <Navbar
             menu={headerMenu}
-            className="mb-5 flex items-center justify-between"
+            className="mb-5 flex items-center justify-between gap-5"
           >
             <div className="flex items-center justify-end gap-2">
               <Button
                 className="capitalize"
                 onClick={() => router.replace(`/${animal.name}/add`)}
               >
-                tambah data {animal.title}
+                <Pen className="h-4 w-4 md:hidden" />
+                <span className="hidden md:block">
+                  tambah data {animal.title}
+                </span>
               </Button>
               <Button
                 variant="outline"

@@ -11,7 +11,10 @@ interface ShedDetailHeaderProps {
   eartagOptions?: any
 }
 
-const ShedDetailHeader: FC<ShedDetailHeaderProps> = ({ type, eartagOptions }) => {
+const ShedDetailHeader: FC<ShedDetailHeaderProps> = ({
+  type,
+  eartagOptions,
+}) => {
   const { animal, shed_code } = useStore()
   const pathname = usePathname()
   const id = pathname.split('/')[3]

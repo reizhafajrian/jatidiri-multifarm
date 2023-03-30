@@ -2,17 +2,17 @@ import useStore from '@/store/useStore'
 import axios from 'axios'
 
 export const Get = async (url: string) => {
+  const token = await useStore.getState().token
   try {
     const res = await axios.get(url, {
       withCredentials: true,
       headers: {
-        Authorization: `bearer ${useStore.getState().token}`,
+        Authorization: `bearer ${token}`,
       },
     })
 
     return res.data
   } catch (err: any) {
-    console.log(err)
     return Promise.reject(err.response)
   }
 }
@@ -23,11 +23,12 @@ type params = {
 }
 
 export const Post = async ({ url, data }: params) => {
+  const token = await useStore.getState().token
   try {
     const res = await axios.post(url, data, {
       withCredentials: true,
       headers: {
-        Authorization: `bearer ${useStore.getState().token}`,
+        Authorization: `bearer ${token}`,
       },
     })
 
@@ -38,11 +39,12 @@ export const Post = async ({ url, data }: params) => {
 }
 
 export const Put = async ({ url, data }: params) => {
+  const token = await useStore.getState().token
   try {
     const res = await axios.put(url, data, {
       withCredentials: true,
       headers: {
-        Authorization: `bearer ${useStore.getState().token}`,
+        Authorization: `bearer ${token}`,
       },
     })
 
@@ -53,11 +55,12 @@ export const Put = async ({ url, data }: params) => {
 }
 
 export const Delete = async (url: string) => {
+  const token = await useStore.getState().token
   try {
     const res = await axios.delete(url, {
       withCredentials: true,
       headers: {
-        Authorization: `bearer ${useStore.getState().token}`,
+        Authorization: `bearer ${token}`,
       },
     })
 

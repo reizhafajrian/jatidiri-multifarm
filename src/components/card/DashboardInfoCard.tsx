@@ -18,9 +18,11 @@ const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
       <div className="mr-6 h-14 w-14">{data.icon}</div>
       <div className="text-neutral-5">
         <h3 className="mb-4 font-medium capitalize">{data.title}</h3>
-        <p className="text-[32px] font-semibold">{formatRupiah(data.value)}</p>
+        <p className="text-2xl font-semibold md:text-[32px]">
+          {formatRupiah(data.value)}
+        </p>
       </div>
-      <p className="mt-auto ml-auto flex items-center gap-1 rounded-xl bg-success-3 py-[2px] px-[10px]">
+      <p className="mt-auto ml-auto flex items-center gap-1 rounded-xl bg-success-3 py-[2px] px-1 md:px-[10px]">
         <ArrowUp className="w-3 stroke-success-1" />
         <span className="text-xs font-medium text-success-2">
           {data.percentage} %

@@ -72,14 +72,14 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
         set((state) => ({ ...state, milkHistory: res.data }))
       }
     } catch (err: any) {
-      if (err.status === 404) {
-        toast({
-          type: 'error',
-          message: 'result none',
-        })
-      } else {
-        console.log(err)
-      }
+      // if (err.status === 404) {
+      //   toast({
+      //     type: 'error',
+      //     message: 'result none',
+      //   })
+      // } else {
+      //   console.log(err)
+      // }
     }
   },
   changeMilkStatus: async (_id, status) => {

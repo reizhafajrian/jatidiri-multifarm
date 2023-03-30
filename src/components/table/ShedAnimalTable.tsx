@@ -5,7 +5,6 @@ import { longDateFormatter } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
-import SelectTable from '../shared/SelectTable'
 
 interface ShedAnimalTableProps {
   id: string
@@ -42,20 +41,22 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
     },
     { header: 'No Eartag', accessorKey: 'eartag_code' },
     { header: 'Keterangan', accessorKey: 'description' },
-    {
-      header: 'Pindah Kandang',
-      accessorKey: 'shed_code',
-      cell: (data) => (
-        <SelectTable
-          value={id}
-          onChange={changeShedHandler}
-          animalEarTag={data.row.original.eartag_code}
-          options={shedCodeOptions}
-          triggerClassName="bg-primary-4 text-white"
-        />
-      ),
-    },
+    // {
+    //   header: 'Pindah Kandang',
+    //   accessorKey: 'shed_code',
+    //   cell: (data) => (
+    //     <SelectTable
+    //       value={id}
+    //       onChange={changeShedHandler}
+    //       animalEarTag={data.row.original.eartag_code}
+    //       options={shedCodeOptions}
+    //       triggerClassName="bg-primary-4 text-white"
+    //     />
+    //   ),
+    // },
   ]
+
+  console.log(shedCodeOptions)
 
   return (
     <Table

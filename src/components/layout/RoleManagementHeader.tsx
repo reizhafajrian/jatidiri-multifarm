@@ -5,10 +5,7 @@ export default function RoleManagementHeader() {
   return (
     <>
       <div>
-        <div className="mb-8 flex items-center justify-between">
-          <h1 className="text-lg font-semibold text-neutral-5">
-            Member Management
-          </h1>
+        <div className="mb-8 flex items-center justify-end">
           <MemberForm formType="add" />
         </div>
       </div>

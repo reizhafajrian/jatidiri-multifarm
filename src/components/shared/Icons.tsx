@@ -20,7 +20,7 @@ import {
   Search as SearchIcon,
   Syringe,
   Trash2,
-  X
+  X,
 } from 'lucide-react'
 
 export {
@@ -1284,8 +1284,6 @@ export const HPP = () => {
     </svg>
   )
 }
-
-
 
 export const ExclamationTriangle = () => {
   return (

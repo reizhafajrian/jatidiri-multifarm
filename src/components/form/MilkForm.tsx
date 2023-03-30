@@ -20,6 +20,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
+import { Pen } from '../shared/Icons'
 
 interface MilkFormProps {
   formType: 'add' | 'edit'
@@ -33,8 +34,10 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
   const { data } = useDataList('/api/cow/get', ['gender=false'])
 
   const eartagOptions =
-    data?.map((item: any) => ({ name: item.eartag_code, value: item._id })) ??
-    []
+    data?.data.map((item: any) => ({
+      name: item.eartag_code,
+      value: item._id,
+    })) ?? []
 
   const methods = useForm<IMilk>({
     resolver: zodResolver(milkSchema),
@@ -69,7 +72,10 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         {formType === 'add' ? (
-          <Button className="capitalize">tambah data susu</Button>
+          <Button className="capitalize">
+            <Pen className="h-4 w-4 md:hidden" />
+            <span className="hidden md:block">tambah data susu</span>
+          </Button>
         ) : (
           <Button size="xs" variant="edit" />
         )}
@@ -112,7 +118,7 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
                   <h2 className="mb-3 text-base font-medium">
                     Cek History Susu
                   </h2>
-                  <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+                  <div className="grid gap-x-5 gap-y-4 md:grid-cols-2">
                     <InputDate
                       name="history_milk_date"
                       label="Tanggal"

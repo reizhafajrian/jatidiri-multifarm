@@ -5,27 +5,29 @@ import { Doughnut } from 'react-chartjs-2'
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const ageData = [
-  { range: '15 - 20', value: '20' },
-  { range: '21 - 30', value: '20' },
-  { range: '31 - 40', value: '20' },
-  { range: '41+', value: '20' },
-]
-
-const data = {
-  labels: ['Sapi', 'Kambing', 'Domba'],
-  datasets: [
-    {
-      label: 'die',
-      data: [12, 19, 3],
-      backgroundColor: ['#40916C', '#775DFE', '#C1E5D5'],
-    },
-  ],
+interface DeadAnimalsDiagramProps {
+  data: any
 }
 
-interface DeadAnimalsDiagramProps {}
+const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({ data }) => {
+  const ageData = [
+    { range: '0 - 2', value: '20' },
+    { range: '3 - 5', value: '20' },
+    { range: '6 - 8', value: '20' },
+    { range: '8+', value: '20' },
+  ]
 
-const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({}) => {
+  const diedData = {
+    labels: ['Sapi', 'Kambing', 'Domba'],
+    datasets: [
+      {
+        label: 'die',
+        data: [data?.cow.total, data?.goat.total, data?.sheep.total],
+        backgroundColor: ['#40916C', '#775DFE', '#C1E5D5'],
+      },
+    ],
+  }
+
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2">
@@ -43,7 +45,7 @@ const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({}) => {
               },
             },
           }}
-          data={data}
+          data={diedData}
         />
       </div>
       <div>

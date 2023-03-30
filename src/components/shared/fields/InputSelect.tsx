@@ -8,7 +8,7 @@ import {
   SelectRoot,
   SelectTrigger,
   SelectValue,
-  SelectViewport
+  SelectViewport,
 } from '@/components/shared/Select'
 import { cn } from '@/lib/utils'
 import { FC } from 'react'
@@ -79,7 +79,9 @@ const InputSelect: FC<InputSelectProps> = ({
                 <Loader2 className="animate-spin stroke-primary-4" />
               </div>
             ) : options.length == 0 ? (
-              <div className='px-8 py-2 text-sm font-medium text-neutral-4'>empty list</div>
+              <div className="px-8 py-2 text-sm font-medium text-neutral-4">
+                empty list
+              </div>
             ) : (
               options.map(({ name, value }, idx) => (
                 <SelectItem key={idx} value={value}>

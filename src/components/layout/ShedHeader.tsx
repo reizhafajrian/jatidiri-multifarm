@@ -1,8 +1,8 @@
 'use client'
-import { Download } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Navbar from '../layout/Navbar'
 import { Button } from '../shared'
+import { Download, Pen } from '../shared/Icons'
 
 export default function ShedHeader() {
   const router = useRouter()
@@ -19,7 +19,8 @@ export default function ShedHeader() {
           className="capitalize"
           onClick={() => router.replace(`/shed/add`)}
         >
-          tambah kandang
+          <Pen className="h-4 w-4 md:hidden" />
+          <span className="hidden md:block">tambah kandang</span>
         </Button>
         <Button variant="outline" className="px-3">
           <Download className="h-4 w-4" />

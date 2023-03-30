@@ -65,7 +65,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
       <Form
         methods={methods}
         onSubmit={(values) => onSubmit({ ...values, ...data })}
-        className="grid grid-cols-2 gap-4"
+        className="grid gap-4 md:grid-cols-2"
       >
         <div className="space-y-6">
           <InputSelect
@@ -130,7 +130,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
           <div
             className={cn(
               'flex justify-end gap-3',
-              cempekForm ? 'mt-10' : 'mt-auto'
+              cempekForm ? 'mt-10' : 'mt-10 md:mt-auto'
             )}
           >
             <Button

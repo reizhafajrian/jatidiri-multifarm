@@ -154,8 +154,7 @@ const createAuthSlice: StateCreator<IAuth> = (set, get) => ({
         message: err.data.errors[0].msg,
       })
     }
-
-  }
+  },
 })
 
 export default createAuthSlice

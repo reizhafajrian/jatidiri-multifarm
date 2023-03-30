@@ -3,7 +3,7 @@ import MilkTotalCard from '../card/MilkTotalCard'
 
 export default function MilkCardList() {
   return (
-    <div className="my-4 grid grid-cols-2 gap-10">
+    <div className="my-4 grid gap-3 md:grid-cols-2 md:gap-10">
       <MilkIncomeCard />
       <MilkTotalCard />
     </div>

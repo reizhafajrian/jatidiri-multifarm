@@ -29,7 +29,7 @@ export interface IAuth {
   register: (data: IUser, router: any) => void
   updateUser: (data: IUser, router: any) => void
   updateProfile: (data: IUser, router: any) => void
-  changePass: (data: { password: string, passwordConfirmation: string }) => void
+  changePass: (data: { password: string; passwordConfirmation: string }) => void
   changeRole: (data: { _id: string; role: string }, router: any) => void
   deleteUser: (id: string, router: any) => void
 }
@@ -235,8 +235,6 @@ export interface IHppState {
   hppStatus: string
   editHpp: (data: IEditHpp, animal: string) => void
 }
-
-
 
 export interface IEditHpp {
   _id?: string

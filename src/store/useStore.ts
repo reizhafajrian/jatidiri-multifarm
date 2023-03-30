@@ -1,3 +1,4 @@
+import { format } from 'date-fns'
 import { create } from 'zustand'
 import createAnimalSlice from './slices/animalSlice'
 import createAuthSlice from './slices/authSlice'
@@ -22,7 +23,14 @@ interface IState
     ICategoryState,
     IMilkState,
     IHppState,
-    ISearchState {}
+    ISearchState {
+  dashboardFilterParams: string
+  filterByDateAnimals: string
+}
+
+const shape = 'yyyy-MM-dd'
+const today = new Date()
+const now = format(today, shape)
 
 const useStore = create<IState>()((...a) => ({
   ...createAuthSlice(...a),
@@ -32,6 +40,8 @@ const useStore = create<IState>()((...a) => ({
   ...createMilkSlice(...a),
   ...createHppSlice(...a),
   ...createSearchSlice(...a),
+  dashboardFilterParams: `start=${now}&end=${now}`,
+  filterByDateAnimals: `start=${now}&end=${now}`,
 }))
 
 export default useStore

@@ -10,9 +10,7 @@ interface ShedInfoTableProps {
 }
 
 const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
-  const { data, loading } = useDataList(
-    `/api/shed/data/get?shed_code=${id}`
-  )
+  const { data, loading } = useDataList(`/api/shed/data/get?shed_code=${id}`)
 
   const columns: ColumnDef<any, any>[] = [
     {

@@ -13,6 +13,15 @@ import SelectFilter from '@/components/shared/SelectFilter'
 import { getAnimalListOptions } from '@/lib/data'
 import { shortDateFormatter } from '@/lib/utils'
 import useStore from '@/store/useStore'
+import {
+  format,
+  lastDayOfMonth,
+  lastDayOfWeek,
+  lastDayOfYear,
+  startOfMonth,
+  startOfWeek,
+  startOfYear,
+} from 'date-fns'
 import { FC, useState } from 'react'
 import ReactDatePicker from 'react-datepicker'
 
@@ -25,8 +34,8 @@ const AnimalFilter: FC<AnimalFilterProps> = ({ animal }) => {
   const opts = getAnimalListOptions(animal)
 
   return (
-    <div className="mb-6 flex items-center gap-6">
-      <FilterDate dateOptions={opts?.dateOptions} />
+    <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
+      <FilterDate />
       <SelectFilter
         title="asal induk"
         defaultValue={originFemale}
@@ -45,16 +54,42 @@ const AnimalFilter: FC<AnimalFilterProps> = ({ animal }) => {
 
 export default AnimalFilter
 
-const FilterDate = ({ dateOptions }: any) => {
-  const [startDate, setStartDate] = useState(new Date())
-  const [endDate, setEndDate] = useState(null)
+const FilterDate = () => {
+  const { filterByDateAnimals } = useStore()
 
-  const [selectedDate, setSelectedDate] = useState(dateOptions[0] ?? undefined)
+  const shape = 'yyyy-MM-dd'
+  const today = new Date()
+
+  const now = format(today, shape)
+  const fdOfThisWeek = format(startOfWeek(today), shape)
+  const ldOfThisWeek = format(lastDayOfWeek(today), shape)
+  const fdOfThisMonth = format(startOfMonth(today), shape)
+  const ldOfThisMonth = format(lastDayOfMonth(today), shape)
+  const fdOfThisYear = format(startOfYear(today), shape)
+  const ldOfThisYear = format(lastDayOfYear(today), shape)
+
+  const dateOptions = [
+    { name: 'Today', value: `start=${now}&end=${now}` },
+    { name: 'This Week', value: `start=${fdOfThisWeek}&end=${ldOfThisWeek}` },
+    {
+      name: 'This Month',
+      value: `start=${fdOfThisMonth}&end=${ldOfThisMonth}`,
+    },
+    { name: 'This Year', value: `start=${fdOfThisYear}&end=${ldOfThisYear}` },
+  ]
+
+  const [startDate, setStartDate] = useState(new Date())
+  const [endDate, setEndDate] = useState(new Date())
 
   const onChange = (dates: any) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
+
+    // if (start && end) {
+    const value = `start=${format(start, shape)}&end=${format(end, shape)}`
+    useStore.setState({ filterByDateAnimals: value })
+    // }
   }
 
   return (
@@ -63,7 +98,10 @@ const FilterDate = ({ dateOptions }: any) => {
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-3 text-sm outline-none">
-            {selectedDate.name}
+            {dateOptions?.find((item) => item.value == filterByDateAnimals)
+              ?.name ??
+              (format(startDate, 'dd/yyyy/MM') + ' - ' + endDate !== null &&
+                format(endDate, 'dd/yyyy/MM'))}
             <ChevronDown className="w-4" />
           </button>
         </DropdownMenuTrigger>
@@ -71,7 +109,9 @@ const FilterDate = ({ dateOptions }: any) => {
           {dateOptions.map((item: any) => (
             <DropdownMenuItem
               key={item.value}
-              onClick={() => setSelectedDate(item)}
+              onClick={() =>
+                useStore.setState({ filterByDateAnimals: item.value })
+              }
               className="text-sm"
             >
               {item.name}
