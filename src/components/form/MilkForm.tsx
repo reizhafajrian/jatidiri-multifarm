@@ -12,7 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/shared/Dialog'
-import useDataList from '@/hooks/useDataList'
+import useMilkAnimalTags from '@/hooks/useMilkAnimalTags'
 import { milkSchema } from '@/lib/schemas'
 import { IMilk } from '@/store/types'
 import useStore from '@/store/useStore'
@@ -30,22 +30,17 @@ interface MilkFormProps {
 const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
   const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Data Susu`
-  const { user, milkHistory, setMilkHistory, addMilk, editMilk } = useStore()
-  const { data } = useDataList('/api/cow/get', ['gender=false'])
-
-  const eartagOptions =
-    data?.data.map((item: any) => ({
-      name: item.eartag_code,
-      value: item._id,
-    })) ?? []
+  const { user, setMilkHistory, addMilk, editMilk } = useStore()
+  const { eartagOptions } = useMilkAnimalTags()
 
   const methods = useForm<IMilk>({
     resolver: zodResolver(milkSchema),
+
     values:
       formType === 'edit'
         ? {
             eartag_code: curr?.animal_id?.eartag_code,
-            history_milk: milkHistory,
+            history_milk: 0,
           }
         : undefined,
   })
@@ -65,7 +60,11 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-    setMilkHistory(start, end)
+
+    if (start && end) {
+      const data = await setMilkHistory(start, end)
+      methods.setValue('history_milk', data)
+    }
   }
 
   return (

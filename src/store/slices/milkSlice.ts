@@ -5,7 +5,6 @@ import { IMilkState } from '../types'
 
 const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
   milkStatus: 'all',
-  milkHistory: 0,
   incomeHistory: 0,
   addMilk: async (data) => {
     try {
@@ -69,17 +68,20 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       if (start !== null && end !== null) {
         const res = await Get(`/api/milk/get/history?start=` + s + '&end=' + e)
 
-        set((state) => ({ ...state, milkHistory: res.data }))
+        return res.data
       }
     } catch (err: any) {
-      // if (err.status === 404) {
-      //   toast({
-      //     type: 'error',
-      //     message: 'result none',
-      //   })
-      // } else {
-      //   console.log(err)
-      // }
+      if (err.status === 404) {
+        toast({
+          type: 'error',
+          message: 'result none',
+        })
+        return 0
+      } else {
+        console.log(err)
+
+        return 0
+      }
     }
   },
   changeMilkStatus: async (_id, status) => {

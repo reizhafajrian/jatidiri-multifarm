@@ -2,12 +2,13 @@ import { Get } from '@/lib/api'
 import useStore from '@/store/useStore'
 import useSWR from 'swr'
 
-const useAnimalList = ({ type }: { type: string }) => {
+const useAnimalList = () => {
   const {
+    type,
     animal: { name: animal },
     originMale,
     originFemale,
-    filterByDateAnimals,
+    filterByDate,
     searchResults,
     searchKeyword,
     searchLoading,
@@ -22,7 +23,7 @@ const useAnimalList = ({ type }: { type: string }) => {
   !isCempek &&
     queriesArray.push(type === 'male' ? 'gender=true' : 'gender=false')
 
-  queriesArray.push(filterByDateAnimals)
+  queriesArray.push(filterByDate)
   const queries = queriesArray?.join('&')
   const url = isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`
   const endpoint = queriesArray ? url + `?${queries}` : url

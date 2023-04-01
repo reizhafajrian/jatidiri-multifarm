@@ -21,6 +21,7 @@ export default function ShedForm() {
   const methods = useForm<IShed>({ resolver: zodResolver(shedSchema) })
   const { data: res, error, isLoading } = useSWR(`/api/feed/get`, Get)
   const { data } = res || {}
+
   return (
     <Form
       onSubmit={(values) =>
@@ -69,7 +70,7 @@ export default function ShedForm() {
           type="button"
           variant="outline"
           className="w-36"
-          onClick={() => router.back()}
+          onClick={() => router.replace('/shed/goat')}
           disabled={methods.formState.isSubmitting}
         >
           CANCEL

@@ -10,11 +10,21 @@ interface DeadAnimalsDiagramProps {
 }
 
 const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({ data }) => {
+  const getPercentage = (range: string) => {
+    const deadTotal = data?.cow.total + data?.goat.total + data?.sheep.total
+
+    let cow = data?.age_range.cow.count[range]
+    let goat = data?.age_range.goat.count[range]
+    let sheep = data?.age_range.sheep.count[range]
+
+    return ((cow + goat + sheep) / deadTotal) * 100
+  }
+
   const ageData = [
-    { range: '0 - 2', value: '20' },
-    { range: '3 - 5', value: '20' },
-    { range: '6 - 8', value: '20' },
-    { range: '8+', value: '20' },
+    { range: '0 - 2', value: getPercentage('0-2') },
+    { range: '3 - 5', value: getPercentage('3-5') },
+    { range: '6 - 8', value: getPercentage('6-8') },
+    { range: '8+', value: getPercentage('8+') },
   ]
 
   const diedData = {
@@ -57,10 +67,17 @@ const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({ data }) => {
             <div key={idx}>
               <div className="flex justify-between text-[10px] font-medium">
                 <p>{item.range}</p>
-                <p>{item.value}%</p>
+                <p>
+                  {!isNaN(item.value) && item.value !== Infinity
+                    ? `${item.value}%`
+                    : '0%'}
+                </p>
               </div>
               <div className="relative mt-1 h-1 bg-neutral-2">
-                <div className="absolute h-1 w-1/2 bg-primary-4" />
+                <div
+                  className={`absolute h-1 bg-primary-4`}
+                  style={{ width: `${item.value}%` }}
+                />
               </div>
             </div>
           ))}

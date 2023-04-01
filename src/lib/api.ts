@@ -2,7 +2,7 @@ import useStore from '@/store/useStore'
 import axios from 'axios'
 
 export const Get = async (url: string) => {
-  const token = await useStore.getState().token
+  const token = useStore.getState().token
   try {
     const res = await axios.get(url, {
       withCredentials: true,
@@ -23,7 +23,7 @@ type params = {
 }
 
 export const Post = async ({ url, data }: params) => {
-  const token = await useStore.getState().token
+  const token = useStore.getState().token
   try {
     const res = await axios.post(url, data, {
       withCredentials: true,
@@ -39,7 +39,7 @@ export const Post = async ({ url, data }: params) => {
 }
 
 export const Put = async ({ url, data }: params) => {
-  const token = await useStore.getState().token
+  const token = useStore.getState().token
   try {
     const res = await axios.put(url, data, {
       withCredentials: true,
@@ -55,7 +55,7 @@ export const Put = async ({ url, data }: params) => {
 }
 
 export const Delete = async (url: string) => {
-  const token = await useStore.getState().token
+  const token = useStore.getState().token
   try {
     const res = await axios.delete(url, {
       withCredentials: true,

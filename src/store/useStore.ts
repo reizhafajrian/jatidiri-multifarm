@@ -1,3 +1,4 @@
+import { thisMonthValue } from '@/hooks/useFilterDate'
 import { format } from 'date-fns'
 import { create } from 'zustand'
 import createAnimalSlice from './slices/animalSlice'
@@ -24,8 +25,7 @@ interface IState
     IMilkState,
     IHppState,
     ISearchState {
-  dashboardFilterParams: string
-  filterByDateAnimals: string
+  filterByDate: string
 }
 
 const shape = 'yyyy-MM-dd'
@@ -40,8 +40,7 @@ const useStore = create<IState>()((...a) => ({
   ...createMilkSlice(...a),
   ...createHppSlice(...a),
   ...createSearchSlice(...a),
-  dashboardFilterParams: `start=${now}&end=${now}`,
-  filterByDateAnimals: `start=${now}&end=${now}`,
+  filterByDate: thisMonthValue,
 }))
 
 export default useStore

@@ -1,4 +1,5 @@
 import AnimalFilter from '@/components/filter/AnimalFilter'
+import { StoreInitializer } from '@/components/shared'
 import AnimalTable from '@/components/table/AnimalTable'
 import { notFound } from 'next/navigation'
 
@@ -14,8 +15,9 @@ export default function AnimalPage({ params }: { params: any }) {
 
   return (
     <>
+      <StoreInitializer data={{ type }} />
       <AnimalFilter animal={animal} />
-      <AnimalTable animal={animal} type={type} />
+      <AnimalTable animal={animal} />
     </>
   )
 }

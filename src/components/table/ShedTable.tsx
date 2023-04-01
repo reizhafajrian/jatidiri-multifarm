@@ -1,19 +1,17 @@
 'use client'
 import { Button, Table } from '@/components/shared'
 import useDataList from '@/hooks/useDataList'
+import useStore from '@/store/useStore'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC } from 'react'
 
-interface ShedTableProps {
-  animal?: 'goat' | 'sheep' | 'cow'
-}
-
-const ShedTable: FC<ShedTableProps> = ({ animal }) => {
+const ShedTable: FC = () => {
   const router = useRouter()
   const pathname = usePathname()
+  const { animal } = useStore()
 
   const { data, loading } = useDataList('/api/shed/get', [
-    `animal_type=${animal}`,
+    `animal_type=${animal.name}`,
   ])
 
   const columns = [

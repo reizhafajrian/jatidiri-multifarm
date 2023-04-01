@@ -41,9 +41,9 @@ const ShedInfo: FC<ShedInfoProps> = ({ options }) => {
           </h1>
           <div className="flex flex-col-reverse justify-between gap-3 md:flex-row md:items-center">
             <ShedInfoFilter options={options} />
-            <ShedDetailForm options={options} shed_code={data._id!} />
+            <ShedDetailForm options={options} />
           </div>
-          <ShedInfoTable id={data._id} />
+          <ShedInfoTable />
         </div>
       )}
     </>

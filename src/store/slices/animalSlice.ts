@@ -3,13 +3,15 @@ import { Delete, Post } from '@/lib/api'
 import { StateCreator } from 'zustand'
 import { IAnimalState } from '../types'
 
+const animalTitleList = [
+  { name: 'goat', title: 'Kambing' },
+  { name: 'sheep', title: 'Domba' },
+  { name: 'cow', title: 'Sapi' },
+]
+
 const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   animal: { name: '', title: '' },
-  animalList: [
-    { name: 'goat', title: 'Kambing' },
-    { name: 'sheep', title: 'Domba' },
-    { name: 'cow', title: 'Sapi' },
-  ],
+  type: '',
   originMale: 'all',
   originFemale: 'all',
   setFilter: ({ originMale, originFemale }) => {
@@ -17,7 +19,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
     originFemale && set((state) => ({ ...state, originFemale }))
   },
   setAnimal: (name) => {
-    const animal = get().animalList.find((item) => item.name === name)
+    const animal = animalTitleList.find((item) => item.name === name)
     set((state) => ({ ...state, animal }))
   },
   addAnimal: async (data, router) => {

@@ -3,7 +3,7 @@ import useStore from '@/store/useStore'
 import useSwr from 'swr'
 
 const useDashboardData = () => {
-  const { dashboardFilterParams: params } = useStore()
+  const { filterByDate: params } = useStore()
 
   const url = {
     income: '/api/dashboard/income/get?',

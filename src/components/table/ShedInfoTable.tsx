@@ -1,16 +1,12 @@
 'use client'
-import useDataList from '@/hooks/useDataList'
+import useShedDetailList from '@/hooks/useShedDetailList'
 import { longDateFormatter } from '@/lib/utils'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
 import { Table } from '../shared'
 
-interface ShedInfoTableProps {
-  id: string
-}
-
-const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
-  const { data, loading } = useDataList(`/api/shed/data/get?shed_code=${id}`)
+const ShedInfoTable: FC = () => {
+  const { data, loading } = useShedDetailList()
 
   const columns: ColumnDef<any, any>[] = [
     {
@@ -21,9 +17,8 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
     },
     {
       header: 'Pakan',
-      accessorKey: 'data_feed_type.feed_type',
-      cell: (data) =>
-        data.getValue() ? longDateFormatter(new Date(data.getValue())) : '-',
+      accessorKey: 'data_feed_type.name',
+      cell: (data) => data.getValue() ?? '-',
     },
     {
       header: 'Tgl Pakan',
@@ -33,7 +28,7 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
     },
     {
       header: 'Vitamin',
-      accessorKey: 'data_vitamin_type.vitamin_type',
+      accessorKey: 'data_vitamin_type.name',
       cell: (data) => data.getValue() ?? '-',
     },
     {
@@ -44,7 +39,7 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
     },
     {
       header: 'Vaksin',
-      accessorKey: 'data_vaccine_type.vaccine_type',
+      accessorKey: 'data_vaccine_type.name',
       cell: (data) => data.getValue() ?? '-',
     },
     {
@@ -55,7 +50,7 @@ const ShedInfoTable: FC<ShedInfoTableProps> = ({ id }) => {
     },
     {
       header: 'Obat Cacing',
-      accessorKey: 'data_anthelmintic_type.anthelmintic_type',
+      accessorKey: 'data_anthelmintic_type.name',
       cell: (data) => data.getValue() ?? '-',
     },
     {

@@ -1,4 +1,5 @@
 import ShedAnimalTable from '@/components/table/ShedAnimalTable'
+import axios from 'axios'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
@@ -31,18 +32,18 @@ const getData = async (
   const baseUrl = process.env.API_BASE_URL
   const Authorization = `bearer ${token}`
 
-  // const isCempek = type === 'cempek'
-  // const gender = type === 'male' ? 'true' : 'false'
+  const isCempek = type === 'cempek'
+  const gender = type === 'male' ? 'true' : 'false'
 
-  // const url = isCempek
-  //   ? `/shed/get/${animal}/cempek`
-  //   : `/shed/get/${animal}?gender=${gender}`
+  const url = isCempek
+    ? `/shed/get/${animal}/cempek`
+    : `/shed/get/${animal}?gender=${gender}`
 
-  const res = await fetch(baseUrl + `/shed/get?animal_type=${animal}`, {
+  const res = await axios.get(`${baseUrl}/shed/get?animal_type=${animal}`, {
     headers: { Authorization },
-  }).then((res) => res.json())
+  })
 
-  const shedCodeOptions = res?.data?.map((item: any) => ({
+  const shedCodeOptions = res?.data?.data.map((item: any) => ({
     name: item.code,
     value: item._id,
   }))

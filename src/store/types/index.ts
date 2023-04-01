@@ -21,8 +21,8 @@ export interface IChangePass {
 }
 
 export interface IAuth {
-  user: IUser | null
   token: string
+  user: IUser | null
   logout: (router: any) => void
   loadUser: () => void
   login: (data: IUser, router: any) => void
@@ -69,7 +69,7 @@ interface IAnimalFilter {
 
 export interface IAnimalState {
   animal: IAnimalTitle
-  animalList: IAnimalTitle[]
+  type: string
   originMale: string
   originFemale: string
 
@@ -124,6 +124,7 @@ export interface IShedAnimal {
 }
 
 export interface IShedState {
+  shed_id: string
   shed_code: string
   // shed: IShed
   // shedDetail: IShedDetail
@@ -181,7 +182,7 @@ export interface IMilk {
   eartag_code?: string
   milk?: number
   milk_date?: Date
-  history_milk_date?: Date
+  // history_milk_date?: Date
   history_milk?: number
   animal_id?: string
   created_by?: string
@@ -205,11 +206,11 @@ export interface IMilkState {
   // milkInfo: IMilkInfo
   // milkList: IMilk[]
   milkStatus: string
-  milkHistory: number
+  // milkHistory: number
   incomeHistory: number
   addMilk: (data: IMilk) => void
   editMilk: (data: IMilk) => void
-  setMilkHistory: (start: Date, end: Date) => void
+  setMilkHistory: (start: Date, end: Date) => Promise<number | undefined>
   changeMilkStatus: (id: string, status: string) => void
   addIncome: (data: IMilkInfo) => void
   setIncomeHistory: (start: Date, end: Date) => void

@@ -10,13 +10,12 @@ import { Button, Table } from '../shared'
 
 interface AnimalTableProps {
   animal?: string
-  type: string
 }
 
-const AnimalTable: FC<AnimalTableProps> = ({ animal, type }) => {
+const AnimalTable: FC<AnimalTableProps> = ({ animal }) => {
   const router = useRouter()
-  const { deleteAnimal } = useStore()
-  const { data, loading, mutate } = useAnimalList({ type })
+  const { type, deleteAnimal } = useStore()
+  const { data, loading, mutate } = useAnimalList()
 
   const columns: ColumnDef<any, any>[] = [
     ...(type === 'cempek' ? cempekTColumns : animalTColumns),

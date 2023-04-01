@@ -24,13 +24,12 @@ import {
 import { Pen } from '../shared/Icons'
 
 interface ShedDetailFormProps {
-  shed_code: string
   options: any
 }
 
-const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
+const ShedDetailForm: FC<ShedDetailFormProps> = ({ options }) => {
   const [open, setOpen] = useState(false)
-  const { user, addShedData } = useStore()
+  const { user, addShedData, shed_code, shed_id } = useStore()
   const [categories, setCategories] = useState<any>({ feed: true })
 
   const methods = useForm<IShedDetail>({
@@ -38,11 +37,14 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
   })
 
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
-    addShedData(values)
+    await addShedData(values)
     setOpen(false)
     methods.reset()
-    mutate(`/api/shed/data/get?shed_code=${shed_code}`)
+
+    mutate(`/api/shed/data/get?shed_code=${shed_id}`)
+    mutate(`/api/shed/get/detail/${shed_code}`)
   }
+
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -57,7 +59,7 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ shed_code, options }) => {
 
         <Form
           onSubmit={(values) =>
-            onSubmit({ ...values, created_by: user?.id, shed_code })
+            onSubmit({ ...values, created_by: user?.id, shed_code: shed_id })
           }
           methods={methods}
         >
