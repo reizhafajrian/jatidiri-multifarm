@@ -15,6 +15,7 @@ interface IData {
 
 export default function StoreInitializer({ data }: IData) {
   const { token, animal, category: c, searchType } = data
+
   const { setAnimal, loadUser, setCategoryInfo } = useStore()
 
   useEffect(() => {
@@ -29,7 +30,11 @@ export default function StoreInitializer({ data }: IData) {
     }
 
     if (searchType) {
-      useStore.setState({ searchType })
+      if (searchType === 'shed') {
+        useStore.setState({ searchType: 'shed' + '-' + animal })
+      } else {
+        useStore.setState({ searchType })
+      }
     }
 
     if (c) {

@@ -9,14 +9,14 @@ export const metadata = {
 }
 
 export default function Page(props: { params: any }) {
-  const data = use(getData(props.params.animal, cookies().get('token')?.value!))
+  const data = use(getData(props.params.animal, cookies().get('token')?.value!),)
 
 
   return (
     <>
       <HppHeader animal_type={props.params.animal} />
       <HppFilter />
-      <HppTable data={data} />
+      <HppTable animal={props.params.animal} />
     </>
   )
 }

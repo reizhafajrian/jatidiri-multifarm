@@ -16,7 +16,7 @@ export default function ShedDetailPage(props: { params: any }) {
 
   return (
     <>
-      <StoreInitializer data={{ animal }} />
+      <StoreInitializer data={{ animal, searchType: 'shed' }} />
       <ShedDetailHeader animal={animal} shed_code={data.shed_code} />
       <ShedInfo data={data} options={options} />
     </>

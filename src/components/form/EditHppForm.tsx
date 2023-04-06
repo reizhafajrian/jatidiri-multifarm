@@ -8,28 +8,38 @@ import {
 } from '@/components/shared/Dialog'
 import { hppSchema } from '@/lib/schemas'
 import { IEditHpp } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Button, Form, InputText } from '../shared'
-
 interface EditHppFormProps {
-  eartag_code: string
+  eartag_code: string,
+  hpp_price: number,
+  _id: string
 }
 
-const EditHppForm: FC<EditHppFormProps> = ({ eartag_code }) => {
+const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id }) => {
+  const { editAnimal, } = useStore()
+  const r = useRouter()
+
   const [open, setOpen] = useState(false)
 
   const methods = useForm<IEditHpp>({
     resolver: zodResolver(hppSchema),
     values: {
       eartag_code,
-      hpp: 1000000,
+      hpp_price: hpp_price,
     },
   })
 
   const onSubmit: SubmitHandler<IEditHpp> = async (values) => {
+    const pathname = window?.location?.pathname
+    const secondPath = pathname.split('/')[2]
+    editAnimal({ _id, sell_price: Number(values.sell_price), animal: secondPath })
     setOpen(false)
+    r.refresh()
   }
 
   return (
@@ -44,8 +54,8 @@ const EditHppForm: FC<EditHppFormProps> = ({ eartag_code }) => {
           <div className="mb-8 space-y-5">
             <InputText name="eartag_code" label="" disabled />
             <div className="grid grid-cols-2 gap-5">
-              <InputText name="hpp" label="" disabled />
-              <InputText name="selling_price" label="Harga Jual" />
+              <InputText name="hpp_price" label="" disabled />
+              <InputText name="sell_price" label="Harga Jual" />
             </div>
             <InputText name="description" label="Keterangan" />
           </div>

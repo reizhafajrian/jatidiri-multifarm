@@ -15,7 +15,7 @@ export default function ShedAnimalLayout(props: {
 
   return (
     <>
-      <StoreInitializer data={{ animal }} />
+      <StoreInitializer data={{ animal, }} />
       <ShedDetailHeader
         animal={animal}
         shed_code={data.shed_code}

@@ -166,9 +166,9 @@ export const incomeSchema = z.object({
 
 // HPP
 export const hppSchema = z.object({
-  shed_code: z.string(validations),
-  hpp: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
-  selling_price: z.coerce
+  eartag_code: z.string(validations),
+  hpp_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
+  sell_price: z.coerce
     .number(validations)
     .min(1, { message: REQUIRED_ERROR }),
   description: z.string(),

@@ -18,6 +18,7 @@ const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
   searchHandler: async (keyword) => {
     try {
       set({ searchLoading: true })
+      console.log(get().searchType, 'searchType')
       const res = await Get(
         `/api/search?type=${get().searchType}&search=${keyword}`
       )

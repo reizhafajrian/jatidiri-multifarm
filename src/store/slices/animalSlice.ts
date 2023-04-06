@@ -58,7 +58,6 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   editAnimal: async (data, router) => {
     try {
       const isCempek = data.cempek === 'true'
-      console.log(data)
       const formData = new FormData()
 
       for (let value in data) {

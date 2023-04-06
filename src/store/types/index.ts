@@ -35,7 +35,7 @@ export interface IAuth {
 
 export interface IAnimal {
   animal?: string
-
+  sell_price?: number
   _id?: string
   type?: string
   eartag_code?: string
@@ -218,6 +218,8 @@ export interface IHppState {
   // hpp: IHpp
   // hppList: IHpp[]
   editHpp: (data: IEditHpp) => void
+  setHppFilter: (status: string) => void
+  status: string
 }
 
 export interface IHpp {
@@ -236,8 +238,8 @@ export interface IHpp {
 
 export interface IEditHpp {
   eartag_code?: string
-  hpp?: number
-  selling_price?: number
+  hpp_price?: number
+  sell_price?: number
   description?: string
   created_by?: string
 }

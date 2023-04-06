@@ -1,6 +1,7 @@
 'use client'
 import { Button, Table } from '@/components/shared'
 import useDataList from '@/hooks/useDataList'
+import useStore from '@/store/useStore'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC } from 'react'
 
@@ -11,10 +12,13 @@ interface ShedTableProps {
 const ShedTable: FC<ShedTableProps> = ({ animal }) => {
   const router = useRouter()
   const pathname = usePathname()
+  const { searchResults, searchKeyword } = useStore()
 
   const { data, loading } = useDataList('/api/shed/get', [
     `animal_type=${animal}`,
   ])
+
+
 
   const columns = [
     { header: 'No Kandang', accessorKey: 'code' },
@@ -42,7 +46,7 @@ const ShedTable: FC<ShedTableProps> = ({ animal }) => {
   ]
 
   return (
-    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+    <Table isLoading={loading} data={searchKeyword.length > 0 ? searchResults : data} columns={columns} fixedCol={2} />
   )
 }
 
