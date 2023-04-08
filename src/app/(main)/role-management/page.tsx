@@ -9,7 +9,6 @@ export const metadata = {
 
 export default async function RoleManagementPage() {
   const { data } = await getData(cookies().get('token')?.value!)
-  console.log({ data })
 
   return (
     <>

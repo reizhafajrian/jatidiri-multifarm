@@ -58,7 +58,7 @@ export const adultSchema = z.object({
   purchase_price: z.coerce
     .number(validations)
     .min(1, { message: REQUIRED_ERROR }),
-  files: z.array(z.any(), validations),
+  files: z.array(z.any(), validations).min(0),
 })
 
 export const cempekSchema = z.object({
@@ -92,9 +92,9 @@ export const shedDetailSchema = (categories: any) => {
       ...shape,
       data_feed_date: z.coerce.date(validations),
       data_feed_type: z.string(validations),
-      data_feed_stock: z.coerce
-        .number(validations)
-        .min(1, { message: REQUIRED_ERROR }),
+      // data_feed_stock: z.coerce
+      //   .number(validations)
+      //   .min(1, { message: REQUIRED_ERROR }),
       // data_feed_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
     }
   }
@@ -104,9 +104,9 @@ export const shedDetailSchema = (categories: any) => {
       ...shape,
       data_vitamin_date: z.coerce.date(validations),
       data_vitamin_type: z.string(validations),
-      data_vitamin_stock: z.coerce
-        .number(validations)
-        .min(1, { message: REQUIRED_ERROR }),
+      // data_vitamin_stock: z.coerce
+      //   .number(validations)
+      //   .min(1, { message: REQUIRED_ERROR }),
       // data_feed_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
     }
   }
@@ -116,9 +116,9 @@ export const shedDetailSchema = (categories: any) => {
       ...shape,
       data_vaccine_date: z.coerce.date(validations),
       data_vaccine_type: z.string(validations),
-      data_vaccine_stock: z.coerce
-        .number(validations)
-        .min(1, { message: REQUIRED_ERROR }),
+      // data_vaccine_stock: z.coerce
+      //   .number(validations)
+      //   .min(1, { message: REQUIRED_ERROR }),
       // data_feed_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
     }
   }
@@ -128,9 +128,9 @@ export const shedDetailSchema = (categories: any) => {
       ...shape,
       data_anthelmintic_date: z.coerce.date(validations),
       data_anthelmintic_type: z.string(validations),
-      data_anthelmintic_stock: z.coerce
-        .number(validations)
-        .min(1, { message: REQUIRED_ERROR }),
+      // data_anthelmintic_stock: z.coerce
+      //   .number(validations)
+      //   .min(1, { message: REQUIRED_ERROR }),
       // data_feed_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
     }
   }

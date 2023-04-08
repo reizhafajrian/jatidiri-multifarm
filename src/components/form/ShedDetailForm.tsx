@@ -96,7 +96,11 @@ const ShedDetailForm: FC<ShedDetailFormProps> = ({ options }) => {
                           }))}
                         />
                       ) : (
-                        <InputText name={field.name} label={field.label} />
+                        <InputText
+                          name={field.name}
+                          label={field.label}
+                          type="number"
+                        />
                       )}
                     </div>
                   ))}
@@ -145,7 +149,7 @@ const shedDataFormContent = {
       fields: [
         { type: 'date', label: 'Tanggal', name: 'data_feed_date' },
         { type: 'select', label: 'Jenis Pakan', name: 'data_feed_type' },
-        { type: 'input', label: 'Stok', name: 'data_feed_stock' },
+        // { type: 'input', label: 'Stok', name: 'data_feed_stock' },
       ],
     },
     {
@@ -154,7 +158,7 @@ const shedDataFormContent = {
       fields: [
         { type: 'date', label: 'Tanggal', name: 'data_vitamin_date' },
         { type: 'select', label: 'Jenis vitamin', name: 'data_vitamin_type' },
-        { type: 'input', label: 'Stok', name: 'data_vitamin_stock' },
+        // { type: 'input', label: 'Stok', name: 'data_vitamin_stock' },
       ],
     },
     {
@@ -163,7 +167,7 @@ const shedDataFormContent = {
       fields: [
         { type: 'date', label: 'Tanggal', name: 'data_vaccine_date' },
         { type: 'select', label: 'Jenis Vaksin', name: 'data_vaccine_type' },
-        { type: 'input', label: 'Stok', name: 'data_vaccine_stock' },
+        // { type: 'input', label: 'Stok', name: 'data_vaccine_stock' },
       ],
     },
     {
@@ -176,7 +180,7 @@ const shedDataFormContent = {
           label: 'Jenis Obat Cacing',
           name: 'data_anthelmintic_type',
         },
-        { type: 'input', label: 'Stok', name: 'data_anthelmintic_stock' },
+        // { type: 'input', label: 'Stok', name: 'data_anthelmintic_stock' },
       ],
     },
   ],

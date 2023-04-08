@@ -55,8 +55,13 @@ const EditHppForm: FC<EditHppFormProps> = ({ data }) => {
           <div className="mb-8 space-y-5">
             <InputText name="eartag_code" label="" disabled />
             <div className="grid grid-cols-2 gap-5">
-              <InputText name="hpp" label="" disabled />
-              <InputText name="selling_price" label="Harga Jual" />
+              <InputText name="hpp" label="" disabled type="number" rupiah />
+              <InputText
+                name="selling_price"
+                label="Harga Jual"
+                type="number"
+                rupiah
+              />
             </div>
             <InputText name="description" label="Keterangan" />
           </div>

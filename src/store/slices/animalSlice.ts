@@ -42,7 +42,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         ? `/api/${animal}/cempek/create`
         : `/api/${animal}/create`
 
-      const res = await Post({ url, data: formData })
+      const res = await Post({ url, data: isCempek ? data : formData })
 
       toast({
         type: 'success',

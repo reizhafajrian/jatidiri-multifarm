@@ -1,18 +1,11 @@
 'use client'
 import SelectFilter from '@/components/shared/SelectFilter'
-import { getAnimalListOptions } from '@/lib/data'
-import useStore from '@/store/useStore'
-
+import useAnimalFilter from '@/hooks/useAnimalFilter'
 import { FC } from 'react'
 import DateFilter from './DateFilter'
 
-interface AnimalFilterProps {
-  animal: string
-}
-
-const AnimalFilter: FC<AnimalFilterProps> = ({ animal }) => {
-  const { setFilter, originFemale, originMale } = useStore()
-  const opts = getAnimalListOptions(animal)
+const AnimalFilter: FC = () => {
+  const { opts, originFemale, originMale, setFilter } = useAnimalFilter()
 
   return (
     <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
@@ -20,13 +13,13 @@ const AnimalFilter: FC<AnimalFilterProps> = ({ animal }) => {
       <SelectFilter
         title="asal induk"
         defaultValue={originFemale}
-        options={opts?.femaleOriginOptions}
+        options={opts.femaleOrigin}
         onChange={(value) => setFilter({ originFemale: value })}
       />
       <SelectFilter
         title="asal pejantan"
         defaultValue={originMale}
-        options={opts?.maleOriginOptions}
+        options={opts?.maleOrigin}
         onChange={(value) => setFilter({ originMale: value })}
       />
     </div>

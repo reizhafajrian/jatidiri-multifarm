@@ -1,5 +1,4 @@
 import { thisMonthValue } from '@/hooks/useFilterDate'
-import { format } from 'date-fns'
 import { create } from 'zustand'
 import createAnimalSlice from './slices/animalSlice'
 import createAuthSlice from './slices/authSlice'
@@ -27,10 +26,6 @@ interface IState
     ISearchState {
   filterByDate: string
 }
-
-const shape = 'yyyy-MM-dd'
-const today = new Date()
-const now = format(today, shape)
 
 const useStore = create<IState>()((...a) => ({
   ...createAuthSlice(...a),

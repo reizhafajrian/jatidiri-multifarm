@@ -16,7 +16,7 @@ export default function AnimalPage({ params }: { params: any }) {
   return (
     <>
       <StoreInitializer data={{ type }} />
-      <AnimalFilter animal={animal} />
+      <AnimalFilter />
       <AnimalTable animal={animal} />
     </>
   )

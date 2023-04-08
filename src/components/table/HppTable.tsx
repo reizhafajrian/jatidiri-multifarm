@@ -63,10 +63,11 @@ const HppTable: FC = () => {
         <SelectTable
           onChange={changeStatusHandler}
           animalEarTag={data.row.original._id}
-          value={data.getValue()}
+          value={data.getValue() === 'active' ? 'available' : data.getValue()}
           options={statusOptions}
           triggerClassName={
-            statusOptions.find((i) => i.value === data.getValue())?.bgColor!
+            statusOptions.find((i) => i.value === data.getValue())?.bgColor! ??
+            'bg-[#E1F7E8]'
           }
         />
       ),

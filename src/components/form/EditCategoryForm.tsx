@@ -58,10 +58,12 @@ const EditCategoryForm: FC<EditCategoryFormProps> = ({ category, data }) => {
         >
           <div className="mb-8 space-y-6">
             <InputText name="type" label={`Jenis ${setTitle(category)}`} />
-            <InputText name="stock" label="Stock" />
+            <InputText name="stock" label="Stock" type="number" />
             <InputText
               name="price"
               label={`Harga ${category === 'feed' ? '(per kg)' : '(per pcs)'}`}
+              type="number"
+              rupiah
             />
           </div>
           <div className="flex justify-end gap-3">

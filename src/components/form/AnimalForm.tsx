@@ -7,11 +7,10 @@ import {
   InputSelect,
   InputText,
 } from '@/components/shared'
-import { getAnimalFormContent, getAnimalFormOptions } from '@/lib/data'
+import useAnimalForm from '@/hooks/useAnimalForm'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
 import { cn } from '@/lib/utils'
 import { IAnimal } from '@/store/types'
-import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
@@ -26,25 +25,9 @@ interface AnimalFormProps {
 }
 
 const AnimalForm: FC<AnimalFormProps> = (props) => {
-  const { formType, cempekForm, gender, values, id } = props
   const router = useRouter()
-  const { user, animal, addAnimal, editAnimal } = useStore()
-
-  const opt = getAnimalFormOptions(animal.name)
-  const content = getAnimalFormContent({
-    animal: animal.name,
-    gender,
-    formType,
-    cempekForm,
-  })
-
-  const data = {
-    cempek: cempekForm ? 'true' : 'false',
-    created_by: user?.id,
-    _id: id,
-    animal,
-    gender,
-  }
+  const { formType, cempekForm, gender, values, id } = props
+  const data = useAnimalForm({ formType, cempekForm, gender })
 
   const methods = useForm<IAnimal>({
     resolver: zodResolver(cempekForm ? cempekSchema : adultSchema),
@@ -53,25 +36,36 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
 
   const onSubmit: SubmitHandler<IAnimal> = async (values) => {
     if (formType === 'add') {
-      await addAnimal(values, router)
+      await data.addAnimal(values, router)
     } else {
-      await editAnimal(values, router)
+      await data.editAnimal(values, router)
     }
   }
 
   return (
     <>
-      <h1 className="mb-6 text-base font-semibold">{content.title}</h1>
+      <h1 className="mb-6 text-base font-semibold" suppressHydrationWarning>
+        {data.title}
+      </h1>
       <Form
         methods={methods}
-        onSubmit={(values) => onSubmit({ ...values, ...data })}
+        onSubmit={(values) =>
+          onSubmit({
+            ...values,
+            cempek: cempekForm ? 'true' : 'false',
+            created_by: data.created_by,
+            _id: id,
+            animal: data.animal,
+            gender,
+          })
+        }
         className="grid gap-4 md:grid-cols-2"
       >
         <div className="space-y-6">
           <InputSelect
             name="type"
-            label={`Jenis ${cempekForm ? 'Cempek' : animal.title}`}
-            options={opt?.typeOptions}
+            label={`Jenis ${cempekForm ? 'Cempek' : data.animalTitle}`}
+            options={data.opts?.typeOptions}
           />
 
           {cempekForm ? (
@@ -86,7 +80,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
           <InputSelect
             name="origin_female"
             label="Asal Induk"
-            options={opt?.femaleOriginOptions}
+            options={data.opts?.femaleOriginOptions}
           />
 
           {cempekForm ? (
@@ -113,17 +107,26 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
               <>
                 <InputSelect
                   name="origin"
-                  label={`Asal ${animal.title}`}
-                  options={opt?.originOptions}
+                  label={`Asal ${data.animalTitle}`}
+                  options={data.opts?.originOptions}
                 />
-                <InputText name="weight" label={`Berat ${animal.title}`} />
-                <InputText name="purchase_price" label="Harga Beli" />
+                <InputText
+                  name="weight"
+                  label={`Berat ${data.animalTitle}`}
+                  type="number"
+                />
+                <InputText
+                  name="purchase_price"
+                  label="Harga Beli"
+                  type="number"
+                  rupiah
+                />
               </>
             )}
             <InputSelect
               name="origin_male"
               label="Asal Pejantan"
-              options={opt?.maleOriginOptions}
+              options={data.opts?.maleOriginOptions ?? []}
             />
             <InputText name="description" label="Keterangan" />
           </div>
@@ -137,7 +140,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
               type="button"
               variant="outline"
               className="w-36"
-              onClick={() => router.replace(`/${animal.name}/male`)}
+              onClick={() => router.replace(`/${data.animal}/male`)}
               disabled={methods.formState.isSubmitting}
             >
               CANCEL

@@ -110,7 +110,11 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
                   <h2 className="mb-3 text-base font-medium">Data Susu</h2>
                   <div className="grid grid-cols-2 gap-x-5 gap-y-4">
                     <InputDate name="milk_date" label="Tanggal" />
-                    <InputText name="milk" label="Berapa liter susu?" />
+                    <InputText
+                      name="milk"
+                      label="Berapa liter susu?"
+                      type="number"
+                    />
                   </div>
                 </div>
                 <div>
@@ -129,6 +133,7 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
                     <InputText
                       name="history_milk"
                       label="History Susu"
+                      type="number"
                       disabled
                     />
                   </div>
@@ -137,7 +142,11 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
             ) : (
               <>
                 <InputDate name="milk_date" label="Tanggal" />
-                <InputText name="milk" label="Berapa liter susu?" />
+                <InputText
+                  name="milk"
+                  label="Berapa liter susu?"
+                  type="number"
+                />
               </>
             )}
           </div>

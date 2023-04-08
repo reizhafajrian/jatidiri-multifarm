@@ -18,7 +18,7 @@ interface InputSelectProps {
   name: string
   label: string
   isLoading?: boolean
-  options: { name: string; value: string }[]
+  options: { name: string; value: string }[] | undefined
 }
 
 const InputSelect: FC<InputSelectProps> = ({
@@ -78,12 +78,12 @@ const InputSelect: FC<InputSelectProps> = ({
               <div className="flex h-20 items-center justify-center">
                 <Loader2 className="animate-spin stroke-primary-4" />
               </div>
-            ) : options.length == 0 ? (
+            ) : options?.length == 0 ? (
               <div className="px-8 py-2 text-sm font-medium text-neutral-4">
                 empty list
               </div>
             ) : (
-              options.map(({ name, value }, idx) => (
+              options?.map(({ name, value }, idx) => (
                 <SelectItem key={idx} value={value}>
                   <SelectItemText>{name}</SelectItemText>
                   <SelectItemIndicator>

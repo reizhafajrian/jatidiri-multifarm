@@ -19,11 +19,6 @@ interface AddCategoryFormProps {
   category: string
 }
 
-interface ResponseCategory {
-  message: string
-  errors?: { msg: string }[]
-}
-
 const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   const [open, setOpen] = useState(false)
   const title = setTitle(category)
@@ -35,7 +30,7 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
   })
 
   const onSubmit: SubmitHandler<ICategory> = async (values) => {
-    addCategory(values) as unknown as ResponseCategory
+    await addCategory(values)
     mutate(`/api/${category}/get`)
     methods.reset()
     setOpen(false)
@@ -58,8 +53,13 @@ const AddCategoryForm: FC<AddCategoryFormProps> = ({ category }) => {
         >
           <div className="mb-8 space-y-6">
             <InputText name="type" label={`Jenis ${title}`} />
-            <InputText name="stock" label="Stock" />
-            <InputText name="price" label={`Harga ${satuan}`} />
+            <InputText name="stock" label="Stock" type="number" />
+            <InputText
+              name="price"
+              label={`Harga ${satuan}`}
+              type="number"
+              rupiah
+            />
           </div>
           <div className="flex justify-end gap-3">
             <DialogClose asChild>

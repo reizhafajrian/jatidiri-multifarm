@@ -3,12 +3,8 @@ import MemberForm from '../form/MemberForm'
 
 export default function RoleManagementHeader() {
   return (
-    <>
-      <div>
-        <div className="mb-8 flex items-center justify-end">
-          <MemberForm formType="add" />
-        </div>
-      </div>
-    </>
+    <div className="mb-8 flex items-center justify-end">
+      <MemberForm formType="add" />
+    </div>
   )
 }

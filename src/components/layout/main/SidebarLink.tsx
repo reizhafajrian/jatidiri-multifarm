@@ -1,4 +1,6 @@
 'use client'
+import { thisMonthValue } from '@/hooks/useFilterDate'
+import useStore from '@/store/useStore'
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -23,6 +25,15 @@ export default function SidebarLink(props: IProps) {
           ? 'bg-white font-semibold text-primary-5'
           : 'text-white hover:bg-white/25'
       )}
+      onClick={() =>
+        useStore.setState({
+          searchKeyword: '',
+          originFemale: 'all',
+          originMale: 'all',
+          hppStatus: 'all',
+          filterByDate: thisMonthValue,
+        })
+      }
     >
       <span
         className={clsx('h-5 w-5', isActive ? 'fill-primary-5' : 'fill-white')}
