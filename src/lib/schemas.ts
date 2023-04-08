@@ -58,7 +58,7 @@ export const adultSchema = z.object({
   purchase_price: z.coerce
     .number(validations)
     .min(1, { message: REQUIRED_ERROR }),
-  files: z.array(z.any(), validations).min(0),
+  // files: z.array(z.any(), validations).min(0),
 })
 
 export const cempekSchema = z.object({

@@ -13,7 +13,7 @@ const AnimalFilter: FC = () => {
       <SelectFilter
         title="asal induk"
         defaultValue={originFemale}
-        options={opts.femaleOrigin}
+        options={opts?.femaleOrigin}
         onChange={(value) => setFilter({ originFemale: value })}
       />
       <SelectFilter

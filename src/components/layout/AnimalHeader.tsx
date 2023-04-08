@@ -1,26 +1,33 @@
 'use client'
 import Navbar from '@/components/layout/Navbar'
 import { BackLink, Button } from '@/components/shared'
-import { Download, ExclamationTriangle, Pen } from '@/components/shared/Icons'
+import { Download, Pen } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'
 import { usePathname, useRouter } from 'next/navigation'
-import { useState } from 'react'
+import { FC } from 'react'
+import AlertCluster from '../shared/AlertCluster'
 
-const AnimalHeader = () => {
+interface AnimalHeaderProps {
+  undefinedClusterTotal: number
+}
+
+const AnimalHeader: FC<AnimalHeaderProps> = ({ undefinedClusterTotal }) => {
   const router = useRouter()
   const path = usePathname()
-
   const { animal } = useStore()
   const headerMenu = getHeaderMenu(animal.name)
-
-  const [alertCluster] = useState(false)
   const isListData = !path.includes('add') && !path.includes('edit')
 
   return (
     <>
       {isListData ? (
         <>
-          {alertCluster && <AlertCluster />}
+          {undefinedClusterTotal > 0 && (
+            <AlertCluster
+              animal={animal.title}
+              undefinedClusterTotal={undefinedClusterTotal}
+            />
+          )}
           <Navbar
             menu={headerMenu}
             className="mb-5 flex items-center justify-between gap-5"
@@ -67,19 +74,4 @@ const getHeaderMenu = (animal: string) => {
   }
 
   return links
-}
-
-const AlertCluster = () => {
-  return (
-    <div className="my-8 flex gap-5 bg-warning/30 px-5 py-3">
-      <ExclamationTriangle />
-      <div className="space-y-2">
-        <p className="font-semibold">10 Kambing belum masuk kandang</p>
-        <p className="text-xs">
-          Segera masukan kambing ke kandang melalui halaman
-          <span className="font-semibold">Cluster</span>
-        </p>
-      </div>
-    </div>
-  )
 }
