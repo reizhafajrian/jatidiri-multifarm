@@ -18,7 +18,7 @@ const DashboardContent: FC = () => {
     {
       icon: <I.DashboardCart />,
       title: 'total pembelian',
-      value: '0',
+      value: data.purchase?.totalAllAnimals,
       percentage: '2.2',
     },
   ]
@@ -48,7 +48,7 @@ const DashboardContent: FC = () => {
     {
       title: 'ternak terjual',
       className: 'md:col-span-5',
-      children: <D.SoldAnimalsDiagram />,
+      children: <D.SoldAnimalsDiagram data={data.soldAnimals} />,
     },
     {
       title: 'pendapatan event',
@@ -79,17 +79,17 @@ const DashboardContent: FC = () => {
 
   return (
     <div className="space-y-6">
-      <div className="grid gap-7 md:grid-cols-2">
+      <div className="grid gap-3 md:grid-cols-2 md:gap-7">
         {info?.map((item, idx) => (
           <C.DashboardInfoCard key={idx} data={item} />
         ))}
       </div>
-      <div className="grid gap-7 md:grid-cols-3">
+      <div className="grid gap-3 md:grid-cols-3 md:gap-7">
         {animal.map((item, idx) => (
           <C.DashboardAnimalInfoCard key={idx} data={item} />
         ))}
       </div>
-      <div className="grid gap-6 md:grid-cols-12">
+      <div className="space-y-3 md:grid md:grid-cols-12 md:gap-6 md:space-y-0">
         {diagram.map(({ title, className, children }, idx) => (
           <C.DashboardDiagramCard key={idx} title={title} className={className}>
             {children}

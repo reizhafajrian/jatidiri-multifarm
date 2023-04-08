@@ -7,26 +7,28 @@ const useDashboardData = () => {
 
   const url = {
     income: '/api/dashboard/income/get?',
-    // buy: '',
+    sell: '/api/dashboard/sell/get?',
+    purchase: '/api/dashboard/purchase/get?',
     cow: '/api/dashboard/cow/get?',
     sheep: '/api/dashboard/sheep/get?',
     goat: '/api/dashboard/goat/get?',
 
-    // soldAnimals: '',
+    soldAnimals: '/api/dashboard/animals/sold?',
     // events: '',
-    milkSales: '/api/dashboard/milk/get',
-    dataAnalytics: '/api/dashboard/animals/alive?status=active&',
-    diedAnimals: '/api/dashboard/animals/died?status=died&',
+    milkSales: '/api/dashboard/milk/get?',
+    dataAnalytics: '/api/dashboard/animals/alive?',
+    diedAnimals: '/api/dashboard/animals/died?',
     goatsData: '/api/dashboard/goat/type/get?status=alive&gender=false&',
   }
 
   const { data: income } = useSwr(url.income + params, Get)
-  // const { data: buy } = useSwr(url.buy + params, Get)
+  const { data: sell } = useSwr(url.sell + params, Get)
+  const { data: purchase } = useSwr(url.purchase + params, Get)
   const { data: cow } = useSwr(url.cow + params, Get)
   const { data: sheep } = useSwr(url.sheep + params, Get)
   const { data: goat } = useSwr(url.goat + params, Get)
 
-  // const { data: soldAnimals } = useSwr(url.soldAnimals, Get)
+  const { data: soldAnimals } = useSwr(url.soldAnimals, Get)
   // const { data: events } = useSwr(url.events, Get)
   const { data: milkSales } = useSwr(url.milkSales, Get)
   const { data: dataAnalytics } = useSwr(url.dataAnalytics + params, Get)
@@ -35,11 +37,12 @@ const useDashboardData = () => {
 
   return {
     income,
-    // buy,
+    sell,
+    purchase,
     cow,
     sheep,
     goat,
-    // soldAnimals,
+    soldAnimals,
     // events,
     milkSales,
     goatsData,

@@ -31,7 +31,7 @@ function useAnimalForm({ formType, cempekForm, gender }: IProps) {
     setAnimalTitle(animal?.title)
     setAnimalName(animal?.name)
     setCreatedBy(user?.id ?? '')
-  }, [animal])
+  }, [])
 
   return {
     title,

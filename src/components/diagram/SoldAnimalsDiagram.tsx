@@ -1,11 +1,11 @@
 'use client'
 import {
   CategoryScale,
-  Chart as ChartJS,
   ChartData,
+  Chart as ChartJS,
   Legend,
-  LinearScale,
   LineElement,
+  LinearScale,
   PointElement,
   Title,
   Tooltip,
@@ -23,41 +23,44 @@ ChartJS.register(
   Legend
 )
 
-const labels = ['1 January', '2 January', '3 January', 'Today']
-
-const data: ChartData<'line', number[], string> = {
-  labels,
-  datasets: [
-    {
-      label: 'Sapi',
-      data: labels.map(() => Math.random()),
-      borderColor: '#40916C',
-      backgroundColor: '#40916C',
-      borderCapStyle: 'round',
-      tension: 0.25,
-    },
-    {
-      label: 'Kambing',
-      data: labels.map(() => Math.random()),
-      borderColor: '#775DFE',
-      backgroundColor: '#775DFE',
-      borderCapStyle: 'round',
-      tension: 0.25,
-    },
-    {
-      label: 'Domba',
-      data: labels.map(() => Math.random()),
-      borderColor: '#C1E5D5',
-      backgroundColor: '#C1E5D5',
-      borderCapStyle: 'round',
-      tension: 0.25,
-    },
-  ],
+interface SoldAnimalsDiagramProps {
+  data: any
 }
 
-interface SoldAnimalsDiagramProps {}
+const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
+  // const labels = ['1 January', '2 January', '3 January', 'Today']
 
-const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({}) => {
+  const soldAnimals: ChartData<'line', number[], string> = {
+    // labels,
+    labels: ['Total Hewan Terjual'],
+    datasets: [
+      {
+        label: 'Sapi',
+        data: [data?.cow?.total],
+        borderColor: '#40916C',
+        backgroundColor: '#40916C',
+        borderCapStyle: 'round',
+        tension: 0.25,
+      },
+      {
+        label: 'Kambing',
+        data: [data?.goat?.total],
+        borderColor: '#775DFE',
+        backgroundColor: '#775DFE',
+        borderCapStyle: 'round',
+        tension: 0.25,
+      },
+      {
+        label: 'Domba',
+        data: [data?.sheep?.total],
+        borderColor: '#C1E5D5',
+        backgroundColor: '#C1E5D5',
+        borderCapStyle: 'round',
+        tension: 0.25,
+      },
+    ],
+  }
+
   return (
     <Line
       options={{
@@ -72,9 +75,8 @@ const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({}) => {
             },
           },
         },
-        // cutout: '90%',
       }}
-      data={data}
+      data={soldAnimals}
       className="font-sans"
     />
   )

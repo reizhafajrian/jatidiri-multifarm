@@ -36,7 +36,11 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         }
       }
 
-      if (!isCempek) formData.set('files', data.files[0])
+      if (!isCempek) {
+        if (data.files) {
+          formData.set('files', data.files[0])
+        }
+      }
 
       const url = isCempek
         ? `/api/${animal}/cempek/create`

@@ -46,7 +46,7 @@ const animalSchema = {
   birth_date: z.coerce.date(validations),
   origin_female: z.string(validations),
   origin_male: z.string(validations),
-  description: z.string(),
+  description: z.string().optional(),
   // created_by: z.string(validations),
 }
 
@@ -58,7 +58,7 @@ export const adultSchema = z.object({
   purchase_price: z.coerce
     .number(validations)
     .min(1, { message: REQUIRED_ERROR }),
-  // files: z.array(z.any(), validations).min(0),
+  files: z.any().optional(),
 })
 
 export const cempekSchema = z.object({
@@ -80,7 +80,7 @@ export const shedSchema = z.object({
   default_feed: z.string(validations),
   // feed_weight: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
   // age_range: z.string(validations),
-  description: z.string(),
+  description: z.string().optional(),
   // created_by: z.string(validations),
 })
 

@@ -15,7 +15,7 @@ interface DashboardInfoCardProps {
 const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
   return (
     <Card className="flex items-center">
-      <div className="mr-6 h-14 w-14">{data.icon}</div>
+      <div className="mr-6 h-8 w-8 md:h-14 md:w-14">{data.icon}</div>
       <div className="text-neutral-5">
         <h3 className="mb-4 font-medium capitalize">{data.title}</h3>
         <p className="text-2xl font-semibold md:text-[32px]">
