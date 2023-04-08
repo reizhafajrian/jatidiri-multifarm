@@ -1,14 +1,12 @@
-import DashboardFilter from '@/components/filter/DashboardFilter'
 import { Button } from '@/components/shared'
 import { DownloadCloud } from '@/components/shared/Icons'
 import { FC } from 'react'
+import DateFilter from '../filter/DateFilter'
 
-interface DashboardHeaderProps {}
-
-const DashboardHeader: FC<DashboardHeaderProps> = ({}) => {
+const DashboardHeader: FC = () => {
   return (
     <div className="mb-4 flex items-center justify-between">
-      <DashboardFilter />
+      <DateFilter label="Show" />
       <Button
         variant="outline"
         size="sm"

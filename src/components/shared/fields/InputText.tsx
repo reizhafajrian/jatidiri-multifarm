@@ -1,13 +1,16 @@
 import { Eye, EyeOff } from '@/components/shared/Icons'
 import { cn } from '@/lib/utils'
 import React, { FC } from 'react'
-import { useFormContext } from 'react-hook-form'
+import { useController, useFormContext } from 'react-hook-form'
+import { NumericFormat } from 'react-number-format'
 
 interface InputTextProps {
   name: string
   label: string
   isSecured?: boolean
   disabled?: boolean
+  type?: string
+  rupiah?: boolean
 }
 
 const InputText: FC<InputTextProps> = ({
@@ -15,29 +18,65 @@ const InputText: FC<InputTextProps> = ({
   label,
   isSecured,
   disabled,
+  type,
+  rupiah,
 }) => {
   const [showPassword, setShowPassword] = React.useState(false)
   const {
+    control,
     register,
     formState: { errors, isSubmitting },
   } = useFormContext()
 
+  const { field } = useController({ name, control })
+
+  const className = cn(
+    'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm  focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
+    errors[name]
+      ? 'border-error focus:border-error'
+      : 'border-neutral-4 focus:border-black'
+  )
+
   return (
     <div>
       <div className="relative">
-        <input
-          id={label}
-          type={isSecured ? (showPassword ? 'text' : 'password') : 'text'}
-          className={cn(
-            'peer block w-full appearance-none rounded-lg border bg-white px-2.5 pb-2.5 pt-4 text-sm  focus:outline-none focus:ring-0 disabled:border-neutral-3 disabled:bg-[#ebebeb] disabled:text-neutral-4',
-            errors[name]
-              ? 'border-error focus:border-error'
-              : 'border-neutral-4 focus:border-black'
-          )}
-          placeholder=" "
-          disabled={isSubmitting || disabled}
-          {...register(name)}
-        />
+        {type == 'number' ? (
+          rupiah ? (
+            <NumericFormat
+              id={name}
+              name={field.name}
+              onValueChange={({ floatValue }) => field.onChange(floatValue)}
+              value={field.value}
+              disabled={isSubmitting || disabled}
+              className={className}
+              placeholder=" "
+              valueIsNumericString={true}
+              prefix="Rp. "
+              thousandsGroupStyle="thousand"
+              thousandSeparator=","
+            />
+          ) : (
+            <NumericFormat
+              id={name}
+              name={field.name}
+              onValueChange={({ floatValue }) => field.onChange(floatValue)}
+              value={field.value}
+              disabled={isSubmitting || disabled}
+              className={className}
+              placeholder=" "
+              valueIsNumericString={true}
+            />
+          )
+        ) : (
+          <input
+            id={label}
+            type={isSecured ? (showPassword ? 'text' : 'password') : 'text'}
+            className={className}
+            placeholder=" "
+            disabled={isSubmitting || disabled}
+            {...register(name)}
+          />
+        )}
         <label
           htmlFor={label}
           className={cn(

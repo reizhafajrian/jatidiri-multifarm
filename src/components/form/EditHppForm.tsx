@@ -4,7 +4,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from '@/components/shared/Dialog'
 import { hppSchema } from '@/lib/schemas'
 import { IEditHpp } from '@/store/types'
@@ -20,15 +20,20 @@ interface EditHppFormProps {
   _id: string
 }
 
-const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id }) => {
+const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id,mutate }) => {
   const { editAnimal, } = useStore()
   const r = useRouter()
 
   const [open, setOpen] = useState(false)
+  const {
+    editHpp,
+    animal,
+  } = useStore()
 
   const methods = useForm<IEditHpp>({
     resolver: zodResolver(hppSchema),
     values: {
+      _id,
       eartag_code,
       hpp_price: hpp_price,
     },
@@ -37,7 +42,8 @@ const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id }) => {
   const onSubmit: SubmitHandler<IEditHpp> = async (values) => {
     const pathname = window?.location?.pathname
     const secondPath = pathname.split('/')[2]
-    editAnimal({ _id, sell_price: Number(values.sell_price), animal: secondPath })
+    await editAnimal({ _id, sell_price: Number(values.sell_price), animal: secondPath })
+    mutate()
     setOpen(false)
     r.refresh()
   }
@@ -54,8 +60,8 @@ const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id }) => {
           <div className="mb-8 space-y-5">
             <InputText name="eartag_code" label="" disabled />
             <div className="grid grid-cols-2 gap-5">
-              <InputText name="hpp_price" label="" disabled />
-              <InputText name="sell_price" label="Harga Jual" />
+              <InputText rupiah type='number' name="hpp_price" label="" disabled />
+              <InputText rupiah type='number' name="sell_price" label="Harga Jual" />
             </div>
             <InputText name="description" label="Keterangan" />
           </div>

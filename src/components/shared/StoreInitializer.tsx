@@ -3,30 +3,42 @@ import { ICategoryInfo } from '@/store/types'
 import useStore from '@/store/useStore'
 import { useEffect } from 'react'
 
-
 interface IData {
   data: {
     token?: string
     category?: ICategoryInfo
     animal?: string
+    type?: string
     searchType?: string
+    shed_code?: string
+    shed_id?: string
   }
 }
 
 export default function StoreInitializer({ data }: IData) {
-  const { token, animal, category: c, searchType } = data
+  const {  token,
+    animal,
+    type,
+    category: c,
+    searchType,
+    shed_code,
+    shed_id,
+  } = data
 
   const { setAnimal, loadUser, setCategoryInfo } = useStore()
 
   useEffect(() => {
     if (token) {
       loadUser()
-      useStore.setState({ token })
+      useStore.setState((state) => ({ ...state, token }))
     }
 
     if (animal) {
       setAnimal(animal)
-      useStore.setState({ searchType: animal })
+    }
+
+    if (type) {
+      useStore.setState((state) => ({ ...state, type }))
     }
 
     if (searchType) {
@@ -46,43 +58,7 @@ export default function StoreInitializer({ data }: IData) {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
-
+  }, [JSON.stringify(data)])
+ 
   return null
 }
-
-// interface IAnimalState {
-//   type?: string
-//   animal?: IAnimal
-// }
-
-// interface IShedState {
-//   shed_code?: string
-//   shed?: IShed
-// }
-
-// interface ICategoryState {
-//   feed?: cat.IFeed
-//   feedList?: cat.IFeed[]
-//   feedInfo?: cat.IFeedInfo
-//   vitamin?: cat.IVitamin
-//   vitaminList?: []
-//   vitaminInfo?: []
-//   vaccine?: cat.IVaccine
-//   vaccineList?: []
-//   vaccineInfo?: []
-//   anthelmintic?: cat.IAnthelmintic
-//   anthelminticList?: cat.IAnthelmintic[]
-//   anthelminticInfo?: []
-// }
-
-// interface IMilkState {
-//   milk?: IMilk
-//   milkInfo?: IMilkInfo
-//   milkList?: IMilk[]
-// }
-
-// interface IHppState {
-//   hpp?: IHpp
-//   hppList?: IHpp[]
-// }

@@ -36,7 +36,7 @@ export default function SignInForm() {
           className="w-full"
           isLoading={methods.formState.isSubmitting}
         >
-          SIGNIN
+          SIGN IN
         </Button>
       </div>
     </Form>

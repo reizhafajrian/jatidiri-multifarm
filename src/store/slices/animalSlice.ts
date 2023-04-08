@@ -3,13 +3,15 @@ import { Delete, Post } from '@/lib/api'
 import { StateCreator } from 'zustand'
 import { IAnimalState } from '../types'
 
+const animalTitleList = [
+  { name: 'goat', title: 'Kambing' },
+  { name: 'sheep', title: 'Domba' },
+  { name: 'cow', title: 'Sapi' },
+]
+
 const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   animal: { name: '', title: '' },
-  animalList: [
-    { name: 'goat', title: 'Kambing' },
-    { name: 'sheep', title: 'Domba' },
-    { name: 'cow', title: 'Sapi' },
-  ],
+  type: '',
   originMale: 'all',
   originFemale: 'all',
   setFilter: ({ originMale, originFemale }) => {
@@ -17,7 +19,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
     originFemale && set((state) => ({ ...state, originFemale }))
   },
   setAnimal: (name) => {
-    const animal = get().animalList.find((item) => item.name === name)
+    const animal = animalTitleList.find((item) => item.name === name)
     set((state) => ({ ...state, animal }))
   },
   addAnimal: async (data, router) => {
@@ -40,7 +42,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         ? `/api/${animal}/cempek/create`
         : `/api/${animal}/create`
 
-      const res = await Post({ url, data: formData })
+      const res = await Post({ url, data: isCempek ? data : formData })
 
       toast({
         type: 'success',
@@ -57,6 +59,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   },
   editAnimal: async (data, router) => {
     try {
+
       const isCempek = data.cempek === 'true'
       const formData = new FormData()
 
@@ -83,11 +86,11 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
         type: 'success',
         message: res.message,
       })
+
       if (router) {
         router.replace(`/${get().animal.name}/male`)
       }
     } catch (err: any) {
-      console.log(err)
       return toast({
         type: 'error',
         message: err.data.errors[0].msg,

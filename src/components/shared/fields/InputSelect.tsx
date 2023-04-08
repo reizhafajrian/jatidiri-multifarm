@@ -8,7 +8,7 @@ import {
   SelectRoot,
   SelectTrigger,
   SelectValue,
-  SelectViewport
+  SelectViewport,
 } from '@/components/shared/Select'
 import { cn } from '@/lib/utils'
 import { FC } from 'react'
@@ -18,17 +18,21 @@ interface InputSelectProps {
   name: string
   label: string
   isLoading?: boolean
-  options: { name: string; value: string }[]
+  options: { name: string; value: string }[] | undefined
 }
 
-const InputSelect: FC<InputSelectProps> = ({ name, label, options, isLoading = false }) => {
+const InputSelect: FC<InputSelectProps> = ({
+  name,
+  label,
+  options,
+  isLoading = false,
+}) => {
   const {
     control,
     formState: { errors, isSubmitting },
   } = useFormContext()
 
   const { field } = useController({ name, control })
-
 
   return (
     <div>
@@ -70,23 +74,24 @@ const InputSelect: FC<InputSelectProps> = ({ name, label, options, isLoading = f
         </div>
         <SelectContent>
           <SelectViewport>
-            {
-              isLoading ? (
-                <div className="flex justify-center items-center h-20">
-                  <Loader2 className="animate-spin stroke-primary-4" />
-                </div>
-              ) :
-                (
-                  options.map(({ name, value }, idx) => (
-                    <SelectItem key={idx} value={value}>
-                      <SelectItemText>{name}</SelectItemText>
-                      <SelectItemIndicator>
-                        <Check className="h-5 w-5" />
-                      </SelectItemIndicator>
-                    </SelectItem>
-                  )))
-            }
-
+            {isLoading ? (
+              <div className="flex h-20 items-center justify-center">
+                <Loader2 className="animate-spin stroke-primary-4" />
+              </div>
+            ) : options?.length == 0 ? (
+              <div className="px-8 py-2 text-sm font-medium text-neutral-4">
+                empty list
+              </div>
+            ) : (
+              options?.map(({ name, value }, idx) => (
+                <SelectItem key={idx} value={value}>
+                  <SelectItemText>{name}</SelectItemText>
+                  <SelectItemIndicator>
+                    <Check className="h-5 w-5" />
+                  </SelectItemIndicator>
+                </SelectItem>
+              ))
+            )}
           </SelectViewport>
         </SelectContent>
       </SelectRoot>

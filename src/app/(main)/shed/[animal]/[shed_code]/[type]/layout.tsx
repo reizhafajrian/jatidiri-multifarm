@@ -1,17 +1,19 @@
 import ShedDetailHeader from '@/components/layout/ShedDetailHeader'
 import { StoreInitializer } from '@/components/shared'
+import axios from 'axios'
 import { cookies } from 'next/headers'
-import { ReactNode, use } from 'react'
+import { ReactNode } from 'react'
 
-export default function ShedAnimalLayout(props: {
+export default async function ShedAnimalLayout({
+  children,
+  params: { animal, shed_code: shed_id, type },
+}: {
   children: ReactNode
   params: any
 }) {
-  const { animal, shed_code, type } = props.params
-
-  const { eartagOptions, shedDetail: data } = use(
-    getData(animal, type, shed_code, cookies().get('token')?.value!)
-  )
+  const token = cookies().get('token')?.value!
+  const params = { animal, shed_id, token, type }
+  const { shed_code } = await getData(params)
 
   return (
     <>
@@ -27,33 +29,21 @@ export default function ShedAnimalLayout(props: {
   )
 }
 
-const getData = async (
-  animal: string,
-  type: string,
-  shed_code: string,
+type Props = {
+  shed_id: string
   token: string
-) => {
+}
+
+const getData = async ({ shed_id, token }: Props) => {
   const baseUrl = process.env.API_BASE_URL
-  const Authorization = `bearer ${token}`
+  const headers = { Authorization: `bearer ${token}` }
 
-  const isCempek = type === 'cempek'
-
-  const gender = type === 'male' ? 'true' : 'false'
-
-  const url = isCempek
-    ? `/${animal}/cempek/get`
-    : `/${animal}/get?gender=${gender}`
-
-  const eartagOptions = await await fetch(baseUrl + url, {
-    headers: { Authorization },
-  }).then((res) => res.json())
-
-  const resDetail = await fetch(baseUrl + '/shed/get/detail/' + shed_code, {
-    headers: { Authorization },
-  }).then((res) => res.json())
+  const details = await axios.get(`${baseUrl}/shed/get/detail/${shed_id}`, {
+    headers,
+  })
+  const shed_code = details.data.data.code
 
   return {
-    eartagOptions: eartagOptions.data,
-    shedDetail: resDetail.data,
+    shed_code,
   }
 }

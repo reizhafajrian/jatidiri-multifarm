@@ -5,7 +5,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable
+  useReactTable,
 } from '@tanstack/react-table'
 import { FC, useMemo, useState } from 'react'
 import SimpleBar from 'simplebar-react'
@@ -47,20 +47,20 @@ const Table: FC<TableProps> = (props) => {
             <thead>
               {table.getHeaderGroups().map((headerGroup) => (
                 <tr key={headerGroup.id}>
-                  <th className="sticky left-0 min-w-[50px] border-b border-[#B4B5B6] bg-white p-4 text-left text-xs font-semibold">
+                  <th className="left-0 min-w-[50px] border-b border-[#B4B5B6] bg-white p-4 text-left text-xs font-semibold md:sticky">
                     No
                   </th>
                   <TH
                     header={headerGroup.headers[0]}
                     className={cn(
-                      'sticky left-[50px]',
+                      'left-[50px] md:sticky',
                       props.fixedCol === 3 ? 'min-w-[150px]' : 'pr-3'
                     )}
                   />
                   {props.fixedCol === 3 && (
                     <TH
                       header={headerGroup.headers[1]}
-                      className="sticky left-[200px] min-w-[100px]"
+                      className="left-[200px] min-w-[100px] md:sticky"
                     />
                   )}
                   {headerGroup.headers
@@ -91,20 +91,20 @@ const Table: FC<TableProps> = (props) => {
                     key={row.id}
                     className="border-b border-[#DCDFE3] last:border-none"
                   >
-                    <td className="sticky left-0 z-10  min-w-[50px] bg-white p-4 text-xs">
+                    <td className="left-0 z-10 min-w-[50px] bg-white p-4 text-xs md:sticky">
                       {i + 1}
                     </td>
                     <TD
                       cell={row.getVisibleCells()[0]}
                       className={cn(
-                        'sticky left-[50px] z-10',
+                        'z-10 md:sticky md:left-[50px]',
                         props.fixedCol === 3 ? 'min-w-[150px]' : 'pr-3'
                       )}
                     />
                     {props.fixedCol === 3 && (
                       <TD
                         cell={row.getVisibleCells()[1]}
-                        className="sticky left-[200px] z-10 min-w-[100px]"
+                        className="left-[200px] z-10 min-w-[100px] md:sticky"
                       />
                     )}
                     {row

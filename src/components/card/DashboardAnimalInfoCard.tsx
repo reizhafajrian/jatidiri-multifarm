@@ -6,7 +6,7 @@ interface DashboardAnimalInfoCardProps {
     icon: any
     animal_type: string
     totalAdult: number
-    totalCempek: number
+    totalCempek?: number
   }
 }
 
@@ -46,7 +46,8 @@ const DashboardAnimalInfoCard: FC<DashboardAnimalInfoCardProps> = ({
         </div>
         <div className="grid grid-cols-2">
           {content({ title, total: totalAdult, label: 'Dewasa' })}
-          {content({ title, total: totalCempek, label: 'Cempek' })}
+          {totalCempek !== undefined &&
+            content({ title, total: totalCempek, label: 'Cempek' })}
         </div>
       </Card>
     </>

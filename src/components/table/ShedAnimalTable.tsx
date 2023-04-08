@@ -1,6 +1,7 @@
 'use client'
 import { Table } from '@/components/shared'
-import useDataList from '@/hooks/useDataList'
+import useShedAnimalList from '@/hooks/useShedAnimalList'
+import useShedAnimalTags from '@/hooks/useshedAnimalTags'
 import { longDateFormatter } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
@@ -18,22 +19,16 @@ const ShedAnimalTable: FC<ShedAnimalTableProps> = ({
   type,
 }) => {
   const changeShedAnimal = useStore((state) => state.changeShedAnimal)
-  const isCempek = type === 'cempek'
-  const gender = type === 'male' ? 'true' : 'false'
-
-  const url = isCempek
-    ? `/shed/get/detail/${id}?cempek=true`
-    : `/shed/get/detail/${id}?gender=${gender}`
-
-  const { data, loading, mutate } = useDataList(`/api/${url}`)
+  const { data, loading, mutate: mutateTable } = useShedAnimalList()
+  const { mutate: mutateEartags } = useShedAnimalTags()
 
   const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
     try {
       await changeShedAnimal(shed_code, eartag_code)
-      mutate()
-    } catch (error) {
-
-
+      mutateTable()
+      mutateEartags()
+    } catch (err) {
+      console.log(err)
     }
   }
 

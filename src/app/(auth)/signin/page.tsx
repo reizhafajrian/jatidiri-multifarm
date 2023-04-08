@@ -13,13 +13,13 @@ export default function SigninPage() {
   if (isAuthenticated) redirect('/dashboard')
 
   return (
-    <div className="grid grid-cols-2">
-      <div className="relative m-28">
+    <div className="grid md:grid-cols-2">
+      <div className="relative m-28 hidden md:block">
         <Image src="/logo-big.png" alt="logo" fill className="object-contain" />
       </div>
       <div className="grid h-screen place-items-center">
-        <div className="w-full px-24">
-          <div className="mb-32 space-y-5 text-5xl font-medium">
+        <div className="w-full px-12 md:px-24">
+          <div className="mb-16 space-y-5 text-3xl font-medium md:mb-32 md:text-5xl">
             <h1>Selamat datang</h1>
             <h1>
               di{' '}
@@ -29,7 +29,9 @@ export default function SigninPage() {
             </h1>
           </div>
           <div className="w-full">
-            <h2 className="mb-8 text-[32px] font-medium">Sign In Disini</h2>
+            <h2 className="mb-8 text-xl font-medium md:text-[32px]">
+              Sign In Disini
+            </h2>
             <SignInForm />
           </div>
         </div>

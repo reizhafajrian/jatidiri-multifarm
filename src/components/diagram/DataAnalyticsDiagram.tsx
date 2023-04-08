@@ -14,32 +14,32 @@ import { Bar } from 'react-chartjs-2'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
-
-const data: ChartData<'bar', number[], string> = {
-  labels,
-  datasets: [
-    {
-      label: 'Sapi',
-      data: labels.map(() => Math.random()),
-      backgroundColor: '#40916C',
-    },
-    {
-      label: 'Kambing',
-      data: labels.map(() => Math.random()),
-      backgroundColor: '#775DFE',
-    },
-    {
-      label: 'Domba',
-      data: labels.map(() => Math.random()),
-      backgroundColor: '#C1E5D5',
-    },
-  ],
+interface DataAnalyticsDiagramProps {
+  data: any
 }
 
-interface DataAnalyticsDiagramProps {}
+const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({ data }) => {
+  const dataAnalytics: ChartData<'bar', number[], string> = {
+    labels: ['Total Hewan Aktif'],
+    datasets: [
+      {
+        label: 'Sapi',
+        data: [data?.cow],
+        backgroundColor: '#40916C',
+      },
+      {
+        label: 'Kambing',
+        data: [data?.goat],
+        backgroundColor: '#775DFE',
+      },
+      {
+        label: 'Domba',
+        data: [data?.sheep],
+        backgroundColor: '#C1E5D5',
+      },
+    ],
+  }
 
-const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({}) => {
   return (
     <Bar
       options={{
@@ -55,7 +55,7 @@ const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({}) => {
           },
         },
       }}
-      data={data}
+      data={dataAnalytics}
     />
   )
 }

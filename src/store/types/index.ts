@@ -15,20 +15,21 @@ export interface IUser {
 }
 
 export interface IChangePass {
-  old_pass: string
-  new_pass: string
-  confirm_pass: string
+  passwordOld: string
+  password: string
+  passwordConfirmation: string
 }
 
 export interface IAuth {
-  user: IUser | null
   token: string
+  user: IUser | null
   logout: (router: any) => void
   loadUser: () => void
   login: (data: IUser, router: any) => void
   register: (data: IUser, router: any) => void
   updateUser: (data: IUser, router: any) => void
   updateProfile: (data: IUser, router: any) => void
+  changePass: (data: { password: string; passwordConfirmation: string }) => void
   changeRole: (data: { _id: string; role: string }, router: any) => void
   deleteUser: (id: string, router: any) => void
 }
@@ -68,7 +69,7 @@ interface IAnimalFilter {
 
 export interface IAnimalState {
   animal: IAnimalTitle
-  animalList: IAnimalTitle[]
+  type: string
   originMale: string
   originFemale: string
 
@@ -78,7 +79,6 @@ export interface IAnimalState {
   editAnimal: (data: IAnimal, router?: any) => void
   deleteAnimal: (id: string) => void
 }
-
 
 // SHED
 export interface IShed {
@@ -124,7 +124,8 @@ export interface IShedAnimal {
 }
 
 export interface IShedState {
-  // shed_code: string
+  shed_id: string
+  shed_code: string
   // shed: IShed
   // shedDetail: IShedDetail
 
@@ -151,8 +152,9 @@ interface IFeedInfo {
 }
 
 interface IOtherInfo {
-  total: string
-  animal: string
+  cow_value: string
+  sheep_value: string
+  goat_value: string
 }
 
 export interface ICategoryInfo {
@@ -180,7 +182,7 @@ export interface IMilk {
   eartag_code?: string
   milk?: number
   milk_date?: Date
-  history_milk_date?: Date
+  // history_milk_date?: Date
   history_milk?: number
   animal_id?: string
   created_by?: string
@@ -189,7 +191,7 @@ export interface IMilk {
 export interface IMilkInfo {
   income_total?: number
   income_date?: Date
-  history_income_total?: string
+  history_income_total?: Number
   history_income_date?: Date
   income_percentage?: number
 
@@ -203,15 +205,29 @@ export interface IMilkState {
   // milk: IMilk
   // milkInfo: IMilkInfo
   // milkList: IMilk[]
-  milkHistory: number
+  milkStatus: string
+  // milkHistory: number
   incomeHistory: number
   addMilk: (data: IMilk) => void
   editMilk: (data: IMilk) => void
-  setMilkHistory: (start: Date, end: Date) => void
+  setMilkHistory: (start: Date, end: Date) => Promise<number | undefined>
   changeMilkStatus: (id: string, status: string) => void
   addIncome: (data: IMilkInfo) => void
   setIncomeHistory: (start: Date, end: Date) => void
 }
+
+// export interface IHpp {
+//   type?: string
+//   origin?: string
+//   weight?: number
+//   age?: number
+//   purchase_price?: number
+//   feed_price?: number
+//   other_price?: number
+//   hpp?: number
+//   selling_price?: number
+//   status?: { name: string; value: string }
+// }
 
 // HPP
 export interface IHppState {
@@ -237,9 +253,9 @@ export interface IHpp {
 }
 
 export interface IEditHpp {
+  _id?: string
   eartag_code?: string
   hpp_price?: number
   sell_price?: number
   description?: string
-  created_by?: string
 }

@@ -137,6 +137,24 @@ const createAuthSlice: StateCreator<IAuth> = (set, get) => ({
       })
     }
   },
+  changePass: async (data) => {
+    try {
+      const res = await Post({
+        url: '/api/user/password/update',
+        data,
+      })
+
+      toast({
+        type: 'success',
+        message: res.message,
+      })
+    } catch (err: any) {
+      toast({
+        type: 'error',
+        message: err.data.errors[0].msg,
+      })
+    }
+  },
 })
 
 export default createAuthSlice

@@ -1,3 +1,4 @@
+import { thisMonthValue } from '@/hooks/useFilterDate'
 import { create } from 'zustand'
 import createAnimalSlice from './slices/animalSlice'
 import createAuthSlice from './slices/authSlice'
@@ -24,7 +25,9 @@ interface IState
   IMilkState,
   IHppState,
   IExpandState,
-  ISearchState { }
+  ISearchState { 
+  filterByDate: string
+}
 
 const useStore = create<IState>()((...a) => ({
   ...createAuthSlice(...a),
@@ -35,6 +38,7 @@ const useStore = create<IState>()((...a) => ({
   ...createMilkSlice(...a),
   ...createHppSlice(...a),
   ...createSearchSlice(...a),
+  filterByDate: thisMonthValue,
 }))
 
 export default useStore

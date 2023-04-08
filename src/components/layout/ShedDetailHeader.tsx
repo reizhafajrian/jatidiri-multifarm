@@ -1,28 +1,13 @@
 'use client'
 import { BackLink } from '@/components/shared'
 import useStore from '@/store/useStore'
-// import { useAnimalStore } from '@/store/animal'
-import { usePathname } from 'next/navigation'
 import { FC } from 'react'
 import ShedAnimalForm from '../form/ShedAnimalForm'
 import Navbar from './Navbar'
 
-interface ShedDetailHeaderProps {
-  animal: string
-  shed_code: string
-  type?: string
-  eartagOptions?: any
-}
-
-const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
-  const { animal: test, shed_code, type, eartagOptions } = props
-  // const { animalTitle } = useAnimalStore()
-  // const title = animalTitle(animal)
-  const { animal } = useStore()
-  const pathname = usePathname()
-  const id = pathname.split('/')[3]
-
-  const baseUrl = `/shed/${animal.name}/${id}`
+const ShedDetailHeader: FC = () => {
+  const { animal, type, shed_code, shed_id } = useStore()
+  const baseUrl = `/shed/${animal.name}/${shed_id}`
 
   const menu = [
     { name: 'Informasi', link: baseUrl },
@@ -48,13 +33,7 @@ const ShedDetailHeader: FC<ShedDetailHeaderProps> = (props) => {
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
-        {type && (
-          <ShedAnimalForm
-            eartagOptions={eartagOptions}
-            animal={animal.name}
-            id={id}
-          />
-        )}
+        {type && <ShedAnimalForm />}
       </Navbar>
     </>
   )

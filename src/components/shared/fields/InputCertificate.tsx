@@ -70,7 +70,7 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
             <span className="text-primary-5"> klik disini</span> untuk upload
           </p>
           <p className="text-xs font-light text-neutral-4">
-            Upload dalam format .xls atau .xlsx file
+            Upload dalam format .pdf file
           </p>
           <a
             href="#"

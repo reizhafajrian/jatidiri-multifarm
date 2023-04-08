@@ -1,12 +1,13 @@
 'use client'
 import { Button, Form, InputSelect, InputText } from '@/components/shared'
+import useShedAnimalList from '@/hooks/useShedAnimalList'
+import useShedAnimalTags from '@/hooks/useshedAnimalTags'
 import { shedAnimalSchema } from '@/lib/schemas'
 import { IShedAnimal } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { mutate } from 'swr'
 import {
   DialogClose,
   DialogContent,
@@ -16,42 +17,30 @@ import {
 } from '../shared/Dialog'
 import { Pen } from '../shared/Icons'
 
-interface ShedAnimalFormProps {
-  animal: string
-  eartagOptions: any
-  id: string
-}
-
-const ShedAnimalForm: FC<ShedAnimalFormProps> = ({
-  animal: test,
-  eartagOptions,
-  id,
-}) => {
+const ShedAnimalForm: FC = () => {
   const [open, setOpen] = useState(false)
-  const { animal, addShedAnimal } = useStore()
+  const { animal, shed_id, addShedAnimal } = useStore()
+
+  const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags()
+  const { mutate: mutateTable } = useShedAnimalList()
 
   const methods = useForm<IShedAnimal>({
     resolver: zodResolver(shedAnimalSchema),
   })
 
-  const onSubmit: SubmitHandler<IShedAnimal> = (values) => {
-    addShedAnimal(values)
-    mutate(`/api/shed/get/detail/${id}`)
+  const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
+    await addShedAnimal(values)
+    mutateTable()
+    mutateEartags()
     setOpen(false)
   }
-
-  const codeOptions =
-    eartagOptions?.map((item: any) => ({
-      name: item.eartag_code,
-      value: item.eartag_code,
-    })) ?? []
 
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
-          Tambah {animal.title}
-          <Pen className="ml-3 h-4 w-4 fill-white" />
+          <span className="hidden md:block">Tambah {animal.title}</span>
+          <Pen className="h-4 w-4 fill-white md:ml-3" />
         </Button>
       </DialogTrigger>
       <DialogContent>
@@ -59,13 +48,13 @@ const ShedAnimalForm: FC<ShedAnimalFormProps> = ({
 
         <Form
           methods={methods}
-          onSubmit={(values) => onSubmit({ ...values, id })}
+          onSubmit={(values) => onSubmit({ ...values, id: shed_id })}
         >
           <div className="mb-8 space-y-6">
             <InputSelect
               name="eartag_code"
               label="No Eartag"
-              options={codeOptions}
+              options={eartagOptions}
             />
             <InputText name="description" label="Keterangan" />
           </div>

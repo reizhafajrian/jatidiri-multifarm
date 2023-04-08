@@ -1,10 +1,13 @@
+'use client'
+import useStore from '@/store/useStore'
 import { SelectFilter } from '../shared'
 
 export default function MilkFilter() {
+  const { milkStatus } = useStore()
   const statusOptions = [
     { name: 'All', value: 'all' },
     { name: 'Aktif', value: 'active' },
-    { name: 'Non-Aktif', value: 'non-active' },
+    { name: 'Non-Aktif', value: 'inactive' },
   ]
 
   return (
@@ -12,7 +15,8 @@ export default function MilkFilter() {
       <SelectFilter
         title="status"
         options={statusOptions}
-        defaultValue={statusOptions[0].value}
+        defaultValue={milkStatus}
+        onChange={(value) => useStore.setState({ milkStatus: value })}
       />
     </div>
   )

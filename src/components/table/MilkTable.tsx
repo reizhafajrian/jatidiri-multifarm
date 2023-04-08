@@ -1,5 +1,5 @@
 'use client'
-import useDataList from '@/hooks/useDataList'
+import useMilkList from '@/hooks/useMilkList'
 import useStore from '@/store/useStore'
 import { ColumnDef } from '@tanstack/react-table'
 import { FC } from 'react'
@@ -7,16 +7,9 @@ import MilkForm from '../form/MilkForm'
 import { Table } from '../shared'
 import SelectTable from '../shared/SelectTable'
 
-interface MilkTableProps {}
-
-const MilkTable: FC<MilkTableProps> = ({}) => {
+const MilkTable: FC = () => {
   const { changeMilkStatus } = useStore()
-  const { data, loading, mutate } = useDataList('/api/milk/get')
-
-  const changeStatusHandler = async (id: string, status: string) => {
-    changeMilkStatus(id, status)
-    mutate()
-  }
+  const { data, loading, mutate } = useMilkList()
 
   const statusOptions = [
     { name: 'Aktif', value: 'active', bgColor: 'bg-[#E1F7E8]' },
@@ -44,9 +37,10 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
           triggerClassName={`${statusOptions.find(
             (i) => i.value === data.getValue()
           )?.bgColor!} font-semibold text-neutral-4`}
-          onChange={(value) =>
-            changeStatusHandler(data.row.original.animal_id._id, value)
-          }
+          onChange={(value) => {
+            changeMilkStatus(data.row.original.animal_id._id, value)
+            mutate()
+          }}
         />
       ),
     },
@@ -60,18 +54,7 @@ const MilkTable: FC<MilkTableProps> = ({}) => {
   ]
 
   return (
-    <Table
-      isLoading={loading}
-      data={data?.filter((item: any) => {
-        if (item.animal_id) {
-          if (item.animal_id.eartag_code) {
-            return item
-          }
-        }
-      })}
-      columns={columns}
-      fixedCol={2}
-    />
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
 

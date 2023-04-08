@@ -13,7 +13,7 @@ export default function Search() {
   })
 
   return (
-    <div className="relative w-1/3">
+    <div className="relative md:w-1/3">
       <Form
         methods={methods}
         onSubmit={(values) => searchHandler(values.keyword)}

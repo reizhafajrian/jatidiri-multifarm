@@ -20,7 +20,7 @@ export default function MemberCard({ data }: any) {
 
   return (
     <>
-      <div className="grid grid-cols-4 items-center rounded-lg border bg-white py-4 px-5">
+      <div className="flex items-center rounded-lg border bg-white py-4 px-5 md:grid md:grid-cols-4">
         <div className="flex items-center gap-4">
           <div className="h-12 w-12 rounded-full bg-neutral-3" />
           <div>
@@ -30,7 +30,7 @@ export default function MemberCard({ data }: any) {
             <p className="text-xs text-neutral-4">{data.email}</p>
           </div>
         </div>
-        <div className="mx-auto">
+        <div className="mx-auto hidden md:block">
           <SelectTable
             value={data.role}
             options={options}
@@ -42,10 +42,10 @@ export default function MemberCard({ data }: any) {
             }
           />
         </div>
-        <div className="ml-auto text-neutral-4">
+        <div className="ml-auto hidden text-neutral-4 md:block">
           <p>{data.phone}</p>
         </div>
-        <div className="flex justify-end gap-2">
+        <div className="ml-auto flex justify-end gap-2 md:ml-0">
           <MemberForm formType="edit" values={data} />
           <DeleteModal
             title={`Hapus Member Ini?`}

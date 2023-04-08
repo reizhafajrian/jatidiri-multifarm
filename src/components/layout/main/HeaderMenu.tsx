@@ -21,7 +21,7 @@ const HeaderMenu = () => {
       <DropdownMenuTrigger asChild>
         <button className="flex items-center gap-3 outline-none">
           <div className="h-8 w-8 rounded-full bg-gray-200" />
-          <div>
+          <div className="hidden md:block">
             <p className="mb-1 text-sm capitalize">
               {user?.firstName} {user?.lastName}
             </p>

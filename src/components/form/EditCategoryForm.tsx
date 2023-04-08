@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger
+  DialogTrigger,
 } from '@/components/shared/Dialog'
 import { categorySchema } from '@/lib/schemas'
 import { ICategory } from '@/store/types'
@@ -58,10 +58,12 @@ const EditCategoryForm: FC<EditCategoryFormProps> = ({ category, data }) => {
         >
           <div className="mb-8 space-y-6">
             <InputText name="type" label={`Jenis ${setTitle(category)}`} />
-            <InputText name="stock" label="Stock" />
+            <InputText name="stock" label="Stock" type="number" />
             <InputText
               name="price"
               label={`Harga ${category === 'feed' ? '(per kg)' : '(per pcs)'}`}
+              type="number"
+              rupiah
             />
           </div>
           <div className="flex justify-end gap-3">
@@ -96,7 +98,7 @@ const setTitle = (category: string) =>
   category === 'feed'
     ? 'Pakan'
     : category === 'vitamin'
-      ? 'Vitamin'
-      : category === 'vaccine'
-        ? 'Vaksin'
-        : 'Obat Cacing'
+    ? 'Vitamin'
+    : category === 'vaccine'
+    ? 'Vaksin'
+    : 'Obat Cacing'

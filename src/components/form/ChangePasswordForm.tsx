@@ -2,6 +2,7 @@
 import { Button, Form, InputText } from '@/components/shared'
 import { changePassSchema } from '@/lib/schemas'
 import { IChangePass } from '@/store/types'
+import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
@@ -11,25 +12,31 @@ interface IProps {}
 
 const ChangePasswordForm: FC<IProps> = ({}) => {
   const router = useRouter()
+  const { changePass } = useStore()
 
   const methods = useForm<IChangePass>({
     resolver: zodResolver(changePassSchema),
   })
 
   const onSubmit: SubmitHandler<IChangePass> = async (values) => {
-    console.log(values)
+    await changePass(values)
+    methods.reset()
   }
 
   return (
     <Form
       methods={methods}
       onSubmit={onSubmit}
-      className="grid grid-cols-2 gap-6"
+      className="grid gap-6 md:grid-cols-2"
     >
-      <InputText name="old_pass" label="Old Password" isSecured />
+      <InputText name="passwordOld" label="Old Password" isSecured />
       <div className="grid gap-6">
-        <InputText name="new_pass" label="New Password" isSecured />
-        <InputText name="confirm_pass" label="Confirm Password" isSecured />
+        <InputText name="password" label="New Password" isSecured />
+        <InputText
+          name="passwordConfirmation"
+          label="Confirm Password"
+          isSecured
+        />
         <div className="flex justify-end gap-3">
           <Button
             type="button"

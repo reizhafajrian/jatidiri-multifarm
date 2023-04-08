@@ -4,19 +4,26 @@ import {
   CowCircle,
   FeedCircle,
   GoatCircle,
-  SheepCircle
+  Loader2,
+  SheepCircle,
 } from '@/components/shared/Icons'
+import useCategoryDetail from '@/hooks/useCategoryDetail'
 import { categoryTitle } from '@/lib/utils'
-import useStore from '@/store/useStore'
 import AddCategoryForm from '../form/AddCategoryForm'
 import CategoryCardList from '../list/CategoryCardList'
 import CategoryTable from '../table/CategoryTable'
 
 export default function CategoryContent() {
-  const { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo } = useStore()
-  const c = { feedInfo, vitaminInfo, vaccineInfo, anthelminticInfo }
-  const categories = setCategories(c)
+  const { data, loading } = useCategoryDetail()
 
+  if (loading)
+    return (
+      <div className="flex h-20 items-center justify-center">
+        <Loader2 className="animate-spin stroke-primary-4" />
+      </div>
+    )
+
+  const categories = setCategories(data)
 
   return (
     <>
@@ -27,7 +34,7 @@ export default function CategoryContent() {
               <h1 className="mb-8 text-2xl font-semibold text-primary-4">
                 {categoryTitle(category)}
               </h1>
-              <div className="mb-6 flex items-end justify-between">
+              <div className="mb-3 flex flex-col gap-3 md:mb-6 md:flex-row md:items-end md:justify-between">
                 <CategoryCardList cardList={cardList} />
                 <AddCategoryForm category={category} />
               </div>
@@ -39,15 +46,6 @@ export default function CategoryContent() {
     </>
   )
 }
-
-const title = (category: string) =>
-  category === 'feed'
-    ? 'Pakan'
-    : category === 'vitamin'
-      ? 'Vitamin'
-      : category === 'vaccine'
-        ? 'Vaksin'
-        : 'Obat Cacing'
 
 const setCategories = (c: any) => [
   {
@@ -124,7 +122,8 @@ const setCategories = (c: any) => [
       },
       {
         title: 'Domba',
-        value: c.anthelminticInfo?.find((v: any) => v.animal === 'sheep')?.total,
+        value: c.anthelminticInfo?.find((v: any) => v.animal === 'sheep')
+          ?.total,
         icon: <SheepCircle />,
       },
       {

@@ -29,7 +29,6 @@ const useHppList = ({ animal }: { animal: string }) => {
 
   const { data, isLoading, error, mutate } = useSWR(endpoint(), Get)
 
-  console.log(data)
 
   return {
     data: data?.data,
@@ -48,8 +47,8 @@ const HppTable: FC<HppTableProps> = ({ animal }) => {
   const changeStatusHandler = async (value: any, _id?: string) => {
     const pathname = window?.location?.pathname
     const secondPath = pathname.split('/')[2]
-    editAnimal({ status: value, _id, animal: secondPath })
-    r.refresh()
+    await editAnimal({ status: value, _id, animal: secondPath })
+    mutate()
   }
 
   const columns: ColumnDef<any, any>[] = [
@@ -90,10 +89,11 @@ const HppTable: FC<HppTableProps> = ({ animal }) => {
         <SelectTable
           onChange={changeStatusHandler}
           animalEarTag={data.row.original._id}
-          value={data.getValue()}
+          value={data.getValue() === 'active' ? 'available' : data.getValue()}
           options={statusOptions}
           triggerClassName={
-            statusOptions.find((i) => i.value === data.getValue())?.bgColor!
+            statusOptions.find((i) => i.value === data.getValue())?.bgColor! ??
+            'bg-[#E1F7E8]'
           }
         />
       ),
@@ -103,11 +103,11 @@ const HppTable: FC<HppTableProps> = ({ animal }) => {
       accessorKey: 'eartag_code',
       cell: (data) => <EditHppForm eartag_code={data.getValue()} hpp_price={data.row.original.hpp_price} _id={
         data.row.original._id
-      } />,
+      } mutate={mutate} />,
     },
   ]
 
-  return <Table isLoading={false} data={data?.length > 0 ? data : []} columns={columns} fixedCol={2} />
+  return <Table isLoading={false} data={(data?.length > 0 && data!==undefined )? data : []} columns={columns} fixedCol={2} />
 }
 
 export default HppTable

@@ -1,4 +1,5 @@
 'use client'
+import { thisMonthValue } from '@/hooks/useFilterDate'
 import useStore from '@/store/useStore'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -26,6 +27,8 @@ export default function NavbarLink(props: IProps) {
           searchKeyword: '',
           originFemale: 'all',
           originMale: 'all',
+          hppStatus: 'all',
+          filterByDate: thisMonthValue,
         })
       }
       className={clsx(

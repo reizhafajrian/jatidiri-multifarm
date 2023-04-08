@@ -9,10 +9,10 @@ export default function AddAnimalPage({ params }: { params: any }) {
   const animal = params.animal
 
   const categories = {
-    Pejantan: <AnimalForm formType="add" gender="true" animal={animal} />,
-    Betina: <AnimalForm formType="add" gender="false" animal={animal} />,
+    Pejantan: <AnimalForm formType="add" gender="true" />,
+    Betina: <AnimalForm formType="add" gender="false" />,
     ...(animal !== 'cow' && {
-      Cempek: <AnimalForm formType="add" cempekForm animal={animal} />,
+      Cempek: <AnimalForm formType="add" cempekForm />,
     }),
   }
 

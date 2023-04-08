@@ -6,7 +6,8 @@ export const metadata = {
   title: 'Jatidiri Multifarm | Shed',
 }
 
-export default function ShedPage({ params }: { params: any }) {
+export default function ShedPage(props: any) {
+  const { params } = props
   return (
     <>
       <StoreInitializer data={{ animal: params.animal, searchType: 'shed' }} />

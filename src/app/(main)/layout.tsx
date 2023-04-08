@@ -6,13 +6,13 @@ import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
 export default function MainLayout(props: { children: ReactNode }) {
-  const isAuthenticated = cookies().get('token')?.value
+  const token = cookies().get('token')?.value
 
-  if (!isAuthenticated) redirect('/signin')
+  if (!token) redirect('/signin')
 
   return (
     <>
-      <StoreInitializer data={{ token: cookies().get('token')?.value }} />
+      <StoreInitializer data={{ token }} />
       <Sidebar />
       <Container>
         <Header />

@@ -1,3 +1,4 @@
+'use client'
 import { X } from '@/components/shared/Icons'
 import { editMemberSchema, memberSchema } from '@/lib/schemas'
 import { IUser } from '@/store/types'
@@ -22,10 +23,11 @@ interface MemberFormProps {
 }
 
 const MemberForm: FC<MemberFormProps> = ({ formType, values: data }) => {
+  const [open, setOpen] = useState(false)
+
   const router = useRouter()
   const { register, updateUser } = useStore()
   const schema = formType === 'add' ? memberSchema : editMemberSchema
-  const [open, setOpen] = useState(false)
   const title = `${formType == 'add' ? 'Tambah' : 'Edit'} Member`
 
   const methods = useForm<IUser>({
@@ -46,9 +48,6 @@ const MemberForm: FC<MemberFormProps> = ({ formType, values: data }) => {
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        {/* 
-     button 
-      */}
         {formType === 'add' ? (
           <Button className="text-sm capitalize">tambah member</Button>
         ) : (

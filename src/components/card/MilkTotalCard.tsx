@@ -1,6 +1,6 @@
 'use client'
 import useDataList from '@/hooks/useDataList'
-import { shortDateFormatter } from '@/lib/utils'
+import { format } from 'date-fns'
 import { Card } from '../shared'
 import { ArrowUp, MilkCircle } from '../shared/Icons'
 
@@ -18,7 +18,7 @@ const MilkTotalCard = () => {
       <div className="flex gap-6">
         <MilkCircle />
         <div className="grid">
-          <p className="text-base font-medium">Total Susu</p>
+          <p className="text-sm font-medium md:text-base">Total Susu</p>
           <p className="mt-auto text-2xl font-semibold">
             {loading
               ? '...'
@@ -31,7 +31,7 @@ const MilkTotalCard = () => {
       </div>
       <div className="grid">
         <p className="text-base font-semibold text-primary-4">
-          {loading ? '...' : shortDateFormatter(info.milk_date)}
+          {loading ? '...' : format(info.milk_date, 'MMM yyyy')}
         </p>
         <p className="ml-auto mt-auto flex h-fit w-fit items-center gap-1 rounded-xl bg-success-3 py-[2px] px-[10px]">
           <ArrowUp className="w-3 stroke-success-1" />

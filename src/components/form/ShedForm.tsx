@@ -4,7 +4,7 @@ import {
   Form,
   InputRadio,
   InputSelect,
-  InputText
+  InputText,
 } from '@/components/shared'
 import { Get } from '@/lib/api'
 import { shedSchema } from '@/lib/schemas'
@@ -21,6 +21,7 @@ export default function ShedForm() {
   const methods = useForm<IShed>({ resolver: zodResolver(shedSchema) })
   const { data: res, error, isLoading } = useSWR(`/api/feed/get`, Get)
   const { data } = res || {}
+
   return (
     <Form
       onSubmit={(values) =>
@@ -50,7 +51,10 @@ export default function ShedForm() {
           <InputSelect
             name="default_feed"
             label="Pakan"
-            options={data?.map((res: any) => ({ value: res.id, name: res.name }))}
+            options={data?.map((res: any) => ({
+              value: res.id,
+              name: res.name,
+            }))}
             isLoading={isLoading}
           />
           {/* <InputText name="age_range" label="Range Usia" /> */}
@@ -66,7 +70,7 @@ export default function ShedForm() {
           type="button"
           variant="outline"
           className="w-36"
-          onClick={() => router.back()}
+          onClick={() => router.replace('/shed/goat')}
           disabled={methods.formState.isSubmitting}
         >
           CANCEL

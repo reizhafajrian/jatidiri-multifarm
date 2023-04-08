@@ -13,7 +13,6 @@ export default function EditAnimalPage({ params }: { params: any }) {
   return (
     <AnimalForm
       formType="edit"
-      animal={params.animal}
       gender={data.gender}
       cempekForm={data.cempek}
       values={data}

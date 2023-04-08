@@ -4,6 +4,8 @@ import { StateCreator } from 'zustand'
 import { IShedState } from '../types'
 
 const createShedSlice: StateCreator<IShedState> = (set, get) => ({
+  shed_id: '',
+  shed_code: '',
   addShed: async (data, router) => {
     try {
       const res = await Post({ url: '/api/shed/create', data })
@@ -13,7 +15,7 @@ const createShedSlice: StateCreator<IShedState> = (set, get) => ({
         message: res.message,
       })
 
-      router.replace(`/shed/goat`)
+      router.replace(`/shed/${data.animal_type}`)
     } catch (err: any) {
       toast({
         type: 'error',

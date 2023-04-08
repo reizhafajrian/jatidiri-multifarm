@@ -8,27 +8,25 @@ import {
   DialogTrigger,
 } from '@/components/shared/Dialog'
 import { incomeSchema } from '@/lib/schemas'
-import { formatRupiah } from '@/lib/utils'
 import { IMilkInfo } from '@/store/types'
 import useStore from '@/store/useStore'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
-import MilkIncomeCard from '../card/MilkIncomeCard'
 
 interface IncomeFormProps {}
 
 const IncomeForm: FC<IncomeFormProps> = ({}) => {
   const [open, setOpen] = useState(false)
   const { user, incomeHistory, addIncome, setIncomeHistory } = useStore()
-
   const methods = useForm<IMilkInfo>({
     resolver: zodResolver(incomeSchema),
     values: {
-      history_income_total: formatRupiah(incomeHistory),
+      history_income_total: (incomeHistory),
     },
   })
+
 
   const onSubmit: SubmitHandler<IMilkInfo> = async (values) => {
     await addIncome(values)
@@ -51,9 +49,7 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <button>
-          <MilkIncomeCard />
-        </button>
+        <Button variant="edit" size="xs" />
       </DialogTrigger>
 
       <DialogContent>
@@ -68,12 +64,17 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
               <h2 className="mb-3 text-base font-medium">Pendapatan Susu</h2>
               <div className="grid grid-cols-2 gap-x-5 gap-y-4">
                 <InputDate name="income_date" label="Tanggal" />
-                <InputText name="income_total" label="Total" />
+                <InputText
+                  name="income_total"
+                  label="Total"
+                  type="number"
+                  rupiah
+                />
               </div>
             </div>
             <div>
               <h2 className="mb-3 text-base font-medium">History Pendapatan</h2>
-              <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+              <div className="grid gap-x-5 gap-y-4 md:grid-cols-2">
                 <InputDate
                   name="history_income_date"
                   label="Tanggal"
@@ -85,6 +86,8 @@ const IncomeForm: FC<IncomeFormProps> = ({}) => {
                 <InputText
                   name="history_income_total"
                   label="History Pendapatan"
+                  type="number"
+                  rupiah
                   disabled
                 />
               </div>

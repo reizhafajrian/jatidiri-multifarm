@@ -30,8 +30,8 @@ export default function TH(props: IProps) {
         >
           {flexRender(header.column.columnDef.header, header.getContext())}
           {{
-            asc: <ChevronsUpDown />,
-            desc: <ChevronsUpDown />,
+            asc: <ChevronsUpDown className="w-4" />,
+            desc: <ChevronsUpDown className="w-4" />,
           }[header.column.getIsSorted() as string] ?? null}
         </div>
       )}
