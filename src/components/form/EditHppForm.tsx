@@ -17,10 +17,11 @@ import { Button, Form, InputText } from '../shared'
 interface EditHppFormProps {
   eartag_code: string,
   hpp_price: number,
-  _id: string
+  _id: string,
+  mutate: () => void,
 }
 
-const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id,mutate }) => {
+const EditHppForm: FC<EditHppFormProps> = ({ eartag_code, hpp_price, _id, mutate }) => {
   const { editAnimal, } = useStore()
   const r = useRouter()
 

@@ -34,7 +34,7 @@ export default function SidebarLink(props: IProps) {
           searchKeyword: '',
           originFemale: 'all',
           originMale: 'all',
-          hppStatus: 'all',
+          status: 'all',
           filterByDate: thisMonthValue,
         })
       }

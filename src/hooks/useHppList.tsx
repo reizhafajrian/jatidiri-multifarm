@@ -5,13 +5,13 @@ import useSWR from 'swr'
 const useHppList = () => {
   const {
     animal: { name: animal },
-    hppStatus,
+    status,
     searchKeyword,
     searchResults,
     searchLoading,
   } = useStore()
   const queriesArray = []
-  hppStatus !== 'all' && queriesArray.push(`status=${hppStatus}`)
+  status !== 'all' && queriesArray.push(`status=${status}`)
 
   const queries = queriesArray?.join('&')
   const url = `/api/hpp/get?animal_type=${animal}`

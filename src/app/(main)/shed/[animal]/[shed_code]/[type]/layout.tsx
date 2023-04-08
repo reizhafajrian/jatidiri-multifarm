@@ -19,12 +19,8 @@ export default async function ShedAnimalLayout({
     <>
       <StoreInitializer data={{ animal, }} />
       <ShedDetailHeader
-        animal={animal}
-        shed_code={data.shed_code}
-        type={type}
-        eartagOptions={eartagOptions}
       />
-      {props.children}
+      {children}
     </>
   )
 }
