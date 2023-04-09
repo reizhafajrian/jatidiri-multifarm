@@ -48,12 +48,12 @@ const HppTable: FC = () => {
     },
     {
       header: 'HPP',
-      accessorKey: 'hpp',
+      accessorKey: 'hpp_price',
       cell: (data) => formatRupiah(data.getValue()),
     },
     {
       header: 'Harga Jual',
-      accessorKey: 'selling_price',
+      accessorKey: 'sell_price',
       cell: (data) => formatRupiah(data.getValue()),
     },
     {
@@ -75,7 +75,7 @@ const HppTable: FC = () => {
     {
       header: 'Aksi',
       accessorKey: 'eartag_code',
-      cell: (data) => <EditHppForm data={data.row.original} />,
+      cell: (data) => <EditHppForm data={data.row.original} mutate={mutate} />,
     },
   ]
 

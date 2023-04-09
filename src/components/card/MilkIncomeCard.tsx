@@ -13,7 +13,19 @@ const MilkIncomeCard = () => {
     income_percentage: 5.2,
   }
 
-  const { data, loading } = useDataList('/api/milk/income/get')
+
+  // startdate is 1 days of this month
+  const startDate = new Date()
+  startDate.setDate(1)
+
+
+  //end date is last day of this month
+  const endDate = new Date()
+  endDate.setMonth(endDate.getMonth() + 1)
+  endDate.setDate(0)
+
+
+  const { data, loading } = useDataList(`/api/milk/income/get?start=${startDate}&end=${endDate}`)
 
   return (
     <Card className="flex justify-between">
@@ -29,8 +41,8 @@ const MilkIncomeCard = () => {
             {loading
               ? '...'
               : formatRupiah(
-                  data.reduce((acc: number, cur: any) => acc + cur.amount, 0)
-                )}
+                data.reduce((acc: number, cur: any) => acc + cur.amount, 0)
+              )}
           </p>
         </div>
       </div>

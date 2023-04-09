@@ -16,6 +16,7 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
+  console.log('StoreInitializer', data)
   const {
     token,
     animal,

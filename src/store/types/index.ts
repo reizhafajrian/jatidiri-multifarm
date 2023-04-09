@@ -47,6 +47,7 @@ export interface IAnimal {
   origin_male?: string
   origin?: string
   weight?: number
+  sell_price?: number
   purchase_price?: number
   status?: string
   files?: any
@@ -240,7 +241,7 @@ export interface IHppState {
 export interface IEditHpp {
   _id?: string
   eartag_code?: string
-  hpp?: number
-  selling_price?: number
+  hpp_price?: number
+  sell_price?: number
   description?: string
 }

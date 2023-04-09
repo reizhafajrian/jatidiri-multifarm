@@ -7,6 +7,8 @@ const createHppSlice: StateCreator<IHppState> = (set, get) => ({
   hppStatus: 'all',
   editHpp: async (data, animal) => {
     try {
+
+      
       const url = `/api/hpp/update?animal_type=${animal}`
 
       const res = await Post({
