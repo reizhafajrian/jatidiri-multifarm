@@ -108,12 +108,15 @@ export interface IShedDetail {
   data_vitamin_date?: Date
   data_vitamin_type?: string
   data_vitamin_price?: number
+  data_vitamin_stock?: number
   data_vaccine_date?: Date
   data_vaccine_type?: string
   data_vaccine_price?: number
+  data_vaccine_stock?: number
   data_anthelmintic_date?: Date
   data_anthelmintic_type?: string
   data_anthelmintic_price?: number
+  data_anthelmintic_stock?: number
 }
 
 export interface IShedAnimal {

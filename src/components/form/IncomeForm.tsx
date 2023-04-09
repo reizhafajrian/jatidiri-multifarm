@@ -5,7 +5,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import { incomeSchema } from '@/lib/schemas'
 import { formatRupiah } from '@/lib/utils'
@@ -16,9 +16,9 @@ import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { mutate } from 'swr'
 
-interface IncomeFormProps {}
+interface IncomeFormProps { }
 
-const IncomeForm: FC<IncomeFormProps> = ({}) => {
+const IncomeForm: FC<IncomeFormProps> = ({ }) => {
   const [open, setOpen] = useState(false)
   const { user, incomeHistory, addIncome, setIncomeHistory } = useStore()
 

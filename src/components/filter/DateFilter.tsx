@@ -6,7 +6,7 @@ import {
   DropdownMenuSub,
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
-  DropdownMenuTrigger,
+  DropdownMenuTrigger
 } from '@/components/shared/DropdownMenu'
 import { ChevronDown } from '@/components/shared/Icons'
 import useFilterDate from '@/hooks/useFilterDate'

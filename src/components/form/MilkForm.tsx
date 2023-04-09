@@ -3,14 +3,14 @@ import {
   Form,
   InputDate,
   InputSelect,
-  InputText,
+  InputText
 } from '@/components/shared'
 import {
   DialogClose,
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '@/components/shared/Dialog'
 import useMilkAnimalTags from '@/hooks/useMilkAnimalTags'
 import { milkSchema } from '@/lib/schemas'
@@ -39,9 +39,9 @@ const MilkForm: FC<MilkFormProps> = ({ formType, currentValues: curr }) => {
     values:
       formType === 'edit'
         ? {
-            eartag_code: curr?.animal_id?.eartag_code,
-            history_milk: 0,
-          }
+          eartag_code: curr?.animal_id?.eartag_code,
+          history_milk: 0,
+        }
         : undefined,
   })
 

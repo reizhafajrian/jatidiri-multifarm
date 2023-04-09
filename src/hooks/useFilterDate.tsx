@@ -6,7 +6,7 @@ import {
   lastDayOfYear,
   startOfMonth,
   startOfWeek,
-  startOfYear,
+  startOfYear
 } from 'date-fns'
 import { useState } from 'react'
 

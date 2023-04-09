@@ -4,7 +4,7 @@ import {
   Form,
   InputRadio,
   InputSelect,
-  InputText,
+  InputText
 } from '@/components/shared'
 import { Get } from '@/lib/api'
 import { shedSchema } from '@/lib/schemas'

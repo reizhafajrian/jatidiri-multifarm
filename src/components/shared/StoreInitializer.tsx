@@ -1,4 +1,3 @@
-'use client'
 import { ICategoryInfo } from '@/store/types'
 import useStore from '@/store/useStore'
 import { useEffect } from 'react'
@@ -25,7 +24,9 @@ export default function StoreInitializer({ data }: IData) {
     shed_code,
     shed_id,
   } = data
-  const { setAnimal, loadUser, setCategoryInfo } = useStore()
+
+  const { setAnimal, loadUser, setCategoryInfo } = useStore() || {}
+
 
   useEffect(() => {
     if (token) {

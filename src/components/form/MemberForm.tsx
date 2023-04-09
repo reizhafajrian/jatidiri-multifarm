@@ -14,7 +14,7 @@ import {
   DialogContent,
   DialogRoot,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from '../shared/Dialog'
 
 interface MemberFormProps {

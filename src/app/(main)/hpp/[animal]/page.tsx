@@ -12,7 +12,7 @@ export default function Page(props: { params: any }) {
 
   return (
     <>
-      <StoreInitializer data={{ animal, searchType: animal }} />
+      <StoreInitializer data={{ animal, searchType: `hpp-${animal}` }} />
       <HppHeader animal_type={animal} />
       <HppFilter />
       <HppTable />

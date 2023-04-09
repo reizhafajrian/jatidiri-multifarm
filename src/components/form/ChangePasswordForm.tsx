@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface IProps {}
+interface IProps { }
 
-const ChangePasswordForm: FC<IProps> = ({}) => {
+const ChangePasswordForm: FC<IProps> = ({ }) => {
   const router = useRouter()
   const { changePass } = useStore()
 

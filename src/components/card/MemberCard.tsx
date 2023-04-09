@@ -34,9 +34,8 @@ export default function MemberCard({ data }: any) {
           <SelectTable
             value={data.role}
             options={options}
-            triggerClassName={`${
-              options.find((opt) => opt.value === data.role)?.bgColor
-            } font-semibold text-neutral-4 text-xs`}
+            triggerClassName={`${options.find((opt) => opt.value === data.role)?.bgColor
+              } font-semibold text-neutral-4 text-xs`}
             onChange={(value) =>
               changeRole({ _id: data.id, role: value }, router)
             }
