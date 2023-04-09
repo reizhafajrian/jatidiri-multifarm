@@ -5,7 +5,7 @@ import {
   FeedCircle,
   GoatCircle,
   Loader2,
-  SheepCircle,
+  SheepCircle
 } from '@/components/shared/Icons'
 import useCategoryDetail from '@/hooks/useCategoryDetail'
 import { categoryTitle } from '@/lib/utils'
@@ -28,7 +28,7 @@ export default function CategoryContent() {
   return (
     <>
       <div className="space-y-10">
-        {categories.map(({ cardList, category }, idx) => (
+        {categories?.map(({ cardList, category }, idx) => (
           <div key={idx}>
             <div>
               <h1 className="mb-8 text-2xl font-semibold text-primary-4">

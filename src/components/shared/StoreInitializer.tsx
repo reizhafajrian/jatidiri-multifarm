@@ -16,7 +16,6 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
-  console.log('StoreInitializer', data)
   const {
     token,
     animal,
@@ -63,7 +62,11 @@ export default function StoreInitializer({ data }: IData) {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [data])
+  }, [
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    JSON.stringify(data),
+  ])
 
   return null
+
 }
