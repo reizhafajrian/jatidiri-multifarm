@@ -8,7 +8,7 @@ import { FC } from 'react'
 const ShedTable: FC = () => {
   const router = useRouter()
   const pathname = usePathname()
-  const { animal } = useStore()
+  const { animal, searchKeyword, searchResults } = useStore()
 
   const { data, loading } = useDataList('/api/shed/get', [
     `animal_type=${animal.name}`,

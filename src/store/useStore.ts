@@ -3,7 +3,7 @@ import { create } from 'zustand'
 import createAnimalSlice from './slices/animalSlice'
 import createAuthSlice from './slices/authSlice'
 import createCategorySlice from './slices/categorySlice'
-import createExpandSlice from './slices/expandSlice'
+import createExpandSlice, { IExpandState } from './slices/expandSlice'
 import createHppSlice from './slices/hppSlice'
 import createMilkSlice from './slices/milkSlice'
 import createSearchSlice, { ISearchState } from './slices/searchSlice'
@@ -24,6 +24,7 @@ interface IState
     ICategoryState,
     IMilkState,
     IHppState,
+    IExpandState,
     ISearchState {
   filterByDate: string
 }
