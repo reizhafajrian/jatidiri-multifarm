@@ -5,7 +5,7 @@ import {
   getPaginationRowModel,
   getSortedRowModel,
   SortingState,
-  useReactTable,
+  useReactTable
 } from '@tanstack/react-table'
 import { FC, useMemo, useState } from 'react'
 import SimpleBar from 'simplebar-react'
@@ -21,13 +21,20 @@ interface TableProps {
   isLoading: boolean
 }
 
+
+
 const Table: FC<TableProps> = (props) => {
   const tData = useMemo<any[]>(
     () => (props.isLoading ? [] : props.data),
     [props.data, props.isLoading]
   )
   const tColumns = useMemo<any[]>(() => props.columns, [props.columns])
-  const [sorting, setSorting] = useState<SortingState>([])
+  const [sorting, setSorting] = useState<SortingState>([
+    {
+      id: 'created_at',
+      desc: true,
+    }
+  ])
 
   const table = useReactTable({
     data: tData ?? [{}],
