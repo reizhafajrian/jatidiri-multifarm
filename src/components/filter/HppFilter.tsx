@@ -1,7 +1,6 @@
 'use client'
 import useStore from '@/store/useStore'
 import { SelectFilter } from '../shared'
-
 const statusOptions = [
   { name: 'All', value: 'all' },
   { name: 'Terjual', value: 'sold' },

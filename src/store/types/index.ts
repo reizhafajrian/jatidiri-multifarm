@@ -36,7 +36,7 @@ export interface IAuth {
 
 export interface IAnimal {
   animal?: string
-
+  sell_price?: number
   _id?: string
   type?: string
   eartag_code?: string

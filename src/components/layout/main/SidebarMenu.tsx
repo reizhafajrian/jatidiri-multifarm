@@ -13,11 +13,14 @@ const menu = [
   { name: 'HPP', link: '/hpp/goat', icon: <ICON.HPP /> },
 ]
 
-const SidebarMenu = () => {
+interface IProps {
+  isExpanded?: boolean
+}
+const SidebarMenu = ({ isExpanded }: IProps) => {
   return (
     <div className="grid gap-3">
       {menu.map((item, idx) => (
-        <SidebarLink key={idx} item={item} />
+        <SidebarLink key={idx} item={item} isExpanded={isExpanded} />
       ))}
     </div>
   )
