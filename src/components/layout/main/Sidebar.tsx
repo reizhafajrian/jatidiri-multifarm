@@ -6,7 +6,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import SidebarMenu from './SidebarMenu'
 
-
 export default function Sidebar() {
   const { isExpanded, setExpanded } = useStore()
 
@@ -15,31 +14,53 @@ export default function Sidebar() {
   }
 
   const sidebarVariants = {
-    expanded: { width: '240px', paddingLeft: '6px', paddingRight: '6px', paddingTop: '7px', paddingBottom: '7px' },
-    collapsed: { width: '60px', paddingLeft: '0px', paddingRight: '0px', paddingTop: '7px', paddingBottom: '7px' }
+    expanded: {
+      width: '240px',
+      paddingLeft: '6px',
+      paddingRight: '6px',
+      paddingTop: '7px',
+      paddingBottom: '7px',
+    },
+    collapsed: {
+      width: '60px',
+      paddingLeft: '0px',
+      paddingRight: '0px',
+      paddingTop: '7px',
+      paddingBottom: '7px',
+    },
   }
 
   const contentVariants = {
-    expanded: { opacity: 1, display: 'block', paddingLeft: '6px', paddingRight: '6px' },
-    collapsed: { opacity: 1, display: 'block', paddingLeft: '0px', paddingRight: '0px' }
+    expanded: {
+      opacity: 1,
+      display: 'block',
+      paddingLeft: '6px',
+      paddingRight: '6px',
+    },
+    collapsed: {
+      opacity: 1,
+      display: 'block',
+      paddingLeft: '0px',
+      paddingRight: '0px',
+    },
   }
   const imageVariants = {
     expanded: { opacity: 1, display: 'block' },
-    collapsed: { opacity: 0, display: 'block' }
+    collapsed: { opacity: 0, display: 'block' },
   }
 
   return (
     <>
       <AnimatePresence>
         <motion.div
-          className="fixed top-0 left-0 h-screen bg-primary-7"
+          className="fixed top-0 left-0 z-10 h-screen bg-primary-7"
           initial={{ width: '240px' }}
           animate={isExpanded ? 'expanded' : 'collapsed'}
           variants={sidebarVariants}
           transition={{ duration: 0.3 }}
         >
           <motion.div
-            className="relative mb-6 h-28"
+            className="relative mb-6 mt-6 h-28"
             initial={{ opacity: 1 }}
             animate={isExpanded ? 'expanded' : 'collapsed'}
             variants={imageVariants}
@@ -47,7 +68,11 @@ export default function Sidebar() {
           >
             <Link href="/dashboard">
               <Image
-                className={isExpanded ? "object-contain object-left" : "object-contain object-left"}
+                className={
+                  isExpanded
+                    ? 'object-contain object-left'
+                    : 'object-contain object-left'
+                }
                 src="/logo.png"
                 alt="logo"
                 priority
@@ -65,7 +90,7 @@ export default function Sidebar() {
             <SidebarMenu isExpanded={isExpanded} />
           </motion.div>
           <motion.button
-            className="absolute bottom-0 left-0 w-full h-16 flex justify-center items-center text-white font-bold text-lg"
+            className="absolute bottom-0 left-0 flex h-16 w-full items-center justify-center text-lg font-bold text-white"
             onClick={handleToggle}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.3 }}
@@ -78,9 +103,6 @@ export default function Sidebar() {
           </motion.button>
         </motion.div>
       </AnimatePresence>
-
-
     </>
-
   )
 }

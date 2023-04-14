@@ -6,6 +6,7 @@ import {
   InputDate,
   InputSelect,
   InputText,
+  TextArea,
 } from '@/components/shared'
 import useAnimalForm from '@/hooks/useAnimalForm'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
@@ -86,7 +87,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
           {cempekForm ? (
             <InputText name="birth_condition" label="Kondisi Lahir" />
           ) : (
-            <InputCertificate name="files" label="Upload Sertifikat" />
+            <TextArea name="description" label="Keterangan" />
           )}
         </div>
         <div className="flex flex-col">
@@ -128,12 +129,21 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
               label="Asal Pejantan"
               options={data.opts?.maleOriginOptions ?? []}
             />
-            <InputText name="description" label="Keterangan" />
+            {cempekForm ? (
+              <TextArea name="description" label="Keterangan" />
+            ) : (
+              <div className="">
+                <p className="mb-7 font-semibold">
+                  Sertifikat {data.animalTitle} {data.genderTitle}
+                </p>
+                <InputCertificate name="files" label="Upload Sertifikat" />
+              </div>
+            )}
           </div>
           <div
             className={cn(
               'flex justify-end gap-3',
-              cempekForm ? 'mt-10' : 'mt-10 md:mt-auto'
+              cempekForm ? 'mt-10' : 'pt-32 md:mt-auto'
             )}
           >
             <Button

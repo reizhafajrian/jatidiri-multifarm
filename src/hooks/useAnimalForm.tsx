@@ -36,6 +36,7 @@ function useAnimalForm({ formType, cempekForm, gender }: IProps) {
   return {
     title,
     animalTitle,
+    genderTitle,
     opts,
     addAnimal,
     editAnimal,

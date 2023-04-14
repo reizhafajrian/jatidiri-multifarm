@@ -11,10 +11,12 @@ interface InputDateProps {
   startDate?: Date
   endDate?: Date
   onChange?: any
+  disabled?: boolean
 }
 
 const InputDate: FC<InputDateProps> = (props) => {
-  const { name, label, selectRange, startDate, endDate, onChange } = props
+  const { name, label, selectRange, startDate, endDate, onChange, disabled } =
+    props
 
   const {
     control,
@@ -42,7 +44,7 @@ const InputDate: FC<InputDateProps> = (props) => {
               ? 'border-error focus:border-error'
               : 'border-neutral-4 focus:border-black'
           )}
-          disabled={isSubmitting}
+          disabled={isSubmitting || disabled}
         />
         <label
           htmlFor={name}

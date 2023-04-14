@@ -8,8 +8,8 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
-  ChevronsUpDown,
   ChevronUp,
+  ChevronsUpDown,
   Download,
   DownloadCloud,
   Eye,
@@ -17,6 +17,7 @@ import {
   FileText,
   Loader2,
   Pencil as Pen,
+  Plus,
   Search as SearchIcon,
   Syringe,
   Trash2,
@@ -24,6 +25,7 @@ import {
 } from 'lucide-react'
 
 export {
+  Plus,
   Eye,
   EyeOff,
   DownloadCloud,

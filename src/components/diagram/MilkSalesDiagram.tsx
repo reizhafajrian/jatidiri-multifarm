@@ -5,13 +5,14 @@ import SimpleBar from 'simplebar-react'
 
 interface MilkSalesDiagramProps {
   data: any
+  total: any
 }
 
-const MilkSalesDiagram: FC<MilkSalesDiagramProps> = ({ data }) => {
+const MilkSalesDiagram: FC<MilkSalesDiagramProps> = ({ data, total }) => {
   return (
     <div>
       <div className="my-8 text-center text-2xl font-semibold">
-        {formatRupiah('0')}
+        {formatRupiah(total?.data ?? '0')}
       </div>
       <SimpleBar className="max-h-28">
         {data?.data.map((item: any, idx: number) => (

@@ -34,9 +34,9 @@ const DashboardAnimalInfoCard: FC<DashboardAnimalInfoCardProps> = ({
 
   return (
     <>
-      <Card className="space-y-7 capitalize">
+      <Card className="space-y-4 capitalize md:space-y-7">
         <div className="flex items-center gap-3">
-          <div className="h-12 w-12">{icon}</div>
+          <div className="h-10 w-10 md:h-12 md:w-12">{icon}</div>
           <div>
             <h1 className="mb-1 text-xl font-semibold text-neutral-5">
               {title}

@@ -8,9 +8,9 @@ import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface IProps { }
+interface IProps {}
 
-const ChangePasswordForm: FC<IProps> = ({ }) => {
+const ChangePasswordForm: FC<IProps> = ({}) => {
   const router = useRouter()
   const { changePass } = useStore()
 
@@ -24,37 +24,35 @@ const ChangePasswordForm: FC<IProps> = ({ }) => {
   }
 
   return (
-    <Form
-      methods={methods}
-      onSubmit={onSubmit}
-      className="grid gap-6 md:grid-cols-2"
-    >
-      <InputText name="passwordOld" label="Old Password" isSecured />
-      <div className="grid gap-6">
-        <InputText name="password" label="New Password" isSecured />
-        <InputText
-          name="passwordConfirmation"
-          label="Confirm Password"
-          isSecured
-        />
-        <div className="flex justify-end gap-3">
-          <Button
-            type="button"
-            variant="outline"
-            className="w-36"
-            onClick={() => router.replace('/dashboard')}
-            disabled={methods.formState.isSubmitting}
-          >
-            CANCEL
-          </Button>
-          <Button
-            type="submit"
-            className="w-36"
-            isLoading={methods.formState.isSubmitting}
-          >
-            SAVE
-          </Button>
+    <Form methods={methods} onSubmit={onSubmit} className="space-y-6">
+      <div className="grid gap-6 md:grid-cols-2">
+        <InputText name="passwordOld" label="Old Password" isSecured />
+        <div className="space-y-6">
+          <InputText name="password" label="New Password" isSecured />
+          <InputText
+            name="passwordConfirmation"
+            label="Confirm Password"
+            isSecured
+          />
         </div>
+      </div>
+      <div className="flex justify-end gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          className="w-36"
+          onClick={() => router.replace('/dashboard')}
+          disabled={methods.formState.isSubmitting}
+        >
+          CANCEL
+        </Button>
+        <Button
+          type="submit"
+          className="w-36"
+          isLoading={methods.formState.isSubmitting}
+        >
+          SAVE
+        </Button>
       </div>
     </Form>
   )

@@ -1,5 +1,6 @@
 'use client'
 import { thisMonthValue } from '@/hooks/useFilterDate'
+import { cn } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import clsx from 'clsx'
 import { motion } from 'framer-motion'
@@ -7,7 +8,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 interface IProps {
-  item: { name: string; link: string; icon: any, }
+  item: { name: string; link: string; icon: any }
   isExpanded?: boolean
 }
 
@@ -22,9 +23,9 @@ export default function SidebarLink(props: IProps) {
     <Link
       replace
       href={link}
-      className={clsx(
+      className={cn(
         'flex items-center gap-3 rounded-lg py-3 transition duration-200 ease-in-out',
-        isExpanded ? 'pl-12' : 'pl-0  justify-center',
+        isExpanded ? 'pl-12' : 'mx-2 justify-center pl-0',
         isActive
           ? 'bg-white font-semibold text-primary-5'
           : 'text-white hover:bg-white/25'
@@ -39,7 +40,6 @@ export default function SidebarLink(props: IProps) {
         })
       }
     >
-
       <span
         className={clsx('h-5 w-5', isActive ? 'fill-primary-5' : 'fill-white')}
       >
@@ -47,12 +47,15 @@ export default function SidebarLink(props: IProps) {
       </span>
       <motion.div
         initial={{ opacity: 1 }}
-        animate={isExpanded ? { opacity: 1, display: 'block', } : { opacity: 0, display: 'none', }}
+        animate={
+          isExpanded
+            ? { opacity: 1, display: 'block' }
+            : { opacity: 0, display: 'none' }
+        }
         transition={{ duration: 0.9 }}
       >
         {name}
       </motion.div>
-
     </Link>
   )
 }

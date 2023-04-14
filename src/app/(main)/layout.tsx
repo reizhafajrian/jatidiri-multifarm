@@ -5,6 +5,7 @@ import { StoreInitializer } from '@/components/shared'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
+
 export default function MainLayout(props: { children: ReactNode }) {
   const token = cookies().get('token')?.value
 
@@ -18,7 +19,6 @@ export default function MainLayout(props: { children: ReactNode }) {
         <Header />
         <main className="relative flex-1">{props.children}</main>
       </Container>
-
     </>
   )
 }

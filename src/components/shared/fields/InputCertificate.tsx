@@ -1,5 +1,5 @@
-import { FileText, X } from '@/components/shared/Icons'
-import { cn } from '@/lib/utils'
+import CertificateForm from '@/components/form/CertificateForm'
+import { DownloadCloud, FileText, X } from '@/components/shared/Icons'
 import { FC } from 'react'
 import { useDropzone } from 'react-dropzone'
 import { useController, useFormContext } from 'react-hook-form'
@@ -26,30 +26,41 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
 
   return (
     <div className="space-y-3">
-      <div>
-        <input
-          className={cn(
-            'w-full appearance-none rounded-lg border px-2.5 py-2.5 text-sm',
-            errors[name]
-              ? 'border-error text-error disabled:border-error'
-              : 'border-neutral-4 text-neutral-4 disabled:border-neutral-3',
-            isSubmitting
-              ? 'disabled:bg-[#ebebeb] disabled:text-neutral-4'
-              : 'bg-white'
-          )}
-          value={label}
-          disabled
-        />
-        <span className="text-[10px] text-error">
-          {errors[name]?.message?.toString()}
-        </span>
+      <div className="flex items-center gap-2 md:gap-7">
+        <div {...getRootProps({ className: 'dropzone' })} className="flex-1">
+          <input {...getInputProps()} name={name} disabled={isSubmitting} />
+          <div className="flex h-16 cursor-pointer items-center justify-center gap-2 rounded-lg border border-dashed border-neutral-4 md:gap-6">
+            <DownloadCloud className="h-6 w-6" />
+            <span className="text-sm font-medium">Unggah sertifikat</span>
+          </div>
+          <span className="mt-1 text-[8px] font-light text-neutral-4 md:ml-4">
+            Unggah Sertifikat Kambing dalam format .pdf
+          </span>
+        </div>
 
+        <p className="text-xs font-medium">atau</p>
+
+        <div className="flex-1">
+          <CertificateForm />
+          <span className="mt-1 text-[8px] font-light text-neutral-4 md:ml-4">
+            Jika belum memiliki sertifikat buat di sini.
+          </span>
+        </div>
+      </div>
+
+      <span className="text-[10px] text-error">
+        {errors[name]?.message?.toString()}
+      </span>
+
+      <div>
         {field.value && (
           <div className="mt-2 flex justify-between rounded-lg border border-neutral-3 bg-white p-3">
             <div className="flex gap-3">
               <FileText className="w-5 stroke-primary-3" />
               <div>
-                <p className="mb-1 font-semibold">{field.value[0].path}</p>
+                <p className="mb-1 text-sm font-semibold md:text-base">
+                  {field.value[0].path}
+                </p>
                 <p className="text-xs text-neutral-4">
                   {field.value[0].size} bytes
                 </p>
@@ -60,25 +71,6 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
             </button>
           </div>
         )}
-      </div>
-      <div {...getRootProps({ className: 'dropzone' })}>
-        <input {...getInputProps()} name={name} disabled={isSubmitting} />
-        <div className="grid cursor-default place-items-center gap-2 border border-dashed border-neutral-4 py-6">
-          <FileText className="w-6 stroke-neutral-4" />
-          <p className="font-semibold">
-            Upload file atau
-            <span className="text-primary-5"> klik disini</span> untuk upload
-          </p>
-          <p className="text-xs font-light text-neutral-4">
-            Upload dalam format .pdf file
-          </p>
-          <a
-            href="#"
-            className="text-xs font-medium uppercase text-primary-5 underline"
-          >
-            lihat contoh
-          </a>
-        </div>
       </div>
     </div>
   )

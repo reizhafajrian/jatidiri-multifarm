@@ -41,7 +41,7 @@ export default function EditProfileForm() {
         {/* CHANGE AVATAR */}
         <div
           {...getRootProps({ className: 'dropzone' })}
-          className="relative h-20 w-20 cursor-pointer rounded-full"
+          className="relative h-16 w-16 cursor-pointer rounded-full md:h-20 md:w-20"
         >
           <input
             {...getInputProps()}
@@ -56,9 +56,9 @@ export default function EditProfileForm() {
               fill
             />
           ) : (
-            <div className="h-20 w-20 rounded-full bg-black" />
+            <div className="h-16 w-16 rounded-full bg-black md:h-20 md:w-20" />
           )}
-          <div className="absolute -right-2 -bottom-1 grid h-10 w-10 place-items-center rounded-full bg-neutral-2">
+          <div className="absolute -right-2 -bottom-1 grid h-8 w-8 place-items-center rounded-full bg-neutral-2 md:h-10 md:w-10">
             <Camera className="w-5" />
           </div>
         </div>
@@ -79,7 +79,7 @@ export default function EditProfileForm() {
       </div>
       <Form methods={methods} onSubmit={onSubmit} className="space-y-4">
         <p className="font-semibold">Profile</p>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-4 md:grid-cols-2">
           <InputText name="firstName" label="First Name" />
           <InputText name="lastName" label="Last Name" />
           <InputSelect

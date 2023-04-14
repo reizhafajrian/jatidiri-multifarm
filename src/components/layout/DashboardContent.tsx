@@ -12,7 +12,7 @@ const DashboardContent: FC = () => {
     {
       icon: <I.DashboardWallet />,
       title: 'total pendapatan',
-      value: data.income?.data,
+      value: data.sell?.totalAllAnimals,
       percentage: '5.2',
     },
     {
@@ -58,7 +58,9 @@ const DashboardContent: FC = () => {
     {
       title: 'penjualan susu',
       className: 'md:col-span-3',
-      children: <D.MilkSalesDiagram data={data.milkSales} />,
+      children: (
+        <D.MilkSalesDiagram data={data.milkSales} total={data.income} />
+      ),
     },
     {
       title: 'data analytics',
