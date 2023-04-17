@@ -34,6 +34,24 @@ export interface IAuth {
   deleteUser: (id: string, router: any) => void
 }
 
+export interface ICertificate {
+  organization: string
+  prefix: string
+  tag: string
+  issueDate: string
+  exportTag: string
+  registrationNum: string
+  lambPlanId: string
+  colour: string
+  conception: string
+  gender: string
+  grade: string
+  birthDate: string
+  breeder: string
+  owner: string
+  notes: string
+}
+
 export interface IAnimal {
   animal?: string
   _id?: string

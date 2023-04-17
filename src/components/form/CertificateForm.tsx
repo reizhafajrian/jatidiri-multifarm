@@ -13,14 +13,30 @@ import {
   DialogTrigger,
 } from '../shared/Dialog'
 
-interface CertificateFormProps {}
-
-const CertificateForm: FC<CertificateFormProps> = ({}) => {
+const CertificateForm: FC = () => {
   const [open, setOpen] = useState(false)
   const [sec1, setSec1] = useState(true)
   const [sec2, setSec2] = useState(false)
   const [sec3, setSec3] = useState(false)
   const [success, setSuccess] = useState(false)
+  const [data, setData] = useState({
+    organization: 'DORPER SHEEP SOCIETY OF AUSTRALIA INC',
+    prefix: 'douwana',
+    tag: '210759',
+    issueDate: '21/09/2022',
+    exportTag: 'BL4528',
+    registrationNum: 'D048 210759',
+    lambPlanId: '400048-2021-210759',
+    colour: 'black',
+    conception: 'natural',
+    gender: 'Ram',
+    grade: 'Fullblood',
+    birthDate: '05/09/2021',
+    breeder: 'D048 BATTEN FARMS',
+    owner: 'D048 BATTEN FARMS',
+    notes:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium est porro praesentium tenetur ab omnis. Eveniet, perspiciatis hic vel facere illo earum aliquid dolores nemo reiciendis numquam perferendis dicta iste.',
+  })
 
   const methods = useForm()
 
@@ -68,7 +84,7 @@ const CertificateForm: FC<CertificateFormProps> = ({}) => {
                 Sertifikat berhasil dibuat!
               </h1>
               <PDFDownloadLink
-                document={<Certificate />}
+                document={<Certificate data={data} />}
                 fileName="certificate.pdf"
                 className="text-xs font-medium text-primary-5 underline"
               >
@@ -84,15 +100,21 @@ const CertificateForm: FC<CertificateFormProps> = ({}) => {
         {!success && <DialogTitle>Buat Sertifikat</DialogTitle>}
         <Form
           methods={methods}
-          onSubmit={(value) => {
+          onSubmit={async (value) => {
             setSec2(false)
+
+            await setData((prev) => ({
+              ...prev,
+              organization: value.organization,
+            }))
+
             setSuccess(true)
           }}
         >
           <div className={sec1 ? 'block space-y-5' : 'hidden'}>
             <InputSelect
               label="Organisasi"
-              name="organisation"
+              name="organization"
               options={orgOptions.map((name) => ({ name, value: name }))}
             />
             <div className="grid grid-cols-2 gap-6">
