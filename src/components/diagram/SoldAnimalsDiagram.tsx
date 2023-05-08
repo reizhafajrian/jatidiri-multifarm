@@ -28,15 +28,47 @@ interface SoldAnimalsDiagramProps {
 }
 
 const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
-  // const labels = ['1 January', '2 January', '3 January', 'Today']
+  const labels = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ]
+
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
   const soldAnimals: ChartData<'line', number[], string> = {
-    // labels,
-    labels: ['Total Hewan Terjual'],
+    labels,
     datasets: [
       {
         label: 'Sapi',
-        data: [data?.cow?.total],
+        data: months.map((month) => {
+          const cow = data?.cow?.find((item: any) => item._id.month == month)
+          if (cow) return cow.count
+
+          return 0
+        }),
         borderColor: '#40916C',
         backgroundColor: '#40916C',
         borderCapStyle: 'round',
@@ -44,7 +76,12 @@ const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
       },
       {
         label: 'Kambing',
-        data: [data?.goat?.total],
+        data: months.map((month) => {
+          const goat = data?.goat?.find((item: any) => item._id.month == month)
+          if (goat) return goat.count
+
+          return 0
+        }),
         borderColor: '#775DFE',
         backgroundColor: '#775DFE',
         borderCapStyle: 'round',
@@ -52,7 +89,14 @@ const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
       },
       {
         label: 'Domba',
-        data: [data?.sheep?.total],
+        data: months.map((month) => {
+          const sheep = data?.sheep?.find(
+            (item: any) => item._id.month == month
+          )
+          if (sheep) return sheep.count
+
+          return 0
+        }),
         borderColor: '#C1E5D5',
         backgroundColor: '#C1E5D5',
         borderCapStyle: 'round',

@@ -49,7 +49,7 @@ const Container: FC<PropsWithChildren & { data: any }> = ({
             <Text style={{ fontFamily: 'Helvetica-Bold' }}>Signed:</Text>
             <View style={{ textAlign: 'center', width: 200 }}>
               <View style={styles.signLine} />
-              <Text>Name</Text>
+              <Text>{data.adminName}</Text>
             </View>
           </View>
         </View>

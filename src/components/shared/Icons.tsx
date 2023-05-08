@@ -1,5 +1,6 @@
 import {
   AlertCircle,
+  ArrowDown,
   ArrowLeft,
   ArrowUp,
   Bell,
@@ -38,6 +39,7 @@ export {
   ChevronRight,
   ChevronsUpDown,
   ArrowUp,
+  ArrowDown,
   ArrowLeft,
   Download,
   Calendar,

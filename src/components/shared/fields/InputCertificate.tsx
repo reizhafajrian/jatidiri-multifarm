@@ -6,10 +6,13 @@ import { useController, useFormContext } from 'react-hook-form'
 
 interface InputCertificateProps {
   name: string
-  label: string
+  currentValue: any
 }
 
-const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
+const InputCertificate: FC<InputCertificateProps> = ({
+  name,
+  currentValue,
+}) => {
   const {
     control,
     formState: { errors, isSubmitting },
@@ -19,6 +22,9 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
 
   const { getRootProps, getInputProps } = useDropzone({
     maxFiles: 1,
+    accept: {
+      'text/pdf': ['.pdf'],
+    },
     onDrop: (acceptedFiles) => {
       field.onChange(acceptedFiles)
     },
@@ -41,7 +47,7 @@ const InputCertificate: FC<InputCertificateProps> = ({ name, label }) => {
         <p className="text-xs font-medium">atau</p>
 
         <div className="flex-1">
-          <CertificateForm />
+          <CertificateForm currentValue={currentValue} />
           <span className="mt-1 text-[8px] font-light text-neutral-4 md:ml-4">
             Jika belum memiliki sertifikat buat di sini.
           </span>

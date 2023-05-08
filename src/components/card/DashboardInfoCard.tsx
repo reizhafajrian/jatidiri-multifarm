@@ -1,4 +1,4 @@
-import { ArrowUp } from '@/components/shared/Icons'
+import { ArrowDown, ArrowUp } from '@/components/shared/Icons'
 import { formatRupiah } from '@/lib/utils'
 import { FC } from 'react'
 import { Card } from '../shared'
@@ -8,11 +8,13 @@ interface DashboardInfoCardProps {
     icon: any
     title: string
     value: string
-    percentage: string
   }
+  comparison: any
 }
 
-const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
+const DashboardInfoCard: FC<DashboardInfoCardProps> = (props) => {
+  const { data, comparison } = props
+
   return (
     <Card className="relative flex items-center">
       <div className="mr-6 h-10 w-10 md:h-14 md:w-14">{data.icon}</div>
@@ -22,12 +24,35 @@ const DashboardInfoCard: FC<DashboardInfoCardProps> = ({ data }) => {
           {formatRupiah(data.value)}
         </p>
       </div>
-      <p className="absolute bottom-0 right-0 mb-6 mr-6 flex items-center gap-1 rounded-xl bg-success-3 px-1 md:py-[2px] md:px-[10px]">
-        <ArrowUp className="w-3 stroke-success-1" />
-        <span className="text-xs font-medium text-success-2">
-          {data.percentage} %
-        </span>
-      </p>
+      {comparison ? (
+        comparison?.description === 'Increased' ? (
+          <p className="absolute bottom-0 right-0 mb-6 mr-6 flex items-center gap-1 rounded-xl bg-success-3 px-1 md:py-[2px] md:px-[10px]">
+            {comparison?.percentage !== 'Infinity' && (
+              <ArrowUp className="w-3 stroke-success-1" />
+            )}
+            <span className="text-xs font-medium text-success-2">
+              {comparison?.percentage === 'Infinity'
+                ? '0'
+                : comparison?.percentage}{' '}
+              %
+            </span>
+          </p>
+        ) : (
+          <p className="absolute bottom-0 right-0 mb-6 mr-6 flex items-center gap-1 rounded-xl bg-error/20 px-1 md:py-[2px] md:px-[10px]">
+            {comparison?.percentage !== 'Infinity' && (
+              <ArrowDown className="w-3 stroke-error" />
+            )}
+            <span className="text-xs font-medium text-error">
+              {comparison?.percentage === 'Infinity'
+                ? '0'
+                : comparison?.percentage}{' '}
+              %
+            </span>
+          </p>
+        )
+      ) : (
+        <div></div>
+      )}
     </Card>
   )
 }

@@ -136,7 +136,7 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
                 <p className="mb-7 font-semibold">
                   Sertifikat {data.animalTitle} {data.genderTitle}
                 </p>
-                <InputCertificate name="files" label="Upload Sertifikat" />
+                <InputCertificate name="files" currentValue={{ gender }} />
               </div>
             )}
           </div>

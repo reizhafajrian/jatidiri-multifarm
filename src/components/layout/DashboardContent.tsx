@@ -10,16 +10,20 @@ const DashboardContent: FC = () => {
 
   const info = [
     {
-      icon: <I.DashboardWallet />,
-      title: 'total pendapatan',
-      value: data.sell?.totalAllAnimals,
-      percentage: '5.2',
+      data: {
+        icon: <I.DashboardWallet />,
+        title: 'total pendapatan',
+        value: data.sell?.totalAllAnimals,
+      },
+      comparison: data.sellComp,
     },
     {
-      icon: <I.DashboardCart />,
-      title: 'total pembelian',
-      value: data.purchase?.totalAllAnimals,
-      percentage: '2.2',
+      data: {
+        icon: <I.DashboardCart />,
+        title: 'total pembelian',
+        value: data.purchase?.totalAllAnimals,
+      },
+      comparison: data.purchaseComp,
     },
   ]
 
@@ -83,7 +87,11 @@ const DashboardContent: FC = () => {
     <div className="space-y-6">
       <div className="grid gap-3 md:grid-cols-2 md:gap-7">
         {info?.map((item, idx) => (
-          <C.DashboardInfoCard key={idx} data={item} />
+          <C.DashboardInfoCard
+            key={idx}
+            data={item.data}
+            comparison={item.comparison}
+          />
         ))}
       </div>
       <div className="grid gap-3 md:grid-cols-3 md:gap-7">

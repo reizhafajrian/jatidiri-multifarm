@@ -3,7 +3,6 @@ import Navbar from '@/components/layout/Navbar'
 import { BackLink, Button } from '@/components/shared'
 import { Download, Pen } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'
-import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { FC } from 'react'
 import AlertCluster from '../shared/AlertCluster'
@@ -34,20 +33,12 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ undefinedClusterTotal }) => {
             className="mb-5 flex items-center justify-between gap-5"
           >
             <div className="flex items-center justify-end gap-2">
-              {/* <Button
-                className="capitalize"
-                onClick={() => router.push(`/${animal.name}/add`)}
-              > */}
-              <Link
-                href={`/${animal.name}/add`}
-              >
+              <Button onClick={() => router.push(`/${animal.name}/add`)}>
                 <Pen className="h-4 w-4 md:hidden" />
-                <span className="hidden md:block">
+                <span className="hidden capitalize md:block">
                   tambah data {animal.title}
                 </span>
-              </Link>
-
-              {/* </Button> */}
+              </Button>
               <Button
                 variant="outline"
                 className="px-3"
@@ -62,8 +53,7 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ undefinedClusterTotal }) => {
         </>
       ) : (
         <BackLink href={`/${animal.name}/male`} />
-      )
-      }
+      )}
     </>
   )
 }

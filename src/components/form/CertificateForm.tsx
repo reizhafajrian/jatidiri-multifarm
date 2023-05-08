@@ -1,8 +1,11 @@
+'use client'
 import { Plus, X } from '@/components/shared/Icons'
+import useStore from '@/store/useStore'
 import { PDFDownloadLink } from '@react-pdf/renderer'
+import { format } from 'date-fns'
 import Image from 'next/image'
 import { FC, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import Certificate from '../layout/Certificate'
 import { Button, Form, InputDate, InputSelect, InputText } from '../shared'
 import {
@@ -13,32 +16,15 @@ import {
   DialogTrigger,
 } from '../shared/Dialog'
 
-const CertificateForm: FC = () => {
+const CertificateForm: FC<any> = ({ currentValue }) => {
+  const { animal, user } = useStore()
   const [open, setOpen] = useState(false)
+  const [data, setData] = useState(DUMMY_CERTIFICATE)
+
   const [sec1, setSec1] = useState(true)
   const [sec2, setSec2] = useState(false)
   const [sec3, setSec3] = useState(false)
   const [success, setSuccess] = useState(false)
-  const [data, setData] = useState({
-    organization: 'DORPER SHEEP SOCIETY OF AUSTRALIA INC',
-    prefix: 'douwana',
-    tag: '210759',
-    issueDate: '21/09/2022',
-    exportTag: 'BL4528',
-    registrationNum: 'D048 210759',
-    lambPlanId: '400048-2021-210759',
-    colour: 'black',
-    conception: 'natural',
-    gender: 'Ram',
-    grade: 'Fullblood',
-    birthDate: '05/09/2021',
-    breeder: 'D048 BATTEN FARMS',
-    owner: 'D048 BATTEN FARMS',
-    notes:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium est porro praesentium tenetur ab omnis. Eveniet, perspiciatis hic vel facere illo earum aliquid dolores nemo reiciendis numquam perferendis dicta iste.',
-  })
-
-  const methods = useForm()
 
   const orgOptions = [
     'Australian Dorper and White Dorper Association',
@@ -46,10 +32,41 @@ const CertificateForm: FC = () => {
     'Dairy Goat Society of Australia Ltd',
   ]
 
+  const methods = useForm({
+    defaultValues: {
+      c_animal: animal.name,
+      c_gender: currentValue.gender === true ? 'Sire' : 'Dam',
+    },
+  })
+
+  const submitHandler: SubmitHandler<any> = async (value) => {
+    setSec2(false)
+
+    await setData((prev) => ({
+      ...prev,
+      organization: value.c_organization,
+      prefix: value.c_name,
+      tag: value.c_eartag,
+      gender: value.c_gender,
+      issueDate: format(new Date(), 'dd/MM/yyyy'),
+      birthDate: format(new Date(value.c_birth_date), 'dd/MM/yyyy'),
+      adminName: `${user?.firstName!} ${user?.lastName!}`,
+    }))
+
+    setSuccess(true)
+  }
+
+  const closeModalHandler = () => {
+    setSec1(true)
+    setSec2(false)
+    setSec3(false)
+    setSuccess(false)
+  }
+
   return (
     <DialogRoot open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="h-16 w-full">
+        <Button className="h-16 w-full" type="button">
           <Plus className="mr-2 md:mr-6" />
           <span className="text-sm font-medium">Buat Sertifikat</span>
         </Button>
@@ -59,14 +76,7 @@ const CertificateForm: FC = () => {
         {success && (
           <div className="">
             <div className="flex justify-end">
-              <DialogClose
-                onClick={() => {
-                  setSec1(true)
-                  setSec2(false)
-                  setSec3(false)
-                  setSuccess(false)
-                }}
-              >
+              <DialogClose onClick={closeModalHandler}>
                 <X />
               </DialogClose>
             </div>
@@ -97,34 +107,24 @@ const CertificateForm: FC = () => {
             </div>
           </div>
         )}
+
         {!success && <DialogTitle>Buat Sertifikat</DialogTitle>}
-        <Form
-          methods={methods}
-          onSubmit={async (value) => {
-            setSec2(false)
 
-            await setData((prev) => ({
-              ...prev,
-              organization: value.organization,
-            }))
-
-            setSuccess(true)
-          }}
-        >
+        <Form methods={methods} onSubmit={submitHandler}>
           <div className={sec1 ? 'block space-y-5' : 'hidden'}>
             <InputSelect
               label="Organisasi"
-              name="organization"
+              name="c_organization"
               options={orgOptions.map((name) => ({ name, value: name }))}
             />
             <div className="grid grid-cols-2 gap-6">
-              <InputText name="animal" label="Jenis Hewan" disabled />
-              <InputText name="gender" label="Jenis Kelamin" disabled />
+              <InputText name="c_animal" label="Jenis Hewan" disabled />
+              <InputText name="c_gender" label="Jenis Kelamin" disabled />
             </div>
-            <InputText name="name" label="Nama Hewan" />
+            <InputText name="c_name" label="Nama Hewan" />
             <div className="grid grid-cols-2 gap-6">
-              <InputText name="eartag" label="Eartag" disabled />
-              <InputDate name="birth_date" label="Tanggal Lahir" disabled />
+              <InputText name="c_eartag" label="Eartag" />
+              <InputDate name="c_birth_date" label="Tanggal Lahir" />
             </div>
             <ButtonAction
               methods={methods}
@@ -141,16 +141,16 @@ const CertificateForm: FC = () => {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <p className="font-medium">Sire</p>
-                  <InputText name="sire_name" label="Nama Sire" />
-                  <InputText name="sire_eartag" label="Eartag Sire" />
-                  <InputText name="sire_breed" label="Keturunan" />
+                  <InputText name="l1_sire_name" label="Nama Sire" />
+                  <InputText name="l1_sire_eartag" label="Eartag Sire" />
+                  <InputText name="l1_sire_breed" label="Keturunan" />
                 </div>
 
                 <div className="space-y-3">
                   <p className="font-medium">Dam</p>
-                  <InputText name="dam_name" label="Nama Dam" />
-                  <InputText name="dam_eartag" label="Eartag Dam" />
-                  <InputText name="dam_breed" label="Keturunan" />
+                  <InputText name="l1_dam_name" label="Nama Dam" />
+                  <InputText name="l1_dam_eartag" label="Eartag Dam" />
+                  <InputText name="l1_dam_breed" label="Keturunan" />
                 </div>
               </div>
             </div>
@@ -160,28 +160,22 @@ const CertificateForm: FC = () => {
               <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-3">
                   <p className="font-medium">Sire</p>
-                  <InputText name="sire_name" label="Nama Sire" />
-                  <InputText name="sire_eartag" label="Eartag Sire" />
-                  <InputText name="sire_breed" label="Keturunan" />
+                  <InputText name="l2_sire_name" label="Nama Sire" />
+                  <InputText name="l2_sire_eartag" label="Eartag Sire" />
+                  <InputText name="l2_sire_breed" label="Keturunan" />
                 </div>
 
                 <div className="space-y-3">
                   <p className="font-medium">Dam</p>
-                  <InputText name="dam_name" label="Nama Dam" />
-                  <InputText name="dam_eartag" label="Eartag Dam" />
-                  <InputText name="dam_breed" label="Keturunan" />
+                  <InputText name="l2_dam_name" label="Nama Dam" />
+                  <InputText name="l2_dam_eartag" label="Eartag Dam" />
+                  <InputText name="l2_dam_breed" label="Keturunan" />
                 </div>
               </div>
             </div>
 
             <div className={sec3 ? 'block' : 'hidden'}>
-              <ButtonAction
-                methods={methods}
-                onPrev={() => {
-                  setSec1(true)
-                  setSec2(false)
-                }}
-              />
+              <ButtonAction methods={methods} onPrev={() => setSec3(false)} />
             </div>
 
             <div className={!sec3 ? 'block' : 'hidden'}>
@@ -206,15 +200,7 @@ const CertificateForm: FC = () => {
 
 export default CertificateForm
 
-const ButtonAction = ({
-  methods,
-  onNext,
-  onPrev,
-}: {
-  methods: any
-  onNext?: any
-  onPrev?: any
-}) => {
+const ButtonAction = ({ methods, onNext, onPrev }: any) => {
   return (
     <div className="flex justify-end gap-3">
       {!onPrev ? (
@@ -259,4 +245,24 @@ const ButtonAction = ({
       )}
     </div>
   )
+}
+
+const DUMMY_CERTIFICATE = {
+  organization: 'DORPER SHEEP SOCIETY OF AUSTRALIA INC',
+  prefix: 'douwana',
+  tag: '210759',
+  issueDate: '21/09/2022',
+  exportTag: 'BL4528',
+  registrationNum: 'D048 210759',
+  lambPlanId: '400048-2021-210759',
+  colour: 'black',
+  conception: 'natural',
+  gender: 'Dam',
+  grade: 'Fullblood',
+  birthDate: '05/09/2021',
+  breeder: 'D048 BATTEN FARMS',
+  owner: 'D048 BATTEN FARMS',
+  notes:
+    'Lorem ipsum dolor sit amet consectetur adipisicing elit. Accusantium est porro praesentium tenetur ab omnis. Eveniet, perspiciatis hic vel facere illo earum aliquid dolores nemo reiciendis numquam perferendis dicta iste.',
+  adminName: 'name',
 }
