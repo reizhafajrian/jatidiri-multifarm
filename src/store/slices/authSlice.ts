@@ -79,8 +79,6 @@ const createAuthSlice: StateCreator<IAuth> = (set, get) => ({
   },
   updateProfile: async (data, router) => {
     try {
-      console.log({ data })
-
       const res = await Post({
         url: '/api/user/update',
         data: { data: [data] },

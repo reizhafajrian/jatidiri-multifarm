@@ -6,7 +6,7 @@ import {
   lastDayOfYear,
   startOfMonth,
   startOfWeek,
-  startOfYear
+  startOfYear,
 } from 'date-fns'
 import { useState } from 'react'
 
@@ -23,8 +23,8 @@ const ldOfThisYear = format(lastDayOfYear(today), shape)
 
 const todayValue = `start=${now}&end=${now}`
 const thisWeekValue = `start=${fdOfThisWeek}&end=${ldOfThisWeek}`
-export const thisMonthValue = `start=${fdOfThisMonth}&end=${ldOfThisMonth}`
-const thisYearValue = `start=${fdOfThisYear}&end=${ldOfThisYear}`
+const thisMonthValue = `start=${fdOfThisMonth}&end=${ldOfThisMonth}`
+export const thisYearValue = `start=${fdOfThisYear}&end=${ldOfThisYear}`
 
 function useFilterDate() {
   const dateOptions = [

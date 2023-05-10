@@ -1,5 +1,5 @@
 'use client'
-import { thisMonthValue } from '@/hooks/useFilterDate'
+import { thisYearValue } from '@/hooks/useFilterDate'
 import { cn } from '@/lib/utils'
 import useStore from '@/store/useStore'
 import clsx from 'clsx'
@@ -36,7 +36,7 @@ export default function SidebarLink(props: IProps) {
           originFemale: 'all',
           originMale: 'all',
           hppStatus: 'all',
-          filterByDate: thisMonthValue,
+          filterByDate: thisYearValue,
         })
       }
     >

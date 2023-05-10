@@ -19,8 +19,6 @@ interface DataAnalyticsDiagramProps {
 }
 
 const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({ data }) => {
-  console.log({ data })
-
   const dataAnalytics: ChartData<'bar', number[], string> = {
     labels: ['Total Hewan Aktif'],
     datasets: [
