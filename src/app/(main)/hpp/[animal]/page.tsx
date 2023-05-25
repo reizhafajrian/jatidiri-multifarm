@@ -19,24 +19,3 @@ export default function Page(props: { params: any }) {
     </>
   )
 }
-
-const getData = async (animal: string, token: string) => {
-  try {
-    const res = await fetch(
-      process.env.API_BASE_URL + `/hpp/get?animal_type=${animal}`,
-
-      {
-        next: {
-          revalidate: 0,
-        },
-        headers: {
-          Authorization: `bearer ${token}`,
-        },
-      }
-    )
-    const data = await res.json()
-    return data.data
-  } catch (error) {
-    console.log(error)
-  }
-}

@@ -24,6 +24,7 @@ const InputCertificate: FC<InputCertificateProps> = ({
     maxFiles: 1,
     accept: {
       'text/pdf': ['.pdf'],
+      'image/*': ['.jpeg', '.png'],
     },
     onDrop: (acceptedFiles) => {
       field.onChange(acceptedFiles)

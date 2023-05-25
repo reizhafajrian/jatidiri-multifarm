@@ -1,7 +1,8 @@
 interface IProps {
+  name?: string
   label: string
-  defaultChecked: boolean
-  onChange: any
+  defaultChecked?: boolean
+  onChange?: any
 }
 
 export default function InputCheckbox(props: IProps) {
@@ -10,6 +11,7 @@ export default function InputCheckbox(props: IProps) {
       <input
         type="checkbox"
         id={props.label}
+        name={props.name}
         className="h-4 w-4 accent-primary-4"
         defaultChecked={props.defaultChecked}
         onChange={props.onChange}

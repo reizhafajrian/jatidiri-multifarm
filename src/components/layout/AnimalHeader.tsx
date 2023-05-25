@@ -4,19 +4,39 @@ import { BackLink, Button } from '@/components/shared'
 import { Download, Pen } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'
 import { usePathname, useRouter } from 'next/navigation'
-import { FC } from 'react'
+import { FC, useEffect, useState } from 'react'
 import AlertCluster from '../shared/AlertCluster'
 
-interface AnimalHeaderProps {
+interface IProps {
   undefinedClusterTotal: number
 }
 
-const AnimalHeader: FC<AnimalHeaderProps> = ({ undefinedClusterTotal }) => {
+const AnimalHeader: FC<IProps> = ({ undefinedClusterTotal }) => {
   const router = useRouter()
   const path = usePathname()
-  const { animal } = useStore()
-  const headerMenu = getHeaderMenu(animal.name)
   const isListData = !path.includes('add') && !path.includes('edit')
+
+  const [endpoint, setEndpoint] = useState('')
+  const { animal, type, originMale, originFemale, filterByDate } = useStore()
+  const headerMenu = getHeaderMenu(animal.name)
+
+  useEffect(() => {
+    const queriesArray = []
+    if (type !== 'cempek') {
+      type === 'male' && queriesArray.push('gender=true')
+      type === 'female' && queriesArray.push('gender=false')
+    } else {
+      queriesArray.push('cempek=true')
+    }
+
+    originMale !== 'all' && queriesArray.push('origin_male=' + originMale)
+    originFemale !== 'all' && queriesArray.push('origin_female=' + originFemale)
+    queriesArray.push(filterByDate)
+
+    const url = `/api/${animal.name}/download`
+    const isQueries = queriesArray.length > 0
+    isQueries && setEndpoint(url + `?${queriesArray?.join('&')}`)
+  }, [type, originMale, originFemale, animal, filterByDate])
 
   return (
     <>
@@ -41,12 +61,17 @@ const AnimalHeader: FC<AnimalHeaderProps> = ({ undefinedClusterTotal }) => {
               </Button>
               <Button
                 variant="outline"
-                className="px-3"
-                onClick={() =>
-                  window.open(`/api/${animal.name}/download`, '_blank')
-                }
+                className="space-x-1 px-3"
+                onClick={() => window.open(endpoint, '_blank')}
               >
-                <Download className="h-4 w-4" />
+                <Download className="h-4 w-4" /> <span> .PDF</span>
+              </Button>
+              <Button
+                variant="outline"
+                className="space-x-1 px-3"
+                onClick={() => window.open(endpoint, '_blank')}
+              >
+                <Download className="h-4 w-4" /> <span> .XLSX</span>
               </Button>
             </div>
           </Navbar>

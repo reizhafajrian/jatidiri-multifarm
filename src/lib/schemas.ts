@@ -68,6 +68,7 @@ export const cempekSchema = z.object({
     .min(1, { message: REQUIRED_ERROR }),
   birth_condition: z.string(validations),
   gender: z.string(validations),
+  files: z.any().optional(),
 })
 
 // SHED
@@ -168,8 +169,6 @@ export const incomeSchema = z.object({
 export const hppSchema = z.object({
   eartag_code: z.string(validations).nonempty(REQUIRED_ERROR),
   hpp_price: z.coerce.number(validations).min(0, { message: REQUIRED_ERROR }),
-  sell_price: z.coerce
-    .number(validations)
-    .min(1, { message: REQUIRED_ERROR }),
+  sell_price: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
   description: z.string().nullish(),
 })

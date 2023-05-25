@@ -1,4 +1,5 @@
 import AnimalForm from '@/components/form/AnimalForm'
+import axios from 'axios'
 import { cookies } from 'next/headers'
 import { use } from 'react'
 
@@ -13,23 +14,46 @@ export default function EditAnimalPage({ params }: { params: any }) {
   return (
     <AnimalForm
       formType="edit"
-      gender={data.gender}
-      cempekForm={data.cempek}
-      values={data}
+      gender={data.detail.gender}
+      cempekForm={data.detail.cempek}
+      values={data.detail}
+      options={{
+        pejantanOpts: data.pejantanOpts,
+        indukanOpts: data.indukanOpts,
+      }}
       id={id}
     />
   )
 }
 
 const getData = async (animal: string, id: string, token: string) => {
-  const res = await fetch(
-    process.env.API_BASE_URL + `/${animal}/get/detail/${id}`,
-    {
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    }
-  ).then((res) => res.json())
+  const url = process.env.API_BASE_URL + `/${animal}/get`
+  const options = {
+    headers: {
+      Authorization: `bearer ${token}`,
+    },
+  }
 
-  return await res.data
+  const {
+    data: { data: detail },
+  } = await axios.get(url + `/detail/${id}`, options)
+
+  const pejantan = await axios.get(url + '?gender=true', options)
+  const indukan = await axios.get(url + '?gender=false', options)
+
+  const pejantanOpts = pejantan.data.data.map((item: any) => ({
+    name: item.eartag_code,
+    value: item._id,
+  }))
+
+  const indukanOpts = indukan.data.data.map((item: any) => ({
+    name: item.eartag_code,
+    value: item._id,
+  }))
+
+  return {
+    detail,
+    pejantanOpts,
+    indukanOpts,
+  }
 }

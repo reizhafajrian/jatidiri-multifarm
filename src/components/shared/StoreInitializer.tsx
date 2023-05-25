@@ -27,7 +27,6 @@ export default function StoreInitializer({ data }: IData) {
 
   const { setAnimal, loadUser, setCategoryInfo } = useStore() || {}
 
-
   useEffect(() => {
     if (token) {
       loadUser()
@@ -69,5 +68,4 @@ export default function StoreInitializer({ data }: IData) {
   ])
 
   return null
-
 }

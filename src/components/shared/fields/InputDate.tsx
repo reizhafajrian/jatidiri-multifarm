@@ -49,10 +49,9 @@ const InputDate: FC<InputDateProps> = (props) => {
         <label
           htmlFor={name}
           className={cn(
-            'absolute top-2 left-1 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-300 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black',
-            field?.value || startDate || endDate
-              ? ''
-              : 'top-1/2 -translate-y-1/2 scale-100',
+            'absolute left-1 top-2 origin-[0] -translate-y-4 scale-75 transform bg-white px-2 text-sm duration-300 peer-focus:top-2 peer-focus:-translate-y-4 peer-focus:scale-75 peer-focus:px-2 peer-focus:text-black',
+            !(field?.value || startDate || endDate) &&
+              'top-1/2 -translate-y-1/2 scale-100',
             errors[name] ? 'text-error' : 'text-neutral-4'
           )}
         >

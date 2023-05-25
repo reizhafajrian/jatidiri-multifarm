@@ -3,6 +3,7 @@ import {
   Button,
   Form,
   InputCertificate,
+  InputCheckbox,
   InputDate,
   InputSelect,
   InputText,
@@ -10,25 +11,28 @@ import {
 } from '@/components/shared'
 import useAnimalForm from '@/hooks/useAnimalForm'
 import { adultSchema, cempekSchema } from '@/lib/schemas'
-import { cn } from '@/lib/utils'
 import { IAnimal } from '@/store/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { FC } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-interface AnimalFormProps {
+interface IProps {
   formType: 'add' | 'edit'
   cempekForm?: boolean
   gender?: string
   values?: any
   id?: string
+  options: {
+    indukanOpts: { name: string; value: string }[]
+    pejantanOpts: { name: string; value: string }[]
+  }
 }
 
-const AnimalForm: FC<AnimalFormProps> = (props) => {
-  const router = useRouter()
-  const { formType, cempekForm, gender, values, id } = props
+const AnimalForm: FC<IProps> = (props) => {
+  const { formType, cempekForm, gender, values, id, options } = props
   const data = useAnimalForm({ formType, cempekForm, gender })
+  const router = useRouter()
 
   const methods = useForm<IAnimal>({
     resolver: zodResolver(cempekForm ? cempekSchema : adultSchema),
@@ -36,58 +40,59 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
   })
 
   const onSubmit: SubmitHandler<IAnimal> = async (values) => {
+    const formValues = {
+      ...values,
+      cempek: cempekForm ? 'true' : 'false',
+      created_by: data.created_by,
+      _id: id,
+      animal: data.animal,
+      gender,
+    }
+
     if (formType === 'add') {
-      await data.addAnimal(values, router)
+      data.addAnimal(formValues, router)
     } else {
-      await data.editAnimal(values, router)
+      data.editAnimal(formValues, router)
     }
   }
 
   return (
-    <>
+    <Form methods={methods} onSubmit={onSubmit}>
       <h1 className="mb-6 text-base font-semibold" suppressHydrationWarning>
         {data.title}
       </h1>
-      <Form
-        methods={methods}
-        onSubmit={(values) =>
-          onSubmit({
-            ...values,
-            cempek: cempekForm ? 'true' : 'false',
-            created_by: data.created_by,
-            _id: id,
-            animal: data.animal,
-            gender,
-          })
-        }
-        className="grid gap-4 md:grid-cols-2"
-      >
-        <div className="space-y-6">
-          <InputSelect
-            name="type"
-            label={`Jenis ${cempekForm ? 'Cempek' : data.animalTitle}`}
-            options={data.opts?.typeOptions}
-          />
 
+      <div className="grid gap-4 md:grid-cols-2">
+        <div className="space-y-6">
           {cempekForm ? (
-            <InputText name="birth_weight" label="Berat Lahir" />
+            <>
+              <InputText name="type" label="Jenis Cempek" />
+              <InputText name="birth_weight" label="Berat Lahir" />
+              <InputSelect
+                name="origin_female"
+                label="Asal Induk"
+                options={options.indukanOpts}
+              />
+              <InputText name="birth_condition" label="Kondisi Lahir" />
+              <div>
+                <p className="mb-7 font-semibold">
+                  Sertifikat {data.animalTitle} Cempek
+                </p>
+                <InputCertificate name="files" currentValue={{ gender }} />
+              </div>
+            </>
           ) : (
             <>
+              <InputCheckbox
+                name={gender === 'true' ? 'pejantan' : 'indukan'}
+                label={gender === 'true' ? 'Pejantan' : 'Indukan'}
+              />
+              <InputText name="type" label={`Jenis ${data.animalTitle}`} />
               <InputDate name="arrival_date" label="Tgl Tiba" />
               <InputDate name="birth_date" label="Tgl Lahir" />
+              <InputText name="origin_female" label="Asal Induk" />
+              <TextArea name="description" label="Keterangan" />
             </>
-          )}
-
-          <InputSelect
-            name="origin_female"
-            label="Asal Induk"
-            options={data.opts?.femaleOriginOptions}
-          />
-
-          {cempekForm ? (
-            <InputText name="birth_condition" label="Kondisi Lahir" />
-          ) : (
-            <TextArea name="description" label="Keterangan" />
           )}
         </div>
         <div className="flex flex-col">
@@ -103,14 +108,16 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
                     { name: 'Betina', value: 'female' },
                   ]}
                 />
+                <InputSelect
+                  name="origin_male"
+                  label="Asal Pejantan"
+                  options={options.pejantanOpts}
+                />
+                <TextArea name="description" label="Keterangan" />
               </>
             ) : (
               <>
-                <InputSelect
-                  name="origin"
-                  label={`Asal ${data.animalTitle}`}
-                  options={data.opts?.originOptions}
-                />
+                <InputText name="origin" label={`Asal ${data.animalTitle}`} />
                 <InputText
                   name="weight"
                   label={`Berat ${data.animalTitle}`}
@@ -122,30 +129,17 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
                   type="number"
                   rupiah
                 />
+                <InputText name="origin_male" label="Asal Pejantan" />
+                <div>
+                  <p className="mb-7 font-semibold">
+                    Sertifikat {data.animalTitle} {data.genderTitle}
+                  </p>
+                  <InputCertificate name="files" currentValue={{ gender }} />
+                </div>
               </>
             )}
-            <InputSelect
-              name="origin_male"
-              label="Asal Pejantan"
-              options={data.opts?.maleOriginOptions ?? []}
-            />
-            {cempekForm ? (
-              <TextArea name="description" label="Keterangan" />
-            ) : (
-              <div className="">
-                <p className="mb-7 font-semibold">
-                  Sertifikat {data.animalTitle} {data.genderTitle}
-                </p>
-                <InputCertificate name="files" currentValue={{ gender }} />
-              </div>
-            )}
           </div>
-          <div
-            className={cn(
-              'flex justify-end gap-3',
-              cempekForm ? 'mt-10' : 'pt-32 md:mt-auto'
-            )}
-          >
+          <div className="flex justify-end gap-3 pt-32 md:mt-auto">
             <Button
               type="button"
               variant="outline"
@@ -164,8 +158,8 @@ const AnimalForm: FC<AnimalFormProps> = (props) => {
             </Button>
           </div>
         </div>
-      </Form>
-    </>
+      </div>
+    </Form>
   )
 }
 

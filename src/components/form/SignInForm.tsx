@@ -19,7 +19,7 @@ export default function SignInForm() {
     <Form
       onSubmit={(data) => login(data, router)}
       methods={methods}
-      className="space-y-4"
+      className="w-full space-y-4"
     >
       <InputText name="email" label="Email" />
       <InputText name="password" label="Password" isSecured />

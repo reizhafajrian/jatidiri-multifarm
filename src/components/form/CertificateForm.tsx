@@ -1,12 +1,10 @@
 'use client'
 import { Plus, X } from '@/components/shared/Icons'
 import useStore from '@/store/useStore'
-import { PDFDownloadLink } from '@react-pdf/renderer'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { FC, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import Certificate from '../layout/Certificate'
 import { Button, Form, InputDate, InputSelect, InputText } from '../shared'
 import {
   DialogClose,
@@ -93,7 +91,7 @@ const CertificateForm: FC<any> = ({ currentValue }) => {
               <h1 className="mb-1 text-xl font-medium">
                 Sertifikat berhasil dibuat!
               </h1>
-              <PDFDownloadLink
+              {/* <PDFDownloadLink
                 document={<Certificate data={data} />}
                 fileName="certificate.pdf"
                 className="text-xs font-medium text-primary-5 underline"
@@ -103,7 +101,7 @@ const CertificateForm: FC<any> = ({ currentValue }) => {
                     ? 'Loading Document...'
                     : 'Klik di sini untuk melihat Sertifikat.'
                 }
-              </PDFDownloadLink>
+              </PDFDownloadLink> */}
             </div>
           </div>
         )}

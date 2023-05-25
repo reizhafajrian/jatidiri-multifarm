@@ -1,7 +1,7 @@
 import { FC } from 'react'
 import { Card } from '../shared'
 
-interface DashboardAnimalInfoCardProps {
+interface IProps {
   data: {
     icon: any
     animal_type: string
@@ -10,17 +10,11 @@ interface DashboardAnimalInfoCardProps {
   }
 }
 
-const DashboardAnimalInfoCard: FC<DashboardAnimalInfoCardProps> = ({
-  data: { icon, animal_type, totalAdult, totalCempek },
-}) => {
-  const title =
-    animal_type === 'goat'
-      ? 'Kambing'
-      : animal_type === 'sheep'
-      ? 'Domba'
-      : 'Sapi'
+const DashboardAnimalInfoCard: FC<IProps> = ({ data }) => {
+  const { icon, animal_type: type, totalAdult, totalCempek } = data
+  const title = type == 'goat' ? 'Kambing' : type == 'sheep' ? 'Domba' : 'Sapi'
 
-  const content = ({ total, title, label }: any) => (
+  const content = ({ total, label }: any) => (
     <div className="space-y-1">
       <p className="text-xl font-semibold text-neutral-5">
         {total}
@@ -33,24 +27,20 @@ const DashboardAnimalInfoCard: FC<DashboardAnimalInfoCardProps> = ({
   )
 
   return (
-    <>
-      <Card className="space-y-4 capitalize md:space-y-7">
-        <div className="flex items-center gap-3">
-          <div className="h-10 w-10 md:h-12 md:w-12">{icon}</div>
-          <div>
-            <h1 className="mb-1 text-xl font-semibold text-neutral-5">
-              {title}
-            </h1>
-            <h2 className="text-xs text-neutral-4">total {title} hidup</h2>
-          </div>
+    <Card className="space-y-4 capitalize md:space-y-7">
+      <div className="flex items-center gap-3">
+        <div className="h-10 w-10 md:h-12 md:w-12">{icon}</div>
+        <div className="space-y-1">
+          <h1 className="text-xl font-semibold text-neutral-5">{title}</h1>
+          <h2 className="text-xs text-neutral-4">total {title} hidup</h2>
         </div>
-        <div className="grid grid-cols-2">
-          {content({ title, total: totalAdult, label: 'Dewasa' })}
-          {totalCempek !== undefined &&
-            content({ title, total: totalCempek, label: 'Cempek' })}
-        </div>
-      </Card>
-    </>
+      </div>
+      <div className="grid grid-cols-2">
+        {content({ total: totalAdult, label: 'Dewasa' })}
+        {totalCempek !== undefined &&
+          content({ total: totalCempek, label: 'Cempek' })}
+      </div>
+    </Card>
   )
 }
 
