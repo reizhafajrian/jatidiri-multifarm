@@ -1,23 +1,25 @@
-import AnimalForm from '@/components/form/AnimalForm'
-import Tab from '@/components/shared/Tab'
-import axios from 'axios'
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers"
+import axios from "axios"
+
+import Tab from "@/components/ui/Tab"
+
+import AddAnimalForm from "./add-animal-form"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Add Animal',
+  title: "Jatidiri Multifarm | Add Animal",
 }
 
 export default async function AddAnimalPage({ params }: { params: any }) {
-  const token = cookies().get('token')?.value
+  const token = cookies().get("token")?.value
   const animal = params.animal
 
   const options = await getData(animal, token!)
 
   const categories = {
-    Pejantan: <AnimalForm formType="add" gender="true" options={options} />,
-    Betina: <AnimalForm formType="add" gender="false" options={options} />,
-    ...(animal !== 'cow' && {
-      Cempek: <AnimalForm formType="add" cempekForm options={options} />,
+    Jantan: <AddAnimalForm gender="true" options={options} />,
+    Betina: <AddAnimalForm gender="false" options={options} />,
+    ...(animal !== "cow" && {
+      Cempek: <AddAnimalForm cempekForm options={options} />,
     }),
   }
 
@@ -32,8 +34,8 @@ const getData = async (animal: string, token: string) => {
     },
   }
 
-  const pejantan = await axios.get(url + '?gender=true', options)
-  const indukan = await axios.get(url + '?gender=false', options)
+  const pejantan = await axios.get(url + "?gender=true&pejantan=true", options)
+  const indukan = await axios.get(url + "?gender=false", options)
 
   const pejantanOpts = pejantan.data.data.map((item: any) => ({
     name: item.eartag_code,

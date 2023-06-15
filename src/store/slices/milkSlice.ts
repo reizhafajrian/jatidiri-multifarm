@@ -1,17 +1,19 @@
-import { toast } from '@/components/shared'
-import { Get, Post } from '@/lib/api'
-import { StateCreator } from 'zustand'
-import { IMilkState } from '../types'
+import { StateCreator } from "zustand"
+
+import { Get, Post } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
+
+import { IMilkState } from "../types"
 
 const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
-  milkStatus: 'all',
+  milkStatus: "all",
   incomeHistory: 0,
   addMilk: async (data) => {
     try {
       const { created_by, milk, milk_date, eartag_code } = data
 
       const res = await Post({
-        url: '/api/milk/create',
+        url: "/api/milk/create",
         data: {
           amount: milk,
           animal_id: eartag_code,
@@ -21,12 +23,12 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -36,7 +38,7 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const { _id, animal_id, created_by, milk, milk_date } = data
 
       const res = await Post({
-        url: '/api/milk/update',
+        url: "/api/milk/update",
         data: {
           data: [
             {
@@ -51,12 +53,12 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -66,15 +68,15 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const s = start.toISOString()
       const e = end.toISOString()
       if (start !== null && end !== null) {
-        const res = await Get(`/api/milk/get/history?start=` + s + '&end=' + e)
+        const res = await Get(`/api/milk/get/history?start=` + s + "&end=" + e)
 
         return res.data
       }
     } catch (err: any) {
       if (err.status === 404) {
         toast({
-          type: 'error',
-          message: 'result none',
+          type: "error",
+          message: "result none",
         })
         return 0
       } else {
@@ -89,17 +91,17 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const data = [{ _id, status }]
 
       const res = await Post({
-        url: '/api/milk/status/update',
+        url: "/api/milk/status/update",
         data: { data },
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -109,7 +111,7 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const { created_by, income_date, income_total } = data
 
       const res = await Post({
-        url: '/api/milk/income/create',
+        url: "/api/milk/income/create",
         data: {
           amount: income_total,
           income_created_at: income_date?.toISOString(),
@@ -118,12 +120,12 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -134,7 +136,7 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const e = end.toISOString()
       if (start !== null && end !== null) {
         const res = await Get(
-          `/api/milk/income/get/history?start=` + s + '&end=' + e
+          `/api/milk/income/get/history?start=` + s + "&end=" + e
         )
 
         set((state) => ({ ...state, incomeHistory: res.data }))
@@ -142,8 +144,8 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
     } catch (err: any) {
       if (err.status === 404) {
         toast({
-          type: 'error',
-          message: 'result none',
+          type: "error",
+          message: "result none",
         })
       } else {
         console.log(err)

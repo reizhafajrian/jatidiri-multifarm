@@ -1,12 +1,13 @@
-import { Get } from '@/lib/api'
-import useStore from '@/store/useStore'
-import useSWR from 'swr'
+import useStore from "@/store/useStore"
+import useSWR from "swr"
+
+import { Get } from "@/lib/api"
 
 const useShedAnimalTags = () => {
   const { animal, shed_code, type } = useStore()
 
-  const isCempek = type === 'cempek'
-  const gender = type === 'male' ? 'true' : 'false'
+  const isCempek = type === "cempek"
+  const gender = type === "male" ? "true" : "false"
 
   const url = isCempek
     ? `/api/${animal.name}/cempek/get`

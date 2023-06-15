@@ -1,15 +1,16 @@
-import '@/styles/ReactToastify.css'
-import '@/styles/globals.css'
-import '@/styles/react-datepicker.css'
+import { PropsWithChildren } from "react"
+import { Poppins } from "next/font/google"
 
-import { Toaster } from '@/components/shared/Toast'
-import { cn } from '@/lib/utils'
-import { Poppins } from 'next/font/google'
-import { PropsWithChildren } from 'react'
+import "@/styles/ReactToastify.css"
+import "@/styles/globals.css"
+import "@/styles/react-datepicker.css"
+
+import { cn } from "@/lib/utils"
+import { Toaster } from "@/components/ui/Toast"
 
 const poppins = Poppins({
-  subsets: ['latin'],
-  weight: ['300', '400', '500', '600', '700', '800'],
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
 })
 
 export default async function RootLayout(props: PropsWithChildren) {
@@ -17,7 +18,7 @@ export default async function RootLayout(props: PropsWithChildren) {
     <html lang="en">
       <body
         className={cn(
-          'min-h-screen bg-neutral-1 text-sm text-neutral-5 antialiased',
+          "min-h-screen bg-neutral-1 text-sm text-neutral-5 antialiased",
           poppins.className
         )}
       >

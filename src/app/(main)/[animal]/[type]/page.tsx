@@ -1,15 +1,17 @@
-import AnimalFilter from '@/components/filter/AnimalFilter'
-import { StoreInitializer } from '@/components/shared'
-import AnimalTable from '@/components/table/AnimalTable'
-import { notFound } from 'next/navigation'
+import { notFound } from "next/navigation"
+
+import StoreInitializer from "@/components/StoreInitializer"
+
+import AnimalFilter from "./animal-filter"
+import AnimalTable from "./animal-table"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Animal',
+  title: "Jatidiri Multifarm",
 }
 
 export default function AnimalPage({ params }: { params: any }) {
   const { animal, type } = params
-  const typeNotFound = !['male', 'female', 'cempek'].includes(type)
+  const typeNotFound = !["male", "female", "cempek"].includes(type)
 
   if (typeNotFound) return notFound()
 

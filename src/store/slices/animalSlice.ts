@@ -1,22 +1,26 @@
-import { toast } from '@/components/shared'
-import { Delete, Post } from '@/lib/api'
-import { StateCreator } from 'zustand'
-import { IAnimalState } from '../types'
+import { StateCreator } from "zustand"
+
+import { Delete, Post } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
+
+import { IAnimalState } from "../types"
 
 const animalTitleList = [
-  { name: 'goat', title: 'Kambing' },
-  { name: 'sheep', title: 'Domba' },
-  { name: 'cow', title: 'Sapi' },
+  { name: "goat", title: "Kambing" },
+  { name: "sheep", title: "Domba" },
+  { name: "cow", title: "Sapi" },
 ]
 
 const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
-  animal: { name: '', title: '' },
-  type: '',
-  originMale: 'all',
-  originFemale: 'all',
-  setFilter: ({ originMale, originFemale }) => {
+  animal: { name: "", title: "" },
+  type: "",
+  originMale: "all",
+  originFemale: "all",
+  vaccine: "all",
+  setFilter: ({ originMale, originFemale, vaccine }) => {
     originMale && set((state) => ({ ...state, originMale }))
     originFemale && set((state) => ({ ...state, originFemale }))
+    vaccine && set((state) => ({ ...state, vaccine }))
   },
   setAnimal: (name) => {
     const animal = animalTitleList.find((item) => item.name === name)
@@ -24,12 +28,12 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   },
   addAnimal: async (data, router) => {
     try {
-      const isCempek = data.cempek === 'true'
+      const isCempek = data.cempek === "true"
       const animal = get().animal.name
 
       const formData = new FormData()
       for (let value in data) {
-        if (value.includes('_date')) {
+        if (value.includes("_date")) {
           formData.append(value, data[value].toISOString())
         } else {
           formData.append(value, data[value])
@@ -38,7 +42,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
 
       if (!isCempek) {
         if (data.files) {
-          formData.set('files', data.files[0])
+          formData.set("files", data.files[0])
         }
       }
 
@@ -49,32 +53,32 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       const res = await Post({ url, data: isCempek ? data : formData })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
 
       router.replace(`/${animal}/male`)
     } catch (err: any) {
       return toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
   },
   editAnimal: async (data, router) => {
     try {
-      const isCempek = data.cempek === 'true'
+      const isCempek = data.cempek === "true"
       const formData = new FormData()
 
       for (let value in data) {
-        if (value.includes('_date')) {
+        if (value.includes("_date")) {
           formData.append(value, data[value].toISOString())
         } else {
           formData.append(value, data[value])
         }
       }
 
-      if (!isCempek && data?.files) formData.set('files', data?.files[0])
+      if (!isCempek && data?.files) formData.set("files", data?.files[0])
 
       const url = isCempek
         ? `/api/${data.animal}/cempek/update`
@@ -86,7 +90,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
 
@@ -95,7 +99,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       }
     } catch (err: any) {
       return toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -105,12 +109,12 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       const res = await Delete(`/api/${get().animal.name}/delete/${id}`)
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       return toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }

@@ -83,6 +83,7 @@ interface IAnimalTitle {
 interface IAnimalFilter {
   originMale?: string
   originFemale?: string
+  vaccine?: string
 }
 
 export interface IAnimalState {
@@ -90,6 +91,7 @@ export interface IAnimalState {
   type: string
   originMale: string
   originFemale: string
+  vaccine: string
 
   setAnimal: (value: string) => void
   setFilter: (data: IAnimalFilter) => void
@@ -263,5 +265,7 @@ export interface IEditHpp {
   eartag_code?: string
   hpp_price?: number
   sell_price?: number
+  buyer?: number
+  phoneNumber?: number
   description?: string
 }

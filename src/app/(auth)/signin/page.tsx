@@ -1,16 +1,16 @@
-import SignInForm from '@/components/form/SignInForm'
-import { cookies } from 'next/headers'
-import Image from 'next/image'
-import { redirect } from 'next/navigation'
+import { cookies } from "next/headers"
+import Image from "next/image"
+import { redirect } from "next/navigation"
+
+import SignInForm from "./signin-form"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Sign In',
+  title: "Jatidiri Multifarm | Sign In",
 }
 
 export default function SigninPage() {
-  const isAuthenticated = cookies().get('token')?.value
-
-  if (isAuthenticated) redirect('/dashboard')
+  const isAuthenticated = cookies().get("token")?.value
+  if (isAuthenticated) redirect("/dashboard")
 
   return (
     <div className="grid md:grid-cols-2">
@@ -30,11 +30,6 @@ export default function SigninPage() {
             </h1>
           </div>
 
-          <h2 className="mb-8 text-xl font-medium md:text-3xl">
-            Sign In Disini
-          </h2>
-
-          {/* SIGN IN FORM */}
           <SignInForm />
         </div>
       </div>

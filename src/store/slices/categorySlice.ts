@@ -1,7 +1,9 @@
-import { toast } from '@/components/shared'
-import { Delete, Post } from '@/lib/api'
-import { StateCreator } from 'zustand'
-import { ICategoryState } from '../types'
+import { StateCreator } from "zustand"
+
+import { Delete, Post } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
+
+import { ICategoryState } from "../types"
 
 const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
   setCategoryInfo: (data) => {
@@ -22,18 +24,18 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
         data: {
           [`${category}_type`]: type,
           [`${category}_stock`]: stock,
-          [`${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`]: price,
+          [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]: price,
           created_by,
         },
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -51,7 +53,7 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
               _id,
               [`${category}_type`]: type,
               [`${category}_stock`]: stock,
-              [`${category}_price_${category === 'feed' ? 'kgs' : 'pcs'}`]:
+              [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]:
                 price,
             },
           ],
@@ -59,12 +61,12 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.error,
       })
     }
@@ -74,12 +76,12 @@ const createCategorySlice: StateCreator<ICategoryState> = (set, get) => ({
       const res = await Delete(`/api/${data.category}/delete/${data._id}`)
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.error,
       })
     }

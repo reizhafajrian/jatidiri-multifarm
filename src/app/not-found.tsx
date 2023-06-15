@@ -1,8 +1,9 @@
-import { ArrowLeft } from '@/components/shared/Icons'
-import Link from 'next/link'
+import Link from "next/link"
+
+import { Icons } from "@/components/ui/Icons"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Page not found',
+  title: "Jatidiri Multifarm | Page not found",
 }
 
 export default function PageNotFound() {
@@ -17,7 +18,7 @@ export default function PageNotFound() {
           href="/dashboard"
           className="flex w-fit items-center gap-3 border-2 px-3 py-2 "
         >
-          <ArrowLeft />
+          <Icons.arrowLeft />
           <p className="capitalize">Back to Dashboard</p>
         </Link>
       </div>

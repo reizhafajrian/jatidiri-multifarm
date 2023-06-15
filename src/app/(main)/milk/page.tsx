@@ -1,20 +1,25 @@
-import MilkFilter from '@/components/filter/MilkFilter'
-import MilkHeader from '@/components/layout/MilkHeader'
-import MilkCardList from '@/components/list/MilkCardList'
-import { StoreInitializer } from '@/components/shared'
-import MilkTable from '@/components/table/MilkTable'
+import StoreInitializer from "@/components/StoreInitializer"
+
+import MilkIncomeCard from "./milk-card-income"
+import MilkTotalCard from "./milk-card-total"
+import MilkFilter from "./milk-filter"
+import MilkHeader from "./milk-header"
+import MilkTable from "./milk-table"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Milk',
+  title: "Jatidiri Multifarm | Milk",
 }
 
 export default function MilkPage() {
   return (
     <main>
-      <StoreInitializer data={{ searchType: 'milk' }} />
+      <StoreInitializer data={{ searchType: "milk" }} />
       <MilkHeader />
       <MilkFilter />
-      <MilkCardList />
+      <div className="my-4 grid gap-3 md:grid-cols-2 md:gap-10">
+        <MilkIncomeCard />
+        <MilkTotalCard />
+      </div>
       <MilkTable />
     </main>
   )

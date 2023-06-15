@@ -1,24 +1,26 @@
-import { toast } from '@/components/shared'
-import { Post, Put } from '@/lib/api'
-import { StateCreator } from 'zustand'
-import { IShedState } from '../types'
+import { StateCreator } from "zustand"
+
+import { Post, Put } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
+
+import { IShedState } from "../types"
 
 const createShedSlice: StateCreator<IShedState> = (set, get) => ({
-  shed_id: '',
-  shed_code: '',
+  shed_id: "",
+  shed_code: "",
   addShed: async (data, router) => {
     try {
-      const res = await Post({ url: '/api/shed/create', data })
+      const res = await Post({ url: "/api/shed/create", data })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
 
       router.replace(`/shed/${data.animal_type}`)
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -28,22 +30,22 @@ const createShedSlice: StateCreator<IShedState> = (set, get) => ({
       const body = {}
 
       for (let value in data) {
-        if (value.includes('_date')) {
+        if (value.includes("_date")) {
           body[value] = data[value].toISOString()
         } else {
           body[value] = data[value]
         }
       }
 
-      const res = await Post({ url: '/api/shed/data/create', data: body })
+      const res = await Post({ url: "/api/shed/data/create", data: body })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }
@@ -58,12 +60,12 @@ const createShedSlice: StateCreator<IShedState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.error,
       })
     }
@@ -76,12 +78,12 @@ const createShedSlice: StateCreator<IShedState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.error,
       })
     }

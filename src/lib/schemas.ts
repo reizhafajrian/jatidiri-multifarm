@@ -1,7 +1,7 @@
-import { z } from 'zod'
+import { z } from "zod"
 
-const REQUIRED_ERROR = 'Data required'
-const INVALID_ERROR = 'Data invalid'
+const REQUIRED_ERROR = "Data required"
+const INVALID_ERROR = "Data invalid"
 
 const validations = {
   required_error: REQUIRED_ERROR,
@@ -9,10 +9,11 @@ const validations = {
 }
 
 // AUTH
-export const signinSchema = z.object({
+export const signInFormSchema = z.object({
   email: z.string(validations).email(),
   password: z.string(validations).min(1, REQUIRED_ERROR),
 })
+export type SignInFormValues = z.infer<typeof signInFormSchema>
 
 export const memberSchema = z.object({
   firstName: z.string(validations).nonempty(REQUIRED_ERROR),
@@ -60,6 +61,7 @@ export const adultSchema = z.object({
     .min(1, { message: REQUIRED_ERROR }),
   files: z.any().optional(),
 })
+export type adultFormValues = z.infer<typeof adultSchema>
 
 export const cempekSchema = z.object({
   ...animalSchema,
@@ -70,6 +72,7 @@ export const cempekSchema = z.object({
   gender: z.string(validations),
   files: z.any().optional(),
 })
+export type cempekFormValues = z.infer<typeof cempekSchema>
 
 // SHED
 export const shedSchema = z.object({

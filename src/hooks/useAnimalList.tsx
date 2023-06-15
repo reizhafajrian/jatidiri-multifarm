@@ -1,6 +1,7 @@
-import { Get } from '@/lib/api'
-import useStore from '@/store/useStore'
-import useSWR from 'swr'
+import useStore from "@/store/useStore"
+import useSWR from "swr"
+
+import { Get } from "@/lib/api"
 
 const useAnimalList = () => {
   const {
@@ -15,16 +16,16 @@ const useAnimalList = () => {
   } = useStore()
 
   const queriesArray = []
-  const isCempek = type === 'cempek'
-  const gender = type === 'male' ? true : false
-  originMale !== 'all' && queriesArray.push('origin_male=' + originMale)
-  originFemale !== 'all' && queriesArray.push('origin_female=' + originFemale)
+  const isCempek = type === "cempek"
+  const gender = type === "male" ? true : false
+  originMale !== "all" && queriesArray.push("origin_male=" + originMale)
+  originFemale !== "all" && queriesArray.push("origin_female=" + originFemale)
 
   !isCempek &&
-    queriesArray.push(type === 'male' ? 'gender=true' : 'gender=false')
+    queriesArray.push(type === "male" ? "gender=true" : "gender=false")
 
   queriesArray.push(filterByDate)
-  const queries = queriesArray?.join('&')
+  const queries = queriesArray?.join("&")
   const url = isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`
   const endpoint = queriesArray ? url + `?${queries}` : url
 

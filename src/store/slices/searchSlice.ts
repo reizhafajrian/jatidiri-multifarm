@@ -1,6 +1,7 @@
-import { toast } from '@/components/shared'
-import { Get } from '@/lib/api'
-import { StateCreator } from 'zustand'
+import { StateCreator } from "zustand"
+
+import { Get } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
 
 export interface ISearchState {
   searchType: string
@@ -11,8 +12,8 @@ export interface ISearchState {
 }
 
 const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
-  searchType: '',
-  searchKeyword: '',
+  searchType: "",
+  searchKeyword: "",
   searchLoading: false,
   searchResults: [],
   searchHandler: async (keyword) => {
@@ -29,7 +30,7 @@ const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
       })
     } catch (err: any) {
       toast({
-        type: 'error',
+        type: "error",
         message: err.data.error,
       })
     }

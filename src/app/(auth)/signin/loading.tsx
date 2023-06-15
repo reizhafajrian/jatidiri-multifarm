@@ -1,9 +1,5 @@
-import { Loader2 } from 'lucide-react'
+import Loader from "@/components/ui/Loader"
 
 export default function Loading() {
-  return (
-    <div className="grid h-screen place-items-center">
-      <Loader2 className="animate-spin stroke-primary-4" />
-    </div>
-  )
+  return <Loader className="grid h-screen place-items-center" />
 }

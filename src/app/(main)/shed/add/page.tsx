@@ -1,8 +1,9 @@
-import ShedForm from '@/components/form/ShedForm'
-import BackLink from '@/components/shared/BackLink'
+import BackLink from "@/components/ui/BackLink"
+
+import ShedForm from "./shed-form"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Add Shed',
+  title: "Jatidiri Multifarm | Add Shed",
 }
 
 export default function AddShedPage() {

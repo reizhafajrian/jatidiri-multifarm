@@ -1,9 +1,10 @@
-import ShedHeader from '@/components/layout/ShedHeader'
-import { StoreInitializer } from '@/components/shared'
-import ShedTable from '@/components/table/ShedTable'
+import StoreInitializer from "@/components/StoreInitializer"
+
+import ShedHeader from "./shed-header"
+import ShedTable from "./shed-table"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Shed',
+  title: "Jatidiri Multifarm | Shed",
 }
 
 export default function ShedPage(props: any) {

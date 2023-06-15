@@ -1,19 +1,20 @@
-import AnimalForm from '@/components/form/AnimalForm'
-import axios from 'axios'
-import { cookies } from 'next/headers'
-import { use } from 'react'
+import { use } from "react"
+import { cookies } from "next/headers"
+import axios from "axios"
+
+import EditAnimalForm from "./edit-animal-form"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Edit Animal',
+  title: "Jatidiri Multifarm | Edit Animal",
 }
 
 export default function EditAnimalPage({ params }: { params: any }) {
   const { animal, id } = params
-  const data = use(getData(animal, id, cookies().get('token')?.value!))
+  const data = use(getData(animal, id, cookies().get("token")?.value!))
 
   return (
-    <AnimalForm
-      formType="edit"
+    <EditAnimalForm
+      id={id}
       gender={data.detail.gender}
       cempekForm={data.detail.cempek}
       values={data.detail}
@@ -21,7 +22,6 @@ export default function EditAnimalPage({ params }: { params: any }) {
         pejantanOpts: data.pejantanOpts,
         indukanOpts: data.indukanOpts,
       }}
-      id={id}
     />
   )
 }
@@ -38,8 +38,8 @@ const getData = async (animal: string, id: string, token: string) => {
     data: { data: detail },
   } = await axios.get(url + `/detail/${id}`, options)
 
-  const pejantan = await axios.get(url + '?gender=true', options)
-  const indukan = await axios.get(url + '?gender=false', options)
+  const pejantan = await axios.get(url + "?gender=true", options)
+  const indukan = await axios.get(url + "?gender=false", options)
 
   const pejantanOpts = pejantan.data.data.map((item: any) => ({
     name: item.eartag_code,

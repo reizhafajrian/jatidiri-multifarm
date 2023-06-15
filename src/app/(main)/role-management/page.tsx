@@ -1,14 +1,15 @@
-import { MemberCard } from '@/components/card'
-import RoleManagementHeader from '@/components/layout/RoleManagementHeader'
-import axios from 'axios'
-import { cookies } from 'next/headers'
+import { cookies } from "next/headers"
+import axios from "axios"
+
+import MemberCard from "./rm-card"
+import RoleManagementHeader from "./rm-header"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | Role Management',
+  title: "Jatidiri Multifarm | Role Management",
 }
 
 export default async function RoleManagementPage() {
-  const { data } = await getData(cookies().get('token')?.value!)
+  const { data } = await getData(cookies().get("token")?.value!)
 
   return (
     <>
@@ -27,7 +28,7 @@ const getData = async (token: string) => {
   const Authorization = `bearer ${token}`
   const headers = { headers: { Authorization } }
 
-  const res = await axios.get(baseUrl + '/user/get', headers)
+  const res = await axios.get(baseUrl + "/user/get", headers)
 
   return res.data
 }

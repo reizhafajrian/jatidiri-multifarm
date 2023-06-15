@@ -1,5 +1,5 @@
-import useStore from '@/store/useStore'
-import axios from 'axios'
+import useStore from "@/store/useStore"
+import axios from "axios"
 
 export const Get = async (url: string) => {
   const token = useStore.getState().token

@@ -1,6 +1,7 @@
-import { Get } from '@/lib/api'
-import useStore from '@/store/useStore'
-import useSWR from 'swr'
+import useStore from "@/store/useStore"
+import useSWR from "swr"
+
+import { Get } from "@/lib/api"
 
 const useHppList = () => {
   const {
@@ -11,9 +12,9 @@ const useHppList = () => {
     searchLoading,
   } = useStore()
   const queriesArray = []
-  hppStatus !== 'all' && queriesArray.push(`status=${hppStatus}`)
+  hppStatus !== "all" && queriesArray.push(`status=${hppStatus}`)
 
-  const queries = queriesArray?.join('&')
+  const queries = queriesArray?.join("&")
   const url = `/api/hpp/get?animal_type=${animal}`
   const endpoint = queriesArray ? url + `&${queries}` : url
 

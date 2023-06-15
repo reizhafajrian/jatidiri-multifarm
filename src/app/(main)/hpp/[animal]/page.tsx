@@ -1,10 +1,11 @@
-import HppFilter from '@/components/filter/HppFilter'
-import HppHeader from '@/components/layout/HppHeader'
-import { StoreInitializer } from '@/components/shared'
-import HppTable from '@/components/table/HppTable'
+import StoreInitializer from "@/components/StoreInitializer"
+
+import HppFilter from "./hpp-filter"
+import HppHeader from "./hpp-header"
+import HppTable from "./hpp-table"
 
 export const metadata = {
-  title: 'Jatidiri Multifarm | HPP',
+  title: "Jatidiri Multifarm | HPP",
 }
 
 export default function Page(props: { params: any }) {

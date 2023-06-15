@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .simplebar-scrollbar::before {
-  background-color: '#306e52';
+  background-color: "#306e52";
 }

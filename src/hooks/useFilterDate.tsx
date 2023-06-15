@@ -1,4 +1,5 @@
-import useStore from '@/store/useStore'
+import { useState } from "react"
+import useStore from "@/store/useStore"
 import {
   format,
   lastDayOfMonth,
@@ -7,10 +8,9 @@ import {
   startOfMonth,
   startOfWeek,
   startOfYear,
-} from 'date-fns'
-import { useState } from 'react'
+} from "date-fns"
 
-const shape = 'yyyy-MM-dd'
+const shape = "yyyy-MM-dd"
 const today = new Date()
 
 const now = format(today, shape)
@@ -28,10 +28,10 @@ export const thisYearValue = `start=${fdOfThisYear}&end=${ldOfThisYear}`
 
 function useFilterDate() {
   const dateOptions = [
-    { name: 'Today', value: todayValue },
-    { name: 'This Week', value: thisWeekValue },
-    { name: 'This Month', value: thisMonthValue },
-    { name: 'This Year', value: thisYearValue },
+    { name: "Today", value: todayValue },
+    { name: "This Week", value: thisWeekValue },
+    { name: "This Month", value: thisMonthValue },
+    { name: "This Year", value: thisYearValue },
   ]
 
   const [startDate, setStartDate] = useState(new Date())

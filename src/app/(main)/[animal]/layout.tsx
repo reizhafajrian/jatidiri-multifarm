@@ -1,15 +1,17 @@
-import AnimalHeader from '@/components/layout/AnimalHeader'
-import { StoreInitializer } from '@/components/shared'
-import axios from 'axios'
-import { cookies } from 'next/headers'
-import { ReactNode } from 'react'
+import { ReactNode } from "react"
+import { cookies } from "next/headers"
+import axios from "axios"
+
+import StoreInitializer from "@/components/StoreInitializer"
+
+import AnimalHeader from "./animal-header"
 
 export default async function AnimalLayout(props: {
   children: ReactNode
   params: any
 }) {
   const { animal } = props.params
-  const token = cookies().get('token')?.value
+  const token = cookies().get("token")?.value
   const { undefinedClusterTotal: total } = await getData(animal, token!)
 
   return (
@@ -32,7 +34,7 @@ const getData = async (animal: string, token: string) => {
     .then((res) => res.data.data)
 
   let cempek = []
-  if (animal !== 'cow') {
+  if (animal !== "cow") {
     cempek = await axios
       .get(baseUrl + `/${animal}/cempek/get`, { headers })
       .then((res) => res.data.data)

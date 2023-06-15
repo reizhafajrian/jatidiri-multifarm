@@ -1,14 +1,14 @@
-import { toast } from '@/components/shared'
-import { Post } from '@/lib/api'
-import { StateCreator } from 'zustand'
-import { IHppState } from '../types'
+import { StateCreator } from "zustand"
+
+import { Post } from "@/lib/api"
+import { toast } from "@/components/ui/Toast"
+
+import { IHppState } from "../types"
 
 const createHppSlice: StateCreator<IHppState> = (set, get) => ({
-  hppStatus: 'all',
+  hppStatus: "all",
   editHpp: async (data, animal) => {
     try {
-
-      
       const url = `/api/hpp/update?animal_type=${animal}`
 
       const res = await Post({
@@ -17,12 +17,12 @@ const createHppSlice: StateCreator<IHppState> = (set, get) => ({
       })
 
       toast({
-        type: 'success',
+        type: "success",
         message: res.message,
       })
     } catch (err: any) {
       return toast({
-        type: 'error',
+        type: "error",
         message: err.data.errors[0].msg,
       })
     }

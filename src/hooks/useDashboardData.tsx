@@ -1,26 +1,27 @@
-import { Get } from '@/lib/api'
-import useStore from '@/store/useStore'
-import useSwr from 'swr'
+import useStore from "@/store/useStore"
+import useSwr from "swr"
+
+import { Get } from "@/lib/api"
 
 const useDashboardData = () => {
   const { filterByDate: params } = useStore()
 
   const url = {
-    sell: '/api/dashboard/sell/get?',
-    sellComparison: '/api/dashboard/sell/comparison/get?',
-    purchase: '/api/dashboard/purchase/get?',
-    purchaseComparison: '/api/dashboard/purchase/comparison/get?',
-    cow: '/api/dashboard/cow/get?',
-    sheep: '/api/dashboard/sheep/get?',
-    goat: '/api/dashboard/goat/get?',
+    sell: "/api/dashboard/sell/get?",
+    sellComparison: "/api/dashboard/sell/comparison/get?",
+    purchase: "/api/dashboard/purchase/get?",
+    purchaseComparison: "/api/dashboard/purchase/comparison/get?",
+    cow: "/api/dashboard/cow/get?",
+    sheep: "/api/dashboard/sheep/get?",
+    goat: "/api/dashboard/goat/get?",
 
-    soldAnimals: '/api/dashboard/animals/sold?',
+    soldAnimals: "/api/dashboard/animals/sold?",
     // events: '',
-    income: '/api/dashboard/milk/income/get?',
-    milkSales: '/api/dashboard/milk/get?',
-    dataAnalytics: '/api/dashboard/animals/alive?',
-    diedAnimals: '/api/dashboard/animals/died?',
-    goatsData: '/api/dashboard/goat/type/get?status=alive&gender=false&',
+    income: "/api/dashboard/milk/income/get?",
+    milkSales: "/api/dashboard/milk/get?",
+    dataAnalytics: "/api/dashboard/animals/alive?",
+    diedAnimals: "/api/dashboard/animals/died?",
+    goatsData: "/api/dashboard/goat/type/get?status=alive&gender=false&",
   }
 
   const { data: sell } = useSwr(url.sell + params, Get)
