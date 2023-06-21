@@ -1,13 +1,11 @@
-import { FC, ReactNode } from "react"
-
 import { cn } from "@/lib/utils"
 
 interface IProps {
-  children: ReactNode
+  children: React.ReactNode
   className?: string
 }
 
-const Card: FC<IProps> = ({ className, children }) => {
+export default function Card({ className, children }: IProps) {
   return (
     <div
       className={cn(
@@ -19,5 +17,3 @@ const Card: FC<IProps> = ({ className, children }) => {
     </div>
   )
 }
-
-export default Card

@@ -1,12 +1,12 @@
 "use client"
 
-import { FC, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { shedDetailSchema } from "@/lib/schemas"
-import { IShedDetail } from "@/store/types"
+import { IShedDetail } from "@/store/slices/shedSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -23,10 +23,14 @@ import InputDate from "@/components/ui/InputDate"
 import InputSelect from "@/components/ui/InputSelect"
 import InputText from "@/components/ui/InputText"
 
-const ShedDetailForm: FC<{ options: any }> = ({ options }) => {
+interface IProps {
+  options: any
+}
+
+export default function ShedDetailForm({ options }: IProps) {
   const [open, setOpen] = useState(false)
-  const { user, addShedData, shed_code, shed_id } = useStore()
   const [categories, setCategories] = useState<any>({ feed: true })
+  const { user, addShedData, shed_code, shed_id } = useStore()
 
   const methods = useForm<IShedDetail>({
     resolver: zodResolver(shedDetailSchema(categories)),
@@ -36,7 +40,6 @@ const ShedDetailForm: FC<{ options: any }> = ({ options }) => {
     await addShedData(values)
     setOpen(false)
     methods.reset()
-
     mutate(`/api/shed/data/get?shed_code=${shed_id}`)
     mutate(`/api/shed/get/detail/${shed_code}`)
   }
@@ -128,8 +131,6 @@ const ShedDetailForm: FC<{ options: any }> = ({ options }) => {
     </DialogRoot>
   )
 }
-
-export default ShedDetailForm
 
 const shedDataFormContent = {
   options: [

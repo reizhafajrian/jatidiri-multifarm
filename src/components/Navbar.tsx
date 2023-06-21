@@ -1,5 +1,3 @@
-import { FC } from "react"
-
 import NavbarLink from "./NavbarLink"
 
 interface IProps {
@@ -8,9 +6,7 @@ interface IProps {
   children?: React.ReactNode
 }
 
-const Navbar: FC<IProps> = (props) => {
-  const { menu, className, children } = props
-
+export default function Navbar({ menu, className, children }: IProps) {
   return (
     <div className={className}>
       <div>
@@ -22,5 +18,3 @@ const Navbar: FC<IProps> = (props) => {
     </div>
   )
 }
-
-export default Navbar

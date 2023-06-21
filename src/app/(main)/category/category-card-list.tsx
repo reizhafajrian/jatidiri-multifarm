@@ -1,5 +1,3 @@
-import { FC } from "react"
-
 import Card from "@/components/ui/Card"
 
 interface IProps {
@@ -11,7 +9,7 @@ interface IProps {
   }[]
 }
 
-const CategoryCardList: FC<IProps> = ({ cardList }) => {
+export default function CategoryCardList({ cardList }: IProps) {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
       {cardList?.map((item, idx) => (
@@ -34,5 +32,3 @@ const CategoryCardList: FC<IProps> = ({ cardList }) => {
     </div>
   )
 }
-
-export default CategoryCardList

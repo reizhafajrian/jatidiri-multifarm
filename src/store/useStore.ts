@@ -2,36 +2,25 @@ import { create } from "zustand"
 
 import { thisYearValue } from "@/hooks/useFilterDate"
 
-import createAnimalSlice from "./slices/animalSlice"
-import createAuthSlice from "./slices/authSlice"
-import createCategorySlice from "./slices/categorySlice"
+import createAnimalSlice, { IAnimalState } from "./slices/animalSlice"
+import createAuthSlice, { IAuthState } from "./slices/authSlice"
+import createCategorySlice, { ICategoryState } from "./slices/categorySlice"
 import createExpandSlice, { IExpandState } from "./slices/expandSlice"
-import createHppSlice from "./slices/hppSlice"
-import createMilkSlice from "./slices/milkSlice"
+import createHppSlice, { IHppState } from "./slices/hppSlice"
+import createMilkSlice, { IMilkState } from "./slices/milkSlice"
 import createSearchSlice, { ISearchState } from "./slices/searchSlice"
-import createShedSlice from "./slices/shedSlice"
-import {
-  IAnimalState,
-  IAuth,
-  ICategoryState,
-  IHppState,
-  IMilkState,
-  IShedState,
-} from "./types"
+import createShedSlice, { IShedState } from "./slices/shedSlice"
 
-interface IState
-  extends IAuth,
-    IAnimalState,
-    IShedState,
-    ICategoryState,
-    IMilkState,
-    IHppState,
-    IExpandState,
-    ISearchState {
-  filterByDate: string
-}
-
-const useStore = create<IState>()((...a) => ({
+const useStore = create<
+  IAuthState &
+    IAnimalState &
+    IShedState &
+    ICategoryState &
+    IMilkState &
+    IHppState &
+    IExpandState &
+    ISearchState & { filterByDate: string }
+>()((...a) => ({
   ...createAuthSlice(...a),
   ...createAnimalSlice(...a),
   ...createShedSlice(...a),

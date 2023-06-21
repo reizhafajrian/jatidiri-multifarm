@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { formatRupiah } from "@/lib/utils"
@@ -11,7 +10,11 @@ import Table from "@/components/ui/Table"
 
 import EditCategoryForm from "./category-form-edit"
 
-const CategoryTable: FC<{ category: string }> = ({ category }) => {
+interface IProps {
+  category: string
+}
+
+export default function CategoryTable({ category }: IProps) {
   const { deleteCategory } = useStore()
   const { data, loading, mutate } = useDataList(`/api/${category}/get`)
 
@@ -55,10 +58,6 @@ const CategoryTable: FC<{ category: string }> = ({ category }) => {
   ]
 
   return (
-    <>
-      <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
-    </>
+    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
-
-export default CategoryTable

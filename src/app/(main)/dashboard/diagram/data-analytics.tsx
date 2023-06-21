@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import {
   BarElement,
   CategoryScale,
@@ -15,11 +14,11 @@ import { Bar } from "react-chartjs-2"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-interface DataAnalyticsDiagramProps {
+interface IProps {
   data: any
 }
 
-const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({ data }) => {
+export default function DataAnalyticsDiagram({ data }: IProps) {
   const dataAnalytics: ChartData<"bar", number[], string> = {
     labels: ["Total Hewan Aktif"],
     datasets: [
@@ -60,5 +59,3 @@ const DataAnalyticsDiagram: FC<DataAnalyticsDiagramProps> = ({ data }) => {
     />
   )
 }
-
-export default DataAnalyticsDiagram

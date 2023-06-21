@@ -1,5 +1,3 @@
-import { FC } from "react"
-
 import { Icons } from "@/components/ui/Icons"
 
 interface IProps {
@@ -7,7 +5,10 @@ interface IProps {
   undefinedClusterTotal: number
 }
 
-const AlertCluster: FC<IProps> = ({ animal, undefinedClusterTotal }) => {
+export default function AlertCluster({
+  animal,
+  undefinedClusterTotal,
+}: IProps) {
   return (
     <div className="my-8 flex gap-5 bg-warning/30 px-5 py-3">
       <Icons.exclamationTriangle />
@@ -23,5 +24,3 @@ const AlertCluster: FC<IProps> = ({ animal, undefinedClusterTotal }) => {
     </div>
   )
 }
-
-export default AlertCluster

@@ -1,13 +1,12 @@
 "use client"
 
-import { FC } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import { longDateFormatter } from "@/lib/utils"
 import useShedDetailList from "@/hooks/useShedDetailList"
 import Table from "@/components/ui/Table"
 
-const ShedInfoTable: FC = () => {
+export default function ShedInfoTable() {
   const { data, loading } = useShedDetailList()
 
   const columns: ColumnDef<any, any>[] = [
@@ -67,5 +66,3 @@ const ShedInfoTable: FC = () => {
     <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
-
-export default ShedInfoTable

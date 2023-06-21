@@ -1,21 +1,18 @@
 import useStore from "@/store/useStore"
-import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import useDataList from "./useDataList"
 
 const useShedAnimalTags = () => {
   const { animal, shed_code, type } = useStore()
-
   const isCempek = type === "cempek"
   const gender = type === "male" ? "true" : "false"
-
   const url = isCempek
     ? `/api/${animal.name}/cempek/get`
     : `/api/${animal.name}/get?gender=${gender}`
 
-  const { data, isLoading, error, mutate } = useSWR(url, Get)
+  const { data, loading, error, mutate } = useDataList(url)
 
-  const list = data?.data.filter((item: any) => item.shed_code !== shed_code)
+  const list = data.filter((item: any) => item.shed_code !== shed_code)
 
   const eartagOptions =
     list?.map((item: any) => ({
@@ -25,7 +22,7 @@ const useShedAnimalTags = () => {
 
   return {
     eartagOptions,
-    loading: isLoading,
+    loading,
     error,
     mutate,
   }

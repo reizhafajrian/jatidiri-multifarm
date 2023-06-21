@@ -7,7 +7,7 @@ import { Icons } from "@/components/ui/Icons"
 
 interface IProps {
   name: string
-  label: string
+  label?: string
   isSecured?: boolean
   disabled?: boolean
   type?: string

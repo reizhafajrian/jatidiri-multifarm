@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 import { shedAnimalSchema } from "@/lib/schemas"
 import useShedAnimalList from "@/hooks/useShedAnimalList"
 import useShedAnimalTags from "@/hooks/useshedAnimalTags"
-import { IShedAnimal } from "@/store/types"
+import { IShedAnimal } from "@/store/slices/shedSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -22,7 +22,7 @@ import { Icons } from "@/components/ui/Icons"
 import InputSelect from "@/components/ui/InputSelect"
 import InputText from "@/components/ui/InputText"
 
-const ShedAnimalForm = () => {
+export default function ShedAnimalForm() {
   const [open, setOpen] = useState(false)
   const { animal, shed_id, addShedAnimal } = useStore()
 
@@ -34,7 +34,7 @@ const ShedAnimalForm = () => {
   })
 
   const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
-    await addShedAnimal(values)
+    await addShedAnimal({ ...values, id: shed_id })
     mutateTable()
     mutateEartags()
     setOpen(false)
@@ -49,12 +49,8 @@ const ShedAnimalForm = () => {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogTitle>Tambah Data {animal.title}</DialogTitle>
-
-        <Form
-          methods={methods}
-          onSubmit={(values) => onSubmit({ ...values, id: shed_id })}
-        >
+        <Form methods={methods} onSubmit={(values) => onSubmit(values)}>
+          <DialogTitle>Tambah Data {animal.title}</DialogTitle>
           <div className="mb-8 space-y-6">
             <InputSelect
               name="eartag_code"
@@ -87,5 +83,3 @@ const ShedAnimalForm = () => {
     </DialogRoot>
   )
 }
-
-export default ShedAnimalForm

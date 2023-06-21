@@ -1,4 +1,3 @@
-import { ReactNode } from "react"
 import { cookies } from "next/headers"
 import axios from "axios"
 
@@ -7,7 +6,7 @@ import StoreInitializer from "@/components/StoreInitializer"
 import AnimalHeader from "./animal-header"
 
 export default async function AnimalLayout(props: {
-  children: ReactNode
+  children: React.ReactNode
   params: any
 }) {
   const { animal } = props.params

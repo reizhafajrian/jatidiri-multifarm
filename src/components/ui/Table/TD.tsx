@@ -1,4 +1,3 @@
-import { FC } from "react"
 import { flexRender } from "@tanstack/react-table"
 
 import { cn } from "@/lib/utils"
@@ -8,12 +7,10 @@ interface IProps {
   className?: string
 }
 
-const TD: FC<IProps> = ({ cell, className }) => {
+export default function TD({ cell, className }: IProps) {
   return (
     <td className={cn("relative bg-white p-4 text-xs", className)}>
       {flexRender(cell.column.columnDef.cell, cell.getContext())}
     </td>
   )
 }
-
-export default TD

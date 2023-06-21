@@ -1347,6 +1347,7 @@ export const Icons = {
   trash: LR.Trash2,
   loader: LR.Loader2,
   search: LR.SearchIcon,
+  camera: LR.Camera,
 
   // sidebar menu icons
   dashboard: Dashboard,

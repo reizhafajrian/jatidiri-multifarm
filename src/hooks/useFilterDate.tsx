@@ -1,5 +1,4 @@
 import { useState } from "react"
-import useStore from "@/store/useStore"
 import {
   format,
   lastDayOfMonth,
@@ -9,6 +8,8 @@ import {
   startOfWeek,
   startOfYear,
 } from "date-fns"
+
+import useStore from "@/store/useStore"
 
 const shape = "yyyy-MM-dd"
 const today = new Date()

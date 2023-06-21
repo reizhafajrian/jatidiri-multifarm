@@ -1,71 +1,51 @@
-import useStore from "@/store/useStore"
 import axios from "axios"
 
-export const Get = async (url: string) => {
-  const token = useStore.getState().token
-  try {
-    const res = await axios.get(url, {
-      withCredentials: true,
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
+import useStore from "@/store/useStore"
 
-    return res.data
-  } catch (err: any) {
-    return Promise.reject(err.response)
-  }
-}
-
-type params = {
+interface params {
   url: string
-  data?: any
+  data: any
 }
 
-export const Post = async ({ url, data }: params) => {
-  const token = useStore.getState().token
-  try {
-    const res = await axios.post(url, data, {
-      withCredentials: true,
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-
-    return res.data
-  } catch (err: any) {
-    return Promise.reject(err.response)
-  }
-}
-
-export const Put = async ({ url, data }: params) => {
-  const token = useStore.getState().token
-  try {
-    const res = await axios.put(url, data, {
-      withCredentials: true,
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-
-    return res.data
-  } catch (err: any) {
-    return Promise.reject(err.response)
-  }
-}
-
-export const Delete = async (url: string) => {
-  const token = useStore.getState().token
-  try {
-    const res = await axios.delete(url, {
-      withCredentials: true,
-      headers: {
-        Authorization: `bearer ${token}`,
-      },
-    })
-
-    return res.data
-  } catch (err: any) {
-    return Promise.reject(err.response)
-  }
+export const Api = {
+  options: (token: string) => ({
+    withCredentials: true,
+    headers: { Authorization: `bearer ${token}` },
+  }),
+  get: async (url: string) => {
+    try {
+      const opt = Api.options(useStore.getState().token)
+      const res = await axios.get(url, opt)
+      return res.data
+    } catch (err: any) {
+      return Promise.reject(err.response)
+    }
+  },
+  post: async ({ url, data }: params) => {
+    try {
+      const opt = Api.options(useStore.getState().token)
+      const res = await axios.post(url, data, opt)
+      return res.data
+    } catch (err: any) {
+      return Promise.reject(err.response)
+    }
+  },
+  put: async ({ url, data }: params) => {
+    try {
+      const opt = Api.options(useStore.getState().token)
+      const res = await axios.put(url, data, opt)
+      return res.data
+    } catch (err: any) {
+      return Promise.reject(err.response)
+    }
+  },
+  delete: async (url: string) => {
+    try {
+      const opt = Api.options(useStore.getState().token)
+      const res = await axios.delete(url, opt)
+      return res.data
+    } catch (err: any) {
+      return Promise.reject(err.response)
+    }
+  },
 }

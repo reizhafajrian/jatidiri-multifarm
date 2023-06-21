@@ -1,90 +1,11 @@
 "use client"
 
-import { FC } from "react"
-
 import useDashboardData from "@/hooks/useDashboardData"
-import { Icons as I } from "@/components/ui/Icons"
 
 import * as C from "./card"
-import * as D from "./diagram"
 
-const DashboardContent: FC = () => {
-  const data = useDashboardData()
-
-  const info = [
-    {
-      data: {
-        icon: <I.dashboardWallet />,
-        title: "total pendapatan",
-        value: data.sell?.totalAllAnimals,
-      },
-      comparison: data.sellComp,
-    },
-    {
-      data: {
-        icon: <I.dashboardCart />,
-        title: "total pembelian",
-        value: data.purchase?.totalAllAnimals,
-      },
-      comparison: data.purchaseComp,
-    },
-  ]
-
-  const animal = [
-    {
-      icon: <I.dashboardCow />,
-      animal_type: "cow",
-      totalAdult: data.cow?.data,
-      totalCempek: undefined,
-    },
-    {
-      icon: <I.dashboardSheep />,
-      animal_type: "sheep",
-      totalAdult: data.sheep?.total.sheep,
-      totalCempek: data.sheep?.total.cempek,
-    },
-    {
-      icon: <I.dashboardGoat />,
-      animal_type: "goat",
-      totalAdult: data.goat?.total.goat,
-      totalCempek: data.goat?.total.cempek,
-    },
-  ]
-
-  const diagram = [
-    {
-      title: "ternak terjual",
-      className: "md:col-span-5",
-      children: <D.SoldAnimalsDiagram data={data.soldAnimals} />,
-    },
-    {
-      title: "pendapatan event",
-      className: "md:col-span-4",
-      children: <D.EventIncomeDiagram />,
-    },
-    {
-      title: "penjualan susu",
-      className: "md:col-span-3",
-      children: (
-        <D.MilkSalesDiagram data={data.milkSales} total={data.income} />
-      ),
-    },
-    {
-      title: "data analytics",
-      className: "md:col-span-5",
-      children: <D.DataAnalyticsDiagram data={data.dataAnalytics} />,
-    },
-    {
-      title: "hewan mati",
-      className: "md:col-span-4",
-      children: <D.DeadAnimalsDiagram data={data.diedAnimals} />,
-    },
-    {
-      title: "total kambing menyusui",
-      className: "md:col-span-3",
-      children: <D.GoatsDiagram data={data.goatsData} />,
-    },
-  ]
+export default function DashboardContent() {
+  const { info, animal, diagram } = useDashboardData()
 
   return (
     <div className="space-y-6">
@@ -112,5 +33,3 @@ const DashboardContent: FC = () => {
     </div>
   )
 }
-
-export default DashboardContent

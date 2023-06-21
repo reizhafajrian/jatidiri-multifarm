@@ -1,7 +1,6 @@
-import useSWR from "swr"
-
-import { Get } from "@/lib/api"
 import useStore from "@/store/useStore"
+
+import useDataList from "./useDataList"
 
 function uniq(a: any[]) {
   return a?.sort()?.filter(function (item: any, pos: number, ary: any[]) {
@@ -16,14 +15,15 @@ function useAnimalFilter() {
   const all = { name: "all", value: "all" }
 
   const url = `/api/${animal.name}/get`
-  const { data, isLoading } = useSWR(url, Get)
+
+  const { data, loading } = useDataList(url)
 
   if (data) {
-    originFemaleOpts = uniq(
-      data?.data.map((item: any) => item.origin_female)
-    )?.map((item) => ({ name: item, value: item }))
+    originFemaleOpts = uniq(data?.map((item: any) => item.origin_female))?.map(
+      (item) => ({ name: item, value: item })
+    )
 
-    originMaleOpts = uniq(data?.data.map((item: any) => item.origin_male))?.map(
+    originMaleOpts = uniq(data?.map((item: any) => item.origin_male))?.map(
       (item) => ({ name: item, value: item })
     )
   }
@@ -38,14 +38,7 @@ function useAnimalFilter() {
     ],
   }
 
-  return {
-    opts,
-    loading: isLoading,
-    setFilter,
-    originMale,
-    originFemale,
-    vaccine,
-  }
+  return { opts, loading, setFilter, originMale, originFemale, vaccine }
 }
 
 export default useAnimalFilter

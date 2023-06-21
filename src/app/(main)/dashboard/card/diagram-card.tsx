@@ -1,5 +1,3 @@
-import React, { FC } from "react"
-
 import Card from "@/components/ui/Card"
 import { Icons } from "@/components/ui/Icons"
 
@@ -9,7 +7,11 @@ interface IProps {
   children?: React.ReactNode
 }
 
-const DashboardDiagramCard: FC<IProps> = ({ className, title, children }) => {
+export default function DashboardDiagramCard({
+  className,
+  title,
+  children,
+}: IProps) {
   return (
     <Card className={className}>
       <div className="mb-4 flex items-center justify-between capitalize">
@@ -20,5 +22,3 @@ const DashboardDiagramCard: FC<IProps> = ({ className, title, children }) => {
     </Card>
   )
 }
-
-export default DashboardDiagramCard

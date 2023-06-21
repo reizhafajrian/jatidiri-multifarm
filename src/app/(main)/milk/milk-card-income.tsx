@@ -9,7 +9,7 @@ import { Icons } from "@/components/ui/Icons"
 
 import IncomeForm from "./milk-form-income"
 
-const MilkIncomeCard = () => {
+export default function MilkIncomeCard() {
   const info = {
     // income_total: 1250000,
     income_date: new Date(),
@@ -62,5 +62,3 @@ const MilkIncomeCard = () => {
     </Card>
   )
 }
-
-export default MilkIncomeCard

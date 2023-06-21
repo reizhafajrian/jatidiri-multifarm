@@ -5,9 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import { Api } from "@/lib/api"
 import { shedSchema } from "@/lib/schemas"
-import { IShed } from "@/store/types"
+import { IShed } from "@/store/slices/shedSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import Form from "@/components/ui/Form"
@@ -18,15 +18,14 @@ import InputText from "@/components/ui/InputText"
 export default function ShedForm() {
   const router = useRouter()
   const { user, addShed } = useStore()
+
+  const { data, isLoading } = useSWR(`/api/feed/get`, Api.get)
+
   const methods = useForm<IShed>({ resolver: zodResolver(shedSchema) })
-  const { data: res, error, isLoading } = useSWR(`/api/feed/get`, Get)
-  const { data } = res || {}
 
   return (
     <Form
-      onSubmit={(values) =>
-        addShed({ ...values, created_by: user?.id }, router)
-      }
+      onSubmit={(values) => addShed({ ...values, created_by: user?.id })}
       methods={methods}
       className="space-y-4"
     >

@@ -1,30 +1,38 @@
 import { StateCreator } from "zustand"
 
-import { Post } from "@/lib/api"
+import { Api } from "@/lib/api"
 import { toast } from "@/components/ui/Toast"
 
-import { IHppState } from "../types"
+export interface IHppState {
+  // hpp: IHpp
+  // hppList: IHpp[]
+  hppStatus: string
+  editHpp: (data: IEditHpp, animal: string) => void
+}
 
-const createHppSlice: StateCreator<IHppState> = (set, get) => ({
+export interface IEditHpp {
+  _id?: string
+  eartag_code?: string
+  hpp_price?: number
+  sell_price?: number
+  buyer?: number
+  phoneNumber?: number
+  description?: string
+}
+
+const createHppSlice: StateCreator<IHppState> = () => ({
   hppStatus: "all",
   editHpp: async (data, animal) => {
     try {
-      const url = `/api/hpp/update?animal_type=${animal}`
-
-      const res = await Post({
-        url,
+      const res = await Api.post({
+        url: `/api/hpp/update?animal_type=${animal}`,
         data: { data: [data] },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      toast({ type: "success", message: res.message })
+      window.location.reload()
     } catch (err: any) {
-      return toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      return toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
 })

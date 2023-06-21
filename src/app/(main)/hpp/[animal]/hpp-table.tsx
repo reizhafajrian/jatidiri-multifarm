@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import useHppList from "@/hooks/useHppList"
@@ -11,15 +10,15 @@ import Table from "@/components/ui/Table"
 import { hppColumns } from "./column"
 import EditHppForm from "./hpp-form-edit"
 
-const statusOptions = [
-  { name: "Terjual", value: "sold", bgColor: "bg-[#FFE2DC]" },
-  { name: "Tersedia", value: "available", bgColor: "bg-[#E1F7E8]" },
-  { name: "Mati", value: "died", bgColor: "bg-[#BFC4C6] bg-opacity-20" },
-]
-
-const HppTable: FC = () => {
+export default function HppTable() {
   const { editAnimal } = useStore()
   const { data, loading, mutate } = useHppList()
+
+  const statusOptions = [
+    { name: "Terjual", value: "sold", bgColor: "bg-[#FFE2DC]" },
+    { name: "Tersedia", value: "available", bgColor: "bg-[#E1F7E8]" },
+    { name: "Mati", value: "died", bgColor: "bg-[#BFC4C6] bg-opacity-20" },
+  ]
 
   const changeStatusHandler = async (value: any, _id?: string) => {
     const pathname = window?.location?.pathname
@@ -46,10 +45,12 @@ const HppTable: FC = () => {
         />
       ),
     },
+    { header: "Nama Pembeli", accessorKey: "buyer" },
+    { header: "No Telepon", accessorKey: "phoneNumber" },
     {
       header: "Aksi",
       accessorKey: "eartag_code",
-      cell: (data) => <EditHppForm data={data.row.original} mutate={mutate} />,
+      cell: (data) => <EditHppForm data={data.row.original} />,
     },
   ]
 
@@ -57,5 +58,3 @@ const HppTable: FC = () => {
     <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
-
-export default HppTable

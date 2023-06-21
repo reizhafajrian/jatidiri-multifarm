@@ -1,6 +1,6 @@
 import { StateCreator } from "zustand"
 
-import { Get } from "@/lib/api"
+import { Api } from "@/lib/api"
 import { toast } from "@/components/ui/Toast"
 
 export interface ISearchState {
@@ -11,15 +11,19 @@ export interface ISearchState {
   searchHandler: (keyword: string) => void
 }
 
-const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
+const initialstate = {
   searchType: "",
   searchKeyword: "",
   searchLoading: false,
   searchResults: [],
+}
+
+const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
+  ...initialstate,
   searchHandler: async (keyword) => {
     try {
       set({ searchLoading: true })
-      const res = await Get(
+      const res = await Api.get(
         `/api/search?type=${get().searchType}&search=${keyword}`
       )
 
@@ -29,10 +33,7 @@ const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
         searchKeyword: keyword,
       })
     } catch (err: any) {
-      toast({
-        type: "error",
-        message: err.data.error,
-      })
+      toast({ type: "error", message: err.data.error })
     }
   },
 })

@@ -2,12 +2,13 @@
 
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { ColumnDef } from "@tanstack/react-table"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { incomeSchema } from "@/lib/schemas"
 import { formatRupiah } from "@/lib/utils"
-import { IMilkInfo } from "@/store/types"
+import { IMilkInfo } from "@/store/slices/milkSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -20,11 +21,20 @@ import {
 import Form from "@/components/ui/Form"
 import InputDate from "@/components/ui/InputDate"
 import InputText from "@/components/ui/InputText"
+import Table from "@/components/ui/Table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs"
 
-const IncomeForm = () => {
+export default function IncomeForm() {
   const [open, setOpen] = useState(false)
   const { user, incomeHistory, addIncome, setIncomeHistory } = useStore()
+
+  const columns: ColumnDef<any, any>[] = [
+    { header: "Tanggal", accessorKey: "milk_date" },
+    { header: "Susu (L)", accessorKey: "milk" },
+    { header: "Harga perliter (Rp)", accessorKey: "price" },
+    { header: "Total (Rp)", accessorKey: "total" },
+    { header: "Pembeli", accessorKey: "buyer" },
+  ]
 
   const methods = useForm<IMilkInfo>({
     resolver: zodResolver(incomeSchema),
@@ -81,23 +91,17 @@ const IncomeForm = () => {
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                  {/* <InputDate name="income_date" label="Tanggal" /> */}
                   <InputText
                     name="price"
                     label="Harga Terjual/Liter"
                     type="number"
                     rupiah
                   />
-                  <InputText
-                    name="income_total"
-                    label="Total"
-                    type="number"
-                    rupiah
-                  />
+                  <InputText name="total" label="Total" type="number" rupiah />
                 </div>
 
                 <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                  <InputText name="company" label="Perusahaan" />
+                  <InputText name="buyer" label="Perusahaan" />
                 </div>
               </TabsContent>
               <TabsContent value="history" className="space-y-3">
@@ -112,24 +116,15 @@ const IncomeForm = () => {
                   endDate={endDate}
                   onChange={historyHandler}
                 />
-                {/* <InputText
-                    name="history_income_total"
-                    label="History Pendapatan"
-                    type="number"
-                    rupiah
-                    disabled
-                  /> */}
-                <table className="table w-full table-auto">
-                  <thead>
-                    <tr>
-                      <th>tgl</th>
-                      <th>liter susu</th>
-                      <th>harga/lt</th>
-                      <th>total</th>
-                      <th>perusahaan</th>
-                    </tr>
-                  </thead>
-                </table>
+                <div className="max-h-[20rem] overflow-hidden">
+                  <Table
+                    isLoading={false}
+                    data={[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]}
+                    columns={columns}
+                    fixedCol={0}
+                    pageSize={4}
+                  />
+                </div>
               </TabsContent>
             </Tabs>
           </div>
@@ -158,5 +153,3 @@ const IncomeForm = () => {
     </DialogRoot>
   )
 }
-
-export default IncomeForm

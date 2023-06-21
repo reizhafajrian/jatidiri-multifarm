@@ -5,7 +5,7 @@ import HppHeader from "./hpp-header"
 import HppTable from "./hpp-table"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | HPP",
+  title: "HPP",
 }
 
 export default function Page(props: { params: any }) {

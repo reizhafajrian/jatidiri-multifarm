@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { useRouter } from "next/navigation"
 import { ColumnDef } from "@tanstack/react-table"
 
@@ -10,15 +9,23 @@ import { Button } from "@/components/ui/Button"
 import DeleteModal from "@/components/ui/DeleteModal"
 import Table from "@/components/ui/Table"
 
-import { animalTColumns, cempekTColumns } from "./column"
+import { cempekTColumns, femaleTColumns, maleTColumns } from "./column"
 
-const AnimalTable: FC<{ animal: string }> = ({ animal }) => {
+interface IProps {
+  animal: string
+}
+
+export default function AnimalTable({ animal }: IProps) {
   const router = useRouter()
   const { type, deleteAnimal } = useStore()
   const { data, loading, mutate } = useAnimalList()
 
   const columns: ColumnDef<any, any>[] = [
-    ...(type === "cempek" ? cempekTColumns : animalTColumns),
+    ...(type === "cempek"
+      ? cempekTColumns
+      : type === "male"
+      ? maleTColumns
+      : femaleTColumns),
     {
       header: "Aksi",
       accessorKey: "_id",
@@ -47,5 +54,3 @@ const AnimalTable: FC<{ animal: string }> = ({ animal }) => {
     <Table isLoading={loading} fixedCol={3} data={data} columns={columns} />
   )
 }
-
-export default AnimalTable

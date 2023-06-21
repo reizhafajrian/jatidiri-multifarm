@@ -1,18 +1,59 @@
 import { StateCreator } from "zustand"
 
-import { Get, Post } from "@/lib/api"
+import { Api } from "@/lib/api"
 import { toast } from "@/components/ui/Toast"
 
-import { IMilkState } from "../types"
+export interface IMilk {
+  _id?: string
+  eartag_code?: string
+  milk?: number
+  milk_date?: Date
+  // history_milk_date?: Date
+  history_milk?: number
+  animal_id?: string
+  created_by?: string
+}
 
-const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
+export interface IMilkInfo {
+  income_total?: number
+  income_date?: Date
+  history_income_total?: string
+  history_income_date?: Date
+  income_percentage?: number
+
+  milk_total?: number
+  milk_date?: Date
+  milk_percentage?: number
+  created_by?: string
+}
+
+export interface IMilkState {
+  // milk: IMilk
+  // milkInfo: IMilkInfo
+  // milkList: IMilk[]
+  milkStatus: string
+  // milkHistory: number
+  incomeHistory: number
+  addMilk: (data: IMilk) => void
+  editMilk: (data: IMilk) => void
+  setMilkHistory: (start: Date, end: Date) => Promise<number | undefined>
+  changeMilkStatus: (id: string, status: string) => void
+  addIncome: (data: IMilkInfo) => void
+  setIncomeHistory: (start: Date, end: Date) => void
+}
+
+const initialState = {
   milkStatus: "all",
   incomeHistory: 0,
+}
+
+const createMilkSlice: StateCreator<IMilkState> = (set) => ({
+  ...initialState,
   addMilk: async (data) => {
     try {
       const { created_by, milk, milk_date, eartag_code } = data
 
-      const res = await Post({
+      const res = await Api.post({
         url: "/api/milk/create",
         data: {
           amount: milk,
@@ -22,22 +63,16 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
         },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
   editMilk: async (data) => {
     try {
       const { _id, animal_id, created_by, milk, milk_date } = data
 
-      const res = await Post({
+      const res = await Api.post({
         url: "/api/milk/update",
         data: {
           data: [
@@ -52,15 +87,9 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
         },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
   setMilkHistory: async (start, end) => {
@@ -68,21 +97,15 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const s = start.toISOString()
       const e = end.toISOString()
       if (start !== null && end !== null) {
-        const res = await Get(`/api/milk/get/history?start=` + s + "&end=" + e)
-
-        return res.data
+        const { data } = await Api.get(
+          `/api/milk/get/history?start=` + s + "&end=" + e
+        )
+        return data
       }
     } catch (err: any) {
+      console.log(err)
       if (err.status === 404) {
-        toast({
-          type: "error",
-          message: "result none",
-        })
-        return 0
-      } else {
-        console.log(err)
-
-        return 0
+        toast({ type: "error", message: "result none" })
       }
     }
   },
@@ -90,27 +113,21 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
     try {
       const data = [{ _id, status }]
 
-      const res = await Post({
+      const res = await Api.post({
         url: "/api/milk/status/update",
         data: { data },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
   addIncome: async (data) => {
     try {
       const { created_by, income_date, income_total } = data
 
-      const res = await Post({
+      const res = await Api.post({
         url: "/api/milk/income/create",
         data: {
           amount: income_total,
@@ -119,15 +136,9 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
         },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
   setIncomeHistory: async (start, end) => {
@@ -135,20 +146,15 @@ const createMilkSlice: StateCreator<IMilkState> = (set, get) => ({
       const s = start.toISOString()
       const e = end.toISOString()
       if (start !== null && end !== null) {
-        const res = await Get(
+        const res = await Api.get(
           `/api/milk/income/get/history?start=` + s + "&end=" + e
         )
-
         set((state) => ({ ...state, incomeHistory: res.data }))
       }
     } catch (err: any) {
+      console.log(err)
       if (err.status === 404) {
-        toast({
-          type: "error",
-          message: "result none",
-        })
-      } else {
-        console.log(err)
+        toast({ type: "error", message: "result none" })
       }
     }
   },

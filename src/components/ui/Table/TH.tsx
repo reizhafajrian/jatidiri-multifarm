@@ -1,10 +1,14 @@
-import { FC } from "react"
 import { flexRender } from "@tanstack/react-table"
 
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/ui/Icons"
 
-const TH: FC<{ header: any; className?: string }> = ({ header, className }) => {
+interface IProps {
+  header: any
+  className?: string
+}
+
+export default function TH({ header, className }: IProps) {
   return (
     <th
       colSpan={header.colSpan}
@@ -33,5 +37,3 @@ const TH: FC<{ header: any; className?: string }> = ({ header, className }) => {
     </th>
   )
 }
-
-export default TH

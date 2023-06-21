@@ -1,10 +1,12 @@
 "use client"
 
-import { FC } from "react"
-
 import SelectFilter from "@/components/ui/SelectFilter"
 
-const ShedInfoFilter: FC<{ options: any }> = ({ options }) => {
+interface IProps {
+  options: any
+}
+
+export default function ShedInfoFilter({ options }: IProps) {
   return (
     <div className="flex gap-5 md:items-center md:gap-3">
       <span className="hidden font-semibold md:block">FILTER:</span>
@@ -29,5 +31,3 @@ const ShedInfoFilter: FC<{ options: any }> = ({ options }) => {
     </div>
   )
 }
-
-export default ShedInfoFilter

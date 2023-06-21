@@ -48,7 +48,10 @@ const animalSchema = {
   origin_female: z.string(validations),
   origin_male: z.string(validations),
   description: z.string().optional(),
-  // created_by: z.string(validations),
+
+  cempek: z.string(validations).optional(),
+  created_by: z.string(validations).optional(),
+  animal: z.string(validations).optional(),
 }
 
 export const adultSchema = z.object({

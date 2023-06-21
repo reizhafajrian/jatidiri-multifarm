@@ -4,10 +4,17 @@ import { Icons } from "@/components/ui/Icons"
 import CategoryContent from "./category-content"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Category",
+  title: "Category",
 }
 
-export default function Page() {
+export default function Category() {
+  const categoryList = [
+    { title: "Pakan", icon: <Icons.feed /> },
+    { title: "Vitamin", icon: <Icons.vitamin /> },
+    { title: "Vaksin", icon: <Icons.vaksin /> },
+    { title: "Obat Cacing", icon: <Icons.anthelmintic /> },
+  ]
+
   return (
     <>
       <div className="mb-10">
@@ -27,10 +34,3 @@ export default function Page() {
     </>
   )
 }
-
-const categoryList = [
-  { title: "Pakan", icon: <Icons.feed /> },
-  { title: "Vitamin", icon: <Icons.vitamin /> },
-  { title: "Vaksin", icon: <Icons.vaksin /> },
-  { title: "Obat Cacing", icon: <Icons.anthelmintic /> },
-]

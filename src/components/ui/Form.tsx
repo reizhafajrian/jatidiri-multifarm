@@ -3,7 +3,7 @@ import { FormProvider, SubmitHandler, UseFormReturn } from "react-hook-form"
 
 interface IProps {
   methods: UseFormReturn<any>
-  onSubmit: SubmitHandler<any>
+  onSubmit?: SubmitHandler<any>
   children: ReactNode
   className?: string
 }
@@ -11,7 +11,10 @@ interface IProps {
 const Form: FC<IProps> = ({ methods, onSubmit, children, className }) => {
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(onSubmit)} className={className}>
+      <form
+        onSubmit={methods.handleSubmit(onSubmit ?? console.log)}
+        className={className}
+      >
         {children}
       </form>
     </FormProvider>

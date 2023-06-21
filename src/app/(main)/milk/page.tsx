@@ -7,7 +7,7 @@ import MilkHeader from "./milk-header"
 import MilkTable from "./milk-table"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Milk",
+  title: "Milk",
 }
 
 export default function MilkPage() {

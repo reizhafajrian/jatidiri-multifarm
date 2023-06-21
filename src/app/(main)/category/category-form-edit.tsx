@@ -1,12 +1,12 @@
 "use client"
 
-import { FC, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { categorySchema } from "@/lib/schemas"
-import { ICategory } from "@/store/types"
+import { ICategory } from "@/store/slices/categorySlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -24,7 +24,7 @@ interface IProps {
   data: any
 }
 
-const EditCategoryForm: FC<IProps> = ({ category, data }) => {
+export default function EditCategoryForm({ category, data }: IProps) {
   const [open, setOpen] = useState(false)
   const { editCategory } = useStore()
 
@@ -95,8 +95,6 @@ const EditCategoryForm: FC<IProps> = ({ category, data }) => {
     </DialogRoot>
   )
 }
-
-export default EditCategoryForm
 
 const setTitle = (category: string) =>
   category === "feed"

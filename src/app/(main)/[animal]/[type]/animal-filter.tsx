@@ -4,7 +4,7 @@ import useAnimalFilter from "@/hooks/useAnimalFilter"
 import DateFilter from "@/components/ui/DateFilter"
 import SelectFilter from "@/components/ui/SelectFilter"
 
-const AnimalFilter = () => {
+export default function AnimalFilter() {
   const { opts, loading, originFemale, originMale, vaccine, setFilter } =
     useAnimalFilter()
 
@@ -34,5 +34,3 @@ const AnimalFilter = () => {
     </div>
   )
 }
-
-export default AnimalFilter

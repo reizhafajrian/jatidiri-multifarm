@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { format } from "date-fns"
 import ReactDatePicker from "react-datepicker"
 
@@ -19,14 +18,18 @@ import {
 } from "./ui/DropdownMenu"
 import { Icons } from "./ui/Icons"
 
-const DateFilter: FC<{ label: string }> = ({ label }) => {
+interface IProps {
+  label: string
+}
+
+export default function DateFilter({ label }: IProps) {
   const { filterByDate: date } = useStore()
   const { dateOptions, startDate, endDate, dateRangeHandler } = useFilterDate()
 
   const selectedOption = dateOptions?.find((item) => item.value == date)?.name
 
-  const start = format(startDate, "dd/yyyy/MM")
-  const end = endDate ? format(endDate, "dd/yyyy/MM") : undefined
+  const start = format(startDate, "dd/MM/yyyy")
+  const end = endDate ? format(endDate, "dd/MM/yyyy") : undefined
 
   return (
     <div className="flex items-center gap-3">
@@ -79,5 +82,3 @@ const DateFilter: FC<{ label: string }> = ({ label }) => {
     </div>
   )
 }
-
-export default DateFilter

@@ -6,7 +6,7 @@ import ShedDetailHeader from "./shed-detail-header"
 import ShedInfo from "./shed-info"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Detail Shed",
+  title: "Detail Shed",
 }
 
 export default async function ShedDetailPage(props: { params: any }) {

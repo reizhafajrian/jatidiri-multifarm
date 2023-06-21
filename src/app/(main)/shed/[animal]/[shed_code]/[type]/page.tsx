@@ -1,24 +1,21 @@
-import { use } from "react"
 import { cookies } from "next/headers"
 import axios from "axios"
 
 import ShedAnimalTable from "./shed-animal-table"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Shed Animals",
+  title: "Shed Animal",
 }
 
-export default function AnimalShedPage(props: { params: any }) {
-  const { animal, shed_code, type } = props.params
-
-  const { shedCodeOptions } = use(
-    getData(animal, type, cookies().get("token")?.value!)
-  )
+export default async function AnimalShedPage(props: { params: any }) {
+  const { animal, shed_code } = props.params
+  const token = cookies().get("token")?.value!
+  const { shedCodeOptions } = await getData(animal, token)
 
   return <ShedAnimalTable id={shed_code} shedCodeOptions={shedCodeOptions} />
 }
 
-const getData = async (animal: string, type: string, token: string) => {
+const getData = async (animal: string, token: string) => {
   const baseUrl = process.env.API_BASE_URL
   const Authorization = `bearer ${token}`
 

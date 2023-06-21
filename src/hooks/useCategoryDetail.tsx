@@ -1,11 +1,11 @@
 import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import { Api } from "@/lib/api"
 
 const useCategoryDetail = () => {
   const url = "/api/category/detail"
 
-  const { data: res, isLoading, error, mutate } = useSWR(url, Get)
+  const { data: res, isLoading, error, mutate } = useSWR(url, Api.get)
 
   const data = res?.data
 

@@ -17,7 +17,8 @@ const menu = [
 interface IProps {
   isExpanded?: boolean
 }
-const SidebarMenu = ({ isExpanded }: IProps) => {
+
+export default function SidebarMenu({ isExpanded }: IProps) {
   return (
     <div className="grid gap-3">
       {menu.map((item, idx) => (
@@ -26,5 +27,3 @@ const SidebarMenu = ({ isExpanded }: IProps) => {
     </div>
   )
 }
-
-export default SidebarMenu

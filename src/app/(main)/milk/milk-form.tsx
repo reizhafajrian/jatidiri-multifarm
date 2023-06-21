@@ -1,11 +1,11 @@
-import { FC, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { milkSchema } from "@/lib/schemas"
 import useMilkAnimalTags from "@/hooks/useMilkAnimalTags"
-import { IMilk } from "@/store/types"
+import { IMilk } from "@/store/slices/milkSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -26,7 +26,7 @@ interface IProps {
   currentValues?: any
 }
 
-const MilkForm: FC<IProps> = ({ formType, currentValues: curr }) => {
+export default function MilkForm({ formType, currentValues: curr }: IProps) {
   const [open, setOpen] = useState(false)
   const title = `${formType == "add" ? "Tambah" : "Edit"} Data Susu`
   const { user, setMilkHistory, addMilk, editMilk } = useStore()
@@ -168,5 +168,3 @@ const MilkForm: FC<IProps> = ({ formType, currentValues: curr }) => {
     </DialogRoot>
   )
 }
-
-export default MilkForm

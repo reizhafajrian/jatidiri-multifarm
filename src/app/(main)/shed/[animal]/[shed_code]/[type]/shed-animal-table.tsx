@@ -14,19 +14,16 @@ interface IProps {
   id: string
   shedCodeOptions: any
 }
-const ShedAnimalTable: FC<IProps> = ({ id, shedCodeOptions }) => {
+
+export default function ShedAnimalTable({ id, shedCodeOptions }: IProps) {
   const changeShedAnimal = useStore((state) => state.changeShedAnimal)
   const { data, loading, mutate: mutateTable } = useShedAnimalList()
   const { mutate: mutateEartags } = useShedAnimalTags()
 
   const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
-    try {
-      await changeShedAnimal(shed_code, eartag_code)
-      mutateTable()
-      mutateEartags()
-    } catch (err) {
-      console.log(err)
-    }
+    await changeShedAnimal(shed_code, eartag_code)
+    mutateTable()
+    mutateEartags()
   }
 
   const columns: ColumnDef<any, any>[] = [
@@ -61,5 +58,3 @@ const ShedAnimalTable: FC<IProps> = ({ id, shedCodeOptions }) => {
     />
   )
 }
-
-export default ShedAnimalTable

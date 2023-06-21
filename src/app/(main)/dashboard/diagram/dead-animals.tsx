@@ -1,16 +1,15 @@
 "use client"
 
-import { FC } from "react"
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js"
 import { Doughnut } from "react-chartjs-2"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-interface DeadAnimalsDiagramProps {
+interface IProps {
   data: any
 }
 
-const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({ data }) => {
+export default function DeadAnimalsDiagram({ data }: IProps) {
   const getPercentage = (range: string) => {
     const deadTotal = data?.cow.total + data?.goat.total + data?.sheep.total
 
@@ -87,5 +86,3 @@ const DeadAnimalsDiagram: FC<DeadAnimalsDiagramProps> = ({ data }) => {
     </div>
   )
 }
-
-export default DeadAnimalsDiagram

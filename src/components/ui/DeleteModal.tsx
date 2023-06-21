@@ -11,7 +11,7 @@ interface IProps {
   deleteHandler: () => any
 }
 
-const DeleteModal: FC<IProps> = ({ title, desc, deleteHandler }) => {
+export default function DeleteModal({ title, desc, deleteHandler }: IProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -56,5 +56,3 @@ const DeleteModal: FC<IProps> = ({ title, desc, deleteHandler }) => {
     </AlertDialog.Root>
   )
 }
-
-export default DeleteModal

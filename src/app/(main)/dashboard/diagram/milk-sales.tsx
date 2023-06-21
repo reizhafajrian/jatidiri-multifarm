@@ -1,16 +1,17 @@
 "use client"
 
-import { FC } from "react"
 import SimpleBar from "simplebar-react"
+
+import "simplebar-react/dist/simplebar.min.css"
 
 import { formatRupiah } from "@/lib/utils"
 
-interface MilkSalesDiagramProps {
+interface IProps {
   data: any
   total: any
 }
 
-const MilkSalesDiagram: FC<MilkSalesDiagramProps> = ({ data, total }) => {
+export default function MilkSalesDiagram({ data, total }: IProps) {
   return (
     <div>
       <div className="my-8 text-center text-2xl font-semibold">
@@ -32,5 +33,3 @@ const MilkSalesDiagram: FC<MilkSalesDiagramProps> = ({ data, total }) => {
     </div>
   )
 }
-
-export default MilkSalesDiagram

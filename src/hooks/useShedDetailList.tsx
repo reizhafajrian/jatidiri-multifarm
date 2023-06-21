@@ -1,20 +1,16 @@
 import useStore from "@/store/useStore"
-import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import useDataList from "./useDataList"
 
 const useShedDetailList = () => {
   const { shed_id, searchKeyword, searchResults, searchLoading } = useStore()
-
+  const url = `/api/shed/data/get?shed_code=${shed_id}`
   const queriesArray = [] as string[]
   //   milkStatus !== 'all' && queriesArray.push(`status=${milkStatus}`)
-  const queries = queriesArray?.join("&")
-  const url = `/api/shed/data/get?shed_code=${shed_id}`
-  const endpoint = queriesArray ? url + `&${queries}` : url
 
-  const { data, isLoading, error, mutate } = useSWR(url, Get)
+  const { data, loading, error, mutate } = useDataList(url, queriesArray)
 
-  let shedDetailList = data?.data
+  let shedDetailList = data
 
   //   if (searchKeyword.length !== 0) {
   //     shedDetailList = searchResults
@@ -22,7 +18,7 @@ const useShedDetailList = () => {
 
   return {
     data: shedDetailList,
-    loading: isLoading || searchLoading,
+    loading: loading || searchLoading,
     error,
     mutate,
   }

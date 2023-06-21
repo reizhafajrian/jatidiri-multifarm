@@ -1,9 +1,73 @@
 import { StateCreator } from "zustand"
 
-import { Delete, Post } from "@/lib/api"
+import { Api } from "@/lib/api"
 import { toast } from "@/components/ui/Toast"
 
-import { IAnimalState } from "../types"
+export interface ICertificate {
+  organization: string
+  prefix: string
+  tag: string
+  issueDate: string
+  exportTag: string
+  registrationNum: string
+  lambPlanId: string
+  colour: string
+  conception: string
+  gender: string
+  grade: string
+  birthDate: string
+  breeder: string
+  owner: string
+  notes: string
+}
+
+export interface IAnimal {
+  animal?: string
+  _id?: string
+  type?: string
+  eartag_code?: string
+  cempek?: string
+  arrival_date?: Date
+  birth_date?: Date
+  origin_female?: string
+  origin_male?: string
+  origin?: string
+  weight?: number
+  sell_price?: number
+  purchase_price?: number
+  status?: string
+  files?: any
+  birth_weight?: number
+  birth_condition?: string
+  gender?: string
+  description?: string
+  created_by?: string
+}
+
+interface IAnimalTitle {
+  name: string
+  title: string
+}
+
+interface IAnimalFilter {
+  originMale?: string
+  originFemale?: string
+  vaccine?: string
+}
+
+export interface IAnimalState {
+  animal: IAnimalTitle
+  type: string
+  originMale: string
+  originFemale: string
+  vaccine: string
+
+  setAnimal: (value: string) => void
+  setFilter: (data: IAnimalFilter) => void
+  addAnimal: (data: IAnimal) => void
+  editAnimal: (data: IAnimal) => void
+  deleteAnimal: (id: string) => void
+}
 
 const animalTitleList = [
   { name: "goat", title: "Kambing" },
@@ -11,12 +75,16 @@ const animalTitleList = [
   { name: "cow", title: "Sapi" },
 ]
 
-const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
+const initialState = {
   animal: { name: "", title: "" },
   type: "",
   originMale: "all",
   originFemale: "all",
   vaccine: "all",
+}
+
+const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
+  ...initialState,
   setFilter: ({ originMale, originFemale, vaccine }) => {
     originMale && set((state) => ({ ...state, originMale }))
     originFemale && set((state) => ({ ...state, originFemale }))
@@ -26,7 +94,7 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
     const animal = animalTitleList.find((item) => item.name === name)
     set((state) => ({ ...state, animal }))
   },
-  addAnimal: async (data, router) => {
+  addAnimal: async (data) => {
     try {
       const isCempek = data.cempek === "true"
       const animal = get().animal.name
@@ -35,88 +103,59 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       for (let value in data) {
         if (value.includes("_date")) {
           formData.append(value, data[value].toISOString())
-        } else {
-          formData.append(value, data[value])
+          continue
         }
+        formData.append(value, data[value])
       }
+      if (data.files) formData.set("files", data.files[0])
 
-      if (!isCempek) {
-        if (data.files) {
-          formData.set("files", data.files[0])
-        }
-      }
-
-      const url = isCempek
-        ? `/api/${animal}/cempek/create`
-        : `/api/${animal}/create`
-
-      const res = await Post({ url, data: isCempek ? data : formData })
-
-      toast({
-        type: "success",
-        message: res.message,
+      const res = await Api.post({
+        url: isCempek
+          ? `/api/${animal}/cempek/create`
+          : `/api/${animal}/create`,
+        data: isCempek ? data : formData,
       })
 
-      router.replace(`/${animal}/male`)
+      toast({ type: "success", message: res.message })
+      window.location.replace(`/${animal}/male`)
     } catch (err: any) {
-      return toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
-  editAnimal: async (data, router) => {
+  editAnimal: async (data) => {
     try {
       const isCempek = data.cempek === "true"
       const formData = new FormData()
+      const animal = get().animal.name
 
       for (let value in data) {
         if (value.includes("_date")) {
           formData.append(value, data[value].toISOString())
-        } else {
-          formData.append(value, data[value])
+          continue
         }
+        formData.append(value, data[value])
       }
+      if (data.files) formData.set("files", data.files[0])
 
-      if (!isCempek && data?.files) formData.set("files", data?.files[0])
-
-      const url = isCempek
-        ? `/api/${data.animal}/cempek/update`
-        : `/api/${data.animal}/update`
-
-      const res = await Post({
-        url,
+      const res = await Api.post({
+        url: isCempek
+          ? `/api/${animal}/cempek/update`
+          : `/api/${animal}/update`,
         data: { data: [Object.fromEntries(formData)] },
       })
 
-      toast({
-        type: "success",
-        message: res.message,
-      })
-
-      if (router) {
-        router.replace(`/${get().animal.name}/male`)
-      }
+      toast({ type: "success", message: res.message })
+      window.location.replace(`/${animal}/male`)
     } catch (err: any) {
-      return toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
   deleteAnimal: async (id) => {
     try {
-      const res = await Delete(`/api/${get().animal.name}/delete/${id}`)
-
-      toast({
-        type: "success",
-        message: res.message,
-      })
+      const res = await Api.delete(`/api/${get().animal.name}/delete/${id}`)
+      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      return toast({
-        type: "error",
-        message: err.data.errors[0].msg,
-      })
+      toast({ type: "error", message: err.data.errors[0].msg })
     }
   },
 })

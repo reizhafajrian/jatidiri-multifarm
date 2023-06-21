@@ -6,14 +6,14 @@ import useDataList from "@/hooks/useDataList"
 import Card from "@/components/ui/Card"
 import { Icons } from "@/components/ui/Icons"
 
-const MilkTotalCard = () => {
+export default function MilkTotalCard() {
+  const { data, loading } = useDataList("/api/milk/get")
+
   const info = {
     milk_total: 35,
     milk_date: new Date(),
     milk_percentage: 5.2,
   }
-
-  const { data, loading } = useDataList("/api/milk/get")
 
   return (
     <Card className="flex justify-between">
@@ -45,5 +45,3 @@ const MilkTotalCard = () => {
     </Card>
   )
 }
-
-export default MilkTotalCard

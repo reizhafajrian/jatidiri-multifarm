@@ -1,11 +1,13 @@
 "use client"
 
-import { FC } from "react"
 import { useRouter } from "next/navigation"
 
 import { Icons } from "./Icons"
 
-const BackLink: FC<{ href?: string }> = ({ href }) => {
+interface IProps {
+  href?: string
+}
+export default function BackLink({ href }: IProps) {
   const router = useRouter()
 
   return (
@@ -18,5 +20,3 @@ const BackLink: FC<{ href?: string }> = ({ href }) => {
     </button>
   )
 }
-
-export default BackLink

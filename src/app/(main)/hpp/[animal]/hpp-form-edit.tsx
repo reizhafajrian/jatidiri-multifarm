@@ -1,12 +1,11 @@
 "use client"
 
-import { FC, useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import { hppSchema } from "@/lib/schemas"
-import { IEditHpp } from "@/store/types"
+import { IEditHpp } from "@/store/slices/hppSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -19,19 +18,18 @@ import {
 import Form from "@/components/ui/Form"
 import InputText from "@/components/ui/InputText"
 
-interface EditHppFormProps {
+interface IProps {
   data: any
-  mutate: () => void
 }
 
-const EditHppForm: FC<EditHppFormProps> = ({ data, mutate }) => {
+export default function EditHppForm({
+  data: { _id, eartag_code, hpp_price },
+}: IProps) {
   const [open, setOpen] = useState(false)
-  const r = useRouter()
   const {
     editAnimal,
     animal: { name: animal },
   } = useStore()
-  const { _id, eartag_code, hpp_price } = data
 
   const methods = useForm<IEditHpp>({
     resolver: zodResolver(hppSchema),
@@ -47,9 +45,7 @@ const EditHppForm: FC<EditHppFormProps> = ({ data, mutate }) => {
     description,
   }) => {
     await editAnimal({ _id, sell_price, description, animal: animal })
-
     setOpen(false)
-    mutate()
   }
 
   return (
@@ -107,5 +103,3 @@ const EditHppForm: FC<EditHppFormProps> = ({ data, mutate }) => {
     </DialogRoot>
   )
 }
-
-export default EditHppForm

@@ -1,7 +1,5 @@
 "use client"
 
-import { FC } from "react"
-
 import useShedDetail from "@/hooks/useShedDetail"
 import Card from "@/components/ui/Card"
 
@@ -9,8 +7,13 @@ import ShedDetailForm from "./shed-detail-form"
 import ShedInfoFilter from "./shed-info-filter"
 import ShedInfoTable from "./shed-info-table"
 
-const ShedInfo: FC<{ options: any }> = ({ options }) => {
-  const { data, loading, mutate } = useShedDetail()
+interface IProps {
+  options: any
+}
+
+export default function ShedInfo({ options }: IProps) {
+  const { data, loading } = useShedDetail()
+
   const cardList = [
     { title: "Berat", content: `${data?.average_weight ?? 0} kg` },
     { title: "Range Usia", content: `${data?.average_age ?? 0} bulan` },
@@ -48,5 +51,3 @@ const ShedInfo: FC<{ options: any }> = ({ options }) => {
     </>
   )
 }
-
-export default ShedInfo

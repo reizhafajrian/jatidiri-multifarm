@@ -1,7 +1,6 @@
 import useStore from "@/store/useStore"
-import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import useDataList from "./useDataList"
 
 const useHppList = () => {
   const {
@@ -11,23 +10,20 @@ const useHppList = () => {
     searchResults,
     searchLoading,
   } = useStore()
+  const url = `/api/hpp/get?animal_type=${animal}`
   const queriesArray = []
   hppStatus !== "all" && queriesArray.push(`status=${hppStatus}`)
 
-  const queries = queriesArray?.join("&")
-  const url = `/api/hpp/get?animal_type=${animal}`
-  const endpoint = queriesArray ? url + `&${queries}` : url
+  const { data, loading, error, mutate } = useDataList(url, queriesArray)
 
-  const { data, isLoading, error, mutate } = useSWR(endpoint, Get)
-
-  let hppData = data?.data
-  if (searchKeyword.length !== 0) {
-    hppData = searchResults
-  }
+  let hppData = data
+  // if (searchKeyword.length !== 0) {
+  //   hppData = searchResults
+  // }
 
   return {
     data: hppData,
-    loading: isLoading || searchLoading,
+    loading: loading || searchLoading,
     error,
     mutate,
   }

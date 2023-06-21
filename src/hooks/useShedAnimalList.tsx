@@ -1,26 +1,18 @@
 import useStore from "@/store/useStore"
-import useSWR from "swr"
 
-import { Get } from "@/lib/api"
+import useDataList from "./useDataList"
 
 const useShedAnimalList = () => {
   const { shed_id, type } = useStore()
-
   const isCempek = type === "cempek"
   const gender = type === "male" ? "true" : "false"
-
   const url = isCempek
     ? `/api/shed/get/detail/${shed_id}?cempek=true`
     : `/api/shed/get/detail/${shed_id}?gender=${gender}`
 
-  const { data, isLoading, error, mutate } = useSWR(url, Get)
+  const { data, loading, error, mutate } = useDataList(url)
 
-  return {
-    data: data?.data,
-    loading: isLoading,
-    error,
-    mutate,
-  }
+  return { data, loading, error, mutate }
 }
 
 export default useShedAnimalList

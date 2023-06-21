@@ -7,7 +7,7 @@ import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import Table from "@/components/ui/Table"
 
-const ShedTable = () => {
+export default function ShedTable() {
   const router = useRouter()
   const pathname = usePathname()
   const { animal, searchKeyword, searchResults } = useStore()
@@ -50,5 +50,3 @@ const ShedTable = () => {
     />
   )
 }
-
-export default ShedTable

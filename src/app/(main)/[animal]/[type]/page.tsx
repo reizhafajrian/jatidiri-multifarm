@@ -6,12 +6,12 @@ import AnimalFilter from "./animal-filter"
 import AnimalTable from "./animal-table"
 
 export const metadata = {
-  title: "Jatidiri Multifarm",
+  title: "Animal",
 }
 
 export default function AnimalPage({ params }: { params: any }) {
   const { animal, type } = params
-  const typeNotFound = !["male", "female", "cempek"].includes(type)
+  const typeNotFound = type !== "male" && type !== "female" && type !== "cempek"
 
   if (typeNotFound) return notFound()
 

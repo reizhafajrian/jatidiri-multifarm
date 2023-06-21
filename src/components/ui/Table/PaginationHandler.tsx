@@ -1,12 +1,16 @@
-import { FC } from "react"
 import { Table } from "@tanstack/react-table"
 
 import { Icons } from "../Icons"
 
-const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
+interface IProps {
+  table: Table<any>
+}
+
+export default function PaginationHandler({ table }: IProps) {
   return (
     <div className="mt-5 flex items-center justify-center gap-2">
       <button
+        type="button"
         className="px-3 py-2 text-xs disabled:text-black/30"
         onClick={() => table.setPageIndex(0)}
         disabled={!table.getCanPreviousPage()}
@@ -14,6 +18,7 @@ const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
         First
       </button>
       <button
+        type="button"
         className="px-3 py-2 disabled:text-black/30"
         onClick={() => table.previousPage()}
         disabled={!table.getCanPreviousPage()}
@@ -23,6 +28,7 @@ const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
       {[...Array(table.getPageCount())].map((_, i) => (
         <button
           key={i}
+          type="button"
           className="grid h-6 w-6 place-items-center rounded-lg text-xs disabled:bg-primary-4 disabled:text-white"
           disabled={table.getState().pagination.pageIndex === i}
           onClick={() => table.setPageIndex(i)}
@@ -31,6 +37,7 @@ const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
         </button>
       ))}
       <button
+        type="button"
         className="px-3 py-2 disabled:text-black/30"
         onClick={() => table.nextPage()}
         disabled={!table.getCanNextPage()}
@@ -38,6 +45,7 @@ const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
         <Icons.chevronRight className="w-4" />
       </button>
       <button
+        type="button"
         className="px-3 py-2 text-xs disabled:text-black/30"
         onClick={() => table.setPageIndex(table.getPageCount() - 1)}
         disabled={!table.getCanNextPage()}
@@ -47,5 +55,3 @@ const PaginationHandler: FC<{ table: Table<any> }> = ({ table }) => {
     </div>
   )
 }
-
-export default PaginationHandler

@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { usePathname, useRouter } from "next/navigation"
 
 import useStore from "@/store/useStore"
@@ -11,7 +11,11 @@ import Navbar from "@/components/Navbar"
 
 import AlertCluster from "./alert-cluster"
 
-const AnimalHeader: FC<{ undefinedClusterTotal: number }> = (props) => {
+interface IProps {
+  undefinedClusterTotal: number
+}
+
+export default function AnimalHeader({ undefinedClusterTotal }: IProps) {
   const router = useRouter()
   const path = usePathname()
   const isListData = !path.includes("add") && !path.includes("edit")
@@ -42,10 +46,10 @@ const AnimalHeader: FC<{ undefinedClusterTotal: number }> = (props) => {
     <>
       {isListData ? (
         <>
-          {props.undefinedClusterTotal > 0 && (
+          {undefinedClusterTotal > 0 && (
             <AlertCluster
               animal={animal.title}
-              undefinedClusterTotal={props.undefinedClusterTotal}
+              undefinedClusterTotal={undefinedClusterTotal}
             />
           )}
           <Navbar
@@ -82,8 +86,6 @@ const AnimalHeader: FC<{ undefinedClusterTotal: number }> = (props) => {
     </>
   )
 }
-
-export default AnimalHeader
 
 const getHeaderMenu = (animal: string) => {
   const links = [

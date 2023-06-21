@@ -18,10 +18,12 @@ import {
 } from "@/components/ui/DropdownMenu"
 import { Icons } from "@/components/ui/Icons"
 
-const DateFilter: FC<{ label?: string; placeholder?: string }> = ({
-  label,
-  placeholder,
-}) => {
+interface IProps {
+  label?: string
+  placeholder?: string
+}
+
+export default function DateFilter({ label, placeholder }: IProps) {
   const { filterByDate: date } = useStore()
   const { dateOptions, startDate, endDate, dateRangeHandler } = useFilterDate()
 
@@ -83,5 +85,3 @@ const DateFilter: FC<{ label?: string; placeholder?: string }> = ({
     </div>
   )
 }
-
-export default DateFilter

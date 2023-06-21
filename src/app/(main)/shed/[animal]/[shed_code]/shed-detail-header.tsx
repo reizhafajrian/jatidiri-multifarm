@@ -1,14 +1,12 @@
 "use client"
 
-import { FC } from "react"
-
 import useStore from "@/store/useStore"
 import BackLink from "@/components/ui/BackLink"
 import Navbar from "@/components/Navbar"
 
 import ShedAnimalForm from "./shed-animal-form"
 
-const ShedDetailHeader: FC = () => {
+export default function ShedDetailHeader() {
   const { animal, type, shed_code, shed_id } = useStore()
   const baseUrl = `/shed/${animal.name}/${shed_id}`
 
@@ -41,5 +39,3 @@ const ShedDetailHeader: FC = () => {
     </>
   )
 }
-
-export default ShedDetailHeader

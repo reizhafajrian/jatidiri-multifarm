@@ -5,8 +5,18 @@ import "@/styles/ReactToastify.css"
 import "@/styles/globals.css"
 import "@/styles/react-datepicker.css"
 
+import { Metadata } from "next"
+
 import { cn } from "@/lib/utils"
 import { Toaster } from "@/components/ui/Toast"
+
+export const metadata: Metadata = {
+  title: {
+    default: "Jatidiri Multifarm",
+    template: `%s - Jatidiri Multifarm`,
+  },
+  description: "this is a description about the company",
+}
 
 const poppins = Poppins({
   subsets: ["latin"],

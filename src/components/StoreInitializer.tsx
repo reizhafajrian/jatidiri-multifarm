@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 
-import { ICategoryInfo } from "@/store/types"
+import { ICategoryInfo } from "@/store/slices/categorySlice"
 import useStore from "@/store/useStore"
 
 interface IData {
@@ -18,16 +18,7 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
-  const {
-    token,
-    animal,
-    type,
-    category: c,
-    searchType,
-    shed_code,
-    shed_id,
-  } = data
-
+  const { token, animal, type, category, searchType, shed_code, shed_id } = data
   const { setAnimal, loadUser, setCategoryInfo } = useStore() || {}
 
   useEffect(() => {
@@ -36,34 +27,24 @@ export default function StoreInitializer({ data }: IData) {
       useStore.setState((state) => ({ ...state, token }))
     }
 
-    if (animal) {
-      setAnimal(animal)
-    }
+    if (animal) setAnimal(animal)
 
-    if (type) {
-      useStore.setState((state) => ({ ...state, type }))
-    }
+    if (type) useStore.setState((state) => ({ ...state, type }))
 
-    if (searchType) {
-      useStore.setState((state) => ({ ...state, searchType }))
-    }
+    if (searchType) useStore.setState((state) => ({ ...state, searchType }))
 
-    if (shed_code) {
-      useStore.setState((state) => ({ ...state, shed_code }))
-    }
+    if (shed_code) useStore.setState((state) => ({ ...state, shed_code }))
 
-    if (shed_id) {
-      useStore.setState((state) => ({ ...state, shed_id }))
-    }
+    if (shed_id) useStore.setState((state) => ({ ...state, shed_id }))
 
-    if (c) {
+    if (category)
       setCategoryInfo({
-        feedInfo: c.feedInfo,
-        vitaminInfo: c.vitaminInfo,
-        vaccineInfo: c.vaccineInfo,
-        anthelminticInfo: c.anthelminticInfo,
+        feedInfo: category.feedInfo,
+        vitaminInfo: category.vitaminInfo,
+        vaccineInfo: category.vaccineInfo,
+        anthelminticInfo: category.anthelminticInfo,
       })
-    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     // eslint-disable-next-line react-hooks/exhaustive-deps

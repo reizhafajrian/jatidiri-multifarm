@@ -9,7 +9,7 @@ import Table from "@/components/ui/Table"
 
 import MilkForm from "./milk-form"
 
-const MilkTable = () => {
+export default function MilkTable() {
   const { changeMilkStatus } = useStore()
   const { data, loading, mutate } = useMilkList()
 
@@ -59,5 +59,3 @@ const MilkTable = () => {
     <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }
-
-export default MilkTable

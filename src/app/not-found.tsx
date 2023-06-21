@@ -1,26 +1,23 @@
-import Link from "next/link"
+"use client"
 
+import { useRouter } from "next/navigation"
+
+import { Button } from "@/components/ui/Button"
 import { Icons } from "@/components/ui/Icons"
 
-export const metadata = {
-  title: "Jatidiri Multifarm | Page not found",
-}
-
-export default function PageNotFound() {
+export default function NotFound() {
+  const router = useRouter()
   return (
     <div className="grid h-screen w-screen place-items-center">
-      <div className="space-y-2">
+      <div className="space-y-3">
         <h1 className="text-5xl font-semibold">Site not found...</h1>
         <p className="text-xl">
           The site you&apos;re searching for does not exist.
         </p>
-        <Link
-          href="/dashboard"
-          className="flex w-fit items-center gap-3 border-2 px-3 py-2 "
-        >
+        <Button onClick={() => router.replace("/dashboard")}>
           <Icons.arrowLeft />
-          <p className="capitalize">Back to Dashboard</p>
-        </Link>
+          <p className="ml-3">Back to Dashboard</p>
+        </Button>
       </div>
     </div>
   )

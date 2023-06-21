@@ -1,5 +1,3 @@
-import { FC } from "react"
-
 import Card from "@/components/ui/Card"
 
 interface IProps {
@@ -11,21 +9,10 @@ interface IProps {
   }
 }
 
-const DashboardAnimalInfoCard: FC<IProps> = ({ data }) => {
-  const { icon, animal_type: type, totalAdult, totalCempek } = data
+export default function DashboardAnimalInfoCard({
+  data: { icon, animal_type: type, totalAdult, totalCempek },
+}: IProps) {
   const title = type == "goat" ? "Kambing" : type == "sheep" ? "Domba" : "Sapi"
-
-  const content = ({ total, label }: any) => (
-    <div className="space-y-1">
-      <p className="text-xl font-semibold text-neutral-5">
-        {total}
-        <span className="text-[10px] font-normal text-neutral-4"> Ekor</span>
-      </p>
-      <p className="text-xs text-neutral-4">
-        {title} <span className="font-medium">{label}</span>
-      </p>
-    </div>
-  )
 
   return (
     <Card className="space-y-4 capitalize md:space-y-7">
@@ -37,12 +24,25 @@ const DashboardAnimalInfoCard: FC<IProps> = ({ data }) => {
         </div>
       </div>
       <div className="grid grid-cols-2">
-        {content({ total: totalAdult, label: "Dewasa" })}
-        {totalCempek !== undefined &&
-          content({ total: totalCempek, label: "Cempek" })}
+        <Content title={title} total={totalAdult} label="Dewasa" />
+        {totalCempek !== undefined && (
+          <Content title={title} total={totalCempek} label="cempek" />
+        )}
       </div>
     </Card>
   )
 }
 
-export default DashboardAnimalInfoCard
+const Content = ({ title, total, label }: any) => {
+  return (
+    <div className="space-y-1">
+      <p className="text-xl font-semibold text-neutral-5">
+        {total}
+        <span className="text-[10px] font-normal text-neutral-4"> Ekor</span>
+      </p>
+      <p className="text-xs text-neutral-4">
+        {title} <span className="font-medium">{label}</span>
+      </p>
+    </div>
+  )
+}

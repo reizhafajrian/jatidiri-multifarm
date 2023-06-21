@@ -11,6 +11,7 @@ import CategoryTable from "./category-table"
 
 export default function CategoryContent() {
   const { data, loading } = useCategoryDetail()
+  const categories = setCategories(data)
 
   if (loading)
     return (
@@ -18,8 +19,6 @@ export default function CategoryContent() {
         <Icons.loader className="animate-spin stroke-primary-4" />
       </div>
     )
-
-  const categories = setCategories(data)
 
   return (
     <>

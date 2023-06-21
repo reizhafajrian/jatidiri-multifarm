@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import clsx from "clsx"
 import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
@@ -14,12 +13,24 @@ interface IProps {
   isExpanded?: boolean
 }
 
-export default function SidebarLink(props: IProps) {
-  const { name, link, icon } = props.item
-  const { isExpanded } = props
+export default function SidebarLink({
+  item: { name, link, icon },
+  isExpanded,
+}: IProps) {
   const pathname = usePathname()
   const pathLink = link.split("/")[1]
   const isActive = pathname?.startsWith("/" + pathLink)
+
+  function resetFilter() {
+    useStore.setState({
+      searchKeyword: "",
+      originFemale: "all",
+      originMale: "all",
+      hppStatus: "all",
+      vaccine: "all",
+      filterByDate: thisYearValue,
+    })
+  }
 
   return (
     <Link
@@ -32,20 +43,9 @@ export default function SidebarLink(props: IProps) {
           ? "bg-white font-semibold text-primary-5"
           : "text-white hover:bg-white/25"
       )}
-      onClick={() =>
-        useStore.setState({
-          searchKeyword: "",
-          originFemale: "all",
-          originMale: "all",
-          hppStatus: "all",
-          vaccine: "all",
-          filterByDate: thisYearValue,
-        })
-      }
+      onClick={resetFilter}
     >
-      <span
-        className={clsx("h-5 w-5", isActive ? "fill-primary-5" : "fill-white")}
-      >
+      <span className={cn("h-5 w-5 fill-white", isActive && "fill-primary-5")}>
         {icon}
       </span>
       <motion.div

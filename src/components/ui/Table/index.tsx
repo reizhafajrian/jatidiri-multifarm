@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useMemo } from "react"
+import { useEffect, useMemo } from "react"
 import {
   getCoreRowModel,
   getPaginationRowModel,
@@ -22,9 +22,11 @@ interface IProps {
   data: any
   fixedCol: number
   isLoading: boolean
+  pageSize?: number
 }
 
-const Table: FC<IProps> = ({ columns, data, fixedCol, isLoading }) => {
+export default function Table(props: IProps) {
+  const { columns, data, fixedCol, isLoading, pageSize } = props
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 
@@ -35,6 +37,10 @@ const Table: FC<IProps> = ({ columns, data, fixedCol, isLoading }) => {
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
   })
+
+  useEffect(() => {
+    if (pageSize) table.setPageSize(pageSize)
+  }, [pageSize,table])
 
   return (
     <div className="max-w-full">
@@ -130,5 +136,3 @@ const Table: FC<IProps> = ({ columns, data, fixedCol, isLoading }) => {
     </div>
   )
 }
-
-export default Table

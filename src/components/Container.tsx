@@ -1,15 +1,12 @@
 "use client"
 
-import { ReactNode } from "react"
-import useStore from "@/store/useStore"
+import { PropsWithChildren } from "react"
 import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
+import useStore from "@/store/useStore"
 
-interface ContainerProps {
-  children: ReactNode
-}
-const Container = (props: ContainerProps) => {
+export default function Container(props: PropsWithChildren) {
   const { isExpanded } = useStore()
 
   return (
@@ -23,5 +20,3 @@ const Container = (props: ContainerProps) => {
     </motion.div>
   )
 }
-
-export default Container

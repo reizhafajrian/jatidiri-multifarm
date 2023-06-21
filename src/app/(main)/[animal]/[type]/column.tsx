@@ -79,6 +79,14 @@ export const animalTColumns: ColumnDef<any, any>[] = [
     accessorKey: "origin_female",
   },
   {
+    header: "Asal Jantan",
+    accessorKey: "origin_male",
+  },
+]
+
+export const maleTColumns: ColumnDef<any, any>[] = [
+  ...animalTColumns,
+  {
     header: "Pejantan",
     accessorKey: "pejantan",
     cell: (data) => (
@@ -94,11 +102,20 @@ export const animalTColumns: ColumnDef<any, any>[] = [
       </div>
     ),
   },
-  {
-    header: "Asal Jantan",
-    accessorKey: "origin_male",
+ {
+    header: "Asal Supplier",
+    accessorKey: "supplier",
   },
   {
+    header: "Harga Beli",
+    accessorKey: "purchase_price",
+    cell: (data) => formatRupiah(data.getValue()),
+  },
+]
+
+export const femaleTColumns: ColumnDef<any, any>[] = [
+  ...animalTColumns,
+ {
     header: "Asal Supplier",
     accessorKey: "supplier",
   },

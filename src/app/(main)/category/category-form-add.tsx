@@ -1,12 +1,12 @@
 "use client"
 
-import { FC, useState } from "react"
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { categorySchema } from "@/lib/schemas"
-import { ICategory } from "@/store/types"
+import { ICategory } from "@/store/slices/categorySlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/Button"
 import {
@@ -19,11 +19,16 @@ import {
 import Form from "@/components/ui/Form"
 import InputText from "@/components/ui/InputText"
 
-const AddCategoryForm: FC<{ category: string }> = ({ category }) => {
+interface IProps {
+  category: string
+}
+
+export default function AddCategoryForm({ category }: IProps) {
   const [open, setOpen] = useState(false)
+  const { user, addCategory } = useStore()
+
   const title = setTitle(category)
   const satuan = setSatuan(category)
-  const { user, addCategory } = useStore()
 
   const methods = useForm<ICategory>({
     resolver: zodResolver(categorySchema),
@@ -86,8 +91,6 @@ const AddCategoryForm: FC<{ category: string }> = ({ category }) => {
     </DialogRoot>
   )
 }
-
-export default AddCategoryForm
 
 const setSatuan = (category: string) =>
   category === "feed" ? "(per kg)" : "(per pcs)"

@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import {
   CategoryScale,
   ChartData,
@@ -24,11 +23,11 @@ ChartJS.register(
   Legend
 )
 
-interface SoldAnimalsDiagramProps {
+interface IProps {
   data: any
 }
 
-const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
+export default function SoldAnimalsDiagram({ data }: IProps) {
   const labels = [
     "Jan",
     "Feb",
@@ -126,5 +125,3 @@ const SoldAnimalsDiagram: FC<SoldAnimalsDiagramProps> = ({ data }) => {
     />
   )
 }
-
-export default SoldAnimalsDiagram

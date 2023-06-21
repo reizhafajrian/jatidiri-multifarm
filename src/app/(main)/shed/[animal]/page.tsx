@@ -4,7 +4,7 @@ import ShedHeader from "./shed-header"
 import ShedTable from "./shed-table"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Shed",
+  title: "Shed",
 }
 
 export default function ShedPage(props: any) {

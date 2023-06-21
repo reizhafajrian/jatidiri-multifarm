@@ -1,6 +1,5 @@
 "use client"
 
-import { FC } from "react"
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js"
 import { Doughnut } from "react-chartjs-2"
 
@@ -8,19 +7,17 @@ import { formatRupiah } from "@/lib/utils"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
-const data = {
-  labels: ["Valentine Day", "New Year", "Chinese New Year"],
-  datasets: [
-    {
-      data: [12, 19, 3],
-      backgroundColor: ["#40916C", "#775DFE", "#C1E5D5"],
-    },
-  ],
-}
+export default function EventIncomeDiagram() {
+  const data = {
+    labels: ["Valentine Day", "New Year", "Chinese New Year"],
+    datasets: [
+      {
+        data: [12, 19, 3],
+        backgroundColor: ["#40916C", "#775DFE", "#C1E5D5"],
+      },
+    ],
+  }
 
-interface EventIncomeDiagramProps {}
-
-const EventIncomeDiagram: FC<EventIncomeDiagramProps> = ({}) => {
   return (
     <div className="grid grid-cols-3">
       <div className="col-span-2">
@@ -59,5 +56,3 @@ const EventIncomeDiagram: FC<EventIncomeDiagramProps> = ({}) => {
     </div>
   )
 }
-
-export default EventIncomeDiagram

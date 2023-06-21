@@ -1,13 +1,14 @@
 "use client"
 
-import { FC } from "react"
 import SimpleBar from "simplebar-react"
 
-interface GoatsDiagramProps {
+import "simplebar-react/dist/simplebar.min.css"
+
+interface IProps {
   data: any
 }
 
-const GoatsDiagram: FC<GoatsDiagramProps> = ({ data }) => {
+export default function GoatsDiagram({ data }: IProps) {
   const total = data?.data?.goatTypes.reduce(
     (acc: number, cur: any) => acc + cur.count,
     0
@@ -44,5 +45,3 @@ const GoatsDiagram: FC<GoatsDiagramProps> = ({ data }) => {
     </div>
   )
 }
-
-export default GoatsDiagram
