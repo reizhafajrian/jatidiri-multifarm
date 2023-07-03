@@ -1,5 +1,32 @@
 import * as LR from "lucide-react"
 
+const lIcons = {
+  plus: LR.Plus,
+  eye: LR.Eye,
+  eyeOff: LR.EyeOff,
+  downloadCloud: LR.DownloadCloud,
+  check: LR.Check,
+  bell: LR.Bell,
+  alertCircle: LR.AlertCircle,
+  chevronDown: LR.ChevronDown,
+  chevronUp: LR.ChevronUp,
+  chevronLeft: LR.ChevronLeft,
+  chevronRight: LR.ChevronRight,
+  chevronsUpDown: LR.ChevronsUpDown,
+  arrowUp: LR.ArrowUp,
+  arrowDown: LR.ArrowDown,
+  arrowLeft: LR.ArrowLeft,
+  download: LR.Download,
+  calendar: LR.Calendar,
+  fileText: LR.FileText,
+  x: LR.X,
+  pen: LR.Pen,
+  trash: LR.Trash2,
+  loader: LR.Loader2,
+  search: LR.SearchIcon,
+  camera: LR.Camera,
+}
+
 const DashboardWallet = () => {
   return (
     <svg viewBox="0 0 58 59" xmlns="http://www.w3.org/2000/svg">
@@ -1324,30 +1351,7 @@ const Vaksin = () => {
 }
 
 export const Icons = {
-  plus: LR.Plus,
-  eye: LR.Eye,
-  eyeOff: LR.EyeOff,
-  downloadCloud: LR.DownloadCloud,
-  check: LR.Check,
-  bell: LR.Bell,
-  alertCircle: LR.AlertCircle,
-  chevronDown: LR.ChevronDown,
-  chevronUp: LR.ChevronUp,
-  chevronLeft: LR.ChevronLeft,
-  chevronRight: LR.ChevronRight,
-  chevronsUpDown: LR.ChevronsUpDown,
-  arrowUp: LR.ArrowUp,
-  arrowDown: LR.ArrowDown,
-  arrowLeft: LR.ArrowLeft,
-  download: LR.Download,
-  calendar: LR.Calendar,
-  fileText: LR.FileText,
-  x: LR.X,
-  pen: LR.Pen,
-  trash: LR.Trash2,
-  loader: LR.Loader2,
-  search: LR.SearchIcon,
-  camera: LR.Camera,
+  ...lIcons,
 
   // sidebar menu icons
   dashboard: Dashboard,

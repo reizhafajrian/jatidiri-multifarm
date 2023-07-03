@@ -1,44 +1,23 @@
+import axios, { isAxiosError } from "axios"
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
-
-export interface IUser {
-  avatar?: any
-  id?: string
-  _id?: string
-  firstName?: string
-  lastName?: string
-  gender?: string
-  email: string
-  password: string
-  phone?: string
-  jobTitle?: string
-  role?: string
-
-  name?: string
-}
-
-export interface IChangePass {
-  passwordOld?: string
-  password: string
-  passwordConfirmation: string
-}
+import { changePassType, SignInType, userType } from "@/lib/schemas/auth"
+import { toast } from "@/components/ui/toast"
 
 export interface IAuthState {
-  token: string
-  user: IUser | null
+  user: userType | null
   loadUser: () => void
-  login: (data: IUser) => void
+  signin: (data: SignInType) => void
   logout: () => void
-  // role management
-  register: (data: IUser) => void
-  updateUser: (data: IUser) => void
+
+  register: (data: userType) => void
+  updateUser: (data: userType) => void
   changeRole: (data: { _id: string; role: string }) => void
   deleteUser: (id: string) => void
-  // profile
-  updateProfile: (data: IUser) => void
-  changePass: (data: IChangePass) => void
+
+  updateProfile: (data: userType) => void
+  changePass: (data: changePassType) => void
 }
 
 const initialState = {
@@ -54,16 +33,14 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
       set((state) => ({ ...state, user: User }))
     }
   },
-  login: async (data) => {
+  signin: async (data) => {
     try {
-      const options = { method: "POST", body: JSON.stringify(data) }
-      let res = await fetch("/api/signin", options).then((res) => res.json())
-      if (res.status === 200) {
-        localStorage.setItem("user", JSON.stringify(res.data.user))
-        window.location.replace("/dashboard")
-      }
-    } catch (err) {
-      toast({ type: "error", message: "wrong credentials!" })
+      const res = await axios.post("/api/signin", data)
+      localStorage.setItem("user", JSON.stringify(res.data.data.user))
+      window.location.replace("/dashboard")
+    } catch (err: any) {
+      if (isAxiosError(err))
+        toast({ type: "error", message: err.response?.data.message })
     }
   },
   logout: async () => {
@@ -90,6 +67,8 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
         url: "/api/user/update",
         data: { data: [data] },
       })
+      const newData = await Api.get("/api/user/get/detail/" + data._id)
+      localStorage.setItem("user", JSON.stringify(newData.data))
       toast({ type: "success", message: res.message })
       window.location.reload()
     } catch (err: any) {
@@ -102,6 +81,8 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
         url: "/api/user/role/update",
         data: { data: [data] },
       })
+      const newData = await Api.get("/api/user/get/detail/" + data._id)
+      localStorage.setItem("user", JSON.stringify(newData.data))
       toast({ type: "success", message: res.message })
       window.location.reload()
     } catch (err: any) {

@@ -5,10 +5,10 @@ import useDataList from "./useDataList"
 const useShedDetailList = () => {
   const { shed_id, searchKeyword, searchResults, searchLoading } = useStore()
   const url = `/api/shed/data/get?shed_code=${shed_id}`
-  const queriesArray = [] as string[]
+  const queries = [] as string[]
   //   milkStatus !== 'all' && queriesArray.push(`status=${milkStatus}`)
 
-  const { data, loading, error, mutate } = useDataList(url, queriesArray)
+  const { data, loading, error, mutate } = useDataList({ url, queries })
 
   let shedDetailList = data
 

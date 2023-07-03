@@ -1,7 +1,7 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 
-import ShedAnimalTable from "./shed-animal-table"
+import ShedAnimalTable from "@/components/shed/shed-animal-table"
 
 export const metadata = {
   title: "Shed Animal",

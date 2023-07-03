@@ -1,23 +1,12 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
+import { hppType } from "@/lib/schemas/hpp"
+import { toast } from "@/components/ui/toast"
 
 export interface IHppState {
-  // hpp: IHpp
-  // hppList: IHpp[]
-  hppStatus: string
-  editHpp: (data: IEditHpp, animal: string) => void
-}
-
-export interface IEditHpp {
-  _id?: string
-  eartag_code?: string
-  hpp_price?: number
-  sell_price?: number
-  buyer?: number
-  phoneNumber?: number
-  description?: string
+  hppStatus?: string
+  editHpp: (data: hppType, animal: string) => void
 }
 
 const createHppSlice: StateCreator<IHppState> = () => ({

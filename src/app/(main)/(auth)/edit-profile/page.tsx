@@ -1,12 +1,11 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 
-import Card from "@/components/ui/Card"
-
-import EditProfileForm from "./edit-profile-form"
+import Card from "@/components/ui/card"
+import EditProfileForm from "@/components/auth/edit-profile-form"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Edit Profile",
+  title: "Edit Profile",
 }
 
 export default async function EditProfilePage() {

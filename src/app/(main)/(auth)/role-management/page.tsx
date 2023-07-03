@@ -1,11 +1,11 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 
-import MemberCard from "./rm-card"
-import RoleManagementHeader from "./rm-header"
+import MemberCard from "@/components/auth/rm-card"
+import RoleManagementHeader from "@/components/auth/rm-header"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Role Management",
+  title: "Role Management",
 }
 
 export default async function RoleManagementPage() {

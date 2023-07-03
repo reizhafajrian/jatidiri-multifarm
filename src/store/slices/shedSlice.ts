@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
+import { toast } from "@/components/ui/toast"
 
 export interface IShed {
   _id?: string
@@ -14,14 +14,12 @@ export interface IShed {
   feed_weight?: number
   age_range?: string
   description?: string
-  created_by?: string
 }
 
 export interface IShedDetail {
   _id?: string
   updated_at?: Date
   shed_code?: string
-  created_by?: string
 
   data_feed_date?: Date
   data_feed_type?: string
@@ -43,7 +41,6 @@ export interface IShedDetail {
 
 export interface IShedAnimal {
   id?: string
-  created_by?: string
   eartag_code?: string
   description?: string
 }
@@ -79,14 +76,6 @@ const createShedSlice: StateCreator<IShedState> = () => ({
   addShedData: async (data) => {
     try {
       const body = {}
-
-      for (let value in data) {
-        if (value.includes("_date")) {
-          body[value] = data[value].toISOString()
-          continue
-        }
-        body[value] = data[value]
-      }
 
       const res = await Api.post({ url: "/api/shed/data/create", data: body })
       toast({ type: "success", message: res.message })

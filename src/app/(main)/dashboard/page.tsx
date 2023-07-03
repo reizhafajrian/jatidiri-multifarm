@@ -1,18 +1,13 @@
-import DateFilter from "@/components/DateFilter"
+import DateFilter from "@/components/ui/date-filter"
+import Content from "@/components/dashboard/content"
 
-import DashboardContent from "./dashboard-content"
-
-export const metadata = {
-  title: "Dashboard",
-}
-
-export default function DashboardPage() {
+export default function Page() {
   return (
     <>
       <div className="mb-4 flex items-center justify-between">
         <DateFilter label="Show" />
       </div>
-      <DashboardContent />
+      <Content />
     </>
   )
 }

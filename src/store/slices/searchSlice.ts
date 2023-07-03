@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
+import { toast } from "@/components/ui/toast"
 
 export interface ISearchState {
   searchType: string

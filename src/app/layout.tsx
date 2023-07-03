@@ -1,14 +1,13 @@
-import { PropsWithChildren } from "react"
-import { Poppins } from "next/font/google"
-
-import "@/styles/ReactToastify.css"
-import "@/styles/globals.css"
-import "@/styles/react-datepicker.css"
-
 import { Metadata } from "next"
 
+import "@/styles/globals.css"
+import "simplebar-react/dist/simplebar.min.css"
+
+import { PropsWithChildren } from "react"
+
+import { poppins } from "@/config/fonts"
 import { cn } from "@/lib/utils"
-import { Toaster } from "@/components/ui/Toast"
+import { Toaster } from "@/components/ui/toast"
 
 export const metadata: Metadata = {
   title: {
@@ -18,12 +17,7 @@ export const metadata: Metadata = {
   description: "this is a description about the company",
 }
 
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "800"],
-})
-
-export default async function RootLayout(props: PropsWithChildren) {
+export default function RootLayout({ children }: PropsWithChildren) {
   return (
     <html lang="en">
       <body
@@ -33,7 +27,7 @@ export default async function RootLayout(props: PropsWithChildren) {
         )}
       >
         <Toaster position="top-center" />
-        {props.children}
+        {children}
       </body>
     </html>
   )

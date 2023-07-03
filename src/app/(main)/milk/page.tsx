@@ -1,10 +1,9 @@
-import StoreInitializer from "@/components/StoreInitializer"
-
-import MilkIncomeCard from "./milk-card-income"
-import MilkTotalCard from "./milk-card-total"
-import MilkFilter from "./milk-filter"
-import MilkHeader from "./milk-header"
-import MilkTable from "./milk-table"
+import MilkIncomeCard from "@/components/milk/milk-card-income"
+import MilkTotalCard from "@/components/milk/milk-card-total"
+import MilkFilter from "@/components/milk/milk-filter"
+import MilkHeader from "@/components/milk/milk-header"
+import MilkTable from "@/components/milk/milk-table"
+import StoreInitializer from "@/components/store-initializer"
 
 export const metadata = {
   title: "Milk",

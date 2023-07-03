@@ -1,12 +1,11 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
+import { toast } from "@/components/ui/toast"
 
 export interface ICategory {
   _id?: string
   category?: string
-  created_by?: string
   type?: string
   stock?: number
   price?: number
@@ -55,14 +54,13 @@ const createCategorySlice: StateCreator<ICategoryState> = (set) => ({
   },
   addCategory: async (data) => {
     try {
-      const { category, created_by, type, stock, price } = data
+      const { category, type, stock, price } = data
       const res = await Api.post({
         url: `/api/${category}/create`,
         data: {
           [`${category}_type`]: type,
           [`${category}_stock`]: stock,
           [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]: price,
-          created_by,
         },
       })
 

@@ -1,24 +1,21 @@
-import { ReactNode } from "react"
+import { PropsWithChildren } from "react"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
 
-import Container from "@/components/Container"
-import Header from "@/components/layout/Header"
-import Sidebar from "@/components/layout/Sidebar"
-import StoreInitializer from "@/components/StoreInitializer"
+import Container from "@/components/layout/container"
+import Header from "@/components/layout/header"
+import Sidebar from "@/components/layout/sidebar"
 
-export default function MainLayout(props: { children: ReactNode }) {
+export default function MainLayout({ children }: PropsWithChildren) {
   const token = cookies().get("token")?.value
-
   if (!token) redirect("/signin")
 
   return (
     <>
-      <StoreInitializer data={{ token }} />
       <Sidebar />
       <Container>
         <Header />
-        <main className="relative flex-1">{props.children}</main>
+        {children}
       </Container>
     </>
   )

@@ -1,7 +1,6 @@
-import Card from "@/components/ui/Card"
+import Card from "@/components/ui/card"
 import { Icons } from "@/components/ui/Icons"
-
-import CategoryContent from "./category-content"
+import CategoryContent from "@/components/category/category-content"
 
 export const metadata = {
   title: "Category",

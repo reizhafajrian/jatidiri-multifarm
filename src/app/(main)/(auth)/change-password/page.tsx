@@ -1,9 +1,8 @@
-import Card from "@/components/ui/Card"
-
-import ChangePasswordForm from "./change-pass-form"
+import Card from "@/components/ui/card"
+import ChangePasswordForm from "@/components/auth/change-pass-form"
 
 export const metadata = {
-  title: "Jatidiri Multifarm | Change Password",
+  title: "Change Password",
 }
 
 export default function ChangePassPage() {

@@ -2,15 +2,14 @@
 
 import { notFound } from "next/navigation"
 
-import { Button } from "@/components/ui/Button"
+import { Button } from "@/components/ui/button"
 
-export default function Error({
-  error,
-  reset,
-}: {
+interface IProps {
   error: Error
   reset: () => void
-}) {
+}
+
+export default function Error({ error, reset }: IProps) {
   if (error.message.includes("404")) return notFound()
   if (error.message === "NEXT_NOT_FOUND") return notFound()
 

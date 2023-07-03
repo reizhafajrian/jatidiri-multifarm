@@ -21,6 +21,7 @@ const useStore = create<
     IExpandState &
     ISearchState & { filterByDate: string }
 >()((...a) => ({
+  filterByDate: thisYearValue,
   ...createAuthSlice(...a),
   ...createAnimalSlice(...a),
   ...createShedSlice(...a),
@@ -29,7 +30,6 @@ const useStore = create<
   ...createMilkSlice(...a),
   ...createHppSlice(...a),
   ...createSearchSlice(...a),
-  filterByDate: thisYearValue,
 }))
 
 export default useStore

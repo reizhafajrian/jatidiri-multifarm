@@ -1,7 +1,7 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/Toast"
+import { toast } from "@/components/ui/toast"
 
 export interface IMilk {
   _id?: string
@@ -11,7 +11,6 @@ export interface IMilk {
   // history_milk_date?: Date
   history_milk?: number
   animal_id?: string
-  created_by?: string
 }
 
 export interface IMilkInfo {
@@ -51,7 +50,7 @@ const createMilkSlice: StateCreator<IMilkState> = (set) => ({
   ...initialState,
   addMilk: async (data) => {
     try {
-      const { created_by, milk, milk_date, eartag_code } = data
+      const { milk, milk_date, eartag_code } = data
 
       const res = await Api.post({
         url: "/api/milk/create",
@@ -59,7 +58,6 @@ const createMilkSlice: StateCreator<IMilkState> = (set) => ({
           amount: milk,
           animal_id: eartag_code,
           milk_created_at: milk_date?.toISOString(),
-          created_by,
         },
       })
 
@@ -70,7 +68,7 @@ const createMilkSlice: StateCreator<IMilkState> = (set) => ({
   },
   editMilk: async (data) => {
     try {
-      const { _id, animal_id, created_by, milk, milk_date } = data
+      const { _id, animal_id, milk, milk_date } = data
 
       const res = await Api.post({
         url: "/api/milk/update",
@@ -81,7 +79,6 @@ const createMilkSlice: StateCreator<IMilkState> = (set) => ({
               amount: milk,
               animal_id,
               date: milk_date?.toISOString(),
-              created_by,
             },
           ],
         },

@@ -3,7 +3,7 @@ import useSwr from "swr"
 import { Api } from "@/lib/api"
 import useStore from "@/store/useStore"
 import { Icons as I } from "@/components/ui/Icons"
-import * as D from "@/app/(main)/dashboard/diagram"
+import * as D from "@/components/dashboard/diagram"
 
 const useDashboardData = () => {
   const { filterByDate: params } = useStore()
@@ -91,32 +91,26 @@ const useDashboardData = () => {
   const diagram = [
     {
       title: "ternak terjual",
-      className: "md:col-span-5",
       children: <D.SoldAnimalsDiagram data={soldAnimals} />,
     },
     {
       title: "pendapatan event",
-      className: "md:col-span-4",
       children: <D.EventIncomeDiagram />,
     },
     {
       title: "penjualan susu",
-      className: "md:col-span-3",
       children: <D.MilkSalesDiagram data={milkSales} total={income} />,
     },
     {
       title: "data analytics",
-      className: "md:col-span-5",
       children: <D.DataAnalyticsDiagram data={dataAnalytics} />,
     },
     {
       title: "hewan mati",
-      className: "md:col-span-4",
       children: <D.DeadAnimalsDiagram data={diedAnimals} />,
     },
     {
       title: "total kambing menyusui",
-      className: "md:col-span-3",
       children: <D.GoatsDiagram data={goatsData} />,
     },
   ]

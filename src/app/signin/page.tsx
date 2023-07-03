@@ -2,13 +2,13 @@ import { cookies } from "next/headers"
 import Image from "next/image"
 import { redirect } from "next/navigation"
 
-import SignInForm from "./signin-form"
+import SignInForm from "@/components/auth/signin-form"
 
 export const metadata = {
   title: "Sign In",
 }
 
-export default function SigninPage() {
+export default function Page() {
   const isAuthenticated = cookies().get("token")?.value
   if (isAuthenticated) redirect("/dashboard")
 

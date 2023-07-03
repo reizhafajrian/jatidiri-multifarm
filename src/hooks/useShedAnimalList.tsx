@@ -10,7 +10,7 @@ const useShedAnimalList = () => {
     ? `/api/shed/get/detail/${shed_id}?cempek=true`
     : `/api/shed/get/detail/${shed_id}?gender=${gender}`
 
-  const { data, loading, error, mutate } = useDataList(url)
+  const { data, loading, error, mutate } = useDataList({ url })
 
   return { data, loading, error, mutate }
 }

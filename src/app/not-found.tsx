@@ -2,11 +2,12 @@
 
 import { useRouter } from "next/navigation"
 
-import { Button } from "@/components/ui/Button"
+import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/Icons"
 
 export default function NotFound() {
   const router = useRouter()
+
   return (
     <div className="grid h-screen w-screen place-items-center">
       <div className="space-y-3">

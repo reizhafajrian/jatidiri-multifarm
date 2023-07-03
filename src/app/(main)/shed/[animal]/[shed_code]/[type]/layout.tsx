@@ -2,9 +2,8 @@ import { ReactNode } from "react"
 import { cookies } from "next/headers"
 import axios from "axios"
 
-import StoreInitializer from "@/components/StoreInitializer"
-
-import ShedDetailHeader from "../shed-detail-header"
+import ShedDetailHeader from "@/components/shed/shed-detail-header"
+import StoreInitializer from "@/components/store-initializer"
 
 interface IProps {
   children: ReactNode

@@ -7,10 +7,10 @@ const useShedAnimalTags = () => {
   const isCempek = type === "cempek"
   const gender = type === "male" ? "true" : "false"
   const url = isCempek
-    ? `/api/${animal.name}/cempek/get`
-    : `/api/${animal.name}/get?gender=${gender}`
+    ? `/api/${animal}/cempek/get`
+    : `/api/${animal}/get?gender=${gender}`
 
-  const { data, loading, error, mutate } = useDataList(url)
+  const { data, loading, error, mutate } = useDataList({ url })
 
   const list = data.filter((item: any) => item.shed_code !== shed_code)
 

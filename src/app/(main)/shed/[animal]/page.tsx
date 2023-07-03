@@ -1,7 +1,6 @@
-import StoreInitializer from "@/components/StoreInitializer"
-
-import ShedHeader from "./shed-header"
-import ShedTable from "./shed-table"
+import ShedHeader from "@/components/shed/shed-header"
+import ShedTable from "@/components/shed/shed-table"
+import StoreInitializer from "@/components/store-initializer"
 
 export const metadata = {
   title: "Shed",

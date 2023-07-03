@@ -1,9 +1,8 @@
 import { cookies } from "next/headers"
 
-import StoreInitializer from "@/components/StoreInitializer"
-
-import ShedDetailHeader from "./shed-detail-header"
-import ShedInfo from "./shed-info"
+import ShedDetailHeader from "@/components/shed/shed-detail-header"
+import ShedInfo from "@/components/shed/shed-info"
+import StoreInitializer from "@/components/store-initializer"
 
 export const metadata = {
   title: "Detail Shed",
