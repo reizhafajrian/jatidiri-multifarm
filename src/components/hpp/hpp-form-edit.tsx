@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import { mutate } from "swr"
 
 import { hppSchema, hppType } from "@/lib/schemas/hpp"
 import useStore from "@/store/useStore"
@@ -17,6 +18,8 @@ import {
 import Form from "@/components/ui/form"
 import InputText from "@/components/ui/input-text"
 
+import { toast } from "../ui/toast"
+
 interface IProps {
   data: hppType
 }
@@ -25,7 +28,7 @@ export default function EditHppForm({
   data: { _id, eartag_code, hpp_price },
 }: IProps) {
   const [open, setOpen] = useState(false)
-  const { editAdultAnimal: editAnimal, editHpp, animal } = useStore()
+  const { editHpp, animal } = useStore()
 
   const methods = useForm<hppType>({
     resolver: zodResolver(hppSchema),
@@ -33,13 +36,19 @@ export default function EditHppForm({
       _id,
       eartag_code,
       hpp_price: hpp_price ?? 0,
+      animal,
     },
   })
 
   const onSubmit = async (values: hppType) => {
-    // await editAnimal(values)
-    await editHpp(values, animal)
-    setOpen(false)
+    try {
+      const res = await editHpp(values)
+      toast({ type: "success", message: res.message })
+      setOpen(false)
+      mutate(`/api/hpp/get?animal_type=${animal}`)
+    } catch (err: any) {
+      toast({ type: "error", message: err.errors[0].msg })
+    }
   }
 
   return (

@@ -10,6 +10,7 @@ interface IData {
     animal?: string
     type?: string
     gender?: string
+    ucTotal?: number
     category?: ICategoryInfo
     searchType?: string
     shed_code?: string
@@ -18,8 +19,16 @@ interface IData {
 }
 
 export default function StoreInitializer({ data }: IData) {
-  const { animal, type, gender, category, searchType, shed_code, shed_id } =
-    data
+  const {
+    animal,
+    type,
+    ucTotal,
+    gender,
+    category,
+    searchType,
+    shed_code,
+    shed_id,
+  } = data
 
   const [setCat, setAnimal, setGender] = useStore((s) => [
     s.setCategoryInfo,
@@ -38,6 +47,12 @@ export default function StoreInitializer({ data }: IData) {
     }
     if (type) {
       useStore.setState((state) => ({ ...state, type }))
+    }
+    if (ucTotal) {
+      useStore.setState((state) => ({
+        ...state,
+        undefinedClusterTotal: ucTotal,
+      }))
     }
     if (searchType) useStore.setState((state) => ({ ...state, searchType }))
     if (shed_code) useStore.setState((state) => ({ ...state, shed_code }))

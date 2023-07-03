@@ -16,6 +16,7 @@ export interface IAnimalState extends IFilter {
   genderTitle: string
   type: string
   undefinedClusterTotal: number
+
   setAnimalTitle: () => void
   setGenderTitle: () => void
   setFilter: (data: IFilter) => void
@@ -43,28 +44,28 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
   setAnimalTitle: () => {
     switch (get().animal) {
       case "goat":
-        set((state) => ({ ...state, animalTitle: "kambing" }))
+        set((s) => ({ ...s, animalTitle: "kambing" }))
         break
       case "sheep":
-        set((state) => ({ ...state, animalTitle: "domba" }))
+        set((s) => ({ ...s, animalTitle: "domba" }))
         break
       case "cow":
-        set((state) => ({ ...state, animalTitle: "sapi" }))
+        set((s) => ({ ...s, animalTitle: "sapi" }))
     }
   },
   setGenderTitle: () => {
     switch (get().gender) {
       case "true":
-        set((state) => ({ ...state, genderTitle: "jantan" }))
+        set((s) => ({ ...s, genderTitle: "jantan" }))
         break
       case "false":
-        set((state) => ({ ...state, genderTitle: "betina" }))
+        set((s) => ({ ...s, genderTitle: "betina" }))
     }
   },
   setFilter: ({ originMale, originFemale, vaccine }) => {
-    originMale && set((state) => ({ ...state, originMale }))
-    originFemale && set((state) => ({ ...state, originFemale }))
-    vaccine && set((state) => ({ ...state, vaccine }))
+    originMale && set((s) => ({ ...s, originMale }))
+    originFemale && set((s) => ({ ...s, originFemale }))
+    vaccine && set((s) => ({ ...s, vaccine }))
   },
   addAdultAnimal: async (data) => {
     try {

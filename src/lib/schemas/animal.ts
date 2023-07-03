@@ -1,6 +1,6 @@
 import { z } from "zod"
 
-export const adutltSchema = z.object({
+export const adultSchema = z.object({
   type: z.string(),
   cempek: z.string(),
   arrival_date: z.coerce.date(),
@@ -13,17 +13,13 @@ export const adutltSchema = z.object({
   supplier: z.string(),
 
   _id: z.string().optional(),
-  pejantan: z.string().optional(),
+  pejantan: z.boolean().optional(),
   files: z.any().optional(),
   description: z.string().optional(),
   eartag_code: z.string().optional(),
-
-  status: z.string().optional(),
-  animal: z.string().optional(),
-  sell_price: z.coerce.number().optional(),
 })
 
-export type adultType = Partial<z.infer<typeof adutltSchema>>
+export type adultType = z.infer<typeof adultSchema>
 
 export const cempekSchema = z.object({
   type: z.string(),
@@ -42,6 +38,15 @@ export const cempekSchema = z.object({
 })
 
 export type cempekType = z.infer<typeof cempekSchema>
+
+export type animalType = Partial<
+  adultType &
+    cempekType & {
+      status: string
+      animal: string
+      sell_price: number
+    }
+>
 
 export interface ICertificate {
   organization: string

@@ -7,11 +7,12 @@ import useStore from "@/store/useStore"
 import SelectTable from "@/components/ui/select-table"
 import Table from "@/components/ui/table"
 
+import { toast } from "../ui/toast"
 import { hppColumns } from "./column"
 import EditHppForm from "./hpp-form-edit"
 
 export default function HppTable() {
-  const { animal, hppStatus, editAdultAnimal: editAnimal } = useStore()
+  const { animal, hppStatus, changeStatusHpp } = useStore()
 
   const url = `/api/hpp/get?animal_type=${animal}`
   const queries = []
@@ -26,10 +27,13 @@ export default function HppTable() {
   ]
 
   const changeStatusHandler = async (value: string, _id?: string) => {
-    const pathname = window?.location?.pathname
-    const secondPath = pathname.split("/")[2]
-    editAnimal({ status: value, _id, animal: secondPath })
-    mutate()
+    try {
+      const res = await changeStatusHpp({ status: value, _id, animal })
+      toast({ type: "success", message: res.message })
+      mutate()
+    } catch (err: any) {
+      toast({ type: "error", message: err.errors[0].msg })
+    }
   }
 
   const columns: ColumnDef<any, any>[] = [

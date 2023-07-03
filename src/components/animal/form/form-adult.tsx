@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
-import { adultType, adutltSchema } from "@/lib/schemas/animal"
+import { adultSchema, adultType } from "@/lib/schemas/animal"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Form from "@/components/ui/form"
@@ -35,7 +35,7 @@ export default function FormAdult({ data }: IProps) {
   const formTitle = `${data ? "Edit" : "Tambah"} Data ${title} ${genderTitle}`
 
   const form = useForm<adultType>({
-    resolver: zodResolver(adutltSchema),
+    resolver: zodResolver(adultSchema),
     defaultValues: {
       ...data,
       cempek: "false",
