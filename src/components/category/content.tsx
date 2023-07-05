@@ -2,34 +2,28 @@
 
 import { categoryTitle } from "@/lib/utils"
 import useDataList from "@/hooks/useDataList"
-import { Icons } from "@/components/ui/Icons"
 
-import CategoryCardList from "./category-card-list"
-import { setCategories } from "./category-data"
-import AddCategoryForm from "./category-form-add"
-import CategoryTable from "./category-table"
+import Loader from "../ui/loader"
+import CardList from "./card-list"
+import { setCategories } from "./data"
+import AddCategoryForm from "./form/form-add"
+import TableData from "./table-data"
 
-export default function CategoryContent() {
-  const { data, loading, error, mutate } = useDataList({
+export default function Content() {
+  const { data, loading } = useDataList({
     url: "/api/category/detail",
   })
 
-  const categoryDetail = {
+  if (loading)
+    return <Loader className="flex h-20 items-center justify-center" />
+
+  const categories = setCategories({
     feedInfo: data?.find((d: any) => d.title === "Feed")?.result,
     vitaminInfo: data?.find((d: any) => d.title === "Vitamin")?.result,
     anthelminticInfo: data?.find((d: any) => d.title === "Anthelmintic")
       ?.result,
     vaccineInfo: data?.find((d: any) => d.title === "Vaccine")?.result,
-  }
-
-  const categories = setCategories(categoryDetail)
-
-  if (loading)
-    return (
-      <div className="flex h-20 items-center justify-center">
-        <Icons.loader className="animate-spin stroke-primary-4" />
-      </div>
-    )
+  })
 
   return (
     <>
@@ -41,11 +35,11 @@ export default function CategoryContent() {
                 {categoryTitle(category)}
               </h1>
               <div className="mb-3 flex flex-col gap-3 md:mb-6 md:flex-row md:items-end md:justify-between">
-                <CategoryCardList cardList={cardList} />
+                <CardList cardList={cardList} />
                 <AddCategoryForm category={category} />
               </div>
             </div>
-            <CategoryTable category={category} />
+            <TableData category={category} />
           </div>
         ))}
       </div>

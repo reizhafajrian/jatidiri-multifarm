@@ -2,10 +2,11 @@
 
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { mutate } from "swr"
 
 import { categorySchema, categoryType } from "@/lib/schemas/category"
+import { categoryTitle } from "@/lib/utils"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import {
@@ -17,65 +18,63 @@ import {
 } from "@/components/ui/dialog"
 import Form from "@/components/ui/form"
 import InputText from "@/components/ui/input-text"
+import { toast } from "@/components/ui/toast"
 
 interface IProps {
   category: string
-  data: any
 }
 
-export default function EditCategoryForm({ category, data }: IProps) {
+export default function AddCategoryForm({ category }: IProps) {
   const [open, setOpen] = useState(false)
-  const { editCategory } = useStore()
+  const { addCategory } = useStore()
 
-  const methods = useForm<categoryType>({
+  const title = categoryTitle(category)
+  const satuan = category === "feed" ? "(per kg)" : "(per pcs)"
+
+  const form = useForm<categoryType>({
     resolver: zodResolver(categorySchema),
-    defaultValues: {
-      type: data.name,
-      stock: data.stocks,
-      price: data.price,
-    },
+    defaultValues: { category },
   })
 
-  const onSubmit: SubmitHandler<categoryType> = async (values) => {
-    await editCategory(values)
-    mutate(`/api/${category}/get`)
-    methods.reset()
-    setOpen(false)
+  const onSubmit = async (values: categoryType) => {
+    try {
+      const res = await addCategory(values)
+      toast({ type: "success", message: res.message })
+      mutate(`/api/${category}/get`)
+      form.reset()
+      setOpen(false)
+    } catch (err: any) {
+      toast({ type: "error", message: err.errors[0].msg })
+    }
   }
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="edit" size="xs" />
+        <Button>Tambah {title}</Button>
       </DialogTrigger>
 
       <DialogContent>
-        <DialogTitle>Edit {setTitle(category)}</DialogTitle>
+        <DialogTitle>Tambah {title}</DialogTitle>
 
-        <Form
-          methods={methods}
-          onSubmit={(values) =>
-            onSubmit({ ...values, category, _id: data._id })
-          }
-          className="mt-5 space-y-4"
-        >
+        <Form methods={form} onSubmit={onSubmit}>
           <div className="mb-8 space-y-6">
-            <InputText name="type" label={`Jenis ${setTitle(category)}`} />
+            <InputText name="type" label={`Jenis ${title}`} />
             <InputText name="stock" label="Stock" type="number" />
             <InputText
               name="price"
-              label={`Harga ${category === "feed" ? "(per kg)" : "(per pcs)"}`}
+              label={`Harga ${satuan}`}
               type="number"
               rupiah
             />
           </div>
           <div className="flex justify-end gap-3">
-            <DialogClose>
+            <DialogClose asChild>
               <Button
                 type="button"
                 variant="outline"
                 className="w-36"
-                disabled={methods.formState.isSubmitting}
+                disabled={form.formState.isSubmitting}
               >
                 CANCEL
               </Button>
@@ -84,7 +83,7 @@ export default function EditCategoryForm({ category, data }: IProps) {
             <Button
               type="submit"
               className="w-36"
-              isLoading={methods.formState.isSubmitting}
+              isLoading={form.formState.isSubmitting}
             >
               SAVE
             </Button>
@@ -94,12 +93,3 @@ export default function EditCategoryForm({ category, data }: IProps) {
     </Dialog>
   )
 }
-
-const setTitle = (category: string) =>
-  category === "feed"
-    ? "Pakan"
-    : category === "vitamin"
-    ? "Vitamin"
-    : category === "vaccine"
-    ? "Vaksin"
-    : "Obat Cacing"

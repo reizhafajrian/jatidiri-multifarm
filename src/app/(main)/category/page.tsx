@@ -1,6 +1,6 @@
 import Card from "@/components/ui/card"
 import { Icons } from "@/components/ui/Icons"
-import CategoryContent from "@/components/category/category-content"
+import Content from "@/components/category/content"
 
 export const metadata = {
   title: "Category",
@@ -29,7 +29,7 @@ export default function Category() {
           ))}
         </div>
       </div>
-      <CategoryContent />
+      <Content />
     </>
   )
 }

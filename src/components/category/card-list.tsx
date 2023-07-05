@@ -9,7 +9,7 @@ interface IProps {
   }[]
 }
 
-export default function CategoryCardList({ cardList }: IProps) {
+export default function CardList({ cardList }: IProps) {
   return (
     <div className="flex flex-col gap-3 md:flex-row md:gap-6">
       {cardList?.map((item, idx) => (

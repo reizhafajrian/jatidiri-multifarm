@@ -1,34 +1,12 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
-import { toast } from "@/components/ui/toast"
-
-export interface ICategory {
-  _id?: string
-  category?: string
-  type?: string
-  stock?: number
-  price?: number
-}
-
-interface IFeedInfo {
-  total_type: number
-  total_usage: number
-  total_stock: number
-}
-
-interface IOtherInfo {
-  cow_value: string
-  sheep_value: string
-  goat_value: string
-}
-
-export interface ICategoryInfo {
-  feedInfo?: IFeedInfo
-  vitaminInfo?: IOtherInfo
-  vaccineInfo?: IOtherInfo
-  anthelminticInfo?: IOtherInfo
-}
+import {
+  categoryType,
+  ICategoryInfo,
+  IFeedInfo,
+  IOtherInfo,
+} from "@/lib/schemas/category"
 
 export interface ICategoryState {
   feedInfo?: IFeedInfo
@@ -37,9 +15,9 @@ export interface ICategoryState {
   anthelminticInfo?: IOtherInfo
 
   setCategoryInfo: (data: ICategoryInfo) => void
-  addCategory: (data: ICategory) => void
-  editCategory: (data: ICategory) => void
-  deleteCategory: (data: ICategory) => void
+  addCategory: (data: categoryType) => any
+  editCategory: (data: categoryType) => any
+  deleteCategory: (category: string, _id: string) => any
 }
 
 const createCategorySlice: StateCreator<ICategoryState> = (set) => ({
@@ -55,7 +33,7 @@ const createCategorySlice: StateCreator<ICategoryState> = (set) => ({
   addCategory: async (data) => {
     try {
       const { category, type, stock, price } = data
-      const res = await Api.post({
+      return await Api.post({
         url: `/api/${category}/create`,
         data: {
           [`${category}_type`]: type,
@@ -63,42 +41,32 @@ const createCategorySlice: StateCreator<ICategoryState> = (set) => ({
           [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]: price,
         },
       })
-
-      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.errors[0].msg })
+      throw err
     }
   },
   editCategory: async (data) => {
     try {
       const { _id, category, type, stock, price } = data
-
-      const res = await Api.post({
+      return await Api.put({
         url: `/api/${category}/update`,
         data: {
-          data: [
-            {
-              _id,
-              [`${category}_type`]: type,
-              [`${category}_stock`]: stock,
-              [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]:
-                price,
-            },
-          ],
+          _id,
+          [`${category}_type`]: type,
+          [`${category}_stock`]: stock,
+          [`${category}_price_${category === "feed" ? "kgs" : "pcs"}`]: price,
         },
+        isFormData: true,
       })
-
-      toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      throw err
     }
   },
-  deleteCategory: async (data) => {
+  deleteCategory: async (category, _id) => {
     try {
-      const res = await Api.delete(`/api/${data.category}/delete/${data._id}`)
-      toast({ type: "success", message: res.message })
+      return await Api.delete(`/api/${category}/delete/${_id}`)
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      throw err
     }
   },
 })
