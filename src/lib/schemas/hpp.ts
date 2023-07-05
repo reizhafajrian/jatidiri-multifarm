@@ -6,7 +6,7 @@ export const hppSchema = z.object({
   sell_price: z.coerce.number().min(1),
   description: z.string().nullish(),
   buyer: z.string().nonempty(),
-  phoneNumber: z.coerce.number().min(1),
+  phone: z.coerce.number().min(1),
 
   _id: z.string().optional(),
   animal: z.string().optional(),

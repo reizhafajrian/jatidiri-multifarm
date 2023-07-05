@@ -18,8 +18,9 @@ export const shedSchema = z.object({
   // feed_weight: z.coerce.number(validations).min(1, { message: REQUIRED_ERROR }),
   // age_range: z.string(validations),
   description: z.string().optional(),
-  // created_by: z.string(validations),
 })
+
+export type shedType = z.infer<typeof shedSchema>
 
 export const shedDetailSchema = (categories: any) => {
   let shape = {}

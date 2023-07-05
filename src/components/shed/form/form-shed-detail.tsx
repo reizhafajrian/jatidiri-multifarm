@@ -27,10 +27,10 @@ interface IProps {
   options: any
 }
 
-export default function ShedDetailForm({ options }: IProps) {
+export default function FormShedDetail({ options }: IProps) {
   const [open, setOpen] = useState(false)
   const [categories, setCategories] = useState<any>({ feed: true })
-  const { user, addShedData, shed_code, shed_id } = useStore()
+  const { addShedData, shed_code, shed_id } = useStore()
 
   const methods = useForm<IShedDetail>({
     resolver: zodResolver(shedDetailSchema(categories)),

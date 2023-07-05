@@ -1,30 +1,26 @@
 "use client"
 
-import { ColumnDef } from "@tanstack/react-table"
-
 import useDataList from "@/hooks/useDataList"
 import useStore from "@/store/useStore"
-import SelectTable from "@/components/ui/select-table"
 import Table from "@/components/ui/table"
 
 import { toast } from "../ui/toast"
-import { hppColumns } from "./column"
-import EditHppForm from "./hpp-form-edit"
+import { getHppColumns } from "./column"
 
-export default function HppTable() {
-  const { animal, hppStatus, changeStatusHpp } = useStore()
+interface IProps {
+  animal: string
+}
 
-  const url = `/api/hpp/get?animal_type=${animal}`
-  const queries = []
+export default function HppTable({ animal }: IProps) {
+  const { hppStatus, changeStatusHpp } = useStore()
+
+  const queries = [`animal_type=${animal}`]
   hppStatus !== "all" && queries.push(`status=${hppStatus}`)
 
-  const { data, loading, error, mutate } = useDataList({ url, queries })
-
-  const statusOptions = [
-    { name: "Terjual", value: "sold", bgColor: "bg-[#FFE2DC]" },
-    { name: "Tersedia", value: "available", bgColor: "bg-[#E1F7E8]" },
-    { name: "Mati", value: "died", bgColor: "bg-[#BFC4C6] bg-opacity-20" },
-  ]
+  const { data, loading, error, mutate } = useDataList({
+    url: `/api/hpp/get`,
+    queries,
+  })
 
   const changeStatusHandler = async (value: string, _id?: string) => {
     try {
@@ -36,32 +32,7 @@ export default function HppTable() {
     }
   }
 
-  const columns: ColumnDef<any, any>[] = [
-    ...hppColumns,
-    {
-      header: "Status",
-      accessorKey: "status",
-      cell: (data) => (
-        <SelectTable
-          onChange={changeStatusHandler}
-          animalEarTag={data.row.original._id}
-          value={data.getValue() === "active" ? "available" : data.getValue()}
-          options={statusOptions}
-          triggerClassName={
-            statusOptions.find((i) => i.value === data.getValue())?.bgColor! ??
-            "bg-[#E1F7E8]"
-          }
-        />
-      ),
-    },
-    { header: "Nama Pembeli", accessorKey: "buyer" },
-    { header: "No Telepon", accessorKey: "phoneNumber" },
-    {
-      header: "Aksi",
-      accessorKey: "eartag_code",
-      cell: (data) => <EditHppForm data={data.row.original} />,
-    },
-  ]
+  const columns = getHppColumns(changeStatusHandler)
 
   return (
     <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />

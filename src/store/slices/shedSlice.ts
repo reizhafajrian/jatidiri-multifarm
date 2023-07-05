@@ -1,20 +1,21 @@
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
+import { shedType } from "@/lib/schemas/shed"
 import { toast } from "@/components/ui/toast"
 
-export interface IShed {
-  _id?: string
-  shed_code?: string
-  animal_type?: string
-  animal_weight?: string
-  average_weight?: number
-  average_age?: number
-  feed?: string
-  feed_weight?: number
-  age_range?: string
-  description?: string
-}
+// export interface IShed {
+//   _id?: string
+//   shed_code?: string
+//   animal_type?: string
+//   animal_weight?: string
+//   average_weight?: number
+//   average_age?: number
+//   feed?: string
+//   feed_weight?: number
+//   age_range?: string
+//   description?: string
+// }
 
 export interface IShedDetail {
   _id?: string
@@ -48,10 +49,11 @@ export interface IShedAnimal {
 export interface IShedState {
   shed_id: string
   shed_code: string
+  shedAnimalTags: any[]
   // shed: IShed
   // shedDetail: IShedDetail
 
-  addShed: (data: IShed) => void
+  addShed: (data: shedType) => any
   addShedData: (data: IShedDetail) => void
   addShedAnimal: (data: IShedAnimal) => void
   changeShedAnimal: (shed_code: string, eartag_code?: string) => void
@@ -60,17 +62,16 @@ export interface IShedState {
 const initialState = {
   shed_id: "",
   shed_code: "",
+  shedAnimalTags: [],
 }
 
 const createShedSlice: StateCreator<IShedState> = () => ({
   ...initialState,
   addShed: async (data) => {
     try {
-      const res = await Api.post({ url: "/api/shed/create", data })
-      toast({ type: "success", message: res.message })
-      window.location.replace(`/shed/${data.animal_type}`)
+      return await Api.post({ url: "/api/shed/create", data })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.errors[0].msg })
+      return err
     }
   },
   addShedData: async (data) => {

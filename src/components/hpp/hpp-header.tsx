@@ -1,14 +1,26 @@
 "use client"
 
+import { useEffect, useState } from "react"
 import { DownloadCloud } from "lucide-react"
 
+import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Navbar from "@/components/layout/navbar"
 
-export default function HppHeader(props: { animal_type: string }) {
-  const downloadHpp = () => {
-    window.open(`/api/hpp/download?animal_type=${props.animal_type}`, "_blank")
-  }
+interface IProps {
+  animal: string
+}
+
+export default function HppHeader({ animal }: IProps) {
+  const hppStatus = useStore((s) => s.hppStatus)
+  const [endpoint, setEndpoint] = useState("")
+
+  useEffect(() => {
+    const queriesArray: Array<string> = [`animal_type=${animal}`]
+    const url = "/api/hpp/download"
+    hppStatus !== "all" && queriesArray.push("status=" + hppStatus)
+    queriesArray.length > 0 && setEndpoint(url + `?${queriesArray?.join("&")}`)
+  }, [hppStatus])
 
   const menu = [
     { name: "Kambing", link: `/hpp/goat` },
@@ -21,7 +33,7 @@ export default function HppHeader(props: { animal_type: string }) {
       <Button
         variant="outline"
         size="sm"
-        onClick={downloadHpp}
+        onClick={() => window.open(endpoint, "_blank")}
         className="gap-3 rounded-xl uppercase"
       >
         <DownloadCloud className="h-4 w-4" /> download

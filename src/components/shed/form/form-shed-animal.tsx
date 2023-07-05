@@ -1,12 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 
 import { shedAnimalSchema } from "@/lib/schemas/shed"
-import useShedAnimalList from "@/hooks/useShedAnimalList"
-import useShedAnimalTags from "@/hooks/useshedAnimalTags"
 import { IShedAnimal } from "@/store/slices/shedSlice"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
@@ -14,6 +13,7 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
@@ -22,12 +22,16 @@ import { Icons } from "@/components/ui/Icons"
 import InputSelect from "@/components/ui/input-select"
 import InputText from "@/components/ui/input-text"
 
-export default function ShedAnimalForm() {
+export default function FormShedAnimal() {
+  const router = useRouter()
   const [open, setOpen] = useState(false)
-  const { animal, animalTitle: title, shed_id, addShedAnimal } = useStore()
-
-  const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags()
-  const { mutate: mutateTable } = useShedAnimalList()
+  const {
+    animal,
+    animalTitle: title,
+    shed_id,
+    addShedAnimal,
+    shedAnimalTags,
+  } = useStore()
 
   const methods = useForm<IShedAnimal>({
     resolver: zodResolver(shedAnimalSchema),
@@ -35,9 +39,10 @@ export default function ShedAnimalForm() {
 
   const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
     await addShedAnimal({ ...values, id: shed_id })
-    mutateTable()
-    mutateEartags()
+    // mutateTable()
+    // mutateEartags()
     setOpen(false)
+    router.refresh()
   }
 
   return (
@@ -49,13 +54,15 @@ export default function ShedAnimalForm() {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <Form methods={methods} onSubmit={(values) => onSubmit(values)}>
+        <DialogHeader>
           <DialogTitle>Tambah Data {title}</DialogTitle>
+        </DialogHeader>
+        <Form methods={methods} onSubmit={(values) => onSubmit(values)}>
           <div className="mb-8 space-y-6">
             <InputSelect
               name="eartag_code"
               label="No Eartag"
-              options={eartagOptions}
+              options={shedAnimalTags}
             />
             <InputText name="description" label="Keterangan" />
           </div>

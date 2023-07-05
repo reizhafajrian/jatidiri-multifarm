@@ -21,7 +21,7 @@ const createHppSlice: StateCreator<IHppState> = () => ({
   },
   editHpp: async (data) => {
     try {
-      const url = `/api/hpp/update?animal_type=${data.animal}`
+      const url = `/api/${data.animal}/update`
       return await Api.put({ url, data, isFormData: true })
     } catch (err: any) {
       throw err

@@ -1,15 +1,15 @@
 import BackLink from "@/components/ui/back-link"
-import ShedForm from "@/components/shed/shed-form"
+import FormShed from "@/components/shed/form/form-shed"
 
 export const metadata = {
   title: "Add Shed",
 }
 
-export default function AddShedPage() {
+export default function Page() {
   return (
     <>
       <BackLink />
-      <ShedForm />
+      <FormShed />
     </>
   )
 }

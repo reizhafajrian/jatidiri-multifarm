@@ -24,20 +24,13 @@ interface IProps {
   data: hppType
 }
 
-export default function EditHppForm({
-  data: { _id, eartag_code, hpp_price },
-}: IProps) {
+export default function EditHppForm({ data }: IProps) {
   const [open, setOpen] = useState(false)
   const { editHpp, animal } = useStore()
 
-  const methods = useForm<hppType>({
+  const form = useForm<hppType>({
     resolver: zodResolver(hppSchema),
-    values: {
-      _id,
-      eartag_code,
-      hpp_price: hpp_price ?? 0,
-      animal,
-    },
+    values: { ...data, animal, status: "sold" },
   })
 
   const onSubmit = async (values: hppType) => {
@@ -58,7 +51,7 @@ export default function EditHppForm({
       </DialogTrigger>
       <DialogContent>
         <DialogTitle>Edit Data HPP</DialogTitle>
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form methods={form} onSubmit={onSubmit}>
           <div className="mb-8 space-y-5">
             <InputText name="eartag_code" label="" disabled />
             <div className="grid grid-cols-2 gap-5">
@@ -77,7 +70,7 @@ export default function EditHppForm({
               />
             </div>
             <InputText name="buyer" label="Nama Pembeli" />
-            <InputText name="phoneNumber" label="No Tlp" />
+            <InputText name="phone" label="No Tlp" />
             <InputText name="description" label="Keterangan" />
           </div>
           <div className="flex justify-end gap-3">
@@ -86,7 +79,7 @@ export default function EditHppForm({
                 type="button"
                 variant="outline"
                 className="w-36"
-                disabled={methods.formState.isSubmitting}
+                disabled={form.formState.isSubmitting}
               >
                 CANCEL
               </Button>
@@ -95,7 +88,7 @@ export default function EditHppForm({
             <Button
               type="submit"
               className="w-36"
-              isLoading={methods.formState.isSubmitting}
+              isLoading={form.formState.isSubmitting}
             >
               SAVE
             </Button>

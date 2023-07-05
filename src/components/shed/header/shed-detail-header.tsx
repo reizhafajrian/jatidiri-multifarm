@@ -1,13 +1,18 @@
 "use client"
 
+import { usePathname } from "next/navigation"
+
 import useStore from "@/store/useStore"
 import BackLink from "@/components/ui/back-link"
 import Navbar from "@/components/layout/navbar"
 
-import ShedAnimalForm from "./shed-animal-form"
+import FormShedAnimal from "../form/form-shed-animal"
 
 export default function ShedDetailHeader() {
-  const { animal, type, shed_code, shed_id } = useStore()
+  const path = usePathname()
+  const { animal, animalTitle, shed_code } = useStore()
+  const pathArray = path.split("/")
+  const shed_id = pathArray[3]
   const baseUrl = `/shed/${animal}/${shed_id}`
 
   const menu = [
@@ -30,11 +35,11 @@ export default function ShedDetailHeader() {
         <p className="font-light">
           Informasi Detail terkait Kandang Nomor
           <span className="font-semibold"> {shed_code}</span> yang berisi hewan
-          <span className="font-semibold"> {animal}</span>.
+          <span className="font-semibold"> {animalTitle}</span>.
         </p>
       </div>
       <Navbar menu={menu} className="mb-5 flex items-center justify-between">
-        {type && <ShedAnimalForm />}
+        {pathArray.length > 4 && <FormShedAnimal />}
       </Navbar>
     </>
   )

@@ -3,11 +3,16 @@
 import { ColumnDef } from "@tanstack/react-table"
 
 import { longDateFormatter } from "@/lib/utils"
-import useShedDetailList from "@/hooks/useShedDetailList"
+import useDataList from "@/hooks/useDataList"
 import Table from "@/components/ui/table"
 
-export default function ShedInfoTable() {
-  const { data, loading } = useShedDetailList()
+export default function ShedInfoTable({ shed_id }: { shed_id: string }) {
+  const queries: Array<string> = []
+
+  const { data, loading, error, mutate } = useDataList({
+    url: `/api/shed/data/get?shed_code=${shed_id}`,
+    queries,
+  })
 
   const columns: ColumnDef<any, any>[] = [
     {

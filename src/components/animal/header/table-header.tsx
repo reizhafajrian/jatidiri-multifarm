@@ -35,8 +35,8 @@ export default function TableHeader() {
       queriesArray.push("cempek=true")
     }
     queriesArray.push(filterByDate)
-    originMale && queriesArray.push("origin_male=" + originMale)
-    originFemale && queriesArray.push("origin_female=" + originFemale)
+    originMale !== "all" && queriesArray.push("origin_male=" + originMale)
+    originFemale !== "all" && queriesArray.push("origin_female=" + originFemale)
     queriesArray.length > 0 && setEndpoint(url + `?${queriesArray?.join("&")}`)
   }, [originMale, originFemale, filterByDate, animal, path])
 

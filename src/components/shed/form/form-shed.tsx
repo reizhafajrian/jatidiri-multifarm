@@ -1,43 +1,56 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
-import useSWR from "swr"
 
-import { Api } from "@/lib/api"
-import { shedSchema } from "@/lib/schemas/shed"
-import { IShed } from "@/store/slices/shedSlice"
+import { shedSchema, shedType } from "@/lib/schemas/shed"
+import useDataList from "@/hooks/useDataList"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Form from "@/components/ui/form"
 import InputRadio from "@/components/ui/input-radio"
 import InputSelect from "@/components/ui/input-select"
 import InputText from "@/components/ui/input-text"
+import { toast } from "@/components/ui/toast"
 
-export default function ShedForm() {
+export default function FormShed() {
+  const path = usePathname()
   const router = useRouter()
   const { addShed } = useStore()
 
-  const { data, isLoading } = useSWR(`/api/feed/get`, Api.get)
+  const { data, loading } = useDataList({ url: `/api/feed/get` })
 
-  const methods = useForm<IShed>({ resolver: zodResolver(shedSchema) })
+  const feedOptions = data?.map((res: any) => ({
+    value: res.id,
+    name: res.name,
+  }))
+
+  const animalList = [
+    { value: "goat", label: "Kambing" },
+    { value: "sheep", label: "Domba" },
+    { value: "cow", label: "Sapi" },
+  ]
+
+  const form = useForm<shedType>({ resolver: zodResolver(shedSchema) })
+
+  const onSubmit = async (values: shedType) => {
+    try {
+      const res = await addShed(values)
+      toast({ type: "success", message: res.message })
+      router.replace(path.replace("add", "") + "/" + values.animal_type)
+    } catch (err: any) {
+      toast({ type: "error", message: err.errors[0].msg })
+    }
+  }
 
   return (
-    <Form
-      onSubmit={(values) => addShed({ ...values })}
-      methods={methods}
-      className="space-y-4"
-    >
+    <Form onSubmit={onSubmit} methods={form} className="space-y-4">
       <h1 className="mb-5 text-base font-semibold">Tambah Data Kandang</h1>
       <div className="mb-6 flex items-center gap-4">
-        {[
-          { value: "goat", label: "Kambing" },
-          { value: "sheep", label: "Domba" },
-          { value: "cow", label: "Sapi" },
-        ].map((item, idx) => (
+        {animalList.map((item) => (
           <InputRadio
-            key={idx}
+            key={item.value}
             label={item.label}
             name="animal_type"
             value={item.value}
@@ -46,21 +59,14 @@ export default function ShedForm() {
       </div>
       <div className="grid grid-cols-2 gap-4">
         <div className="space-y-6">
-          {/* <InputText name="shed_code" label="No Kandang" disabled /> */}
           <InputSelect
             name="default_feed"
             label="Pakan"
-            options={data?.map((res: any) => ({
-              value: res.id,
-              name: res.name,
-            }))}
-            isLoading={isLoading}
+            options={feedOptions}
+            isLoading={loading}
           />
-          {/* <InputText name="age_range" label="Range Usia" /> */}
         </div>
         <div className="space-y-6">
-          {/* <InputText name="animal_weight" label="Berat Hewan" />
-          <InputText name="feed_weight" label="Berat Pakan" /> */}
           <InputText name="description" label="Keterangan" />
         </div>
       </div>
@@ -69,15 +75,15 @@ export default function ShedForm() {
           type="button"
           variant="outline"
           className="w-36"
-          onClick={() => router.replace("/shed/goat")}
-          disabled={methods.formState.isSubmitting}
+          onClick={() => router.back()}
+          disabled={form.formState.isSubmitting}
         >
           CANCEL
         </Button>
         <Button
           type="submit"
           className="w-36"
-          isLoading={methods.formState.isSubmitting}
+          isLoading={form.formState.isSubmitting}
         >
           SAVE
         </Button>

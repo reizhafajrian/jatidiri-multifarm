@@ -1,44 +1,55 @@
 "use client"
 
+import { useEffect } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
-import { longDateFormatter } from "@/lib/utils"
-import useShedAnimalList from "@/hooks/useShedAnimalList"
+import useDataList from "@/hooks/useDataList"
 import useShedAnimalTags from "@/hooks/useshedAnimalTags"
 import useStore from "@/store/useStore"
 import SelectTable from "@/components/ui/select-table"
 import Table from "@/components/ui/table"
 
+import { shedAnimalcolumns } from "./column"
+
 interface IProps {
-  id: string
+  animal: string
+  shed_id: string
+  type: string
   shedCodeOptions: any
 }
 
-export default function ShedAnimalTable({ id, shedCodeOptions }: IProps) {
+export default function ShedAnimalTable({
+  animal,
+  shed_id,
+  type,
+  shedCodeOptions,
+}: IProps) {
   const changeShedAnimal = useStore((state) => state.changeShedAnimal)
-  const { data, loading, mutate: mutateTable } = useShedAnimalList()
-  const { mutate: mutateEartags } = useShedAnimalTags()
+
+  const { data, loading, error, mutate } = useDataList({
+    url: `/api/shed/get/detail/${shed_id}`,
+    queries: [type === "cempek" ? "cempek=true" : `gender=${type}`],
+  })
+
+  const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags(
+    animal,
+    type
+  )
 
   const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
     await changeShedAnimal(shed_code, eartag_code)
-    mutateTable()
+    mutate()
     mutateEartags()
   }
 
   const columns: ColumnDef<any, any>[] = [
-    {
-      header: "Tgl Tiba",
-      accessorKey: "arrival_date",
-      cell: (data: any) => longDateFormatter(new Date(data.getValue())),
-    },
-    { header: "No Eartag", accessorKey: "eartag_code" },
-    { header: "Keterangan", accessorKey: "description" },
+    ...shedAnimalcolumns,
     {
       header: "Pindah Kandang",
       accessorKey: "shed_code",
       cell: (data) => (
         <SelectTable
-          value={id}
+          value={shed_id}
           onChange={changeShedHandler}
           animalEarTag={data.row.original.eartag_code}
           options={shedCodeOptions}
