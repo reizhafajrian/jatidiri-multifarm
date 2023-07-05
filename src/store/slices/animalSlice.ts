@@ -1,3 +1,4 @@
+import { format } from "date-fns"
 import { StateCreator } from "zustand"
 
 import { Api } from "@/lib/api"
@@ -16,6 +17,7 @@ export interface IAnimalState extends IFilter {
   genderTitle: string
   type: string
   undefinedClusterTotal: number
+  weightHistory: Array<any>
 
   setAnimalTitle: () => void
   setGenderTitle: () => void
@@ -25,6 +27,7 @@ export interface IAnimalState extends IFilter {
   addCempekAnimal: (data: cempekType) => any
   editCempekAnimal: (data: cempekType) => any
   deleteAnimal: (animal: string, type: string, id: string) => any
+  setWeightHistory: (animal_id: string, start: Date, end: Date) => void
 }
 
 const initialState = {
@@ -37,6 +40,7 @@ const initialState = {
   originFemale: "all",
   vaccine: "all",
   undefinedClusterTotal: 0,
+  weightHistory: [],
 }
 
 const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
@@ -114,6 +118,23 @@ const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({
       return await Api.delete(url)
     } catch (err) {
       throw err
+    }
+  },
+  setWeightHistory: async (animal_id, start, end) => {
+    try {
+      const shape = "yyyy-MM-dd"
+      const s = format(start, shape)
+      const e = format(end, shape)
+      if (start !== null && end !== null) {
+        const res = await Api.get(
+          `/api/weight/get?animal_id=${animal_id}&start=${s}&end=${e}`
+        )
+        set((state) => ({ ...state, weightHistory: res.data }))
+      }
+    } catch (err: any) {
+      if (err.status === 404) {
+        set((state) => ({ ...state, weightHistory: [] }))
+      }
     }
   },
 })

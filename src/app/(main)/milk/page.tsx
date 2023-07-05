@@ -1,9 +1,8 @@
+import Header from "@/components/milk/header"
 import MilkIncomeCard from "@/components/milk/milk-card-income"
 import MilkTotalCard from "@/components/milk/milk-card-total"
-import MilkFilter from "@/components/milk/milk-filter"
-import MilkHeader from "@/components/milk/milk-header"
-import MilkTable from "@/components/milk/milk-table"
-import StoreInitializer from "@/components/store-initializer"
+import TableData from "@/components/milk/table-data"
+import TableFilter from "@/components/milk/table-filter"
 
 export const metadata = {
   title: "Milk",
@@ -11,15 +10,14 @@ export const metadata = {
 
 export default function MilkPage() {
   return (
-    <main>
-      <StoreInitializer data={{ searchType: "milk" }} />
-      <MilkHeader />
-      <MilkFilter />
+    <>
+      <Header />
+      <TableFilter />
       <div className="my-4 grid gap-3 md:grid-cols-2 md:gap-10">
         <MilkIncomeCard />
         <MilkTotalCard />
       </div>
-      <MilkTable />
-    </main>
+      <TableData />
+    </>
   )
 }

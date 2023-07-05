@@ -3,8 +3,9 @@
 import useStore from "@/store/useStore"
 import SelectFilter from "@/components/ui/select-filter"
 
-export default function MilkFilter() {
-  const { milkStatus } = useStore()
+export default function TableFilter() {
+  const milkStatus = useStore((s) => s.milkStatus)
+
   const statusOptions = [
     { name: "All", value: "all" },
     { name: "Aktif", value: "active" },

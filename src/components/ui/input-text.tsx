@@ -57,6 +57,7 @@ export default function InputText(props: IProps) {
               className={className}
               placeholder=" "
               valueIsNumericString={true}
+              decimalScale={3}
             />
           )
         ) : (

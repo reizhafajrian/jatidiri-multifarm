@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import { adultSchema, adultType } from "@/lib/schemas/animal"
+import { cn } from "@/lib/utils"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Form from "@/components/ui/form"
@@ -14,6 +15,7 @@ import TextArea from "@/components/ui/text-area"
 import { toast } from "@/components/ui/toast"
 
 import CertificateInput from "./certificate-input"
+import { WeightHistory } from "./weight-history"
 
 interface IProps {
   data?: adultType
@@ -81,11 +83,19 @@ export default function FormAdult({ data }: IProps) {
             <div className="flex flex-col">
               <div className="space-y-6">
                 <InputText name="origin" label={`Asal ${title}`} />
-                <InputText
-                  name="weight"
-                  label={`Berat ${title}`}
-                  type="number"
-                />
+                <div
+                  className={cn(
+                    "grid items-center gap-4",
+                    data ? "grid-cols-2" : "grid-cols-1"
+                  )}
+                >
+                  <InputText
+                    name="weight"
+                    label={`Berat ${title}`}
+                    type="number"
+                  />
+                  {data && <WeightHistory animal_id={data._id!} />}
+                </div>
                 <InputText
                   name="purchase_price"
                   label="Harga Beli"

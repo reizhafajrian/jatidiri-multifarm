@@ -38,7 +38,13 @@ export const getHppColumns = (
     {
       header: "HPP",
       accessorKey: "hpp_price",
-      cell: (data) => formatRupiah(data.getValue()),
+      cell: (data) => (
+        <div>
+          {isNaN(data.getValue())
+            ? data.getValue()
+            : formatRupiah(data.getValue())}
+        </div>
+      ),
     },
     {
       header: "Harga Jual",

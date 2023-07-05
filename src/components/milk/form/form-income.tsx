@@ -2,13 +2,10 @@
 
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { ColumnDef } from "@tanstack/react-table"
-import { SubmitHandler, useForm } from "react-hook-form"
+import { useForm } from "react-hook-form"
 import { mutate } from "swr"
 
-import { incomeSchema } from "@/lib/schemas/milk"
-import { formatRupiah } from "@/lib/utils"
-import { IMilkInfo } from "@/store/slices/milkSlice"
+import { incomeSchema, incomeType } from "@/lib/schemas/milk"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import {
@@ -23,31 +20,33 @@ import InputDate from "@/components/ui/input-date"
 import InputText from "@/components/ui/input-text"
 import Table from "@/components/ui/table"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { toast } from "@/components/ui/toast"
 
-export default function IncomeForm() {
+import { milkHistoryColumns } from "../column"
+
+export default function FormIncome() {
   const [open, setOpen] = useState(false)
-  const { user, incomeHistory, addIncome, setIncomeHistory } = useStore()
+  const [loading, setLoading] = useState(false)
+  const [addIncome, incomeHistory, setIncomeHistory] = useStore((s) => [
+    s.addIncome,
+    s.incomeHistory,
+    s.setIncomeHistory,
+  ])
 
-  const columns: ColumnDef<any, any>[] = [
-    { header: "Tanggal", accessorKey: "milk_date" },
-    { header: "Susu (L)", accessorKey: "milk" },
-    { header: "Harga perliter (Rp)", accessorKey: "price" },
-    { header: "Total (Rp)", accessorKey: "total" },
-    { header: "Pembeli", accessorKey: "buyer" },
-  ]
-
-  const methods = useForm<IMilkInfo>({
+  const form = useForm<incomeType>({
     resolver: zodResolver(incomeSchema),
-    values: {
-      history_income_total: formatRupiah(incomeHistory),
-    },
   })
 
-  const onSubmit: SubmitHandler<IMilkInfo> = async (values) => {
-    await addIncome(values)
-    methods.reset()
-    mutate("/api/milk/income/get")
-    setOpen(false)
+  const onSubmit = async (values: incomeType) => {
+    try {
+      const res = await addIncome(values)
+      toast({ type: "success", message: res.message })
+      form.reset()
+      mutate("/api/milk/income/get")
+      setOpen(false)
+    } catch (err: any) {
+      toast({ type: "error", message: err.errors[0].msg })
+    }
   }
 
   // INCOME HISTORY
@@ -58,7 +57,12 @@ export default function IncomeForm() {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-    setIncomeHistory(start, end)
+
+    if (start && end) {
+      setLoading(true)
+      await setIncomeHistory(start, end)
+      setLoading(false)
+    }
   }
 
   return (
@@ -70,7 +74,7 @@ export default function IncomeForm() {
       <DialogContent>
         <DialogTitle>Tambah Pendapatan dan Cek History</DialogTitle>
 
-        <Form methods={methods} onSubmit={onSubmit}>
+        <Form methods={form} onSubmit={onSubmit}>
           <div className="mb-8 space-y-5" tabIndex={0}>
             <Tabs defaultValue="pendapatan">
               <TabsList>
@@ -80,21 +84,26 @@ export default function IncomeForm() {
               <TabsContent value="pendapatan" className="space-y-3">
                 <h2 className="mb-3 text-base font-medium">Pendapatan Susu</h2>
                 <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                  <InputDate name="milk_date" label="Tanggal" />
+                  <InputDate name="income_created_at" label="Tanggal" />
                   <InputText
-                    name="milk"
+                    name="milk_total"
                     label="Berapa liter susu?"
                     type="number"
                   />
                 </div>
                 <div className="grid grid-cols-2 gap-x-5 gap-y-4">
                   <InputText
-                    name="price"
+                    name="milk_price"
                     label="Harga Terjual/Liter"
                     type="number"
                     rupiah
                   />
-                  <InputText name="total" label="Total" type="number" rupiah />
+                  <InputText
+                    name="income_total"
+                    label="Total"
+                    type="number"
+                    rupiah
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-x-5 gap-y-4">
@@ -115,9 +124,9 @@ export default function IncomeForm() {
                 />
                 <div className="max-h-[20rem] overflow-hidden">
                   <Table
-                    isLoading={false}
-                    data={[{}, {}, {}, {}, {}, {}, {}, {}, {}, {}]}
-                    columns={columns}
+                    isLoading={loading}
+                    data={incomeHistory}
+                    columns={milkHistoryColumns}
                     fixedCol={0}
                     pageSize={4}
                   />
@@ -131,7 +140,7 @@ export default function IncomeForm() {
                 type="button"
                 variant="outline"
                 className="w-36"
-                disabled={methods.formState.isSubmitting}
+                disabled={form.formState.isSubmitting}
               >
                 CANCEL
               </Button>
@@ -140,7 +149,7 @@ export default function IncomeForm() {
             <Button
               type="submit"
               className="w-36"
-              isLoading={methods.formState.isSubmitting}
+              isLoading={form.formState.isSubmitting}
             >
               SAVE
             </Button>

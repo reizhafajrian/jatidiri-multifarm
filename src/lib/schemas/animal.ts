@@ -65,3 +65,11 @@ export interface ICertificate {
   owner: string
   notes: string
 }
+
+export const weightSchema = z.object({
+  animal_id: z.string(),
+  value: z.coerce.number().min(1),
+  _id: z.string().optional(),
+})
+
+export type weightType = z.infer<typeof weightSchema>

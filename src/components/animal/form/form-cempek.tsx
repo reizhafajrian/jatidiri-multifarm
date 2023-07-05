@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 
 import { cempekSchema, cempekType } from "@/lib/schemas/animal"
+import { cn } from "@/lib/utils"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Form from "@/components/ui/form"
@@ -15,6 +16,7 @@ import TextArea from "@/components/ui/text-area"
 import { toast } from "@/components/ui/toast"
 
 import CertificateInput from "./certificate-input"
+import { WeightHistory } from "./weight-history"
 
 interface IProps {
   data?: cempekType
@@ -64,11 +66,15 @@ export default function FormCempek({ data, options }: IProps) {
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-6">
               <InputText name="type" label="Jenis Cempek" />
-              {/* {isEditForm ? (
-              <EditWeightForm />
-            ) : ( */}
-              <InputText name="weight" label="Berat Lahir" />
-              {/* )} */}
+              <div
+                className={cn(
+                  "grid items-center gap-4",
+                  data ? "grid-cols-2" : "grid-cols-1"
+                )}
+              >
+                <InputText name="weight" label="Berat Lahir" />
+                {data && <WeightHistory animal_id={data._id!} />}
+              </div>
               <InputSelect
                 name="indukan_id"
                 label="Asal Induk"

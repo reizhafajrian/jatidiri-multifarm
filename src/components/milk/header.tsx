@@ -1,0 +1,41 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { Download } from "lucide-react"
+
+import useStore from "@/store/useStore"
+import { Button } from "@/components/ui/button"
+
+import FormAddMilk from "./form/form-add"
+
+export default function Header() {
+  const milkStatus = useStore((s) => s.milkStatus)
+  const [endpoint, setEndpoint] = useState("")
+
+  useEffect(() => {
+    const queriesArray: Array<string> = []
+    const url = `/api/milk/download`
+    milkStatus !== "all" && queriesArray.push("milk_status=" + milkStatus)
+    queriesArray.length > 0 && setEndpoint(url + `?${queriesArray?.join("&")}`)
+  }, [milkStatus])
+
+  return (
+    <>
+      <div className="mb-8 flex items-center justify-between">
+        <h1 className="text-2xl font-semibold text-neutral-5">
+          Penghasilan Susu
+        </h1>
+        <div className="flex items-center gap-2">
+          <FormAddMilk />
+          <Button
+            variant="outline"
+            className="px-3"
+            onClick={() => window.open(endpoint, "_blank")}
+          >
+            <Download className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
+    </>
+  )
+}
