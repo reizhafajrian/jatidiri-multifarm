@@ -65,7 +65,11 @@ export default function FormAdult({ data }: IProps) {
               <InputText name="type" label={`Jenis ${title}`} />
               <InputDate name="arrival_date" label="Tgl Tiba" />
               <InputDate name="birth_date" label="Tgl Lahir" />
-              <InputText name="origin_female" label="Asal Induk" />
+              <InputText
+                name="origin_female"
+                label="Asal Induk"
+                disabled={data ? true : false}
+              />
               <InputText name="supplier" label="Nama dan Asal Supplier" />
               <div>
                 <p className="mb-7 font-semibold capitalize">
@@ -102,7 +106,11 @@ export default function FormAdult({ data }: IProps) {
                   type="number"
                   rupiah
                 />
-                <InputText name="origin_male" label="Asal Pejantan" />
+                <InputText
+                  name="origin_male"
+                  label="Asal Pejantan"
+                  disabled={data ? true : false}
+                />
                 <TextArea name="description" label="Keterangan" />
                 {gender === "true" && (
                   <div className="flex items-center gap-3">

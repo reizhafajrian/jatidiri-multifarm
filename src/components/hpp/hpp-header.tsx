@@ -1,11 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { DownloadCloud } from "lucide-react"
 
 import useStore from "@/store/useStore"
-import { Button } from "@/components/ui/button"
 import Navbar from "@/components/layout/navbar"
+
+import ReportButton from "../ui/report-button"
 
 interface IProps {
   animal: string
@@ -13,13 +13,14 @@ interface IProps {
 
 export default function HppHeader({ animal }: IProps) {
   const hppStatus = useStore((s) => s.hppStatus)
-  const [endpoint, setEndpoint] = useState("")
+  const [csvUrl, setCsvUrl] = useState("")
+  const [pdfUrl, setPdfUrl] = useState("/")
 
   useEffect(() => {
     const queriesArray: Array<string> = [`animal_type=${animal}`]
     const url = "/api/hpp/download"
     hppStatus !== "all" && queriesArray.push("status=" + hppStatus)
-    queriesArray.length > 0 && setEndpoint(url + `?${queriesArray?.join("&")}`)
+    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
   }, [hppStatus])
 
   const menu = [
@@ -30,14 +31,9 @@ export default function HppHeader({ animal }: IProps) {
 
   return (
     <Navbar menu={menu} className="mb-6 flex items-center justify-between">
-      <Button
-        variant="outline"
-        size="sm"
-        onClick={() => window.open(endpoint, "_blank")}
-        className="gap-3 rounded-xl uppercase"
-      >
-        <DownloadCloud className="h-4 w-4" /> download
-      </Button>
+      <div className="flex gap-2">
+        <ReportButton csvUrl={csvUrl} pdfUrl={pdfUrl} />
+      </div>
     </Navbar>
   )
 }

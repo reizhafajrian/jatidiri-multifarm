@@ -1,6 +1,6 @@
 import { ColumnDef } from "@tanstack/react-table"
 
-import { shortDateFormatter } from "@/lib/utils"
+import { formatRupiah, shortDateFormatter } from "@/lib/utils"
 
 import SelectTable from "../ui/select-table"
 import FormEditMilk from "./form/form-edit"
@@ -57,7 +57,15 @@ export const milkHistoryColumns: ColumnDef<any, any>[] = [
     cell: (data) => shortDateFormatter(new Date(data.getValue())),
   },
   { header: "Susu (L)", accessorKey: "milk_total" },
-  { header: "Harga perliter (Rp)", accessorKey: "milk_price" },
-  { header: "Total (Rp)", accessorKey: "income_total" },
+  {
+    header: "Harga perliter (Rp)",
+    accessorKey: "milk_price",
+    cell: (data) => formatRupiah(data.getValue()),
+  },
+  {
+    header: "Total (Rp)",
+    accessorKey: "income_total",
+    cell: (data) => formatRupiah(data.getValue()),
+  },
   { header: "Pembeli", accessorKey: "buyer" },
 ]

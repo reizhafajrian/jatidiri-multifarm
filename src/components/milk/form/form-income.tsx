@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
+import SimpleBar from "simplebar-react"
 import { mutate } from "swr"
 
 import { incomeSchema, incomeType } from "@/lib/schemas/milk"
@@ -37,6 +38,8 @@ export default function FormIncome() {
     resolver: zodResolver(incomeSchema),
   })
 
+  const formHistory = useForm({})
+
   const onSubmit = async (values: incomeType) => {
     try {
       const res = await addIncome(values)
@@ -53,14 +56,17 @@ export default function FormIncome() {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
 
-  const historyHandler = async (dates: any) => {
+  const historyHandler = (dates: any) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
+    useStore.setState((s) => ({ ...s, incomeHistory: undefined }))
+  }
 
-    if (start && end) {
+  const onSubmitHistory = async () => {
+    if (startDate && endDate) {
       setLoading(true)
-      await setIncomeHistory(start, end)
+      await setIncomeHistory(startDate, endDate)
       setLoading(false)
     }
   }
@@ -71,90 +77,139 @@ export default function FormIncome() {
         <Button variant="edit" size="xs" />
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent className="max-w-[600px]">
         <DialogTitle>Tambah Pendapatan dan Cek History</DialogTitle>
 
-        <Form methods={form} onSubmit={onSubmit}>
-          <div className="mb-8 space-y-5" tabIndex={0}>
-            <Tabs defaultValue="pendapatan">
-              <TabsList>
-                <TabsTrigger value="pendapatan">Pendapatan</TabsTrigger>
-                <TabsTrigger value="history">History</TabsTrigger>
-              </TabsList>
-              <TabsContent value="pendapatan" className="space-y-3">
-                <h2 className="mb-3 text-base font-medium">Pendapatan Susu</h2>
-                <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                  <InputDate name="income_created_at" label="Tanggal" />
-                  <InputText
-                    name="milk_total"
-                    label="Berapa liter susu?"
-                    type="number"
-                  />
-                </div>
-                <div className="grid grid-cols-2 gap-x-5 gap-y-4">
-                  <InputText
-                    name="milk_price"
-                    label="Harga Terjual/Liter"
-                    type="number"
-                    rupiah
-                  />
-                  <InputText
-                    name="income_total"
-                    label="Total"
-                    type="number"
-                    rupiah
-                  />
-                </div>
+        <div className="mb-8 space-y-5" tabIndex={0}>
+          <Tabs defaultValue="pendapatan">
+            <TabsList>
+              <TabsTrigger value="pendapatan">Pendapatan</TabsTrigger>
+              <TabsTrigger value="history">History</TabsTrigger>
+            </TabsList>
+            <TabsContent value="pendapatan">
+              <Form methods={form} onSubmit={onSubmit}>
+                <div className="space-y-3">
+                  <h2 className="mb-3 text-base font-medium">
+                    Pendapatan Susu
+                  </h2>
+                  <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+                    <InputDate name="income_created_at" label="Tanggal" />
+                    <InputText
+                      name="milk_total"
+                      label="Berapa liter susu?"
+                      type="number"
+                    />
+                  </div>
+                  <div className="grid grid-cols-2 gap-x-5 gap-y-4">
+                    <InputText
+                      name="milk_price"
+                      label="Harga Terjual/Liter"
+                      type="number"
+                      rupiah
+                    />
+                    <InputText
+                      name="income_total"
+                      label="Total"
+                      type="number"
+                      rupiah
+                    />
+                  </div>
 
-                <div className="grid grid-cols-2 gap-x-5 gap-y-4">
                   <InputText name="buyer" label="Perusahaan" />
+
+                  <div className="flex justify-end gap-3">
+                    <DialogClose asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-36"
+                        disabled={form.formState.isSubmitting}
+                        onClick={() => {
+                          setStartDate(undefined)
+                          setEndDate(undefined)
+                          useStore.setState((s) => ({
+                            ...s,
+                            incomeHistory: undefined,
+                          }))
+                        }}
+                      >
+                        CANCEL
+                      </Button>
+                    </DialogClose>
+
+                    <Button
+                      type="submit"
+                      className="w-36"
+                      isLoading={form.formState.isSubmitting}
+                    >
+                      SAVE
+                    </Button>
+                  </div>
                 </div>
-              </TabsContent>
-              <TabsContent value="history" className="space-y-3">
+              </Form>
+            </TabsContent>
+            <TabsContent value="history">
+              <Form methods={formHistory} onSubmit={onSubmitHistory}>
                 <h2 className="mb-3 text-base font-medium">
                   History Pendapatan
                 </h2>
-                <InputDate
-                  name="history_income_date"
-                  label="Tanggal"
-                  selectRange
-                  startDate={startDate}
-                  endDate={endDate}
-                  onChange={historyHandler}
-                />
-                <div className="max-h-[20rem] overflow-hidden">
+
+                <div className="space-y-3">
+                  <InputDate
+                    name="history_income_date"
+                    label="Tanggal"
+                    selectRange
+                    startDate={startDate}
+                    endDate={endDate}
+                    onChange={historyHandler}
+                  />
+
+                  <div className="flex justify-end gap-3">
+                    <DialogClose asChild>
+                      <Button
+                        type="button"
+                        variant="outline"
+                        className="w-36"
+                        disabled={formHistory.formState.isSubmitting}
+                        onClick={() => {
+                          setStartDate(undefined)
+                          setEndDate(undefined)
+                          useStore.setState((s) => ({
+                            ...s,
+                            incomeHistory: undefined,
+                          }))
+                        }}
+                      >
+                        CANCEL
+                      </Button>
+                    </DialogClose>
+
+                    <Button
+                      type="submit"
+                      className="w-36"
+                      isLoading={formHistory.formState.isSubmitting}
+                      disabled={incomeHistory ? true : false}
+                    >
+                      SAVE
+                    </Button>
+                  </div>
+                </div>
+              </Form>
+              {incomeHistory && (
+                <SimpleBar className="max-h-[20rem]">
                   <Table
                     isLoading={loading}
                     data={incomeHistory}
                     columns={milkHistoryColumns}
                     fixedCol={0}
-                    pageSize={4}
+                    // pageSize={4}
+                    showAll
                   />
-                </div>
-              </TabsContent>
-            </Tabs>
-          </div>
-          <div className="flex justify-end gap-3">
-            <DialogClose asChild>
-              <Button
-                type="button"
-                variant="outline"
-                className="w-36"
-                disabled={form.formState.isSubmitting}
-              >
-                CANCEL
-              </Button>
-            </DialogClose>
-
-            <Button
-              type="submit"
-              className="w-36"
-              isLoading={form.formState.isSubmitting}
-            >
-              SAVE
-            </Button>
-          </div>
-        </Form>
+                </SimpleBar>
+              )}
+            </TabsContent>
+          </Tabs>
+        </div>
       </DialogContent>
     </Dialog>
   )

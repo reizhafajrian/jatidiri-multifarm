@@ -17,7 +17,7 @@ export interface IAnimalState extends IFilter {
   genderTitle: string
   type: string
   undefinedClusterTotal: number
-  weightHistory: Array<any>
+  weightHistory?: Array<any>
 
   setAnimalTitle: () => void
   setGenderTitle: () => void
@@ -40,7 +40,7 @@ const initialState = {
   originFemale: "all",
   vaccine: "all",
   undefinedClusterTotal: 0,
-  weightHistory: [],
+  // weightHistory: [],
 }
 
 const createAnimalSlice: StateCreator<IAnimalState> = (set, get) => ({

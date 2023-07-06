@@ -20,10 +20,11 @@ interface IProps {
   fixedCol: number
   isLoading: boolean
   pageSize?: number
+  showAll?: boolean
 }
 
 export default function Table(props: IProps) {
-  const { columns, data, fixedCol, isLoading, pageSize } = props
+  const { columns, data, fixedCol, isLoading, pageSize, showAll } = props
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 
@@ -36,6 +37,7 @@ export default function Table(props: IProps) {
   })
 
   useEffect(() => {
+    if (showAll) table.setPageSize(table.getTotalSize())
     if (pageSize) table.setPageSize(pageSize)
   }, [pageSize, table])
 
@@ -129,7 +131,7 @@ export default function Table(props: IProps) {
           </table>
         </SimpleBar>
       </div>
-      <PaginationHandler table={table} />
+      {!showAll && <PaginationHandler table={table} />}
     </div>
   )
 }

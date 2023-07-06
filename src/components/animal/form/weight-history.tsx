@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
+import SimpleBar from "simplebar-react"
 
 import { shortDateFormatter } from "@/lib/utils"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -39,13 +41,19 @@ export const WeightHistory = ({ animal_id }: IProps) => {
   const [startDate, setStartDate] = useState()
   const [endDate, setEndDate] = useState()
 
-  const historyHandler = async (dates: any) => {
+  const onChangeHandler = (dates: any) => {
     const [start, end] = dates
     setStartDate(start)
     setEndDate(end)
-    setLoading(true)
-    await setWeightHistory(animal_id, start, end)
-    setLoading(false)
+    useStore.setState((s) => ({ ...s, weightHistory: undefined }))
+  }
+
+  const historyHandler = async () => {
+    if (startDate && endDate) {
+      setLoading(true)
+      await setWeightHistory(animal_id, startDate, endDate)
+      setLoading(false)
+    }
   }
 
   return (
@@ -58,25 +66,57 @@ export const WeightHistory = ({ animal_id }: IProps) => {
         <DialogHeader>
           <DialogTitle>History Berat Hewan</DialogTitle>
         </DialogHeader>
-        <div className="space-y-3">
+        <div className="space-y-3" tabIndex={0}>
           <InputDate
             name="history_weight_date"
             label="Tanggal"
             selectRange
             startDate={startDate}
             endDate={endDate}
-            onChange={historyHandler}
+            onChange={onChangeHandler}
           />
-          {startDate && endDate && (
-            <div className="max-h-[20rem] overflow-hidden">
+          <div className="flex justify-end gap-3">
+            <DialogClose asChild>
+              <Button
+                type="button"
+                variant="outline"
+                className="w-36"
+                disabled={loading}
+                onClick={() => {
+                  setStartDate(undefined)
+                  setEndDate(undefined)
+                  useStore.setState((s) => ({
+                    ...s,
+                    weightHistory: undefined,
+                  }))
+                }}
+              >
+                CANCEL
+              </Button>
+            </DialogClose>
+
+            <Button
+              type="submit"
+              className="w-36"
+              isLoading={loading}
+              disabled={weightHistory ? true : false}
+              onClick={historyHandler}
+            >
+              SAVE
+            </Button>
+          </div>
+
+          {weightHistory && (
+            <SimpleBar className="max-h-[20rem]">
               <Table
                 isLoading={loading}
                 data={weightHistory}
                 columns={columns}
                 fixedCol={0}
-                pageSize={4}
+                // pageSize={4}
+                showAll
               />
-            </div>
+            </SimpleBar>
           )}
         </div>
       </DialogContent>

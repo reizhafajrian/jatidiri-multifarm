@@ -6,6 +6,7 @@ import { usePathname, useRouter } from "next/navigation"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/ui/Icons"
+import ReportButton from "@/components/ui/report-button"
 import Navbar from "@/components/layout/navbar"
 
 import AlertCluster from "./alert-cluster"
@@ -13,7 +14,8 @@ import AlertCluster from "./alert-cluster"
 export default function TableHeader() {
   const router = useRouter()
   const path = usePathname()
-  const [endpoint, setEndpoint] = useState("")
+  const [csvUrl, setCsvUrl] = useState("")
+  const [pdfUrl, setPdfUrl] = useState("/")
   const [animal, title, originMale, originFemale, filterByDate] = useStore(
     (s) => [
       s.animal,
@@ -37,7 +39,7 @@ export default function TableHeader() {
     queriesArray.push(filterByDate)
     originMale !== "all" && queriesArray.push("origin_male=" + originMale)
     originFemale !== "all" && queriesArray.push("origin_female=" + originFemale)
-    queriesArray.length > 0 && setEndpoint(url + `?${queriesArray?.join("&")}`)
+    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
   }, [originMale, originFemale, filterByDate, animal, path])
 
   return (
@@ -54,20 +56,7 @@ export default function TableHeader() {
               tambah data {title}
             </span>
           </Button>
-          <Button
-            variant="outline"
-            className="space-x-1 px-3"
-            onClick={() => window.open(endpoint, "_blank")}
-          >
-            <Icons.download className="h-4 w-4" /> <span> .PDF</span>
-          </Button>
-          <Button
-            variant="outline"
-            className="space-x-1 px-3"
-            onClick={() => window.open(endpoint, "_blank")}
-          >
-            <Icons.download className="h-4 w-4" /> <span> .XLSX</span>
-          </Button>
+          <ReportButton csvUrl={csvUrl} pdfUrl={pdfUrl} />
         </div>
       </Navbar>
     </>

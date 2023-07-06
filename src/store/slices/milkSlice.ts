@@ -19,7 +19,7 @@ export interface IMilkInfo {
 
 export interface IMilkState {
   milkStatus: string
-  incomeHistory: Array<any>
+  incomeHistory?: Array<any>
 
   addMilk: (data: milkType) => any
   editMilk: (data: milkType) => any
@@ -31,7 +31,7 @@ export interface IMilkState {
 
 const initialState = {
   milkStatus: "all",
-  incomeHistory: [],
+  // incomeHistory: [],
 }
 
 const createMilkSlice: StateCreator<IMilkState> = (set) => ({

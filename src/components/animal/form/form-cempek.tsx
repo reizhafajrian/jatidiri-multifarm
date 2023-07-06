@@ -79,6 +79,7 @@ export default function FormCempek({ data, options }: IProps) {
                 name="indukan_id"
                 label="Asal Induk"
                 options={options.indukanOpts}
+                disabled={data ? true : false}
               />
               <InputText name="birth_condition" label="Kondisi Lahir" />
               <TextArea name="description" label="Keterangan" />
@@ -98,6 +99,7 @@ export default function FormCempek({ data, options }: IProps) {
                   name="pejantan_id"
                   label="Asal Pejantan"
                   options={options.pejantanOpts}
+                  disabled={data ? true : false}
                 />
                 <div>
                   <p className="mb-7 font-semibold capitalize">
