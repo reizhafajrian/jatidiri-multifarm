@@ -27,10 +27,16 @@ interface IProps {
 export default function EditHppForm({ data }: IProps) {
   const [open, setOpen] = useState(false)
   const { editHpp, animal } = useStore()
+  const { hpp_price, ...rest } = data
 
   const form = useForm<hppType>({
     resolver: zodResolver(hppSchema),
-    values: { ...data, animal, status: "sold" },
+    values: {
+      ...rest,
+      hpp_price: hpp_price === "-" ? undefined : hpp_price,
+      animal,
+      status: "sold",
+    },
   })
 
   const onSubmit = async (values: hppType) => {

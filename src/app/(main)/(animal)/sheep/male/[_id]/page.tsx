@@ -1,13 +1,19 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 
+import AnimalDetail from "@/components/animal/animal-detail"
 import FormAdult from "@/components/animal/form/form-adult"
 
 export default async function Page({ params }: { params: { _id: string } }) {
   const token = cookies().get("token")?.value
   const data = await getData({ _id: params._id, token: token! })
 
-  return <FormAdult data={data} />
+  return (
+    <>
+      <FormAdult data={data} />
+      <AnimalDetail />
+    </>
+  )
 }
 
 const getData = async ({ _id, token }: { _id: string; token: string }) => {

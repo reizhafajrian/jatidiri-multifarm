@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const hppSchema = z.object({
   eartag_code: z.string().nonempty(),
-  hpp_price: z.coerce.number().min(0),
+  hpp_price: z.any().optional(),
   sell_price: z.coerce.number().min(1),
   description: z.string().nullish(),
   buyer: z.string().nonempty(),

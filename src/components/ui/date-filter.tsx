@@ -35,7 +35,7 @@ export default function DateFilter({ label }: IProps) {
 
   return (
     <div className="flex items-center gap-3">
-      <p className="text-sm text-neutral-4">{label}:</p>
+      <p className="text-sm text-neutral-4">{label && `${label}:`}</p>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-3 text-sm outline-none">

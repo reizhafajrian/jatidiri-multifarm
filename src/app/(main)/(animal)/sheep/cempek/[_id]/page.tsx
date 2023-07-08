@@ -1,13 +1,19 @@
 import { cookies } from "next/headers"
 import axios from "axios"
 
+import AnimalDetail from "@/components/animal/animal-detail"
 import FormCempek from "@/components/animal/form/form-cempek"
 
 export default async function Page({ params }: { params: { _id: string } }) {
   const token = cookies().get("token")?.value
   const { data, options } = await getData({ _id: params._id, token: token! })
 
-  return <FormCempek options={options} data={data} />
+  return (
+    <>
+      <FormCempek options={options} data={data} />
+      <AnimalDetail />
+    </>
+  )
 }
 
 const getData = async ({ _id, token }: { _id: string; token: string }) => {

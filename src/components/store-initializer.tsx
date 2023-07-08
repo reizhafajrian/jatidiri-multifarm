@@ -2,7 +2,7 @@
 
 import { useEffect } from "react"
 
-import { ICategoryInfo } from "@/store/slices/categorySlice"
+import { ICategoryInfo } from "@/lib/schemas/category"
 import useStore from "@/store/useStore"
 
 interface IData {
