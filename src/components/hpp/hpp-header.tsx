@@ -14,14 +14,20 @@ interface IProps {
 export default function HppHeader({ animal }: IProps) {
   const hppStatus = useStore((s) => s.hppStatus)
   const [csvUrl, setCsvUrl] = useState("")
-  const [pdfUrl, setPdfUrl] = useState("/")
+  const [pdfUrl, setPdfUrl] = useState("")
 
   useEffect(() => {
     const queriesArray: Array<string> = [`animal_type=${animal}`]
     const url = "/api/hpp/download"
     hppStatus !== "all" && queriesArray.push("status=" + hppStatus)
-    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
-  }, [hppStatus])
+    if (queriesArray.length > 0) {
+      setCsvUrl(url + `?${queriesArray?.join("&")}`)
+      setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
+    } else {
+      setCsvUrl(url)
+      setPdfUrl(url + "/pdf")
+    }
+  }, [animal, hppStatus])
 
   const menu = [
     { name: "Kambing", link: `/hpp/goat` },

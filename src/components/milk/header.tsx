@@ -10,13 +10,19 @@ import FormAddMilk from "./form/form-add"
 export default function Header() {
   const milkStatus = useStore((s) => s.milkStatus)
   const [csvUrl, setCsvUrl] = useState("")
-  const [pdfUrl, setPdfUrl] = useState("/")
+  const [pdfUrl, setPdfUrl] = useState("")
 
   useEffect(() => {
     const queriesArray: Array<string> = []
     const url = `/api/milk/download`
     milkStatus !== "all" && queriesArray.push("milk_status=" + milkStatus)
-    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
+    if (queriesArray.length > 0) {
+      setCsvUrl(`?${queriesArray?.join("&")}`)
+      setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
+    } else {
+      setCsvUrl(url)
+      setPdfUrl(url + "/pdf")
+    }
   }, [milkStatus])
 
   return (
