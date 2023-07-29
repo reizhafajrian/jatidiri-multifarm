@@ -57,13 +57,13 @@ export default function TableFilter({ animal, type }: IProps) {
   return (
     <div className="mb-6 flex flex-col gap-3 md:flex-row md:items-center md:gap-6">
       <DateFilter label="Date" />
-      <SelectFilter
+      {/* <SelectFilter
         loading={loading}
         title="asal induk"
         defaultValue={originFemale}
         options={opts?.femaleOrigin}
         onChange={(value: string) => setFilter({ originFemale: value })}
-      />
+      /> */}
       <SelectFilter
         loading={loading}
         title="asal pejantan"

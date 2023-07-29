@@ -25,15 +25,15 @@ export default function FormAdult({ data }: IProps) {
   const path = usePathname()
   const router = useRouter()
 
-  const [addHandler, editHandler, title, gender, genderTitle] = useStore(
-    (s) => [
+  const [addHandler, editHandler, title, gender, genderTitle, certificate] =
+    useStore((s) => [
       s.addAdultAnimal,
       s.editAdultAnimal,
       s.animalTitle,
       s.gender,
       s.genderTitle,
-    ]
-  )
+      s.certificate,
+    ])
   const formTitle = `${data ? "Edit" : "Tambah"} Data ${title} ${genderTitle}`
 
   const form = useForm<adultType>({
@@ -62,9 +62,32 @@ export default function FormAdult({ data }: IProps) {
         <Form methods={form} onSubmit={onSubmit}>
           <div className="grid gap-4 md:grid-cols-2">
             <div className="space-y-6">
-              <InputText name="type" label={`Jenis ${title}`} />
+              <InputText
+                name="type"
+                label={`Jenis ${title}`}
+                onChange={(e: any) => {
+                  useStore.setState((s) => ({
+                    ...s,
+                    certificate: { ...certificate, type: e.target.value },
+                  }))
+                  form.setValue("type", e.target.value)
+                }}
+              />
               <InputDate name="arrival_date" label="Tgl Tiba" />
-              <InputDate name="birth_date" label="Tgl Lahir" />
+              <InputDate
+                name="birth_date"
+                label="Tgl Lahir"
+                onChange={(value: Date) => {
+                  useStore.setState((s) => ({
+                    ...s,
+                    certificate: {
+                      ...certificate,
+                      birth_date: value ? new Date(value) : undefined,
+                    },
+                  }))
+                  form.setValue("birth_date", value)
+                }}
+              />
               <InputText
                 name="origin_female"
                 label="Asal Induk"
@@ -75,13 +98,7 @@ export default function FormAdult({ data }: IProps) {
                 <p className="mb-7 font-semibold capitalize">
                   sertifikat {title} {genderTitle}
                 </p>
-                <CertificateInput
-                  name="files"
-                  currentValue={{
-                    gender,
-                    birth_date: form.getValues("birth_date"),
-                  }}
-                />
+                <CertificateInput name="files" />
               </div>
             </div>
             <div className="flex flex-col">

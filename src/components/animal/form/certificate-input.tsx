@@ -9,7 +9,7 @@ import CertificateForm from "./certificate-form"
 
 interface IProps {
   name: string
-  currentValue: any
+  currentValue?: any
   isCempek?: boolean
 }
 
@@ -51,7 +51,7 @@ export default function CertificateInput({ name, currentValue }: IProps) {
         </>
 
         <div className="flex-1">
-          <CertificateForm currentValue={currentValue} />
+          <CertificateForm />
           <span className="mt-1 text-[8px] font-light text-neutral-4 md:ml-4">
             Jika belum memiliki sertifikat buat di sini.
           </span>

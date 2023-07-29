@@ -1,11 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { useForm } from "react-hook-form"
 
+import { Api } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
@@ -22,29 +23,48 @@ import InputText from "@/components/ui/input-text"
 import { Tabs, TabsContent } from "@/components/ui/tabs"
 
 interface IProps {
-  currentValue: any
+  currentValue?: any
 }
 
 export default function CertificateForm({ currentValue }: IProps) {
-  const { user } = useStore()
+  const { certificate } = useStore()
   const [open, setOpen] = useState(false)
+  const [data, setData] = useState("")
   const [showLevel2, setShowLevel2] = useState(false)
   const [activeTab, setActiveTab] = useState("section_1")
   const [loading, setLoading] = useState(false)
 
   const methods = useForm({
-    defaultValues: {
-      // c_animal: animal.name,
-      c_gender: currentValue.gender === true ? "sire" : "dam",
-      c_birth_date: currentValue.birth_date,
-      created_by: `${user?.firstName!} ${user?.lastName!}`,
+    values: {
+      c_gender: certificate.gender,
+      c_type: certificate.type,
+      c_birth_date: certificate.birth_date,
+      // ...(certificate.birth_date !== undefined && {
+      //   c_birth_date: new Date(certificate.birth_date),
+      // }),
     },
   })
 
   const createCertificate = async () => {
     setLoading(true)
-    const values = methods.getValues()
-    console.log({ values })
+    console.log({ certificate })
+    const {
+      name,
+      gender,
+      birth_date,
+      type,
+      lvl1_sire,
+      lvl1_sire_eartag,
+      lvl1_sire_tob,
+      lvl1_dam,
+      lvl1_dam_eartag,
+      lvl1_dam_tob,
+    } = certificate
+
+    const url = "/api/cow/download/certificate"
+    const queries = `name=${name}&gender=${gender}&birth_date=${birth_date}&type=${type}`
+    const breeds = `lvl1_sire=${lvl1_sire}&lvl1_sire_eartag=${lvl1_sire_eartag}&lvl1_sire_tob=${lvl1_sire_tob}&lvl1_dam=${lvl1_dam}&lvl1_dam_eartag=${lvl1_dam_eartag}&lvl1_dam_tob=${lvl1_dam_tob}`
+    setData(`${url}?${queries}&${breeds}`)
     setActiveTab("section_3")
     setLoading(false)
   }
@@ -78,10 +98,19 @@ export default function CertificateForm({ currentValue }: IProps) {
           <Tabs defaultValue="section_1" value={activeTab}>
             <TabsContent value="section_1" className="space-y-5">
               <div className="grid grid-cols-2 gap-6">
-                <InputText name="c_animal" label="Jenis Hewan" disabled />
+                <InputText name="c_type" label="Jenis Hewan" disabled />
                 <InputText name="c_gender" label="Jenis Kelamin" disabled />
               </div>
-              <InputText name="c_name" label="Nama Hewan" />
+              <InputText
+                name="c_name"
+                label="Nama Hewan"
+                onChange={(e: any) => {
+                  useStore.setState((s) => ({
+                    ...s,
+                    certificate: { ...certificate, name: e.target.value },
+                  }))
+                }}
+              />
               <div className="grid grid-cols-2 gap-6">
                 <InputText name="c_eartag" label="Eartag" disabled />
                 <InputDate name="c_birth_date" label="Tanggal Lahir" disabled />
@@ -94,16 +123,88 @@ export default function CertificateForm({ currentValue }: IProps) {
                 <div className="grid grid-cols-2 gap-6">
                   <div className="space-y-3">
                     <p className="font-medium">Sire</p>
-                    <InputText name="l1_sire_name" label="Nama Sire" />
-                    <InputText name="l1_sire_eartag" label="Eartag Sire" />
-                    <InputText name="l1_sire_breed" label="Keturunan" />
+                    <InputText
+                      name="lvl1_sire"
+                      label="Nama Sire"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_sire: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
+                    <InputText
+                      name="lvl1_sire_eartag"
+                      label="Eartag Sire"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_sire_eartag: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
+                    <InputText
+                      name="lvl1_sire_tob"
+                      label="Keturunan"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_sire_tob: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
                   </div>
 
                   <div className="space-y-3">
                     <p className="font-medium">Dam</p>
-                    <InputText name="l1_dam_name" label="Nama Dam" />
-                    <InputText name="l1_dam_eartag" label="Eartag Dam" />
-                    <InputText name="l1_dam_breed" label="Keturunan" />
+                    <InputText
+                      name="lvl1_dam"
+                      label="Nama Dam"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_dam: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
+                    <InputText
+                      name="lvl1_dam_eartag"
+                      label="Eartag Dam"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_dam_eartag: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
+                    <InputText
+                      name="lvl1_dam_tob"
+                      label="Keturunan"
+                      onChange={(e: any) => {
+                        useStore.setState((s) => ({
+                          ...s,
+                          certificate: {
+                            ...certificate,
+                            lvl1_dam_tob: e.target.value,
+                          },
+                        }))
+                      }}
+                    />
                   </div>
                 </div>
               </div>
@@ -141,12 +242,13 @@ export default function CertificateForm({ currentValue }: IProps) {
                 <h1 className="mb-1 text-xl font-medium">
                   Sertifikat berhasil dibuat!
                 </h1>
-                <Link
-                  href={`/dashboard`}
+                <button
+                  type="button"
+                  onClick={() => window.open(data, "_blank")}
                   className="text-xs font-medium text-primary-5 underline"
                 >
                   Klik di sini untuk melihat Sertifikat.
-                </Link>
+                </button>
               </div>
             </TabsContent>
           </Tabs>

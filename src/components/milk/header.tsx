@@ -1,29 +1,28 @@
 "use client"
 
-import { useEffect, useState } from "react"
-
+// import { useEffect, useState } from "react"
+// import ReportButton from "../ui/report-button"
 import useStore from "@/store/useStore"
 
-import ReportButton from "../ui/report-button"
 import FormAddMilk from "./form/form-add"
 
 export default function Header() {
   const milkStatus = useStore((s) => s.milkStatus)
-  const [csvUrl, setCsvUrl] = useState("")
-  const [pdfUrl, setPdfUrl] = useState("")
+  // const [csvUrl, setCsvUrl] = useState("")
+  // const [pdfUrl, setPdfUrl] = useState("")
 
-  useEffect(() => {
-    const queriesArray: Array<string> = []
-    const url = `/api/milk/download`
-    milkStatus !== "all" && queriesArray.push("milk_status=" + milkStatus)
-    if (queriesArray.length > 0) {
-      setCsvUrl(`?${queriesArray?.join("&")}`)
-      setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
-    } else {
-      setCsvUrl(url)
-      setPdfUrl(url + "/pdf")
-    }
-  }, [milkStatus])
+  // useEffect(() => {
+  //   const queriesArray: Array<string> = []
+  //   const url = `/api/milk/download`
+  //   milkStatus !== "all" && queriesArray.push("milk_status=" + milkStatus)
+  //   if (queriesArray.length > 0) {
+  //     setCsvUrl(`?${queriesArray?.join("&")}`)
+  //     setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
+  //   } else {
+  //     setCsvUrl(url)
+  //     setPdfUrl(url + "/pdf")
+  //   }
+  // }, [milkStatus])
 
   return (
     <>
@@ -33,7 +32,7 @@ export default function Header() {
         </h1>
         <div className="flex items-center gap-2">
           <FormAddMilk />
-          <ReportButton csvUrl={csvUrl} pdfUrl={pdfUrl} />
+          {/* <ReportButton csvUrl={csvUrl} pdfUrl={pdfUrl} /> */}
         </div>
       </div>
     </>
