@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SubmitHandler, useForm } from "react-hook-form"
 
@@ -24,20 +24,22 @@ import InputText from "@/components/ui/input-text"
 
 export default function FormShedAnimal() {
   const router = useRouter()
+  const path = usePathname()
   const [open, setOpen] = useState(false)
   const {
     animal,
     animalTitle: title,
-    shed_id,
     addShedAnimal,
     shedAnimalTags,
   } = useStore()
+
 
   const methods = useForm<IShedAnimal>({
     resolver: zodResolver(shedAnimalSchema),
   })
 
   const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
+    const shed_id =   path.split("/")[3]
     await addShedAnimal({ ...values, id: shed_id })
     // mutateTable()
     // mutateEartags()

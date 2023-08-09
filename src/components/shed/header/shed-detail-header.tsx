@@ -12,6 +12,7 @@ export default function ShedDetailHeader() {
   const path = usePathname()
   const { animal, animalTitle, shed_code } = useStore()
   const pathArray = path.split("/")
+
   const shed_id = pathArray[3]
   const baseUrl = `/shed/${animal}/${shed_id}`
 

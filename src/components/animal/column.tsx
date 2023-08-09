@@ -82,6 +82,11 @@ export const animalTColumns: ColumnDef<any, any>[] = [
     header: "Asal Jantan",
     accessorKey: "origin_male",
   },
+  {
+    header: "Marga",
+    accessorKey: "parents",
+    cell: (data) => data?.getValue()?.join(" , "),
+  },
 ]
 
 export const maleTColumns: ColumnDef<any, any>[] = [
@@ -111,6 +116,7 @@ export const maleTColumns: ColumnDef<any, any>[] = [
     accessorKey: "purchase_price",
     cell: (data) => formatRupiah(data.getValue()),
   },
+
 ]
 
 export const femaleTColumns: ColumnDef<any, any>[] = [
