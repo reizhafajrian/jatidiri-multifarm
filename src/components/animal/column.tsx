@@ -152,6 +152,10 @@ const categoryBadges: ICategory = {
     name: "Obat Cacing",
     className: "bg-[#FFEFF7] text-[#EF5DA8]",
   },
+  feed: {
+    name: "Pakan",
+    className: "bg-[#F3F3FF] text-[#5D5FEF]",
+  }
 }
 
 export const detailAnimalTColumns: ColumnDef<any, any>[] = [
@@ -169,10 +173,10 @@ export const detailAnimalTColumns: ColumnDef<any, any>[] = [
         <div
           className={cn(
             "w-fit rounded px-2 py-[2px] text-[10px] font-medium",
-            cat.className
+            cat?.className
           )}
         >
-          {cat.name}
+          {cat?.name}
         </div>
       )
     },
