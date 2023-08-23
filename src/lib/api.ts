@@ -13,8 +13,8 @@ export const Api = {
   }),
   get: async (url: string) => {
     try {
-      const token = await axios.get("/api/token")
-      const res = await axios.get(url, Api.options(token.data))
+      const token = localStorage.getItem("token") || ""
+      const res = await axios.get(url, Api.options(token))
       return res.data
     } catch (err: any) {
       return Promise.reject(err.response.data)
@@ -22,7 +22,7 @@ export const Api = {
   },
   post: async ({ url, data, isFormData }: params) => {
     try {
-      const token = await axios.get("/api/token")
+      const token = localStorage.getItem("token") || ""
 
       const formData = new FormData()
       for (let value in data) {
@@ -37,7 +37,7 @@ export const Api = {
       const res = await axios.post(
         url,
         isFormData ? formData : data,
-        Api.options(token.data)
+        Api.options(token)
       )
       return res.data
     } catch (err: any) {
@@ -46,8 +46,7 @@ export const Api = {
   },
   put: async ({ url, data, isFormData }: params) => {
     try {
-      const token = await axios.get("/api/token")
-
+      const token = localStorage.getItem("token") || ""
       const formData = new FormData()
       for (let value in data) {
         if (value.includes("_date")) {
@@ -61,7 +60,7 @@ export const Api = {
       const res = await axios.put(
         url,
         isFormData ? { data: [Object.fromEntries(formData)] } : data,
-        Api.options(token.data)
+        Api.options(token)
       )
       return res.data
     } catch (err: any) {
@@ -70,8 +69,8 @@ export const Api = {
   },
   delete: async (url: string) => {
     try {
-      const token = await axios.get("/api/token")
-      const res = await axios.delete(url, Api.options(token.data))
+      const token = localStorage.getItem("token") || ""
+      const res = await axios.delete(url, Api.options(token))
       return res.data
     } catch (err: any) {
       return Promise.reject(err.response.data)

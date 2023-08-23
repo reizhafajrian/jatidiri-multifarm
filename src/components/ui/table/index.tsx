@@ -21,10 +21,15 @@ interface IProps {
   isLoading: boolean
   pageSize?: number
   showAll?: boolean
+  setPagination?: (pagination: any) => void
+  pagination: {
+    pageIndex: number
+    pageSize: number
+  }
 }
 
 export default function Table(props: IProps) {
-  const { columns, data, fixedCol, isLoading, pageSize, showAll } = props
+  const { columns, data, fixedCol, isLoading, pageSize, showAll, setPagination, pagination } = props
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 
@@ -34,12 +39,17 @@ export default function Table(props: IProps) {
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    state: {
+      pagination
+    },
+    onPaginationChange: setPagination,
   })
 
-  useEffect(() => {
-    if (showAll) table.setPageSize(table.getTotalSize())
-    if (pageSize) table.setPageSize(pageSize)
-  }, [pageSize, table])
+
+  // useEffect(() => {
+  //   if (showAll) table.setPageSize(table.getTotalSize())
+  //   if (pageSize) table.setPageSize(pageSize)
+  // }, [pageSize, table])
 
   return (
     <div className="max-w-full">

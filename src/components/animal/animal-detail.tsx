@@ -13,19 +13,18 @@ export default function AnimalDetail() {
     { name: "Vaksin", value: "vaccine" },
     { name: "Vitamin", value: "vitamin" },
     { name: "Obat Cacing", value: "anthelmintic" },
-    
-  ] 
+
+  ]
   const path = usePathname()
   const pathArray = path.split("/")
   const animalId = pathArray[pathArray.length - 1]
   ///call api
 
-  const {data}=useDataList({
+  const { data } = useDataList({
     url: `/api/goat/sheddata`,
-    queries: [`_id=64146dd2c5a7eedea50886a4`,`page=${1}`,`item_per_page=${10}`],
+    queries: [`_id=${animalId}`, `page=${1}`, `item_per_page=${10}`],
   })
 
-  console.log(data)
 
 
   return (
@@ -40,6 +39,7 @@ export default function AnimalDetail() {
             <SelectFilter
               options={categoryOpts}
               placeholder="kategori"
+
               noTitle
             />
           </div>

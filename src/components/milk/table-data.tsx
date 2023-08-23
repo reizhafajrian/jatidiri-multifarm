@@ -32,6 +32,14 @@ export default function TableData() {
 
   const columns = getMilkColumns(changeStatus)
 
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
+
   return (
     <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )

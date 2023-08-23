@@ -34,6 +34,14 @@ export default function FormIncome() {
     s.setIncomeHistory,
   ])
 
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
+
   const form = useForm<incomeType>({
     resolver: zodResolver(incomeSchema),
   })
@@ -198,6 +206,11 @@ export default function FormIncome() {
               {incomeHistory && (
                 <SimpleBar className="max-h-[20rem]">
                   <Table
+                    pagination={{
+                      pageIndex,
+                      pageSize
+                    }}
+                    setPagination={setPagination}
                     isLoading={loading}
                     data={incomeHistory}
                     columns={milkHistoryColumns}

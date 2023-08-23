@@ -11,6 +11,7 @@ import DeleteDialog from "../ui/delete-dialog"
 import Table from "../ui/table"
 import { cempekTColumns, femaleTColumns, maleTColumns } from "./column"
 import TableFilter from "./table-filter"
+import { useMemo, useState } from "react"
 
 interface IProps {
   animal: string
@@ -22,25 +23,43 @@ export default function TableData({ animal, type }: IProps) {
   const path = usePathname()
   const { deleteAnimal, filterByDate, originMale, originFemale } = useStore()
 
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
   // set queries filter
-  const queries: Array<string> = [filterByDate]
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const queries: Array<string> = [filterByDate, `page=${pageIndex}`, `item_per_page=${pageSize}`]
   const isCempek = type === "cempek"
   !isCempek && queries.push(`gender=${type}`)
   originMale != "all" && queries.push(`origin_male=${originMale}`)
   originFemale != "all" && queries.push(`origin_female=${originFemale}`)
 
   // fetch data list
-  const { data, loading, error, mutate } = useDataList({
-    url: isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
-    queries,
-  })
+  const { data, loading, error, mutate } = useMemo(
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    () => useDataList({
+      url: isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
+      queries,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    , [
+      animal, queries, isCempek,
+      pageIndex, pageSize
+    ]
+  )
+
+
 
   const columns: ColumnDef<any, any>[] = [
     ...(isCempek
       ? cempekTColumns
       : type === "true"
-      ? maleTColumns
-      : femaleTColumns),
+        ? maleTColumns
+        : femaleTColumns),
     {
       header: "Aksi",
       accessorKey: "_id",
@@ -69,7 +88,11 @@ export default function TableData({ animal, type }: IProps) {
       {error ? (
         <div>{error.message}</div>
       ) : (
-        <Table isLoading={loading} fixedCol={3} data={data} columns={columns} />
+        <Table isLoading={loading} fixedCol={3} data={data} columns={columns} pagination={{
+          pageIndex, pageSize,
+        }}
+          setPagination={setPagination}
+        />
       )}
     </div>
   )

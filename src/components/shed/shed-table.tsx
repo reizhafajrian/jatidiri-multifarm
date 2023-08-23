@@ -6,6 +6,7 @@ import useDataList from "@/hooks/useDataList"
 import useStore from "@/store/useStore"
 import { Button } from "@/components/ui/button"
 import Table from "@/components/ui/table"
+import { useState } from "react"
 
 export default function ShedTable() {
   const router = useRouter()
@@ -41,10 +42,21 @@ export default function ShedTable() {
       ),
     },
   ]
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   return (
     <Table
       isLoading={loading}
+      pagination={{
+        pageIndex,
+        pageSize
+      }}
+      setPagination={setPagination}
       data={searchKeyword.length > 0 ? searchResults : data}
       columns={columns}
       fixedCol={2}

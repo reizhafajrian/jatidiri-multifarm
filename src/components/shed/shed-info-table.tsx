@@ -5,6 +5,7 @@ import { ColumnDef } from "@tanstack/react-table"
 import { longDateFormatter } from "@/lib/utils"
 import useDataList from "@/hooks/useDataList"
 import Table from "@/components/ui/table"
+import { useState } from "react"
 
 export default function ShedInfoTable({ shed_id }: { shed_id: string }) {
   const queries: Array<string> = []
@@ -66,8 +67,22 @@ export default function ShedInfoTable({ shed_id }: { shed_id: string }) {
         data.getValue() ? longDateFormatter(new Date(data.getValue())) : "-",
     },
   ]
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
+
+
 
   return (
-    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+    <Table
+      pagination={{
+        pageIndex,
+        pageSize
+      }}
+      setPagination={setPagination}
+      isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }

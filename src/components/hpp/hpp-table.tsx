@@ -6,6 +6,7 @@ import Table from "@/components/ui/table"
 
 import { toast } from "../ui/toast"
 import { getHppColumns } from "./column"
+import { useState } from "react"
 
 interface IProps {
   animal: string
@@ -33,8 +34,20 @@ export default function HppTable({ animal }: IProps) {
   }
 
   const columns = getHppColumns(changeStatusHandler)
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   return (
-    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+    <Table
+      pagination={{
+        pageIndex,
+        pageSize
+      }}
+      setPagination={setPagination}
+      isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }

@@ -37,6 +37,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
     try {
       const res = await axios.post("/api/signin", data)
       localStorage.setItem("user", JSON.stringify(res.data.data.user))
+      localStorage.setItem("token", res.data.data.token)
       window.location.replace("/dashboard")
     } catch (err: any) {
       if (isAxiosError(err))
@@ -47,6 +48,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
     try {
       await fetch("/api/signout")
       localStorage.removeItem("user")
+      localStorage.removeItem("token")
       window.location.replace("/signin")
     } catch (err) {
       toast({ type: "error", message: "Something went wrong!" })

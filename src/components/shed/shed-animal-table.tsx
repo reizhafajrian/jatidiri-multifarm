@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
 import useDataList from "@/hooks/useDataList"
@@ -58,9 +58,20 @@ export default function ShedAnimalTable({
       ),
     },
   ]
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   return (
     <Table
+      pagination={{
+        pageIndex,
+        pageSize
+      }}
+      setPagination={setPagination}
       isLoading={loading}
       data={data?.animal_data ?? []}
       columns={columns}

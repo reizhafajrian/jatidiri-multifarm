@@ -6,5 +6,9 @@
   //   "source.organizeImports": true
   // },
   "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "liveServer.settings.multiRootWorkspaceName": "jatidiri-multifarm"
 }
