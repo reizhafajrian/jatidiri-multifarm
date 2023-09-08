@@ -33,7 +33,13 @@ export default function InputDate(props: IProps) {
           name={name}
           showPopperArrow={false}
           selected={field.value && new Date(field.value)}
-          onChange={selectRange ? onChange : (value) => field.onChange(value)}
+          onChange={
+            onChange
+              ? onChange
+              : selectRange
+              ? onChange
+              : (value) => field.onChange(value)
+          }
           calendarClassName="z-50"
           startDate={startDate}
           endDate={endDate}

@@ -12,14 +12,20 @@ import Navbar from "@/components/layout/navbar"
 export default function ShedHeader() {
   const router = useRouter()
   const animal = useStore((s) => s.animal)
-  const [csvUrl, setCsvUrl] = useState(`?animal_type=${animal}`)
-  const [pdfUrl, setPdfUrl] = useState("/")
+  const [csvUrl, setCsvUrl] = useState("")
+  const [pdfUrl, setPdfUrl] = useState("")
 
   useEffect(() => {
     const queriesArray: Array<string> = []
     const url = `/api/shed/download`
     queriesArray.push(`animal_type=${animal}`)
-    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
+    if (queriesArray.length > 0) {
+      setCsvUrl(url + `?${queriesArray?.join("&")}`)
+      setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
+    } else {
+      setCsvUrl(url)
+      setPdfUrl(url + "/pdf")
+    }
   }, [animal])
 
   const menu = [

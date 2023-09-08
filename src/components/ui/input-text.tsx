@@ -12,10 +12,11 @@ interface IProps {
   disabled?: boolean
   type?: string
   rupiah?: boolean
+  onChange?: any
 }
 
 export default function InputText(props: IProps) {
-  const { name, label, isSecured, disabled, type, rupiah } = props
+  const { name, label, isSecured, disabled, type, rupiah, onChange } = props
   const [showPassword, setShowPassword] = useState(false)
 
   const { control, register, formState } = useFormContext()
@@ -68,6 +69,7 @@ export default function InputText(props: IProps) {
             placeholder=" "
             disabled={isSubmitting || disabled}
             {...register(name)}
+            onChange={onChange}
           />
         )}
         <label

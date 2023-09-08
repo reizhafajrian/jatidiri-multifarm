@@ -10,6 +10,7 @@ interface IData {
     animal?: string
     type?: string
     gender?: string
+    c_gender?: string
     ucTotal?: number
     category?: ICategoryInfo
     searchType?: string
@@ -24,16 +25,18 @@ export default function StoreInitializer({ data }: IData) {
     type,
     ucTotal,
     gender,
+    c_gender,
     category,
     searchType,
     shed_code,
     shed_id,
   } = data
 
-  const [setCat, setAnimal, setGender] = useStore((s) => [
+  const [setCat, setAnimal, setGender, certificate] = useStore((s) => [
     s.setCategoryInfo,
     s.setAnimalTitle,
     s.setGenderTitle,
+    s.certificate,
   ])
 
   useEffect(() => {
@@ -44,6 +47,15 @@ export default function StoreInitializer({ data }: IData) {
     if (gender) {
       useStore.setState((state) => ({ ...state, gender }))
       setGender()
+    }
+    if (c_gender) {
+      useStore.setState((s) => ({
+        ...s,
+        certificate: {
+          ...certificate,
+          gender: gender == "true" ? "sire" : "dam",
+        },
+      }))
     }
     if (type) {
       useStore.setState((state) => ({ ...state, type }))

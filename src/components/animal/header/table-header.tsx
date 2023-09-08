@@ -15,7 +15,7 @@ export default function TableHeader() {
   const router = useRouter()
   const path = usePathname()
   const [csvUrl, setCsvUrl] = useState("")
-  const [pdfUrl, setPdfUrl] = useState("/")
+  const [pdfUrl, setPdfUrl] = useState("")
   const [animal, title, originMale, originFemale, filterByDate] = useStore(
     (s) => [
       s.animal,
@@ -39,7 +39,13 @@ export default function TableHeader() {
     queriesArray.push(filterByDate)
     originMale !== "all" && queriesArray.push("origin_male=" + originMale)
     originFemale !== "all" && queriesArray.push("origin_female=" + originFemale)
-    queriesArray.length > 0 && setCsvUrl(url + `?${queriesArray?.join("&")}`)
+    if (queriesArray.length > 0) {
+      setCsvUrl(url + `?${queriesArray?.join("&")}`)
+      setPdfUrl(`${url + "/pdf"}` + `?${queriesArray?.join("&")}`)
+    } else {
+      setCsvUrl(url)
+      setPdfUrl(url + "/pdf")
+    }
   }, [originMale, originFemale, filterByDate, animal, path])
 
   return (
