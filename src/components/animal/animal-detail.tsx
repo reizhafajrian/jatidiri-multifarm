@@ -27,6 +27,8 @@ export default function AnimalDetail() {
 
 
 
+
+
   return (
     <div>
       <div className="mb-6 flex gap-5 md:items-center md:gap-3">

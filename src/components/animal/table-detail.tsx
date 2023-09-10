@@ -3,6 +3,7 @@
 import Table from "@/components/ui/table"
 
 import { detailAnimalTColumns } from "./column"
+import { useState } from "react"
 
 export default function DetailTable({ data }: any) {
   const tableData = [
@@ -25,8 +26,14 @@ export default function DetailTable({ data }: any) {
       quantity: 1,
     },
   ]
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
-  console.log(data)
+
   if (!data) return null
   return (
     <Table
@@ -39,6 +46,12 @@ export default function DetailTable({ data }: any) {
         type: item[`${item.category_type}`]?.name || '-',
         quantity: item.qty
       }))}
+      pagination={{
+        pageIndex,
+        pageSize
+      }}
+      pageSize={pageSize}
+      setPagination={setPagination}
       columns={detailAnimalTColumns}
     />
   )
