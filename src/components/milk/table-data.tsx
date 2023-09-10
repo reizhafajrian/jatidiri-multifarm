@@ -6,6 +6,7 @@ import Table from "@/components/ui/table"
 
 import { toast } from "../ui/toast"
 import { getMilkColumns } from "./column"
+import { useState } from "react"
 
 export default function TableData() {
   const [changeMilkStatus, status] = useStore((s) => [
@@ -41,6 +42,11 @@ export default function TableData() {
 
 
   return (
-    <Table isLoading={loading} data={data} columns={columns} fixedCol={2} />
+    <Table pagination={{
+      pageIndex,
+      pageSize
+    }}
+      setPagination={setPagination}
+      isLoading={loading} data={data} columns={columns} fixedCol={2} />
   )
 }

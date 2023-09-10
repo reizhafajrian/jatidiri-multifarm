@@ -27,6 +27,12 @@ export const WeightHistory = ({ animal_id }: IProps) => {
     s.weightHistory,
     s.setWeightHistory,
   ])
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  })
 
   const columns: ColumnDef<any, any>[] = [
     {
@@ -114,6 +120,11 @@ export const WeightHistory = ({ animal_id }: IProps) => {
                 columns={columns}
                 fixedCol={0}
                 // pageSize={4}
+                setPagination={setPagination}
+                pagination={{
+                  pageIndex,
+                  pageSize
+                }}
                 showAll
               />
             </SimpleBar>

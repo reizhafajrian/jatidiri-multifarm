@@ -29,7 +29,7 @@ interface IProps {
 }
 
 export default function Table(props: IProps) {
-  const { columns, data, fixedCol, isLoading, pageSize, showAll, setPagination, pagination } = props
+  const { columns, data, fixedCol, isLoading, showAll, setPagination, pagination } = props
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 
