@@ -35,7 +35,7 @@ const getData = async ({ _id, token }: { _id: string; token: string }) => {
 
   const indukanOpts = indukan.data.data.map((item: any) => ({
     name: item.eartag_code,
-    value: item._id,
+    value: item._id
   }))
 
   return {
