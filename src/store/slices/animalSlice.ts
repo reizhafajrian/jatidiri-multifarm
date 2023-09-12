@@ -19,8 +19,8 @@ export interface IAnimalState extends IFilter {
   undefinedClusterTotal: number
   weightHistory?: Array<any>
   certificate: {
-    grade:string,
-    color:string,
+    grade?:string,
+    color?:string,
     name?: string
     type?: string
     gender?: string
