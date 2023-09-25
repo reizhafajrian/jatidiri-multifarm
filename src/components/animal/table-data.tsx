@@ -11,7 +11,7 @@ import DeleteDialog from "../ui/delete-dialog"
 import Table from "../ui/table"
 import { cempekTColumns, femaleTColumns, maleTColumns } from "./column"
 import TableFilter from "./table-filter"
-import { useMemo, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 
 interface IProps {
   animal: string
@@ -30,6 +30,7 @@ export default function TableData({ animal, type }: IProps) {
     pageSize: 10,
   })
 
+
   // set queries filter
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const queries: Array<string> = [filterByDate, `page=${pageIndex}`, `item_per_page=${pageSize}`]
@@ -38,19 +39,26 @@ export default function TableData({ animal, type }: IProps) {
   originMale != "all" && queries.push(`origin_male=${originMale}`)
   originFemale != "all" && queries.push(`origin_female=${originFemale}`)
 
+
   // fetch data list
-  const { data, loading, error, mutate } = useMemo(
+  const { data, loading, error, mutate, pagination } = useMemo(
     // eslint-disable-next-line react-hooks/rules-of-hooks
     () => useDataList({
       url: isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
       queries,
     })
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
     , [
       animal, queries, isCempek,
       pageIndex, pageSize
     ]
   )
+
+
+
+
+
 
 
 
@@ -90,6 +98,7 @@ export default function TableData({ animal, type }: IProps) {
       ) : (
         <Table isLoading={loading} fixedCol={3} data={data} columns={columns} pagination={{
           pageIndex, pageSize,
+          totalPage: pagination?.total_page ?? 0
         }}
           setPagination={setPagination}
         />

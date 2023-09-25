@@ -24,7 +24,11 @@ interface IProps {
   setPagination?: (pagination: any) => void
   pagination: {
     pageIndex: number
+    totalPage?: number
+    prevPage?: number
+    nextPage?: number
     pageSize: number
+
   }
 }
 
@@ -33,12 +37,16 @@ export default function Table(props: IProps) {
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 
+
+
   const table = useReactTable({
     data: tData ?? [{}],
     columns: tColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    pageCount: pagination.totalPage,
+    manualPagination: true,
     state: {
       pagination
     },

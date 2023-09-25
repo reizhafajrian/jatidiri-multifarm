@@ -33,7 +33,7 @@ const createSearchSlice: StateCreator<ISearchState> = (set, get) => ({
         searchKeyword: keyword,
       })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
 })

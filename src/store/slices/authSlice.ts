@@ -60,7 +60,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
       toast({ type: "success", message: res.message })
       window.location.reload()
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
   updateUser: async (data) => {
@@ -74,7 +74,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
       toast({ type: "success", message: res.message })
       window.location.reload()
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
   changeRole: async (data) => {
@@ -111,7 +111,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
       toast({ type: "success", message: res.message })
       window.location.reload()
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
   changePass: async (data) => {

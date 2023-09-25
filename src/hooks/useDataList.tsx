@@ -19,6 +19,7 @@ export default function useDataList({ url, queries = [] }: IProps) {
 
   return {
     data: data?.data,
+    pagination: data?.pagination,
     loading: isValidating && isLoading,
     error,
     mutate,

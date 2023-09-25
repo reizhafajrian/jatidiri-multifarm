@@ -12,11 +12,20 @@ export default function ShedTable() {
   const router = useRouter()
   const pathname = usePathname()
   const { animal, searchKeyword, searchResults } = useStore()
-
-  const { data, loading } = useDataList({
-    url: "/api/shed/get",
-    queries: [`animal_type=${animal}`],
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
   })
+
+  const queries: Array<string> = [`page=${pageIndex}`, `item_per_page=${pageSize}`, `animal_type=${animal}`]
+
+  const { data, loading, pagination } = useDataList({
+    url: "/api/shed/get",
+    queries,
+  })
+
 
   const columns = [
     { header: "No Kandang", accessorKey: "code" },
@@ -42,19 +51,15 @@ export default function ShedTable() {
       ),
     },
   ]
-  const [{
-    pageIndex, pageSize
-  }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  })
+
 
   return (
     <Table
       isLoading={loading}
       pagination={{
         pageIndex,
-        pageSize
+        pageSize,
+        totalPage: pagination?.total_page ?? 0
       }}
       setPagination={setPagination}
       data={searchKeyword.length > 0 ? searchResults : data}

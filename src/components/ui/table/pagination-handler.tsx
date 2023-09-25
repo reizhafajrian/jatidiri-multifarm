@@ -7,6 +7,7 @@ interface IProps {
 }
 
 export default function PaginationHandler({ table }: IProps) {
+
   return (
     <div className="mt-5 flex items-center justify-center gap-2">
       <button

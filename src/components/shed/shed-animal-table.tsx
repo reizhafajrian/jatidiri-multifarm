@@ -24,6 +24,7 @@ export default function ShedAnimalTable({
   type,
   shedCodeOptions,
 }: IProps) {
+
   const changeShedAnimal = useStore((state) => state.changeShedAnimal)
 
   const { data, loading, error, mutate } = useDataList({

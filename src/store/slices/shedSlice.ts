@@ -94,7 +94,7 @@ const createShedSlice: StateCreator<IShedState> = () => ({
 
       toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
   changeShedAnimal: async (shed_code, eartag_code) => {
@@ -106,7 +106,7 @@ const createShedSlice: StateCreator<IShedState> = () => ({
 
       toast({ type: "success", message: res.message })
     } catch (err: any) {
-      toast({ type: "error", message: err.data.error })
+      toast({ type: "error", message: err?.data?.error||"something went wrong" })
     }
   },
 })
