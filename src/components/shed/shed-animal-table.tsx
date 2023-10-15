@@ -1,21 +1,22 @@
 "use client"
 
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { ColumnDef } from "@tanstack/react-table"
 
-import useDataList from "@/hooks/useDataList"
+import useDataShedList from "@/hooks/useDataShedList"
 import useShedAnimalTags from "@/hooks/useshedAnimalTags"
 import useStore from "@/store/useStore"
 import SelectTable from "@/components/ui/select-table"
 import Table from "@/components/ui/table"
 
-import { shedAnimalcolumns } from "./column"
+import { shedAnimalcolumns, shedAnimalCempekcolumns } from "./column"
 
 interface IProps {
   animal: string
   shed_id: string
   type: string
   shedCodeOptions: any
+  cempek?: Boolean
 }
 
 export default function ShedAnimalTable({
@@ -23,28 +24,42 @@ export default function ShedAnimalTable({
   shed_id,
   type,
   shedCodeOptions,
+  cempek
 }: IProps) {
 
   const changeShedAnimal = useStore((state) => state.changeShedAnimal)
 
-  const { data, loading, error, mutate } = useDataList({
-    url: `/api/shed/get/detail/${shed_id}`,
-    queries: [type === "cempek" ? "cempek=true" : `gender=${type}`],
+  // const { data, loading, error, mutate } = useDataList({
+  //   url: `/api/shed/get/detail/${shed_id}`,
+  //   queries: [type === "cempek" ? "cempek=true" : `gender=${type}`],
+  // })
+  const [{
+    pageIndex, pageSize
+  }, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
   })
 
-  const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags(
-    animal,
-    type
-  )
+  // fetch data list
+  const { data, loading, error, mutate, pagination } = useDataShedList({
+    url: `/api/shed/get/detail/${shed_id}`,
+    queries: [type === "cempek" ? "cempek=true" : `gender=${type}`, `page=${pageIndex}`, `item_per_page=${pageSize}`],
+  })
+
+
+  // const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags(
+  //   animal,
+  //   type
+  // )
 
   const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
     await changeShedAnimal(shed_code, eartag_code)
     mutate()
-    mutateEartags()
+    // mutateEartags()
   }
 
   const columns: ColumnDef<any, any>[] = [
-    ...shedAnimalcolumns,
+    ...(cempek ? shedAnimalcolumns : shedAnimalCempekcolumns),
     {
       header: "Pindah Kandang",
       accessorKey: "shed_code",
@@ -59,22 +74,17 @@ export default function ShedAnimalTable({
       ),
     },
   ]
-  const [{
-    pageIndex, pageSize
-  }, setPagination] = useState({
-    pageIndex: 0,
-    pageSize: 10,
-  })
 
   return (
     <Table
       pagination={{
         pageIndex,
-        pageSize
+        pageSize,
+        totalPage: pagination?.total_page ?? 0
       }}
       setPagination={setPagination}
       isLoading={loading}
-      data={data?.animal_data ?? []}
+      data={data ?? []}
       columns={columns}
       fixedCol={2}
     />

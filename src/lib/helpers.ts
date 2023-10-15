@@ -49,7 +49,6 @@ export const getDetailShedData = async (shed_id: string) => {
 
 export const getShedCodeOptions = async (animal: string) => {
   const res = await Get(`/shed/get?animal_type=${animal}`)
-  console.log(res.data)
 
   const shedCodeOptions = res.data.map((item: any) => ({
     name: item.code,

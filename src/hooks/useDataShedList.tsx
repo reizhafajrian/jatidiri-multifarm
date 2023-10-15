@@ -1,3 +1,5 @@
+
+
 "use client"
 
 import useSWR from "swr"
@@ -9,7 +11,7 @@ interface IProps {
   queries?: Array<string>
 }
 
-export default function useDataList({ url, queries = [] }: IProps) {
+export default function useDataShedList({ url, queries = [] }: IProps) {
 
   const endpoint = queries.length > 0 ? url + `?${queries.join("&")}` : url
 
@@ -22,12 +24,10 @@ export default function useDataList({ url, queries = [] }: IProps) {
 
 
   return {
-    data: data?.data,
-    pagination: data?.pagination,
+    data: data?.data?.animal_data?.data,
+    pagination: data?.data?.animal_data?.pagination,
     loading: isValidating && isLoading,
     error,
     mutate,
   }
 }
-
-

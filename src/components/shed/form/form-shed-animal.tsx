@@ -31,6 +31,7 @@ export default function FormShedAnimal() {
     animalTitle: title,
     addShedAnimal,
     shedAnimalTags,
+
   } = useStore()
 
 
@@ -39,12 +40,10 @@ export default function FormShedAnimal() {
   })
 
   const onSubmit: SubmitHandler<IShedAnimal> = async (values) => {
-    const shed_id =   path.split("/")[3]
-    await addShedAnimal({ ...values, id: shed_id })
-    // mutateTable()
-    // mutateEartags()
+    const shed_id = path.split("/")[3]
+    addShedAnimal({ ...values, id: shed_id })
     setOpen(false)
-    router.refresh()
+    window.location.reload()
   }
 
   return (
