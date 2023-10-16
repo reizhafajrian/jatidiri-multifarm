@@ -47,14 +47,14 @@ export default function ShedAnimalTable({
   })
 
 
-  // const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags(
-  //   animal,
-  //   type
-  // )
+  const { eartagOptions, mutate: mutateEartags } = useShedAnimalTags(
+    animal,
+    type
+  )
 
   const changeShedHandler = async (shed_code: string, eartag_code?: string) => {
     await changeShedAnimal(shed_code, eartag_code)
-    mutate()
+    // mutate()
     // mutateEartags()
   }
 
