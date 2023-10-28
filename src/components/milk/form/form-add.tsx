@@ -29,7 +29,7 @@ export default function FormAddMilk() {
 
   const { data: milkData, mutate } = useDataList({ url: "/api/milk/get" })
   const { data } = useDataList({
-    url: "/api/cow/get",
+    url: "/api/goat/get",
     queries: ["gender=false"],
   })
 

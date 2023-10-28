@@ -16,6 +16,7 @@ export const getHppColumns = (
 ) => {
   const hppColumns: ColumnDef<any, any>[] = [
     { header: "No Eartag", accessorKey: "eartag_code" },
+    { header: "Keterangan", accessorKey: "description" },
     { header: "Jenis", accessorKey: "type" },
     { header: "Asal", accessorKey: "origin" },
     { header: "Berat", accessorKey: "weight" },

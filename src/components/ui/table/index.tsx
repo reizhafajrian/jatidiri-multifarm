@@ -78,13 +78,21 @@ export default function Table(props: IProps) {
                     )}
                   />
                   {fixedCol === 3 && (
-                    <TH
-                      header={headerGroup.headers[1]}
-                      className="left-[200px] min-w-[100px] md:sticky"
-                    />
+                    <>
+                      <TH
+                        header={headerGroup.headers[1]}
+                        className="left-[200px] min-w-[150px] md:sticky"
+                      />
+                      <TH
+                        header={headerGroup.headers[2]}
+                        className="left-[350px] min-w-[150px] md:sticky"
+                      />
+
+                    </>
+
                   )}
                   {headerGroup.headers
-                    .slice(fixedCol === 3 ? 2 : 1, headerGroup.headers.length)
+                    .slice(fixedCol === 3 ? 3 : 1, headerGroup.headers.length)
                     .map((header) => (
                       <TH key={header.id} header={header} />
                     ))}
@@ -119,15 +127,22 @@ export default function Table(props: IProps) {
                       )}
                     />
                     {fixedCol === 3 && (
-                      <TD
-                        cell={row.getVisibleCells()[1]}
-                        className="left-[200px] z-10 min-w-[100px] md:sticky"
-                      />
+                      <>
+                        <TD
+                          cell={row.getVisibleCells()[1]}
+                          className="left-[200px] z-10 min-w-[100px] md:sticky"
+                        />
+                        <TD
+                          cell={row.getVisibleCells()[2]}
+                          className="left-[350px] z-10 min-w-[100px] md:sticky"
+                        />
+                      </>
+
                     )}
                     {row
                       .getVisibleCells()
                       .slice(
-                        fixedCol === 3 ? 2 : 1,
+                        fixedCol === 3 ? 3 : 1,
                         row.getVisibleCells().length
                       )
                       .map((cell) => (

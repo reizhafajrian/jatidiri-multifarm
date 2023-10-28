@@ -79,7 +79,6 @@ export default function TableData({ animal, type }: IProps) {
         </div>
       ),
     },
-    { header: "Keterangan", accessorKey: "description" },
   ]
 
   return (

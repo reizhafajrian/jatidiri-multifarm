@@ -15,6 +15,7 @@ export const getMilkColumns = (
 ) => {
   const columns: ColumnDef<any, any>[] = [
     { header: "No Eartag", accessorKey: "animal_id.eartag_code" },
+    { header: "Keterangan", accessorKey: "animal_id.description" },
     { header: "Jenis", accessorKey: "animal_id.type" },
     { header: "Asal", accessorKey: "animal_id.origin" },
     { header: "Berat", accessorKey: "animal_id.weight" },

@@ -47,6 +47,6 @@ export default function TableData() {
       pageSize
     }}
       setPagination={setPagination}
-      isLoading={loading} data={data} columns={columns} fixedCol={2} />
+      isLoading={loading} data={data} columns={columns} fixedCol={3} />
   )
 }

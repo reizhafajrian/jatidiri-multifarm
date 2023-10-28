@@ -53,6 +53,8 @@ export const animalTColumns: ColumnDef<any, any>[] = [
     header: "No Eartag",
     accessorKey: "eartag_code",
   },
+  { header: "Keterangan", accessorKey: "description" },
+
   {
     header: "Tgl Lahir",
     accessorKey: "birth_date",
