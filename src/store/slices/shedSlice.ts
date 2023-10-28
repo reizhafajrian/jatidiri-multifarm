@@ -78,7 +78,7 @@ const createShedSlice: StateCreator<IShedState> = () => ({
     try {
       const body = {}
 
-      const res = await Api.post({ url: "/api/shed/data/create", data: body })
+      const res = await Api.post({ url: "/api/shed/data/create", data: data })
       toast({ type: "success", message: res.message })
     } catch (err: any) {
       toast({ type: "error", message: err.data.errors[0].msg })

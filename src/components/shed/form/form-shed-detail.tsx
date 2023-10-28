@@ -22,6 +22,7 @@ import InputCheckbox from "@/components/ui/input-checkbox"
 import InputDate from "@/components/ui/input-date"
 import InputSelect from "@/components/ui/input-select"
 import InputText from "@/components/ui/input-text"
+import { usePathname } from "next/navigation"
 
 interface IProps {
   options: any
@@ -32,12 +33,15 @@ export default function FormShedDetail({ options }: IProps) {
   const [categories, setCategories] = useState<any>({ feed: true })
   const { addShedData, shed_code, shed_id } = useStore()
 
+  const path = usePathname().split('/')
+
   const methods = useForm<IShedDetail>({
     resolver: zodResolver(shedDetailSchema(categories)),
   })
 
   const onSubmit: SubmitHandler<IShedDetail> = async (values) => {
-    await addShedData(values)
+    const shed_code = path[path.length - 1]
+    await addShedData({ ...values, shed_code })
     setOpen(false)
     methods.reset()
     mutate(`/api/shed/data/get?shed_code=${shed_id}`)

@@ -18,7 +18,7 @@ const useShedAnimalTags = (animal: string, type: string) => {
 
   const eartagOptions =
     list?.map((item: any) => ({
-      name: item.eartag_code,
+      name: `${item.eartag_code}- ${item?.description?.slice(0, 10)}`,
       value: item.eartag_code,
     })) ?? []
 
