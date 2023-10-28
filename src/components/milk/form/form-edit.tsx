@@ -36,8 +36,8 @@ export default function FormEditMilk({ curr }: IProps) {
     resolver: zodResolver(milkSchema),
     values: {
       _id: curr?._id,
-      animal_id: curr?.animal_id?._id,
-      eartag_code: curr?.animal_id?.eartag_code,
+      animal_id: curr?._id,
+      eartag_code: curr?.eartag_code,
       history_milk: 0,
     },
   })
@@ -64,7 +64,7 @@ export default function FormEditMilk({ curr }: IProps) {
     setEndDate(end)
 
     if (start && end) {
-      const data = await setMilkHistory(start, end)
+      const data = await setMilkHistory(start, end, curr?._id,)
       form.setValue("history_milk", data)
     }
   }

@@ -24,7 +24,7 @@ export interface IMilkState {
   addMilk: (data: milkType) => any
   editMilk: (data: milkType) => any
   changeMilkStatus: (id: string, status: string) => any
-  setMilkHistory: (start: Date, end: Date) => Promise<number | undefined>
+  setMilkHistory: (start: Date, end: Date,animal_id?:String) => Promise<number | undefined>
   addIncome: (data: incomeType) => any
   setIncomeHistory: (start: Date, end: Date) => void
 }
@@ -66,12 +66,12 @@ const createMilkSlice: StateCreator<IMilkState> = (set) => ({
       throw err
     }
   },
-  setMilkHistory: async (start, end) => {
+  setMilkHistory: async (start, end,animal_id) => {
     try {
       const s = start.toISOString()
       const e = end.toISOString()
       if (start !== null && end !== null) {
-        const res = await Api.get(`/api/milk/get/history?start=${s}&end=${e}`)
+        const res = await Api.get(`/api/milk/get/history?start=${s}&end=${e}&animal_id=${animal_id}`)
         return res.data
       }
     } catch (err: any) {

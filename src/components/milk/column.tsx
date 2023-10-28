@@ -14,20 +14,20 @@ export const getMilkColumns = (
   changeStatus: (id: string, status: string) => Promise<void>
 ) => {
   const columns: ColumnDef<any, any>[] = [
-    { header: "No Eartag", accessorKey: "animal_id.eartag_code" },
-    { header: "Keterangan", accessorKey: "animal_id.description" },
-    { header: "Jenis", accessorKey: "animal_id.type" },
-    { header: "Asal", accessorKey: "animal_id.origin" },
-    { header: "Berat", accessorKey: "animal_id.weight" },
-    { header: "Usia", accessorKey: "animal_id.age" },
+    { header: "No Eartag", accessorKey: "eartag_code" },
+    { header: "Keterangan", accessorKey: "description" },
+    { header: "Jenis", accessorKey: "type" },
+    { header: "Asal", accessorKey: "origin" },
+    { header: "Berat", accessorKey: "weight" },
+    { header: "Usia", accessorKey: "age" },
     {
       header: "Susu",
-      accessorKey: "amount",
-      cell: (data) => `${data.getValue() !== 0 ? data.getValue() + " L" : "0"}`,
+      accessorKey: "milks",
+      cell: (data) => `${data.getValue().length > 0 ? data.getValue()[0].amount : "-"}`,
     },
     {
       header: "Status",
-      accessorKey: "animal_id.milk_status",
+      accessorKey: "milk_status",
       cell: (data) => (
         <SelectTable
           value={data.getValue()}
@@ -36,7 +36,7 @@ export const getMilkColumns = (
             (i) => i.value === data.getValue()
           )?.bgColor!} font-semibold text-neutral-4`}
           onChange={(value) => {
-            changeStatus(data.row.original.animal_id._id, value)
+            changeStatus(data.row.original._id, value)
           }}
         />
       ),

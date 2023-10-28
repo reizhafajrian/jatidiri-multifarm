@@ -21,11 +21,7 @@ export default function MilkTotalCard() {
   endDate.setDate(0)
 
   const { data, loading } = useDataList({
-    url: `/api/milk/get`,
-    queries: [
-      `start=${format(startDate, shape)}`,
-      `end=${format(endDate, shape)}`,
-    ],
+    url: `/api/milk/get/remaining-milk`,
   })
 
   return (
@@ -37,10 +33,7 @@ export default function MilkTotalCard() {
           <p className="mt-auto text-2xl font-semibold">
             {loading
               ? "..."
-              : `${data.reduce(
-                  (acc: number, cur: any) => acc + cur.amount,
-                  0
-                )} Liter`}
+              : `${data} Liter`}
           </p>
         </div>
       </div>
