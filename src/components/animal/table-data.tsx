@@ -41,19 +41,11 @@ export default function TableData({ animal, type }: IProps) {
 
 
   // fetch data list
-  const { data, loading, error, mutate, pagination } = useMemo(
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    () => useDataList({
-      url: isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
-      queries,
-    })
+  const { data, loading, error, mutate, pagination } = useDataList({
+    url: isCempek ? `/api/${animal}/cempek/get` : `/api/${animal}/get`,
+    queries,
+  })
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    , [
-      animal, queries, isCempek,
-      pageIndex, pageSize
-    ]
-  )
 
 
 
@@ -93,16 +85,12 @@ export default function TableData({ animal, type }: IProps) {
   return (
     <div>
       <TableFilter animal={animal} type={type} />
-      {error ? (
-        <div>{error.message}</div>
-      ) : (
-        <Table isLoading={loading} fixedCol={3} data={data} columns={columns} pagination={{
-          pageIndex, pageSize,
-          totalPage: pagination?.total_page ?? 0
-        }}
-          setPagination={setPagination}
-        />
-      )}
+      <Table isLoading={loading} fixedCol={3} data={data} columns={columns} pagination={{
+        pageIndex, pageSize,
+        totalPage: pagination?.total_page ?? 0
+      }}
+        setPagination={setPagination}
+      />
     </div>
   )
 }
