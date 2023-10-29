@@ -14,10 +14,9 @@ const useShedAnimalTags = (animal: string, type: string) => {
 
   const { data, loading, error, mutate } = useDataList({ url })
 
-  const list = data?.filter((item: any) => item.shed_code !== shed_code)
 
   const eartagOptions =
-    list?.map((item: any) => ({
+    data?.map((item: any) => ({
       name: `${item.eartag_code}- ${item?.description?.slice(0, 10)}`,
       value: item.eartag_code,
     })) ?? []

@@ -51,7 +51,7 @@ export const getShedCodeOptions = async (animal: string) => {
   const res = await Get(`/shed/get?animal_type=${animal}`)
 
   const shedCodeOptions = res.data.map((item: any) => ({
-    name: item.code,
+    name: `${item.code}-${item.description}`,
     value: item._id,
   }))
 
