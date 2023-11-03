@@ -51,6 +51,7 @@ export default function CertificateForm({ currentValue }: IProps) {
     setLoading(true)
 
     const animalId = path.split('/')[3]
+    const animalType = path.split('/')[1]
 
     const {
       color, grade
@@ -58,7 +59,7 @@ export default function CertificateForm({ currentValue }: IProps) {
 
     const url = "/api/download/certificate"
     const token = localStorage.getItem('token')
-    const queries = `grade=${grade}&color=${color}&animal_id=${animalId}`
+    const queries = `grade=${grade}&color=${color}&animal_id=${animalId}&type=${animalType}`
     setData(`${url}?${queries}&token=${token}`)
     try {
       const res = await Api.post({
@@ -66,7 +67,8 @@ export default function CertificateForm({ currentValue }: IProps) {
         data: {
           grade,
           color,
-          animal_id: animalId
+          animal_id: animalId,
+          type: animalType
         }
 
       })

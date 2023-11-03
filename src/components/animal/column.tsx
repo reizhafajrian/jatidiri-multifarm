@@ -86,8 +86,8 @@ export const animalTColumns: ColumnDef<any, any>[] = [
   },
   {
     header: "Marga",
-    accessorKey: "parents",
-    cell: (data) => data?.getValue() ? data?.getValue()?.prefix?.join(", ") : '-',
+    accessorKey: "clan",
+    cell: (data) => data?.getValue() ? data?.getValue()?.map((res: any) => res.prefix).join(",") : '-',
   },
 ]
 

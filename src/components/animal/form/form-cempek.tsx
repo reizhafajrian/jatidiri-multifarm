@@ -72,7 +72,7 @@ export default function FormCempek({ data, options }: IProps) {
                   data ? "grid-cols-2" : "grid-cols-1"
                 )}
               >
-                <InputText name="weight" label="Berat Lahir" />
+                <InputText type="number" name="weight" label="Berat Lahir" />
                 {data && <WeightHistory animal_id={data._id!} />}
               </div>
               <InputSelect

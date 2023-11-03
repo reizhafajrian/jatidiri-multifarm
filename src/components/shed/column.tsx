@@ -9,7 +9,7 @@ export const shedAnimalcolumns: ColumnDef<any, any>[] = [
     cell: (data: any) => longDateFormatter(new Date(data.getValue())),
   },
   { header: "No Eartag", accessorKey: "eartag_code" },
-  { header: "marga", accessorKey: "parents", cell: (data: any) => data?.getValue()?.prefix?.join(", ") },
+  { header: "marga", accessorKey: "clan", cell: (data) => data?.getValue() ? data?.getValue()?.map((res: any) => res.prefix).join(",") : '-', },
   { header: "Keterangan", accessorKey: "description" },
 ]
 
@@ -21,6 +21,6 @@ export const shedAnimalCempekcolumns: ColumnDef<any, any>[] = [
     cell: (data: any) => longDateFormatter(new Date(data.getValue())),
   },
   { header: "No Eartag", accessorKey: "eartag_code" },
-  { header: "marga", accessorKey: "parents", cell: (data: any) => data?.getValue()?.prefix?.join(", ") },
+  { header: "marga", accessorKey: "clan", cell: (data) => data?.getValue() ? data?.getValue()?.map((res: any) => res.prefix).join(",") : '-', },
   { header: "Keterangan", accessorKey: "description" },
 ]
