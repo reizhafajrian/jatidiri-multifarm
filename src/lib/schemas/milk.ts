@@ -2,7 +2,7 @@ import { z } from "zod"
 
 export const milkSchema = z.object({
   eartag_code: z.string(),
-  milk: z.coerce.number().min(1),
+  milk: z.coerce.number().min(0),
   milk_date: z.coerce.date(),
 
   _id: z.string().optional(),

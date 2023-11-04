@@ -103,7 +103,7 @@ export default function FormCempek({ data, options }: IProps) {
                 />
                 <div>
                   <p className="mb-7 font-semibold capitalize">
-                    sertifikat {title} cempek
+                    sertifikat {title} cempe
                   </p>
                   <CertificateInput name="files" currentValue={{}} isCempek />
                 </div>
@@ -134,7 +134,7 @@ export default function FormCempek({ data, options }: IProps) {
       </div>
       {data && (
         <h1 className="mb-6 text-base font-semibold capitalize">
-          {`detail data ${title} cempek`}
+          {`detail data ${title} cempe`}
         </h1>
       )}
     </>

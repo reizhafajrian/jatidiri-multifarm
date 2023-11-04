@@ -76,7 +76,7 @@ const getHeaderMenu = (animal: string) => {
   ]
 
   if (animal !== "cow") {
-    links.push({ name: "Cempek", link: `/${animal}/cempek` })
+    links.push({ name: "Cempe", link: `/${animal}/cempek` })
   }
 
   return links

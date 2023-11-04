@@ -33,7 +33,7 @@ export default function MilkTotalCard() {
           <p className="mt-auto text-2xl font-semibold">
             {loading
               ? "..."
-              : `${data} Liter`}
+              : `${Number(data.toFixed(2))} Liter`}
           </p>
         </div>
       </div>

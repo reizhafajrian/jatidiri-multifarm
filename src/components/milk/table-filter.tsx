@@ -14,12 +14,12 @@ export default function TableFilter() {
 
   return (
     <div className="mb-5">
-      <SelectFilter
+      {/* <SelectFilter
         title="status"
-        options={statusOptions}
+        // options={statusOptions}
         defaultValue={milkStatus}
         onChange={(value) => useStore.setState({ milkStatus: value })}
-      />
+      /> */}
     </div>
   )
 }

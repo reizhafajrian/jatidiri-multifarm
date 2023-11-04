@@ -44,7 +44,9 @@ export default function FormShedAnimal() {
     const shed_id = path.split("/")[3]
     addShedAnimal({ ...values, id: shed_id })
     setOpen(false)
-    window.location.reload()
+    setTimeout(() => {
+      window.location.reload()
+    }, 4000);
   }
 
   return (

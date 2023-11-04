@@ -85,6 +85,7 @@ export default function ShedAnimalTable({
       setPagination={setPagination}
       isLoading={loading}
       data={data ?? []}
+      mutate={mutate}
       columns={columns}
       fixedCol={2}
     />

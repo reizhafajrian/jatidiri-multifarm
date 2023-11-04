@@ -28,12 +28,12 @@ interface IProps {
     prevPage?: number
     nextPage?: number
     pageSize: number
-
   }
+  mutate?: () => void
 }
 
 export default function Table(props: IProps) {
-  const { columns, data, fixedCol, isLoading, showAll, setPagination, pagination } = props
+  const { columns, data, fixedCol, isLoading, showAll, setPagination, pagination, mutate } = props
   const tData = useMemo<any[]>(() => (isLoading ? [] : data), [data, isLoading])
   const tColumns = useMemo<any[]>(() => columns, [columns])
 

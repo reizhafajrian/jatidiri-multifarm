@@ -28,7 +28,9 @@ export default function ShedTable() {
 
 
   const columns = [
-    { header: "No Kandang", accessorKey: "code" },
+    // { header: "No Kandang", accessorKey: "code" },
+    { header: "No Kandang dan Cluster", accessorKey: "description" },
+
     //react table if average_weight is null, it will return 0
     {
       header: "Berat",
@@ -36,7 +38,6 @@ export default function ShedTable() {
       cell: (data: any) =>
         `${data.getValue() ? data.getValue() + " Kg" : "0 Kg"}`,
     },
-    { header: "Keterangan", accessorKey: "description" },
     {
       header: "Aksi",
       accessorKey: "_id",
