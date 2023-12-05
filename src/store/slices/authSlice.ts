@@ -35,7 +35,7 @@ const createAuthSlice: StateCreator<IAuthState> = (set) => ({
   },
   signin: async (data) => {
     try {
-      const res = await axios.post("/api/auth/login", data)
+      const res = await axios.post("/api/signin", data)
       localStorage.setItem("user", JSON.stringify(res.data.data.user))
       localStorage.setItem("token", res.data.data.token)
       window.location.replace("/dashboard")
